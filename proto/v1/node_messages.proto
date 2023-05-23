@@ -22,8 +22,8 @@ import "google/protobuf/timestamp.proto";
 
 // Feature is a list of features supported by a node.
 enum Feature {
-    // NONE is the default feature set.
-    NONE = 0;
+    // FEATURE_NONE is the default feature set.
+    FEATURE_NONE = 0;
     // NODES is the feature for nodes. This is always supported.
     NODES = 1;
     // LEADER_PROXY is the feature for leader proxying.
@@ -36,6 +36,18 @@ enum Feature {
     METRICS_NODE = 5;
     // ICE_NEGOTIATION is the feature for ICE negotiation.
     ICE_NEGOTIATION = 6;
+}
+
+// ClusterStatus is the status of the node in the cluster.
+enum ClusterStatus {
+    // CLUSTER_STATUS_NONE is the default status.
+    CLUSTER_STATUS_NONE = 0;
+    // LEADER is the status for the leader node.
+    LEADER = 1;
+    // VOTER is the status for a voter node.
+    VOTER = 2;
+    // NON_VOTER is the status for a non-voter node.
+    NON_VOTER = 3;
 }
 
 // Features is a list of features supported by a node.
@@ -136,6 +148,8 @@ message MeshNode {
     google.protobuf.Timestamp updated_at = 12;
     // created_at is the creation time for the node.
     google.protobuf.Timestamp created_at = 13;
+    // status is the status of the node.
+    ClusterStatus status = 14;
 }
 
 // NodeList is a list of nodes.
@@ -220,8 +234,8 @@ message Status {
     repeated Feature features = 6;
     // peers is the number of wireguard peers connected.
     uint32 peers = 7;
-    // leader is whether the node is the leader of the cluster.
-    bool leader = 8;
+    // status is the status of the node in the cluster.
+    ClusterStatus status = 8;
     // current_leader is the current leader of the cluster.
     string current_leader = 9;
 }

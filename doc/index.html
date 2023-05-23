@@ -228,6 +228,10 @@
               
               
                 <li>
+                  <a href="#v1.ClusterStatus"><span class="badge">E</span>ClusterStatus</a>
+                </li>
+              
+                <li>
                   <a href="#v1.DataChannel"><span class="badge">E</span>DataChannel</a>
                 </li>
               
@@ -788,6 +792,13 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><p>created_at is the creation time for the node. </p></td>
                 </tr>
               
+                <tr>
+                  <td>status</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
+                  <td></td>
+                  <td><p>status is the status of the node. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -938,10 +949,10 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
               
                 <tr>
-                  <td>leader</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>status</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
                   <td></td>
-                  <td><p>leader is whether the node is the leader of the cluster. </p></td>
+                  <td><p>status is the status of the node in the cluster. </p></td>
                 </tr>
               
                 <tr>
@@ -1019,6 +1030,41 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
       
 
       
+        <h3 id="v1.ClusterStatus">ClusterStatus</h3>
+        <p>ClusterStatus is the status of the node in the cluster.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CLUSTER_STATUS_NONE</td>
+                <td>0</td>
+                <td><p>CLUSTER_STATUS_NONE is the default status.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LEADER</td>
+                <td>1</td>
+                <td><p>LEADER is the status for the leader node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>VOTER</td>
+                <td>2</td>
+                <td><p>VOTER is the status for a voter node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>NON_VOTER</td>
+                <td>3</td>
+                <td><p>NON_VOTER is the status for a non-voter node.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="v1.DataChannel">DataChannel</h3>
         <p>DataChannel are the data channels used when communicating over ICE</p><p>with a node.</p>
         <table class="enum-table">
@@ -1055,9 +1101,9 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
           <tbody>
             
               <tr>
-                <td>NONE</td>
+                <td>FEATURE_NONE</td>
                 <td>0</td>
-                <td><p>NONE is the default feature set.</p></td>
+                <td><p>FEATURE_NONE is the default feature set.</p></td>
               </tr>
             
               <tr>
