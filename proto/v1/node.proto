@@ -1,0 +1,67 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+import "v1/node_messages.proto";
+
+// Node is the service exposed on every node in the mesh to communicate network
+// information amongst themselves. Some methods are only available on the currently
+// elected leader. This service can optionally be exposed on public interfaces to allow
+// external users to query the mesh state, join as an observer, or proxy/inspect traffic.
+// 
+// Nodes can optionally be configured to proxy requests to the leader, however, this
+// is not guaranteed to be available on every RPC. To prefer the leader handle the request
+// when a non-leader can otherwise serve it, use the "prefer-leader" header.
+service Node {
+    // GetFeatures returns the features supported by the node.
+    rpc GetFeatures (google.protobuf.Empty) returns (Features) {}
+
+    // Join is used to join a node to the mesh. The joining node will be added to the mesh 
+    // as an observer, and will be able to query the mesh state, but will not be able to vote 
+    // in elections. To join as a voter pass the as_voter flag.
+    rpc Join (JoinRequest) returns (JoinResponse) {}
+
+    // Leave is used to remove a node from the mesh. The node will be removed from the mesh
+    // and will no longer be able to query the mesh state or vote in elections.
+    rpc Leave (LeaveRequest) returns (google.protobuf.Empty) {}
+
+    // GetNode gets a node by ID.
+    rpc GetNode(GetNodeRequest) returns (MeshNode) {}
+
+    // GetNodeLogs gets the logs for a node.
+    // rpc GetNodeLogs(GetNodeLogsRequest) returns (stream LogMessage) {}
+
+    // ListNodes lists all nodes.
+    rpc ListNodes(google.protobuf.Empty) returns (NodeList) {}
+
+    // GetStatus gets the status of the current node.
+    rpc GetStatus(google.protobuf.Empty) returns (Status) {}
+
+    // StartDataChannel requests a new WebRTC connection to a node.
+    // The client speaks first with the request containing the node ID
+    // and where forwarded packets should be sent. The server responds
+    // with an offer and STUN servers to be used to establish a WebRTC connection.
+    // The client should then respond with an answer to the offer that matches the
+    // spec of the DataChannel.CHANNELS enum value.
+    //
+    // After the offer is accepted, the stream can be used to exchange ICE candidates
+    // to speed up the connection process.
+    rpc StartDataChannel(stream StartDataChannelRequest) returns (stream DataChannelOffer) {}
+}

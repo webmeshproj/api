@@ -1,0 +1,227 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Feature is a list of features supported by a node.
+enum Feature {
+    // NONE is the default feature set.
+    NONE = 0;
+    // NODES is the feature for nodes. This is always supported.
+    NODES = 1;
+    // LEADER_PROXY is the feature for leader proxying.
+    LEADER_PROXY = 2;
+    // PEER_DISCOVERY is the feature for peer discovery.
+    PEER_DISCOVERY = 3;
+    // METRICS_GRPC is the feature for gRPC metrics.
+    METRICS_GRPC = 4;
+    // METRICS_NODE is the feature for node metrics.
+    METRICS_NODE = 5;
+    // ICE_NEGOTIATION is the feature for ICE negotiation.
+    ICE_NEGOTIATION = 6;
+}
+
+// Features is a list of features supported by a node.
+message Features {
+    repeated Feature features = 1;
+}
+
+// JoinRequest is a request to join the cluster.
+message JoinRequest {
+    // id is the ID of the node.
+    string id = 1;
+    // public_key is the public wireguard key of the node to broadcast to peers.
+    string public_key = 2;
+    // raft_port is the Raft listen port of the node.
+    int32 raft_port = 3;
+    // grpc_port is the gRPC listen port of the node.
+    int32 grpc_port = 4;
+    // endpoint is the wireguard endpoint of the node. If left unset, the node
+    // is assumed to be behind a NAT and not directly accessible.
+    string endpoint = 5;
+    // allowed_ips is the list of allowed IPs for the node.
+    repeated string allowed_ips = 6;
+    // available_zones is the list of available zones for the node. These are
+    // public IPv6 addresses that the node can use to route traffic.
+    repeated string available_zones = 7;
+    // assign_asn is whether an ASN should be assigned to the node.
+    bool assign_asn = 8;
+    // assign_ipv4 is whether an IPv4 address should be assigned to the node.
+    bool assign_ipv4 = 9;
+    // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
+    // This is only used if assign_ipv4 is true.
+    bool prefer_raft_ipv6 = 10;
+    // as_voter is whether the node should receive a vote in elections.
+    bool as_voter = 11;
+}
+
+// JoinResponse is a response to a join request.
+message JoinResponse {
+    // address_ipv4 is the private IPv4 wireguard address of the node
+    // in CIDR format representing the network. This is only set if
+    // assign_ipv4 was set in the request or no network_ipv6 was provided.
+    string address_ipv4 = 1;
+    // network_ipv6 is the IPv6 network assigned to the node.
+    string network_ipv6 = 2;
+    // asn is the ASN of the node, if requested.
+    uint32 asn = 3;
+    // peers is a list of wireguard peers to connect to.
+    repeated WireguardPeer peers = 4;
+}
+
+// WireguardPeer is a peer in the Wireguard network.
+message WireguardPeer {
+    // peer_id is the ID of the peer.
+    string public_key = 1;
+    // asn is the ASN of the peer.
+    uint32 asn = 2;
+    // endpoint is the endpoint of the peer, if applicable.
+    string endpoint = 3;
+    // address_ipv4 is the private IPv4 wireguard address of the peer.
+    string address_ipv4 = 4;
+    // address_ipv6 is the private IPv6 wireguard address of the peer.
+    string address_ipv6 = 5;
+    // allowed_ips is the list of allowed IPs for the peer.
+    repeated string allowed_ips = 6;
+}
+
+// LeaveRequest is a request to leave the cluster.
+message LeaveRequest {
+    // id is the ID of the node.
+    string id = 1;
+}
+
+// GetNodeRequest is a request to get a node.
+message GetNodeRequest {
+    // id is the ID of the node.
+    string id = 1;
+}
+
+// MeshNode is a node that has been registered with the controller.
+message MeshNode {
+    // id is the ID of the node.
+    string id = 1;
+    // endpoint is the endpoint of the node.
+    string endpoint = 3;
+    // allowed_ips is the list of allowed IPs for the node.
+    repeated string allowed_ips = 5;
+    // available_zones is the list of available zones for the node.
+    repeated string available_zones = 7;
+    // public_key is the public key of the node.
+    string public_key = 8;
+    // asn is the ASN of the node, if applicable.
+    uint32 asn = 9;
+    // private_ipv4 is the private IPv4 address of the node.
+    string private_ipv4 = 10;
+    // private_ipv6 is the private IPv6 address of the node.
+    string private_ipv6 = 11;
+    // updated_at is the last time the node joined the cluster.
+    google.protobuf.Timestamp updated_at = 12;
+    // created_at is the creation time for the node.
+    google.protobuf.Timestamp created_at = 13;
+}
+
+// NodeList is a list of nodes.
+message NodeList {
+    // nodes is the list of nodes.
+    repeated MeshNode nodes = 1;
+}
+
+// DataChannel are the data channels used when communicating over ICE
+// with a node.
+enum DataChannel {
+  // CHANNELS is the data channel used for negotiating new channels.
+  // This is the first channel that is opened. The ID of the channel
+  // should be 0.
+  CHANNELS = 0;
+  // CONNECTIONS is the data channel used for negotiating new connections.
+  // This is a channel that is opened for each incoming connection from a
+  // client. The ID should start at 0 and be incremented for each new connection.
+  CONNECTIONS = 1;
+}
+
+// DataChannelNegotiation is the message for communicating data channels to nodes.
+message DataChannelNegotiation {
+  // proto is the protocol of the traffic.
+  string proto = 1;
+  // dst is the destination address of the traffic.
+  string dst = 2;
+  // port is the destination port of the traffic.
+  uint32 port = 3;
+  // offer is the offer for the node to use as its local description.
+  string offer = 4;
+  // answer is the answer for the node to use as its remote description.
+  string answer = 5;
+  // candidate is an ICE candidate.
+  string candidate = 6;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 7;
+}
+
+// StartDataChannelRequest is a request to start a data channel.
+// The answer and candidate fields are populated after the offer 
+// is received.
+message StartDataChannelRequest {
+  // node_id is the ID of the node to send the data to.
+  string node_id = 1;
+  // proto is the protocol of the traffic.
+  string proto = 2;
+  // dst is the destination address of the traffic.
+  string dst = 3;
+  // port is the destination port of the traffic.
+  uint32 port = 4;
+  // answer is the answer to the offer.
+  string answer = 5;
+  // candidate is an ICE candidate.
+  string candidate = 6;
+}
+
+// DataChannelOffer is an offer for a data channel. Candidates
+// are sent after the offer is sent.
+message DataChannelOffer {
+  // offer is the offer.
+  string offer = 1;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 2;
+  // candidate is an ICE candidate.
+  string candidate = 3;
+}
+
+// Status represents the status of a node.
+message Status {
+    // version is the version of the node.
+    string version = 1;
+    // commit is the commit of the node.
+    string commit = 2;
+    // build_date is the build date of the node.
+    string build_date = 3;
+    // uptime is the uptime of the node.
+    string uptime = 4;
+    // started_at is the time the node started.
+    google.protobuf.Timestamp started_at = 5;
+    // features is the list of features currently enabled.
+    repeated Feature features = 6;
+    // peers is the number of wireguard peers connected.
+    uint32 peers = 7;
+    // leader is whether the node is the leader of the cluster.
+    bool leader = 8;
+    // current_leader is the current leader of the cluster.
+    string current_leader = 9;
+}

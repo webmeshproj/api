@@ -1,0 +1,196 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// NodeMetrics is the metrics for the node.
+message NodeMetrics {
+  // device_name is the name of the device.
+  string device_name = 1;
+  // public_key is the public key of the node.
+  string public_key = 2;
+  // address_v4 is the IPv4 address of the node.
+  string address_v4 = 3;
+  // address_v6 is the IPv6 address of the node.
+  string address_v6 = 4;
+  // type is the type of interface being used for wireguard.
+  string type = 5;
+  // listen_port is the port wireguard is listening on.
+  int32 listen_port = 6;
+  // total_receive_bytes is the total number of bytes received.
+  uint64 total_receive_bytes = 7;
+  // total_transmit_bytes is the total number of bytes transmitted.
+  uint64 total_transmit_bytes = 8;
+  // peers are the per-peer statistics.
+  repeated PeerMetrics peers = 9;
+  // system is the system metrics for the node.
+  HostMetrics system = 10;
+}
+
+// PeerMetrics are the metrics for a node's peer.
+message PeerMetrics {
+  // public_key is the public key of the peer.
+  string public_key = 1;
+  // endpoint is the connected endpoint of the peer.
+  string endpoint = 2;
+  // persistent_keep_alive is the persistent keep alive interval for the peer.
+  string persistent_keep_alive = 3;
+  // last_handshake_time is the last handshake time for the peer.
+  string last_handshake_time = 4;
+  // allowed_ips is the list of allowed IPs for the peer.
+  repeated string allowed_ips = 5;
+  // protocol_version is the version of the wireguard protocol negotiated with the peer.
+  int64 protocol_version = 6;
+  // receive_bytes is the bytes received from the peer.
+  uint64 receive_bytes = 7;
+  // transmit_bytes is the bytes transmitted to the peer.
+  uint64 transmit_bytes = 8;
+}
+
+// HostMetrics is the metrics for the host.
+message HostMetrics {
+  // host is the host metrics.
+  HostInfo host = 1;
+  // cpu is the CPU metrics.
+  CPUTimes cpu = 2;
+  // memory is the memory metrics.
+  MemoryInfo memory = 3;
+  // disks is the disk metrics.
+  repeated DiskInfo disks = 4;
+}
+
+// HostInfo is the host information.
+message HostInfo {
+  // architecture is the architecture of the host.
+  string architecture = 1;
+  // boot_time is the boot time of the host.
+  string boot_time = 2;
+  // containerized is whether the host is containerized.
+  bool containerized = 3;
+  // hostname is the hostname of the host.
+  string hostname = 4;
+  // ips is the list of IP addresses of the host.
+  repeated string ips = 5;
+  // kernel_version is the kernel version of the host.
+  string kernel_version = 6;
+  // macs is the list of MAC addresses of the host.
+  repeated string macs = 7;
+  // os is the OS of the host.
+  OSInfo os = 8;
+  // timezone is the timezone of the host.
+  string timezone = 9;
+  // uptime is the uptime of the host.
+  string uptime = 10;
+}
+
+// CPUTimes is the CPU times.
+message CPUTimes {
+  LoadAverage load_average = 1;
+  // user is the user CPU time.
+  string user = 2;
+  // system is the system CPU time.
+  string system = 3;
+  // idle is the idle CPU time.
+  string idle = 4;
+  // io_wait is the IO wait CPU time.
+  string io_wait = 5;
+  // irq is the IRQ CPU time.
+  string irq = 6;
+  // nice is the nice CPU time.
+  string nice = 7;
+  // soft_irq is the soft IRQ CPU time.
+  string soft_irq = 8;
+  // steal is the steal CPU time.
+  string steal = 9;
+}
+
+// LoadAverage is the load average.
+message LoadAverage {
+  // one is the 1 minute load average.
+  float one = 1;
+  // five is the 5 minute load average.
+  float five = 2;
+  // fifteen is the 15 minute load average.
+  float fifteen = 3;
+}
+
+// MemoryInfo is the memory information.
+message MemoryInfo {
+  // total is the total memory.
+  uint64 total = 1;
+  // used is the used memory.
+  uint64 used = 2;
+  // available is the available memory.
+  uint64 available = 3;
+  // free is the free memory.
+  uint64 free = 4;
+  // virtual_total is the total virtual memory.
+  uint64 virtual_total = 5;
+  // virtual_used is the used virtual memory.
+  uint64 virtual_used = 6;
+  // virtual_free is the free virtual memory.
+  uint64 virtual_free = 7;
+}
+
+// DiskInfo is the disk information.
+message DiskInfo {
+  // filesystem_path is the path the disk is mounted to.
+  string filesystem_path = 1;
+  // device is the device of the disk.
+  string device = 2;
+  // total is the total disk space.
+  uint64 total = 3;
+  // free is the free disk space.
+  uint64 free = 4;
+  // used is the used disk space.
+  uint64 used = 5;
+  // used_percent is the used disk space percentage.
+  float used_percent = 6;
+  // inodes_total is the total inodes.
+  uint64 inodes_total = 7;
+  // inodes_free is the free inodes.
+  uint64 inodes_free = 8;
+  // inodes_used is the used inodes.
+  uint64 inodes_used = 9;
+  // inodes_used_percent is the used inodes percentage.
+  float inodes_used_percent = 10;
+}
+
+// OSInfo is the OS information.
+message OSInfo {
+  // type is the type of OS.
+  string type = 1;
+  // family is the family of OS.
+  string family = 2;
+  // platform is the platform of OS.
+  string platform = 3;
+  // name is the name of OS.
+  string name = 4;
+  // version is the version of OS.
+  string version = 5;
+  // major is the major version of OS.
+  int64 major = 6;
+  // minor is the minor version of OS.
+  int64 minor = 7;
+  // patch is the patch version of OS.
+  int64 patch = 8;
+  // build is the build version of OS.
+  string build = 9;
+  // codename is the codename of OS.
+  string codename = 10;
+}

@@ -1,0 +1,54 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+
+// ListRaftPeersResponse is the response to ListPeers.
+message ListRaftPeersResponse {
+    // Peers is the list of peers.
+    repeated RaftPeer peers = 1;
+}
+
+// RaftPeer is a peer in the Raft cluster.
+message RaftPeer {
+    // ID is the ID of the peer.
+    string id = 1;
+    // Address is the address of the peer.
+    string address = 2;
+    // Voter is whether the peer is a voter.
+    bool voter = 3;
+    // Leader is whether the peer is the leader.
+    bool leader = 4;
+}
+
+// PeerDiscovery is the service that provides peer discovery. This is a service
+// that can optionally be exposed by nodes in the mesh to provide peer discovery
+// to other nodes. Alternative methods of peer discovery can be used, such as
+// static files or DNS, but running one or more publicly accessible nodes with this
+// service registered is the simplest method.
+//
+// It only makes sense to expose this service on a public address on a member of the
+// Raft cluster. It is not necessary to expose this service on every node in the mesh.
+service PeerDiscovery {
+    // ListPeers returns a list of peers currently known to the mesh.
+    rpc ListPeers (google.protobuf.Empty) returns (ListRaftPeersResponse) {}
+    // WatchPeers returns a stream of peers currently known to the mesh.
+    rpc WatchPeers (google.protobuf.Empty) returns (stream RaftPeer) {}
+}
