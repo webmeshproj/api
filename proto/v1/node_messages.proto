@@ -40,14 +40,14 @@ enum Feature {
 
 // ClusterStatus is the status of the node in the cluster.
 enum ClusterStatus {
-    // CLUSTER_STATUS_NONE is the default status.
-    CLUSTER_STATUS_NONE = 0;
-    // LEADER is the status for the leader node.
-    LEADER = 1;
-    // VOTER is the status for a voter node.
-    VOTER = 2;
-    // NON_VOTER is the status for a non-voter node.
-    NON_VOTER = 3;
+    // CLUSTER_STATUS_UNKNOWN is the default status.
+    CLUSTER_STATUS_UNKNOWN = 0;
+    // CLUSTER_LEADER is the status for the leader node.
+    CLUSTER_LEADER = 1;
+    // CLUSTER_VOTER is the status for a voter node.
+    CLUSTER_VOTER = 2;
+    // CLUSTER_NON_VOTER is the status for a non-voter node.
+    CLUSTER_NON_VOTER = 3;
 }
 
 // Features is a list of features supported by a node.
