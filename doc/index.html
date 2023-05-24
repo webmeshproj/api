@@ -595,21 +595,6 @@ is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
                 <tr>
-                  <td>allowed_ips</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>available_zones</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>available_zones is the list of available zones for the node. These are
-public IPv6 addresses that the node can use to route traffic. </p></td>
-                </tr>
-              
-                <tr>
                   <td>assign_asn</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
@@ -1008,7 +993,7 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td>asn</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>asn is the ASN of the peer. </p></td>
+                  <td><p>asn is the ASN of the peer, if applicable. </p></td>
                 </tr>
               
                 <tr>
@@ -1030,13 +1015,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>address_ipv6 is the private IPv6 wireguard address of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>allowed_ips</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
                 </tr>
               
             </tbody>

@@ -68,20 +68,15 @@ message JoinRequest {
     // endpoint is the wireguard endpoint of the node. If left unset, the node
     // is assumed to be behind a NAT and not directly accessible.
     string endpoint = 5;
-    // allowed_ips is the list of allowed IPs for the node.
-    repeated string allowed_ips = 6;
-    // available_zones is the list of available zones for the node. These are
-    // public IPv6 addresses that the node can use to route traffic.
-    repeated string available_zones = 7;
     // assign_asn is whether an ASN should be assigned to the node.
-    bool assign_asn = 8;
+    bool assign_asn = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 9;
+    bool assign_ipv4 = 7;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 10;
+    bool prefer_raft_ipv6 = 8;
     // as_voter is whether the node should receive a vote in elections.
-    bool as_voter = 11;
+    bool as_voter = 9;
 }
 
 // JoinResponse is a response to a join request.
@@ -104,7 +99,7 @@ message WireguardPeer {
     string id = 1;
     // public_key is the public key of the peer.
     string public_key = 2;
-    // asn is the ASN of the peer.
+    // asn is the ASN of the peer, if applicable.
     uint32 asn = 3;
     // endpoint is the endpoint of the peer, if applicable.
     string endpoint = 4;
@@ -112,8 +107,6 @@ message WireguardPeer {
     string address_ipv4 = 5;
     // address_ipv6 is the private IPv6 wireguard address of the peer.
     string address_ipv6 = 6;
-    // allowed_ips is the list of allowed IPs for the peer.
-    repeated string allowed_ips = 7;
 }
 
 // LeaveRequest is a request to leave the cluster.
