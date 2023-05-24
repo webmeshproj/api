@@ -36,15 +36,13 @@ enum RaftCommandType {
 message SQLParameter {
     // name is the name of the parameter.
     string name = 1;
-    // value is the value of the parameter.
-	oneof value {
-		sint64 int64 = 2;
-		double double = 3;
-		bool bool = 4;
-		bytes bytes = 5;
-		string str = 6;
-        google.protobuf.Timestamp time = 7;
-	}
+
+    sint64 int64 = 2;
+    double double = 3;
+    bool bool = 4;
+    bytes bytes = 5;
+    string str = 6;
+    google.protobuf.Timestamp time = 7;
 }
 
 // SQLValues is a list of values.
