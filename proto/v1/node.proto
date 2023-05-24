@@ -30,9 +30,6 @@ import "v1/node_messages.proto";
 // Nodes can optionally be configured to proxy requests to the leader. To prefer the leader 
 // handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.
 service Node {
-    // GetFeatures returns the features supported by the node.
-    rpc GetFeatures (google.protobuf.Empty) returns (Features) {}
-
     // Join is used to join a node to the mesh. The joining node will be added to the mesh 
     // as an observer, and will be able to query the mesh state, but will not be able to vote 
     // in elections. To join as a voter pass the as_voter flag.
@@ -42,6 +39,13 @@ service Node {
     // and will no longer be able to query the mesh state or vote in elections.
     rpc Leave (LeaveRequest) returns (google.protobuf.Empty) {}
 
-    // GetStatus gets the status of the current node.
-    rpc GetStatus(google.protobuf.Empty) returns (Status) {}
+    // GetStatus gets the status of a node in the cluster.
+    rpc GetStatus(GetStatusRequest) returns (Status) {}
+
+    // NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
+    // and a node in the cluster. The handling server will send the target node over this RPC
+    // an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation. 
+    // The node responds with an answer to the offer that is forwarded to the client. Afterwards,
+    // the stream can be used to exchange ICE candidates between the client and the node.
+    rpc NegotiateDataChannel(stream DataChannelNegotiation) returns (stream DataChannelNegotiation) {}
 }

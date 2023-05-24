@@ -13,12 +13,14 @@
 - [v1/mesh.proto](#v1%2fmesh.proto)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
 - [v1/node_messages.proto](#v1%2fnode_messages.proto)
-  - [<span class="badge">M</span>Features](#v1.Features)
+  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
+  - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
   - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>Status](#v1.Status)
   - [<span class="badge">M</span>WireguardPeer](#v1.WireguardPeer)
+  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">S</span>Node](#v1.Node)
 - [v1/node_metrics.proto](#v1%2fnode_metrics.proto)
@@ -48,10 +50,8 @@
   - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
   - [<span class="badge">S</span>PeerDiscovery](#v1.PeerDiscovery)
 - [v1/webrtc_messages.proto](#v1%2fwebrtc_messages.proto)
-  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
   - [<span class="badge">M</span>StartDataChannelRequest](#v1.StartDataChannelRequest)
-  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">S</span>WebRTC](#v1.WebRTC)
 - [Scalar Value Types](#scalar-value-types)
@@ -160,13 +160,29 @@ handle the request when a non-leader can otherwise serve it, use the
 
 </div>
 
-### Features
+### DataChannelNegotiation
 
-Features is a list of features supported by a node.
+DataChannelNegotiation is the message for communicating data channels to
+nodes.
 
-| Field    | Type                   | Label    | Description |
-|----------|------------------------|----------|-------------|
-| features | [Feature](#v1.Feature) | repeated |             |
+| Field        | Type              | Label    | Description                                                         |
+|--------------|-------------------|----------|---------------------------------------------------------------------|
+| proto        | [string](#string) |          | proto is the protocol of the traffic.                               |
+| src          | [string](#string) |          | src is the address of the client that initiated the request.        |
+| dst          | [string](#string) |          | dst is the destination address of the traffic.                      |
+| port         | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
+| offer        | [string](#string) |          | offer is the offer for the node to use as its local description.    |
+| answer       | [string](#string) |          | answer is the answer for the node to use as its remote description. |
+| candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
+| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
+
+### GetStatusRequest
+
+GetStatusRequest is a request to get the status of a node.
+
+| Field | Type              | Label | Description                                                                   |
+|-------|-------------------|-------|-------------------------------------------------------------------------------|
+| id    | [string](#string) |       | id is the ID of the node. If unset, the status of the local node is returned. |
 
 ### JoinRequest
 
@@ -231,6 +247,17 @@ WireguardPeer is a peer in the Wireguard network.
 | address_ipv4 | [string](#string) |       | address_ipv4 is the private IPv4 wireguard address of the peer. |
 | address_ipv6 | [string](#string) |       | address_ipv6 is the private IPv6 wireguard address of the peer. |
 
+### DataChannel
+
+DataChannel are the data channels used when communicating over ICE
+
+with a node.
+
+| Name        | Number | Description                                                                                                                                                                                                             |
+|-------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CHANNELS    | 0      | CHANNELS is the data channel used for negotiating new channels. This is the first channel that is opened. The ID of the channel should be 0.                                                                            |
+| CONNECTIONS | 1      | CONNECTIONS is the data channel used for negotiating new connections. This is a channel that is opened for each incoming connection from a client. The ID should start at 0 and be incremented for each new connection. |
+
 <div class="file-heading">
 
 ## v1/node.proto
@@ -259,12 +286,12 @@ prefer the leader
 handle the request when a non-leader can otherwise serve it, use the
 "prefer-leader" header.
 
-| Method Name | Request Type                                     | Response Type                                    | Description                                                                                                                                                                                                                         |
-|-------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GetFeatures | [.google.protobuf.Empty](#google.protobuf.Empty) | [Features](#v1.Features)                         | GetFeatures returns the features supported by the node.                                                                                                                                                                             |
-| Join        | [JoinRequest](#v1.JoinRequest)                   | [JoinResponse](#v1.JoinResponse)                 | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag. |
-| Leave       | [LeaveRequest](#v1.LeaveRequest)                 | [.google.protobuf.Empty](#google.protobuf.Empty) | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                       |
-| GetStatus   | [.google.protobuf.Empty](#google.protobuf.Empty) | [Status](#v1.Status)                             | GetStatus gets the status of the current node.                                                                                                                                                                                      |
+| Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|----------------------|-------------------------------------------------------------|-------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                      |
+| Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                            |
+| GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node over this RPC an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an answer to the offer that is forwarded to the client. Afterwards, the stream can be used to exchange ICE candidates between the client and the node. |
 
 <div class="file-heading">
 
@@ -599,21 +626,6 @@ in the mesh.
 
 </div>
 
-### DataChannelNegotiation
-
-DataChannelNegotiation is the message for communicating data channels to
-nodes.
-
-| Field        | Type              | Label    | Description                                                         |
-|--------------|-------------------|----------|---------------------------------------------------------------------|
-| proto        | [string](#string) |          | proto is the protocol of the traffic.                               |
-| dst          | [string](#string) |          | dst is the destination address of the traffic.                      |
-| port         | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
-| offer        | [string](#string) |          | offer is the offer for the node to use as its local description.    |
-| answer       | [string](#string) |          | answer is the answer for the node to use as its remote description. |
-| candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
-| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
-
 ### DataChannelOffer
 
 DataChannelOffer is an offer for a data channel. Candidates
@@ -642,17 +654,6 @@ is received.
 | port      | [uint32](#uint32) |       | port is the destination port of the traffic.       |
 | answer    | [string](#string) |       | answer is the answer to the offer.                 |
 | candidate | [string](#string) |       | candidate is an ICE candidate.                     |
-
-### DataChannel
-
-DataChannel are the data channels used when communicating over ICE
-
-with a node.
-
-| Name        | Number | Description                                                                                                                                                                                                             |
-|-------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CHANNELS    | 0      | CHANNELS is the data channel used for negotiating new channels. This is the first channel that is opened. The ID of the channel should be 0.                                                                            |
-| CONNECTIONS | 1      | CONNECTIONS is the data channel used for negotiating new connections. This is a channel that is opened for each incoming connection from a client. The ID should start at 0 and be incremented for each new connection. |
 
 <div class="file-heading">
 

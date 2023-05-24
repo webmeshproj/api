@@ -225,7 +225,11 @@
             <ul>
               
                 <li>
-                  <a href="#v1.Features"><span class="badge">M</span>Features</a>
+                  <a href="#v1.DataChannelNegotiation"><span class="badge">M</span>DataChannelNegotiation</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetStatusRequest"><span class="badge">M</span>GetStatusRequest</a>
                 </li>
               
                 <li>
@@ -248,6 +252,10 @@
                   <a href="#v1.WireguardPeer"><span class="badge">M</span>WireguardPeer</a>
                 </li>
               
+              
+                <li>
+                  <a href="#v1.DataChannel"><span class="badge">E</span>DataChannel</a>
+                </li>
               
               
               
@@ -400,10 +408,6 @@
             <ul>
               
                 <li>
-                  <a href="#v1.DataChannelNegotiation"><span class="badge">M</span>DataChannelNegotiation</a>
-                </li>
-              
-                <li>
                   <a href="#v1.DataChannelOffer"><span class="badge">M</span>DataChannelOffer</a>
                 </li>
               
@@ -411,10 +415,6 @@
                   <a href="#v1.StartDataChannelRequest"><span class="badge">M</span>StartDataChannelRequest</a>
                 </li>
               
-              
-                <li>
-                  <a href="#v1.DataChannel"><span class="badge">E</span>DataChannel</a>
-                </li>
               
               
               
@@ -738,8 +738,8 @@
       <p></p>
 
       
-        <h3 id="v1.Features">Features</h3>
-        <p>Features is a list of features supported by a node.</p>
+        <h3 id="v1.DataChannelNegotiation">DataChannelNegotiation</h3>
+        <p>DataChannelNegotiation is the message for communicating data channels to nodes.</p>
 
         
           <table class="field-table">
@@ -749,10 +749,84 @@
             <tbody>
               
                 <tr>
-                  <td>features</td>
-                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>proto</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>proto is the protocol of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>src</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>src is the address of the client that initiated the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst is the destination address of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>port</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>port is the destination port of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>offer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>offer is the offer for the node to use as its local description. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>answer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>answer is the answer for the node to use as its remote description. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>candidate is an ICE candidate. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stun_servers</td>
+                  <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.GetStatusRequest">GetStatusRequest</h3>
+        <p>GetStatusRequest is a request to get the status of a node.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. If unset, the status of the 
+local node is returned. </p></td>
                 </tr>
               
             </tbody>
@@ -1049,6 +1123,33 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
       
 
       
+        <h3 id="v1.DataChannel">DataChannel</h3>
+        <p>DataChannel are the data channels used when communicating over ICE</p><p>with a node.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CHANNELS</td>
+                <td>0</td>
+                <td><p>CHANNELS is the data channel used for negotiating new channels.
+This is the first channel that is opened. The ID of the channel
+should be 0.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTIONS</td>
+                <td>1</td>
+                <td><p>CONNECTIONS is the data channel used for negotiating new connections.
+This is a channel that is opened for each incoming connection from a
+client. The ID should start at 0 and be incremented for each new connection.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
@@ -1076,13 +1177,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
           <tbody>
             
               <tr>
-                <td>GetFeatures</td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><a href="#v1.Features">Features</a></td>
-                <td><p>GetFeatures returns the features supported by the node.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Join</td>
                 <td><a href="#v1.JoinRequest">JoinRequest</a></td>
                 <td><a href="#v1.JoinResponse">JoinResponse</a></td>
@@ -1101,9 +1195,20 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
             
               <tr>
                 <td>GetStatus</td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.GetStatusRequest">GetStatusRequest</a></td>
                 <td><a href="#v1.Status">Status</a></td>
-                <td><p>GetStatus gets the status of the current node.</p></td>
+                <td><p>GetStatus gets the status of a node in the cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>NegotiateDataChannel</td>
+                <td><a href="#v1.DataChannelNegotiation">DataChannelNegotiation</a> stream</td>
+                <td><a href="#v1.DataChannelNegotiation">DataChannelNegotiation</a> stream</td>
+                <td><p>NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
+and a node in the cluster. The handling server will send the target node over this RPC
+an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation. 
+The node responds with an answer to the offer that is forwarded to the client. Afterwards,
+the stream can be used to exchange ICE candidates between the client and the node.</p></td>
               </tr>
             
           </tbody>
@@ -2364,72 +2469,6 @@ sql_query is the SQL query of the log entry. </p></td>
       <p></p>
 
       
-        <h3 id="v1.DataChannelNegotiation">DataChannelNegotiation</h3>
-        <p>DataChannelNegotiation is the message for communicating data channels to nodes.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>proto</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>proto is the protocol of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dst</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>dst is the destination address of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>port</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>port is the destination port of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>offer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>offer is the offer for the node to use as its local description. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>answer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>answer is the answer for the node to use as its remote description. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>candidate</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>stun_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.DataChannelOffer">DataChannelOffer</h3>
         <p>DataChannelOffer is an offer for a data channel. Candidates</p><p>are sent after the offer is sent.</p>
 
@@ -2528,33 +2567,6 @@ sql_query is the SQL query of the log entry. </p></td>
         
       
 
-      
-        <h3 id="v1.DataChannel">DataChannel</h3>
-        <p>DataChannel are the data channels used when communicating over ICE</p><p>with a node.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>CHANNELS</td>
-                <td>0</td>
-                <td><p>CHANNELS is the data channel used for negotiating new channels.
-This is the first channel that is opened. The ID of the channel
-should be 0.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CONNECTIONS</td>
-                <td>1</td>
-                <td><p>CONNECTIONS is the data channel used for negotiating new connections.
-This is a channel that is opened for each incoming connection from a
-client. The ID should start at 0 and be incremented for each new connection.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
       
 
       

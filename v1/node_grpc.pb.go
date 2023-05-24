@@ -35,18 +35,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Node_GetFeatures_FullMethodName = "/v1.Node/GetFeatures"
-	Node_Join_FullMethodName        = "/v1.Node/Join"
-	Node_Leave_FullMethodName       = "/v1.Node/Leave"
-	Node_GetStatus_FullMethodName   = "/v1.Node/GetStatus"
+	Node_Join_FullMethodName                 = "/v1.Node/Join"
+	Node_Leave_FullMethodName                = "/v1.Node/Leave"
+	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
+	Node_NegotiateDataChannel_FullMethodName = "/v1.Node/NegotiateDataChannel"
 )
 
 // NodeClient is the client API for Node service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NodeClient interface {
-	// GetFeatures returns the features supported by the node.
-	GetFeatures(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Features, error)
 	// Join is used to join a node to the mesh. The joining node will be added to the mesh
 	// as an observer, and will be able to query the mesh state, but will not be able to vote
 	// in elections. To join as a voter pass the as_voter flag.
@@ -54,8 +52,14 @@ type NodeClient interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// GetStatus gets the status of the current node.
-	GetStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Status, error)
+	// GetStatus gets the status of a node in the cluster.
+	GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error)
+	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
+	// and a node in the cluster. The handling server will send the target node over this RPC
+	// an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation.
+	// The node responds with an answer to the offer that is forwarded to the client. Afterwards,
+	// the stream can be used to exchange ICE candidates between the client and the node.
+	NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error)
 }
 
 type nodeClient struct {
@@ -64,15 +68,6 @@ type nodeClient struct {
 
 func NewNodeClient(cc grpc.ClientConnInterface) NodeClient {
 	return &nodeClient{cc}
-}
-
-func (c *nodeClient) GetFeatures(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Features, error) {
-	out := new(Features)
-	err := c.cc.Invoke(ctx, Node_GetFeatures_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *nodeClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error) {
@@ -93,7 +88,7 @@ func (c *nodeClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *nodeClient) GetStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Status, error) {
+func (c *nodeClient) GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, Node_GetStatus_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,12 +97,41 @@ func (c *nodeClient) GetStatus(ctx context.Context, in *emptypb.Empty, opts ...g
 	return out, nil
 }
 
+func (c *nodeClient) NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[0], Node_NegotiateDataChannel_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &nodeNegotiateDataChannelClient{stream}
+	return x, nil
+}
+
+type Node_NegotiateDataChannelClient interface {
+	Send(*DataChannelNegotiation) error
+	Recv() (*DataChannelNegotiation, error)
+	grpc.ClientStream
+}
+
+type nodeNegotiateDataChannelClient struct {
+	grpc.ClientStream
+}
+
+func (x *nodeNegotiateDataChannelClient) Send(m *DataChannelNegotiation) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *nodeNegotiateDataChannelClient) Recv() (*DataChannelNegotiation, error) {
+	m := new(DataChannelNegotiation)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // NodeServer is the server API for Node service.
 // All implementations must embed UnimplementedNodeServer
 // for forward compatibility
 type NodeServer interface {
-	// GetFeatures returns the features supported by the node.
-	GetFeatures(context.Context, *emptypb.Empty) (*Features, error)
 	// Join is used to join a node to the mesh. The joining node will be added to the mesh
 	// as an observer, and will be able to query the mesh state, but will not be able to vote
 	// in elections. To join as a voter pass the as_voter flag.
@@ -115,8 +139,14 @@ type NodeServer interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error)
-	// GetStatus gets the status of the current node.
-	GetStatus(context.Context, *emptypb.Empty) (*Status, error)
+	// GetStatus gets the status of a node in the cluster.
+	GetStatus(context.Context, *GetStatusRequest) (*Status, error)
+	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
+	// and a node in the cluster. The handling server will send the target node over this RPC
+	// an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation.
+	// The node responds with an answer to the offer that is forwarded to the client. Afterwards,
+	// the stream can be used to exchange ICE candidates between the client and the node.
+	NegotiateDataChannel(Node_NegotiateDataChannelServer) error
 	mustEmbedUnimplementedNodeServer()
 }
 
@@ -124,17 +154,17 @@ type NodeServer interface {
 type UnimplementedNodeServer struct {
 }
 
-func (UnimplementedNodeServer) GetFeatures(context.Context, *emptypb.Empty) (*Features, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFeatures not implemented")
-}
 func (UnimplementedNodeServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
 }
 func (UnimplementedNodeServer) Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
 }
-func (UnimplementedNodeServer) GetStatus(context.Context, *emptypb.Empty) (*Status, error) {
+func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
+}
+func (UnimplementedNodeServer) NegotiateDataChannel(Node_NegotiateDataChannelServer) error {
+	return status.Errorf(codes.Unimplemented, "method NegotiateDataChannel not implemented")
 }
 func (UnimplementedNodeServer) mustEmbedUnimplementedNodeServer() {}
 
@@ -147,24 +177,6 @@ type UnsafeNodeServer interface {
 
 func RegisterNodeServer(s grpc.ServiceRegistrar, srv NodeServer) {
 	s.RegisterService(&Node_ServiceDesc, srv)
-}
-
-func _Node_GetFeatures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).GetFeatures(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_GetFeatures_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetFeatures(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Node_Join_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -204,7 +216,7 @@ func _Node_Leave_Handler(srv interface{}, ctx context.Context, dec func(interfac
 }
 
 func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(GetStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -216,9 +228,35 @@ func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: Node_GetStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetStatus(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetStatus(ctx, req.(*GetStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _Node_NegotiateDataChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(NodeServer).NegotiateDataChannel(&nodeNegotiateDataChannelServer{stream})
+}
+
+type Node_NegotiateDataChannelServer interface {
+	Send(*DataChannelNegotiation) error
+	Recv() (*DataChannelNegotiation, error)
+	grpc.ServerStream
+}
+
+type nodeNegotiateDataChannelServer struct {
+	grpc.ServerStream
+}
+
+func (x *nodeNegotiateDataChannelServer) Send(m *DataChannelNegotiation) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *nodeNegotiateDataChannelServer) Recv() (*DataChannelNegotiation, error) {
+	m := new(DataChannelNegotiation)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // Node_ServiceDesc is the grpc.ServiceDesc for Node service.
@@ -228,10 +266,6 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.Node",
 	HandlerType: (*NodeServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetFeatures",
-			Handler:    _Node_GetFeatures_Handler,
-		},
 		{
 			MethodName: "Join",
 			Handler:    _Node_Join_Handler,
@@ -245,6 +279,13 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Node_GetStatus_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "NegotiateDataChannel",
+			Handler:       _Node_NegotiateDataChannel_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "v1/node.proto",
 }
