@@ -108,12 +108,10 @@ message RaftLogEntry {
     // type is the type of the log entry.
     RaftCommandType type = 1;
     // data is the data of the log entry.
-    oneof data {
-        // sql_query is the SQL query of the log entry.
-        SQLQuery sql_query = 2;
-        // sql_exec is the SQL exec of the log entry.
-        SQLExec sql_exec = 3;
-    }
+    // sql_query is the SQL query of the log entry.
+    SQLQuery sql_query = 2;
+    // sql_exec is the SQL exec of the log entry.
+    SQLExec sql_exec = 3;
 }
 
 // RaftApplyResponse is the response to an apply request. It
@@ -121,13 +119,10 @@ message RaftLogEntry {
 message RaftApplyResponse {
     // time is the total time it took to apply the log entry.
     string time = 1;
-    // result is the result of the log entry.
-    oneof result {
-        // query is the query result of the log entry.
-        SQLQueryResult rows = 2;
-        // exec is the exec result of the log entry.
-        SQLExecResult exec = 3;
-        // error is an error that occurred during the apply.
-        string error = 4;
-    }
+    // query is the query result of the log entry.
+    SQLQueryResult query_result = 2;
+    // exec is the exec result of the log entry.
+    SQLExecResult exec_result = 3;
+    // error is an error that occurred during the apply.
+    string error = 4;
 }
