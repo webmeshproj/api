@@ -30,7 +30,7 @@ message ListRaftPeersResponse {
 message RaftPeer {
     // ID is the ID of the peer.
     string id = 1;
-    // Address is the address of the peer.
+    // Address is the gRPC address of the peer.
     string address = 2;
     // Voter is whether the peer is a voter.
     bool voter = 3;

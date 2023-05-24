@@ -35,13 +35,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Node_GetFeatures_FullMethodName      = "/v1.Node/GetFeatures"
-	Node_Join_FullMethodName             = "/v1.Node/Join"
-	Node_Leave_FullMethodName            = "/v1.Node/Leave"
-	Node_GetNode_FullMethodName          = "/v1.Node/GetNode"
-	Node_ListNodes_FullMethodName        = "/v1.Node/ListNodes"
-	Node_GetStatus_FullMethodName        = "/v1.Node/GetStatus"
-	Node_StartDataChannel_FullMethodName = "/v1.Node/StartDataChannel"
+	Node_GetFeatures_FullMethodName = "/v1.Node/GetFeatures"
+	Node_Join_FullMethodName        = "/v1.Node/Join"
+	Node_Leave_FullMethodName       = "/v1.Node/Leave"
+	Node_GetStatus_FullMethodName   = "/v1.Node/GetStatus"
 )
 
 // NodeClient is the client API for Node service.
@@ -57,22 +54,8 @@ type NodeClient interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// GetNode gets a node by ID.
-	GetNode(ctx context.Context, in *GetNodeRequest, opts ...grpc.CallOption) (*MeshNode, error)
-	// ListNodes lists all nodes.
-	ListNodes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NodeList, error)
 	// GetStatus gets the status of the current node.
 	GetStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Status, error)
-	// StartDataChannel requests a new WebRTC connection to a node.
-	// The client speaks first with the request containing the node ID
-	// and where forwarded packets should be sent. The server responds
-	// with an offer and STUN servers to be used to establish a WebRTC connection.
-	// The client should then respond with an answer to the offer that matches the
-	// spec of the DataChannel.CHANNELS enum value.
-	//
-	// After the offer is accepted, the stream can be used to exchange ICE candidates
-	// to speed up the connection process.
-	StartDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_StartDataChannelClient, error)
 }
 
 type nodeClient struct {
@@ -110,24 +93,6 @@ func (c *nodeClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *nodeClient) GetNode(ctx context.Context, in *GetNodeRequest, opts ...grpc.CallOption) (*MeshNode, error) {
-	out := new(MeshNode)
-	err := c.cc.Invoke(ctx, Node_GetNode_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) ListNodes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NodeList, error) {
-	out := new(NodeList)
-	err := c.cc.Invoke(ctx, Node_ListNodes_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *nodeClient) GetStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, Node_GetStatus_FullMethodName, in, out, opts...)
@@ -135,37 +100,6 @@ func (c *nodeClient) GetStatus(ctx context.Context, in *emptypb.Empty, opts ...g
 		return nil, err
 	}
 	return out, nil
-}
-
-func (c *nodeClient) StartDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_StartDataChannelClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[0], Node_StartDataChannel_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &nodeStartDataChannelClient{stream}
-	return x, nil
-}
-
-type Node_StartDataChannelClient interface {
-	Send(*StartDataChannelRequest) error
-	Recv() (*DataChannelOffer, error)
-	grpc.ClientStream
-}
-
-type nodeStartDataChannelClient struct {
-	grpc.ClientStream
-}
-
-func (x *nodeStartDataChannelClient) Send(m *StartDataChannelRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *nodeStartDataChannelClient) Recv() (*DataChannelOffer, error) {
-	m := new(DataChannelOffer)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 // NodeServer is the server API for Node service.
@@ -181,22 +115,8 @@ type NodeServer interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error)
-	// GetNode gets a node by ID.
-	GetNode(context.Context, *GetNodeRequest) (*MeshNode, error)
-	// ListNodes lists all nodes.
-	ListNodes(context.Context, *emptypb.Empty) (*NodeList, error)
 	// GetStatus gets the status of the current node.
 	GetStatus(context.Context, *emptypb.Empty) (*Status, error)
-	// StartDataChannel requests a new WebRTC connection to a node.
-	// The client speaks first with the request containing the node ID
-	// and where forwarded packets should be sent. The server responds
-	// with an offer and STUN servers to be used to establish a WebRTC connection.
-	// The client should then respond with an answer to the offer that matches the
-	// spec of the DataChannel.CHANNELS enum value.
-	//
-	// After the offer is accepted, the stream can be used to exchange ICE candidates
-	// to speed up the connection process.
-	StartDataChannel(Node_StartDataChannelServer) error
 	mustEmbedUnimplementedNodeServer()
 }
 
@@ -213,17 +133,8 @@ func (UnimplementedNodeServer) Join(context.Context, *JoinRequest) (*JoinRespons
 func (UnimplementedNodeServer) Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
 }
-func (UnimplementedNodeServer) GetNode(context.Context, *GetNodeRequest) (*MeshNode, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetNode not implemented")
-}
-func (UnimplementedNodeServer) ListNodes(context.Context, *emptypb.Empty) (*NodeList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListNodes not implemented")
-}
 func (UnimplementedNodeServer) GetStatus(context.Context, *emptypb.Empty) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
-}
-func (UnimplementedNodeServer) StartDataChannel(Node_StartDataChannelServer) error {
-	return status.Errorf(codes.Unimplemented, "method StartDataChannel not implemented")
 }
 func (UnimplementedNodeServer) mustEmbedUnimplementedNodeServer() {}
 
@@ -292,42 +203,6 @@ func _Node_Leave_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Node_GetNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetNodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).GetNode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_GetNode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetNode(ctx, req.(*GetNodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_ListNodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).ListNodes(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_ListNodes_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).ListNodes(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -344,32 +219,6 @@ func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(inte
 		return srv.(NodeServer).GetStatus(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_StartDataChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(NodeServer).StartDataChannel(&nodeStartDataChannelServer{stream})
-}
-
-type Node_StartDataChannelServer interface {
-	Send(*DataChannelOffer) error
-	Recv() (*StartDataChannelRequest, error)
-	grpc.ServerStream
-}
-
-type nodeStartDataChannelServer struct {
-	grpc.ServerStream
-}
-
-func (x *nodeStartDataChannelServer) Send(m *DataChannelOffer) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *nodeStartDataChannelServer) Recv() (*StartDataChannelRequest, error) {
-	m := new(StartDataChannelRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 // Node_ServiceDesc is the grpc.ServiceDesc for Node service.
@@ -392,25 +241,10 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Node_Leave_Handler,
 		},
 		{
-			MethodName: "GetNode",
-			Handler:    _Node_GetNode_Handler,
-		},
-		{
-			MethodName: "ListNodes",
-			Handler:    _Node_ListNodes_Handler,
-		},
-		{
 			MethodName: "GetStatus",
 			Handler:    _Node_GetStatus_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "StartDataChannel",
-			Handler:       _Node_StartDataChannel_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/node.proto",
 }

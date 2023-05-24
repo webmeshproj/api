@@ -20,7 +20,6 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-
 // RaftCommandType is the type of command being sent to the
 // Raft log.
 enum RaftCommandType {

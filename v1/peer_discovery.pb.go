@@ -93,7 +93,7 @@ type RaftPeer struct {
 
 	// ID is the ID of the peer.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Address is the address of the peer.
+	// Address is the gRPC address of the peer.
 	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	// Voter is whether the peer is a voter.
 	Voter bool `protobuf:"varint,3,opt,name=voter,proto3" json:"voter,omitempty"`

@@ -20,35 +20,7 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-// Feature is a list of features supported by a node.
-enum Feature {
-    // FEATURE_NONE is the default feature set.
-    FEATURE_NONE = 0;
-    // NODES is the feature for nodes. This is always supported.
-    NODES = 1;
-    // LEADER_PROXY is the feature for leader proxying.
-    LEADER_PROXY = 2;
-    // PEER_DISCOVERY is the feature for peer discovery.
-    PEER_DISCOVERY = 3;
-    // METRICS_GRPC is the feature for gRPC metrics.
-    METRICS_GRPC = 4;
-    // METRICS_NODE is the feature for node metrics.
-    METRICS_NODE = 5;
-    // ICE_NEGOTIATION is the feature for ICE negotiation.
-    ICE_NEGOTIATION = 6;
-}
-
-// ClusterStatus is the status of the node in the cluster.
-enum ClusterStatus {
-    // CLUSTER_STATUS_UNKNOWN is the default status.
-    CLUSTER_STATUS_UNKNOWN = 0;
-    // CLUSTER_LEADER is the status for the leader node.
-    CLUSTER_LEADER = 1;
-    // CLUSTER_VOTER is the status for a voter node.
-    CLUSTER_VOTER = 2;
-    // CLUSTER_NON_VOTER is the status for a non-voter node.
-    CLUSTER_NON_VOTER = 3;
-}
+import "v1/mesh_messages.proto";
 
 // Features is a list of features supported by a node.
 message Features {
@@ -109,102 +81,6 @@ message WireguardPeer {
 message LeaveRequest {
     // id is the ID of the node.
     string id = 1;
-}
-
-// GetNodeRequest is a request to get a node.
-message GetNodeRequest {
-    // id is the ID of the node.
-    string id = 1;
-}
-
-// MeshNode is a node that has been registered with the controller.
-message MeshNode {
-    // id is the ID of the node.
-    string id = 1;
-    // endpoint is the endpoint of the node.
-    string endpoint = 2;
-    // allowed_ips is the list of allowed IPs for the node.
-    repeated string allowed_ips = 3;
-    // available_zones is the list of available zones for the node.
-    repeated string available_zones = 4;
-    // public_key is the public key of the node.
-    string public_key = 5;
-    // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 6;
-    // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 7;
-    // updated_at is the last time the node joined the cluster.
-    google.protobuf.Timestamp updated_at = 8;
-    // created_at is the creation time for the node.
-    google.protobuf.Timestamp created_at = 9;
-    // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 10;
-}
-
-// NodeList is a list of nodes.
-message NodeList {
-    // nodes is the list of nodes.
-    repeated MeshNode nodes = 1;
-}
-
-// DataChannel are the data channels used when communicating over ICE
-// with a node.
-enum DataChannel {
-  // CHANNELS is the data channel used for negotiating new channels.
-  // This is the first channel that is opened. The ID of the channel
-  // should be 0.
-  CHANNELS = 0;
-  // CONNECTIONS is the data channel used for negotiating new connections.
-  // This is a channel that is opened for each incoming connection from a
-  // client. The ID should start at 0 and be incremented for each new connection.
-  CONNECTIONS = 1;
-}
-
-// DataChannelNegotiation is the message for communicating data channels to nodes.
-message DataChannelNegotiation {
-  // proto is the protocol of the traffic.
-  string proto = 1;
-  // dst is the destination address of the traffic.
-  string dst = 2;
-  // port is the destination port of the traffic.
-  uint32 port = 3;
-  // offer is the offer for the node to use as its local description.
-  string offer = 4;
-  // answer is the answer for the node to use as its remote description.
-  string answer = 5;
-  // candidate is an ICE candidate.
-  string candidate = 6;
-  // stun_servers is the list of STUN servers to use.
-  repeated string stun_servers = 7;
-}
-
-// StartDataChannelRequest is a request to start a data channel.
-// The answer and candidate fields are populated after the offer 
-// is received.
-message StartDataChannelRequest {
-  // node_id is the ID of the node to send the data to.
-  string node_id = 1;
-  // proto is the protocol of the traffic.
-  string proto = 2;
-  // dst is the destination address of the traffic.
-  string dst = 3;
-  // port is the destination port of the traffic.
-  uint32 port = 4;
-  // answer is the answer to the offer.
-  string answer = 5;
-  // candidate is an ICE candidate.
-  string candidate = 6;
-}
-
-// DataChannelOffer is an offer for a data channel. Candidates
-// are sent after the offer is sent.
-message DataChannelOffer {
-  // offer is the offer.
-  string offer = 1;
-  // stun_servers is the list of STUN servers to use.
-  repeated string stun_servers = 2;
-  // candidate is an ICE candidate.
-  string candidate = 3;
 }
 
 // Status represents the status of a node.

@@ -175,23 +175,57 @@
         
           
           <li>
+            <a href="#v1%2fmesh_messages.proto">v1/mesh_messages.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.GetNodeRequest"><span class="badge">M</span>GetNodeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MeshNode"><span class="badge">M</span>MeshNode</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.NodeList"><span class="badge">M</span>NodeList</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.ClusterStatus"><span class="badge">E</span>ClusterStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.Feature"><span class="badge">E</span>Feature</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#v1%2fmesh.proto">v1/mesh.proto</a>
+            <ul>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.Mesh"><span class="badge">S</span>Mesh</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fnode_messages.proto">v1/node_messages.proto</a>
             <ul>
               
                 <li>
-                  <a href="#v1.DataChannelNegotiation"><span class="badge">M</span>DataChannelNegotiation</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.DataChannelOffer"><span class="badge">M</span>DataChannelOffer</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Features"><span class="badge">M</span>Features</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.GetNodeRequest"><span class="badge">M</span>GetNodeRequest</a>
                 </li>
               
                 <li>
@@ -207,18 +241,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.MeshNode"><span class="badge">M</span>MeshNode</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.NodeList"><span class="badge">M</span>NodeList</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StartDataChannelRequest"><span class="badge">M</span>StartDataChannelRequest</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
@@ -226,18 +248,6 @@
                   <a href="#v1.WireguardPeer"><span class="badge">M</span>WireguardPeer</a>
                 </li>
               
-              
-                <li>
-                  <a href="#v1.ClusterStatus"><span class="badge">E</span>ClusterStatus</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.DataChannel"><span class="badge">E</span>DataChannel</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.Feature"><span class="badge">E</span>Feature</a>
-                </li>
               
               
               
@@ -384,6 +394,48 @@
             </ul>
           </li>
         
+          
+          <li>
+            <a href="#v1%2fwebrtc_messages.proto">v1/webrtc_messages.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.DataChannelNegotiation"><span class="badge">M</span>DataChannelNegotiation</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DataChannelOffer"><span class="badge">M</span>DataChannelOffer</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StartDataChannelRequest"><span class="badge">M</span>StartDataChannelRequest</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.DataChannel"><span class="badge">E</span>DataChannel</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#v1%2fwebrtc.proto">v1/webrtc.proto</a>
+            <ul>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.WebRTC"><span class="badge">S</span>WebRTC</a>
+                </li>
+              
+            </ul>
+          </li>
+        
         <li><a href="#scalar-value-types">Scalar Value Types</a></li>
       </ul>
     </div>
@@ -391,138 +443,10 @@
     
       
       <div class="file-heading">
-        <h2 id="v1/node_messages.proto">v1/node_messages.proto</h2><a href="#title">Top</a>
+        <h2 id="v1/mesh_messages.proto">v1/mesh_messages.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
-      
-        <h3 id="v1.DataChannelNegotiation">DataChannelNegotiation</h3>
-        <p>DataChannelNegotiation is the message for communicating data channels to nodes.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>proto</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>proto is the protocol of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dst</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>dst is the destination address of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>port</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>port is the destination port of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>offer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>offer is the offer for the node to use as its local description. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>answer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>answer is the answer for the node to use as its remote description. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>candidate</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>stun_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.DataChannelOffer">DataChannelOffer</h3>
-        <p>DataChannelOffer is an offer for a data channel. Candidates</p><p>are sent after the offer is sent.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>offer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>offer is the offer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>stun_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>candidate</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.Features">Features</h3>
-        <p>Features is a list of features supported by a node.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>features</td>
-                  <td><a href="#v1.Feature">Feature</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
       
         <h3 id="v1.GetNodeRequest">GetNodeRequest</h3>
         <p>GetNodeRequest is a request to get a node.</p>
@@ -539,6 +463,296 @@
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MeshNode">MeshNode</h3>
+        <p>MeshNode is a node that has been registered with the controller.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>endpoint is the endpoint of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>raft_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>raft_port is the Raft listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>grpc_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>wireguard_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>wireguard_port is the Wireguard listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public key of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_ipv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>private_ipv4 is the private IPv4 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>private_ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>private_ipv6 is the private IPv6 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>updated_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>updated_at is the last time the node joined the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>created_at</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>created_at is the creation time for the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cluster_status</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
+                  <td></td>
+                  <td><p>cluster_status is the status of the node in the cluster. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.NodeList">NodeList</h3>
+        <p>NodeList is a list of nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>nodes</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td>repeated</td>
+                  <td><p>nodes is the list of nodes. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.ClusterStatus">ClusterStatus</h3>
+        <p>ClusterStatus is the status of the node in the cluster.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CLUSTER_STATUS_UNKNOWN</td>
+                <td>0</td>
+                <td><p>CLUSTER_STATUS_UNKNOWN is the default status.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CLUSTER_LEADER</td>
+                <td>1</td>
+                <td><p>CLUSTER_LEADER is the status for the leader node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CLUSTER_VOTER</td>
+                <td>2</td>
+                <td><p>CLUSTER_VOTER is the status for a voter node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CLUSTER_NON_VOTER</td>
+                <td>3</td>
+                <td><p>CLUSTER_NON_VOTER is the status for a non-voter node.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.Feature">Feature</h3>
+        <p>Feature is a list of features supported by a node.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>FEATURE_NONE</td>
+                <td>0</td>
+                <td><p>FEATURE_NONE is the default feature set.</p></td>
+              </tr>
+            
+              <tr>
+                <td>NODES</td>
+                <td>1</td>
+                <td><p>NODES is the feature for nodes. This is always supported.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LEADER_PROXY</td>
+                <td>2</td>
+                <td><p>LEADER_PROXY is the feature for leader proxying.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MESH_API</td>
+                <td>3</td>
+                <td><p>MESH_API is the feature for the mesh API.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PEER_DISCOVERY</td>
+                <td>4</td>
+                <td><p>PEER_DISCOVERY is the feature for peer discovery.</p></td>
+              </tr>
+            
+              <tr>
+                <td>METRICS_GRPC</td>
+                <td>5</td>
+                <td><p>METRICS_GRPC is the feature for gRPC metrics.</p></td>
+              </tr>
+            
+              <tr>
+                <td>METRICS_NODE</td>
+                <td>6</td>
+                <td><p>METRICS_NODE is the feature for node metrics.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ICE_NEGOTIATION</td>
+                <td>7</td>
+                <td><p>ICE_NEGOTIATION is the feature for ICE negotiation.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/mesh.proto">v1/mesh.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.Mesh">Mesh</h3>
+        <p>Mesh is a service that can optionally be exposed by a node. It provides methods for </p><p>interfacing with the webmesh from the outside.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetNode</td>
+                <td><a href="#v1.GetNodeRequest">GetNodeRequest</a></td>
+                <td><a href="#v1.MeshNode">MeshNode</a></td>
+                <td><p>GetNode gets a node by ID.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListNodes</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.NodeList">NodeList</a></td>
+                <td><p>ListNodes lists all nodes.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/node_messages.proto">v1/node_messages.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.Features">Features</h3>
+        <p>Features is a list of features supported by a node.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -694,176 +908,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
 
         
       
-        <h3 id="v1.MeshNode">MeshNode</h3>
-        <p>MeshNode is a node that has been registered with the controller.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>endpoint is the endpoint of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>allowed_ips</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>available_zones</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>available_zones is the list of available zones for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>private_ipv4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>private_ipv4 is the private IPv4 address of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>private_ipv6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>private_ipv6 is the private IPv6 address of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>updated_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>updated_at is the last time the node joined the cluster. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>created_at</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p>created_at is the creation time for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>cluster_status</td>
-                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
-                  <td></td>
-                  <td><p>cluster_status is the status of the node in the cluster. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.NodeList">NodeList</h3>
-        <p>NodeList is a list of nodes.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>nodes</td>
-                  <td><a href="#v1.MeshNode">MeshNode</a></td>
-                  <td>repeated</td>
-                  <td><p>nodes is the list of nodes. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StartDataChannelRequest">StartDataChannelRequest</h3>
-        <p>StartDataChannelRequest is a request to start a data channel.</p><p>The answer and candidate fields are populated after the offer </p><p>is received.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>node_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>node_id is the ID of the node to send the data to. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>proto</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>proto is the protocol of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dst</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>dst is the destination address of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>port</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>port is the destination port of the traffic. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>answer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>answer is the answer to the offer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>candidate</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.Status">Status</h3>
         <p>Status represents the status of a node.</p>
 
@@ -1005,121 +1049,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
       
 
       
-        <h3 id="v1.ClusterStatus">ClusterStatus</h3>
-        <p>ClusterStatus is the status of the node in the cluster.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>CLUSTER_STATUS_UNKNOWN</td>
-                <td>0</td>
-                <td><p>CLUSTER_STATUS_UNKNOWN is the default status.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CLUSTER_LEADER</td>
-                <td>1</td>
-                <td><p>CLUSTER_LEADER is the status for the leader node.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CLUSTER_VOTER</td>
-                <td>2</td>
-                <td><p>CLUSTER_VOTER is the status for a voter node.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CLUSTER_NON_VOTER</td>
-                <td>3</td>
-                <td><p>CLUSTER_NON_VOTER is the status for a non-voter node.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.DataChannel">DataChannel</h3>
-        <p>DataChannel are the data channels used when communicating over ICE</p><p>with a node.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>CHANNELS</td>
-                <td>0</td>
-                <td><p>CHANNELS is the data channel used for negotiating new channels.
-This is the first channel that is opened. The ID of the channel
-should be 0.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CONNECTIONS</td>
-                <td>1</td>
-                <td><p>CONNECTIONS is the data channel used for negotiating new connections.
-This is a channel that is opened for each incoming connection from a
-client. The ID should start at 0 and be incremented for each new connection.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.Feature">Feature</h3>
-        <p>Feature is a list of features supported by a node.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>FEATURE_NONE</td>
-                <td>0</td>
-                <td><p>FEATURE_NONE is the default feature set.</p></td>
-              </tr>
-            
-              <tr>
-                <td>NODES</td>
-                <td>1</td>
-                <td><p>NODES is the feature for nodes. This is always supported.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LEADER_PROXY</td>
-                <td>2</td>
-                <td><p>LEADER_PROXY is the feature for leader proxying.</p></td>
-              </tr>
-            
-              <tr>
-                <td>PEER_DISCOVERY</td>
-                <td>3</td>
-                <td><p>PEER_DISCOVERY is the feature for peer discovery.</p></td>
-              </tr>
-            
-              <tr>
-                <td>METRICS_GRPC</td>
-                <td>4</td>
-                <td><p>METRICS_GRPC is the feature for gRPC metrics.</p></td>
-              </tr>
-            
-              <tr>
-                <td>METRICS_NODE</td>
-                <td>5</td>
-                <td><p>METRICS_NODE is the feature for node metrics.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ICE_NEGOTIATION</td>
-                <td>6</td>
-                <td><p>ICE_NEGOTIATION is the feature for ICE negotiation.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
@@ -1139,7 +1068,7 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
 
       
         <h3 id="v1.Node">Node</h3>
-        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves. Some methods are only available on the currently</p><p>elected leader. This service can optionally be exposed on public interfaces to allow</p><p>external users to query the mesh state, join as an observer, or proxy/inspect traffic.</p><p>Nodes can optionally be configured to proxy requests to the leader, however, this</p><p>is not guaranteed to be available on every RPC. To prefer the leader handle the request</p><p>when a non-leader can otherwise serve it, use the "prefer-leader" header.</p>
+        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves. Some methods are only available on the currently</p><p>elected leader. This service can optionally be exposed on public interfaces to allow</p><p>external users to query the mesh state, join as an observer, or proxy/inspect traffic.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -1171,39 +1100,10 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
               </tr>
             
               <tr>
-                <td>GetNode</td>
-                <td><a href="#v1.GetNodeRequest">GetNodeRequest</a></td>
-                <td><a href="#v1.MeshNode">MeshNode</a></td>
-                <td><p>GetNode gets a node by ID.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ListNodes</td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><a href="#v1.NodeList">NodeList</a></td>
-                <td><p>ListNodes lists all nodes.</p></td>
-              </tr>
-            
-              <tr>
                 <td>GetStatus</td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.Status">Status</a></td>
                 <td><p>GetStatus gets the status of the current node.</p></td>
-              </tr>
-            
-              <tr>
-                <td>StartDataChannel</td>
-                <td><a href="#v1.StartDataChannelRequest">StartDataChannelRequest</a> stream</td>
-                <td><a href="#v1.DataChannelOffer">DataChannelOffer</a> stream</td>
-                <td><p>StartDataChannel requests a new WebRTC connection to a node.
-The client speaks first with the request containing the node ID
-and where forwarded packets should be sent. The server responds
-with an offer and STUN servers to be used to establish a WebRTC connection.
-The client should then respond with an answer to the offer that matches the
-spec of the DataChannel.CHANNELS enum value.
-
-After the offer is accepted, the stream can be used to exchange ICE candidates
-to speed up the connection process.</p></td>
               </tr>
             
           </tbody>
@@ -2400,7 +2300,7 @@ sql_query is the SQL query of the log entry. </p></td>
                   <td>address</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Address is the address of the peer. </p></td>
+                  <td><p>Address is the gRPC address of the peer. </p></td>
                 </tr>
               
                 <tr>
@@ -2450,6 +2350,251 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.RaftPeer">RaftPeer</a> stream</td>
                 <td><p>WatchPeers returns a stream of peers currently known to the mesh.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/webrtc_messages.proto">v1/webrtc_messages.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.DataChannelNegotiation">DataChannelNegotiation</h3>
+        <p>DataChannelNegotiation is the message for communicating data channels to nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>proto</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>proto is the protocol of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst is the destination address of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>port</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>port is the destination port of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>offer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>offer is the offer for the node to use as its local description. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>answer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>answer is the answer for the node to use as its remote description. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>candidate is an ICE candidate. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stun_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.DataChannelOffer">DataChannelOffer</h3>
+        <p>DataChannelOffer is an offer for a data channel. Candidates</p><p>are sent after the offer is sent.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>offer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>offer is the offer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>stun_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>candidate is an ICE candidate. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StartDataChannelRequest">StartDataChannelRequest</h3>
+        <p>StartDataChannelRequest is a request to start a data channel.</p><p>The answer and candidate fields are populated after the offer </p><p>is received.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the ID of the node to send the data to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>proto</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>proto is the protocol of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst is the destination address of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>port</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>port is the destination port of the traffic. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>answer</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>answer is the answer to the offer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>candidate is an ICE candidate. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.DataChannel">DataChannel</h3>
+        <p>DataChannel are the data channels used when communicating over ICE</p><p>with a node.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>CHANNELS</td>
+                <td>0</td>
+                <td><p>CHANNELS is the data channel used for negotiating new channels.
+This is the first channel that is opened. The ID of the channel
+should be 0.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTIONS</td>
+                <td>1</td>
+                <td><p>CONNECTIONS is the data channel used for negotiating new connections.
+This is a channel that is opened for each incoming connection from a
+client. The ID should start at 0 and be incremented for each new connection.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/webrtc.proto">v1/webrtc.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.WebRTC">WebRTC</h3>
+        <p>WebRTC is a service for negotiating WebRTC connections to nodes in the mesh.</p><p>It is typically run alongside a TURN server, however the server can be configured</p><p>to use public STUN servers instead.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>StartDataChannel</td>
+                <td><a href="#v1.StartDataChannelRequest">StartDataChannelRequest</a> stream</td>
+                <td><a href="#v1.DataChannelOffer">DataChannelOffer</a> stream</td>
+                <td><p>StartDataChannel requests a new WebRTC connection to a node.
+The client speaks first with the request containing the node ID
+and where forwarded packets should be sent. The server responds
+with an offer and STUN servers to be used to establish a WebRTC connection.
+The client should then respond with an answer to the offer that matches the
+spec of the DataChannel.CHANNELS enum value.
+
+After the offer is accepted, the stream can be used to exchange ICE candidates
+to speed up the connection process.</p></td>
               </tr>
             
           </tbody>

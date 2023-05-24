@@ -1,0 +1,79 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// DataChannel are the data channels used when communicating over ICE
+// with a node.
+enum DataChannel {
+  // CHANNELS is the data channel used for negotiating new channels.
+  // This is the first channel that is opened. The ID of the channel
+  // should be 0.
+  CHANNELS = 0;
+  // CONNECTIONS is the data channel used for negotiating new connections.
+  // This is a channel that is opened for each incoming connection from a
+  // client. The ID should start at 0 and be incremented for each new connection.
+  CONNECTIONS = 1;
+}
+
+// DataChannelNegotiation is the message for communicating data channels to nodes.
+message DataChannelNegotiation {
+  // proto is the protocol of the traffic.
+  string proto = 1;
+  // dst is the destination address of the traffic.
+  string dst = 2;
+  // port is the destination port of the traffic.
+  uint32 port = 3;
+  // offer is the offer for the node to use as its local description.
+  string offer = 4;
+  // answer is the answer for the node to use as its remote description.
+  string answer = 5;
+  // candidate is an ICE candidate.
+  string candidate = 6;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 7;
+}
+
+// StartDataChannelRequest is a request to start a data channel.
+// The answer and candidate fields are populated after the offer 
+// is received.
+message StartDataChannelRequest {
+  // node_id is the ID of the node to send the data to.
+  string node_id = 1;
+  // proto is the protocol of the traffic.
+  string proto = 2;
+  // dst is the destination address of the traffic.
+  string dst = 3;
+  // port is the destination port of the traffic.
+  uint32 port = 4;
+  // answer is the answer to the offer.
+  string answer = 5;
+  // candidate is an ICE candidate.
+  string candidate = 6;
+}
+
+// DataChannelOffer is an offer for a data channel. Candidates
+// are sent after the offer is sent.
+message DataChannelOffer {
+  // offer is the offer.
+  string offer = 1;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 2;
+  // candidate is an ICE candidate.
+  string candidate = 3;
+}

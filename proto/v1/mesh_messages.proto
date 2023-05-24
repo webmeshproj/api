@@ -1,0 +1,92 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// ClusterStatus is the status of the node in the cluster.
+enum ClusterStatus {
+    // CLUSTER_STATUS_UNKNOWN is the default status.
+    CLUSTER_STATUS_UNKNOWN = 0;
+    // CLUSTER_LEADER is the status for the leader node.
+    CLUSTER_LEADER = 1;
+    // CLUSTER_VOTER is the status for a voter node.
+    CLUSTER_VOTER = 2;
+    // CLUSTER_NON_VOTER is the status for a non-voter node.
+    CLUSTER_NON_VOTER = 3;
+}
+
+// Feature is a list of features supported by a node.
+enum Feature {
+    // FEATURE_NONE is the default feature set.
+    FEATURE_NONE = 0;
+    // NODES is the feature for nodes. This is always supported.
+    NODES = 1;
+    // LEADER_PROXY is the feature for leader proxying.
+    LEADER_PROXY = 2;
+    // MESH_API is the feature for the mesh API.
+    MESH_API = 3;
+    // PEER_DISCOVERY is the feature for peer discovery.
+    PEER_DISCOVERY = 4;
+    // METRICS_GRPC is the feature for gRPC metrics.
+    METRICS_GRPC = 5;
+    // METRICS_NODE is the feature for node metrics.
+    METRICS_NODE = 6;
+    // ICE_NEGOTIATION is the feature for ICE negotiation.
+    ICE_NEGOTIATION = 7;
+}
+
+// GetNodeRequest is a request to get a node.
+message GetNodeRequest {
+    // id is the ID of the node.
+    string id = 1;
+}
+
+// MeshNode is a node that has been registered with the controller.
+message MeshNode {
+    // id is the ID of the node.
+    string id = 1;
+    // endpoint is the endpoint of the node.
+    string endpoint = 2;
+    // raft_port is the Raft listen port of the node.
+    int32 raft_port = 3;
+    // grpc_port is the gRPC listen port of the node.
+    int32 grpc_port = 4;
+    // wireguard_port is the Wireguard listen port of the node.
+    int32 wireguard_port = 5;
+    // public_key is the public key of the node.
+    string public_key = 6;
+    // private_ipv4 is the private IPv4 address of the node.
+    string private_ipv4 = 7;
+    // private_ipv6 is the private IPv6 address of the node.
+    string private_ipv6 = 8;
+    // updated_at is the last time the node joined the cluster.
+    google.protobuf.Timestamp updated_at = 9;
+    // created_at is the creation time for the node.
+    google.protobuf.Timestamp created_at = 10;
+    // cluster_status is the status of the node in the cluster.
+    ClusterStatus cluster_status = 11;
+}
+
+// NodeList is a list of nodes.
+message NodeList {
+    // nodes is the list of nodes.
+    repeated MeshNode nodes = 1;
+}
