@@ -1205,10 +1205,10 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
                 <td><a href="#v1.DataChannelNegotiation">DataChannelNegotiation</a> stream</td>
                 <td><a href="#v1.DataChannelNegotiation">DataChannelNegotiation</a> stream</td>
                 <td><p>NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
-and a node in the cluster. The handling server will send the target node over this RPC
-an SDP offer, the destination for traffic, and STUN/TURN servers to use for the negotiation. 
-The node responds with an answer to the offer that is forwarded to the client. Afterwards,
-the stream can be used to exchange ICE candidates between the client and the node.</p></td>
+and a node in the cluster. The handling server will send the target node an SDP offer, 
+the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
+responds with an answer to the offer that is forwarded to the client. Afterwards, the
+stream can be used to exchange ICE candidates between the client and the node.</p></td>
               </tr>
             
           </tbody>
