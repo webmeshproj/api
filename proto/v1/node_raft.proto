@@ -47,6 +47,8 @@ enum SQLParameterType {
     SQL_PARAM_STRING = 5;
     // TIME is the time parameter type.
     SQL_PARAM_TIME = 6;
+    // NULL is the null parameter type.
+    SQL_PARAM_NULL = 7;
 }
 
 // SQLParameter is a parameter of a SQL query.
