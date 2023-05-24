@@ -100,18 +100,20 @@ message JoinResponse {
 
 // WireguardPeer is a peer in the Wireguard network.
 message WireguardPeer {
-    // peer_id is the ID of the peer.
-    string public_key = 1;
+    // id is the ID of the peer.
+    string id = 1;
+    // public_key is the public key of the peer.
+    string public_key = 2;
     // asn is the ASN of the peer.
-    uint32 asn = 2;
+    uint32 asn = 3;
     // endpoint is the endpoint of the peer, if applicable.
-    string endpoint = 3;
+    string endpoint = 4;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
-    string address_ipv4 = 4;
+    string address_ipv4 = 5;
     // address_ipv6 is the private IPv6 wireguard address of the peer.
-    string address_ipv6 = 5;
+    string address_ipv6 = 6;
     // allowed_ips is the list of allowed IPs for the peer.
-    repeated string allowed_ips = 6;
+    repeated string allowed_ips = 7;
 }
 
 // LeaveRequest is a request to leave the cluster.
