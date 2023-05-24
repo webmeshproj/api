@@ -148,8 +148,8 @@ message MeshNode {
     google.protobuf.Timestamp updated_at = 12;
     // created_at is the creation time for the node.
     google.protobuf.Timestamp created_at = 13;
-    // status is the status of the node.
-    ClusterStatus status = 14;
+    // cluster_status is the status of the node in the cluster.
+    ClusterStatus cluster_status = 14;
 }
 
 // NodeList is a list of nodes.
@@ -220,22 +220,24 @@ message DataChannelOffer {
 
 // Status represents the status of a node.
 message Status {
+    // id is the ID of the node.
+    string id = 1;
     // version is the version of the node.
-    string version = 1;
+    string version = 2;
     // commit is the commit of the node.
-    string commit = 2;
+    string commit = 3;
     // build_date is the build date of the node.
-    string build_date = 3;
+    string build_date = 4;
     // uptime is the uptime of the node.
-    string uptime = 4;
+    string uptime = 5;
     // started_at is the time the node started.
-    google.protobuf.Timestamp started_at = 5;
+    google.protobuf.Timestamp started_at = 6;
     // features is the list of features currently enabled.
-    repeated Feature features = 6;
-    // peers is the number of wireguard peers connected.
-    uint32 peers = 7;
-    // status is the status of the node in the cluster.
-    ClusterStatus status = 8;
+    repeated Feature features = 7;
+    // wireguard_peers is the number of wireguard peers connected.
+    uint32 wireguard_peers = 8;
+    // cluster_status is the status of the node in the cluster.
+    ClusterStatus cluster_status = 9;
     // current_leader is the current leader of the cluster.
-    string current_leader = 9;
+    string current_leader = 10;
 }

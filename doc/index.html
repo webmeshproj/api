@@ -793,10 +793,10 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
               
                 <tr>
-                  <td>status</td>
+                  <td>cluster_status</td>
                   <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
                   <td></td>
-                  <td><p>status is the status of the node. </p></td>
+                  <td><p>cluster_status is the status of the node in the cluster. </p></td>
                 </tr>
               
             </tbody>
@@ -900,6 +900,13 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
             <tbody>
               
                 <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+                <tr>
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -942,17 +949,17 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
               
                 <tr>
-                  <td>peers</td>
+                  <td>wireguard_peers</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>peers is the number of wireguard peers connected. </p></td>
+                  <td><p>wireguard_peers is the number of wireguard peers connected. </p></td>
                 </tr>
               
                 <tr>
-                  <td>status</td>
+                  <td>cluster_status</td>
                   <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
                   <td></td>
-                  <td><p>status is the status of the node in the cluster. </p></td>
+                  <td><p>cluster_status is the status of the node in the cluster. </p></td>
                 </tr>
               
                 <tr>
