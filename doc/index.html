@@ -352,6 +352,10 @@
                   <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
                 </li>
               
+                <li>
+                  <a href="#v1.SQLParameterType"><span class="badge">E</span>SQLParameterType</a>
+                </li>
+              
               
               
             </ul>
@@ -2092,6 +2096,13 @@ sql_query is the SQL query of the log entry. </p></td>
                 </tr>
               
                 <tr>
+                  <td>type</td>
+                  <td><a href="#v1.SQLParameterType">SQLParameterType</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
                   <td>int64</td>
                   <td><a href="#sint64">sint64</a></td>
                   <td></td>
@@ -2304,6 +2315,59 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td>EXECUTE</td>
                 <td>2</td>
                 <td><p>EXECUTE is the execute command type.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.SQLParameterType">SQLParameterType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>SQL_PARAM_UNKNOWN</td>
+                <td>0</td>
+                <td><p>UNKNOWN is the unknown parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_INT64</td>
+                <td>1</td>
+                <td><p>INT64 is the int64 parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_DOUBLE</td>
+                <td>2</td>
+                <td><p>DOUBLE is the double parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_BOOL</td>
+                <td>3</td>
+                <td><p>BOOL is the bool parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_BYTES</td>
+                <td>4</td>
+                <td><p>BYTES is the bytes parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_STRING</td>
+                <td>5</td>
+                <td><p>STRING is the string parameter type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SQL_PARAM_TIME</td>
+                <td>6</td>
+                <td><p>TIME is the time parameter type.</p></td>
               </tr>
             
           </tbody>

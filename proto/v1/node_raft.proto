@@ -32,17 +32,34 @@ enum RaftCommandType {
     EXECUTE = 2;
 }
 
+enum SQLParameterType {
+    // UNKNOWN is the unknown parameter type.
+    SQL_PARAM_UNKNOWN = 0;
+    // INT64 is the int64 parameter type.
+    SQL_PARAM_INT64 = 1;
+    // DOUBLE is the double parameter type.
+    SQL_PARAM_DOUBLE = 2;
+    // BOOL is the bool parameter type.
+    SQL_PARAM_BOOL = 3;
+    // BYTES is the bytes parameter type.
+    SQL_PARAM_BYTES = 4;
+    // STRING is the string parameter type.
+    SQL_PARAM_STRING = 5;
+    // TIME is the time parameter type.
+    SQL_PARAM_TIME = 6;
+}
+
 // SQLParameter is a parameter of a SQL query.
 message SQLParameter {
     // name is the name of the parameter.
     string name = 1;
-
-    sint64 int64 = 2;
-    double double = 3;
-    bool bool = 4;
-    bytes bytes = 5;
-    string str = 6;
-    google.protobuf.Timestamp time = 7;
+    SQLParameterType type = 2;
+    sint64 int64 = 3;
+    double double = 4;
+    bool bool = 5;
+    bytes bytes = 6;
+    string str = 7;
+    google.protobuf.Timestamp time = 8;
 }
 
 // SQLValues is a list of values.
