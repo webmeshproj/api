@@ -6,6 +6,7 @@ generate: gen
 
 gen: buf ## Generate proto files.
 	$(BUF) generate proto
+	pandoc -f html -t gfm -o README.md doc/index.html
 
 .PHONY: buf
 buf: $(BUF) ## Download buf locally if necessary.
