@@ -65,11 +65,11 @@ message JoinRequest {
     int32 raft_port = 3;
     // grpc_port is the gRPC listen port of the node.
     int32 grpc_port = 4;
-    // endpoint is the wireguard endpoint of the node. If left unset, the node
+    // wireguard_port is the Wireguard listen port of the node.
+    int32 wireguard_port = 5;
+    // endpoint is a routable address for the node. If left unset, the node
     // is assumed to be behind a NAT and not directly accessible.
-    string endpoint = 5;
-    // assign_asn is whether an ASN should be assigned to the node.
-    bool assign_asn = 6;
+    string endpoint = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
     bool assign_ipv4 = 7;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
@@ -87,10 +87,8 @@ message JoinResponse {
     string address_ipv4 = 1;
     // network_ipv6 is the IPv6 network assigned to the node.
     string network_ipv6 = 2;
-    // asn is the ASN of the node, if requested.
-    uint32 asn = 3;
     // peers is a list of wireguard peers to connect to.
-    repeated WireguardPeer peers = 4;
+    repeated WireguardPeer peers = 3;
 }
 
 // WireguardPeer is a peer in the Wireguard network.
@@ -99,14 +97,12 @@ message WireguardPeer {
     string id = 1;
     // public_key is the public key of the peer.
     string public_key = 2;
-    // asn is the ASN of the peer, if applicable.
-    uint32 asn = 3;
     // endpoint is the endpoint of the peer, if applicable.
-    string endpoint = 4;
+    string endpoint = 3;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
-    string address_ipv4 = 5;
+    string address_ipv4 = 4;
     // address_ipv6 is the private IPv6 wireguard address of the peer.
-    string address_ipv6 = 6;
+    string address_ipv6 = 5;
 }
 
 // LeaveRequest is a request to leave the cluster.
@@ -126,25 +122,23 @@ message MeshNode {
     // id is the ID of the node.
     string id = 1;
     // endpoint is the endpoint of the node.
-    string endpoint = 3;
+    string endpoint = 2;
     // allowed_ips is the list of allowed IPs for the node.
-    repeated string allowed_ips = 5;
+    repeated string allowed_ips = 3;
     // available_zones is the list of available zones for the node.
-    repeated string available_zones = 7;
+    repeated string available_zones = 4;
     // public_key is the public key of the node.
-    string public_key = 8;
-    // asn is the ASN of the node, if applicable.
-    uint32 asn = 9;
+    string public_key = 5;
     // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 10;
+    string private_ipv4 = 6;
     // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 11;
+    string private_ipv6 = 7;
     // updated_at is the last time the node joined the cluster.
-    google.protobuf.Timestamp updated_at = 12;
+    google.protobuf.Timestamp updated_at = 8;
     // created_at is the creation time for the node.
-    google.protobuf.Timestamp created_at = 13;
+    google.protobuf.Timestamp created_at = 9;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 14;
+    ClusterStatus cluster_status = 10;
 }
 
 // NodeList is a list of nodes.

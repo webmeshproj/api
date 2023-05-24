@@ -587,18 +587,18 @@
                 </tr>
               
                 <tr>
-                  <td>endpoint</td>
-                  <td><a href="#string">string</a></td>
+                  <td>wireguard_port</td>
+                  <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>endpoint is the wireguard endpoint of the node. If left unset, the node
-is assumed to be behind a NAT and not directly accessible. </p></td>
+                  <td><p>wireguard_port is the Wireguard listen port of the node. </p></td>
                 </tr>
               
                 <tr>
-                  <td>assign_asn</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>assign_asn is whether an ASN should be assigned to the node. </p></td>
+                  <td><p>endpoint is a routable address for the node. If left unset, the node
+is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
                 <tr>
@@ -654,13 +654,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>network_ipv6 is the IPv6 network assigned to the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>asn</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>asn is the ASN of the node, if requested. </p></td>
                 </tr>
               
                 <tr>
@@ -744,13 +737,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>public_key is the public key of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>asn</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>asn is the ASN of the node, if applicable. </p></td>
                 </tr>
               
                 <tr>
@@ -987,13 +973,6 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>public_key is the public key of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>asn</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>asn is the ASN of the peer, if applicable. </p></td>
                 </tr>
               
                 <tr>
