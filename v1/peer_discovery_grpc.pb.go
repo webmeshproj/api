@@ -35,8 +35,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PeerDiscovery_ListPeers_FullMethodName  = "/v1.PeerDiscovery/ListPeers"
-	PeerDiscovery_WatchPeers_FullMethodName = "/v1.PeerDiscovery/WatchPeers"
+	PeerDiscovery_ListPeers_FullMethodName = "/v1.PeerDiscovery/ListPeers"
 )
 
 // PeerDiscoveryClient is the client API for PeerDiscovery service.
@@ -45,8 +44,6 @@ const (
 type PeerDiscoveryClient interface {
 	// ListPeers returns a list of peers currently known to the mesh.
 	ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListRaftPeersResponse, error)
-	// WatchPeers returns a stream of peers currently known to the mesh.
-	WatchPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (PeerDiscovery_WatchPeersClient, error)
 }
 
 type peerDiscoveryClient struct {
@@ -66,46 +63,12 @@ func (c *peerDiscoveryClient) ListPeers(ctx context.Context, in *emptypb.Empty, 
 	return out, nil
 }
 
-func (c *peerDiscoveryClient) WatchPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (PeerDiscovery_WatchPeersClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PeerDiscovery_ServiceDesc.Streams[0], PeerDiscovery_WatchPeers_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &peerDiscoveryWatchPeersClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type PeerDiscovery_WatchPeersClient interface {
-	Recv() (*RaftPeer, error)
-	grpc.ClientStream
-}
-
-type peerDiscoveryWatchPeersClient struct {
-	grpc.ClientStream
-}
-
-func (x *peerDiscoveryWatchPeersClient) Recv() (*RaftPeer, error) {
-	m := new(RaftPeer)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // PeerDiscoveryServer is the server API for PeerDiscovery service.
 // All implementations must embed UnimplementedPeerDiscoveryServer
 // for forward compatibility
 type PeerDiscoveryServer interface {
 	// ListPeers returns a list of peers currently known to the mesh.
 	ListPeers(context.Context, *emptypb.Empty) (*ListRaftPeersResponse, error)
-	// WatchPeers returns a stream of peers currently known to the mesh.
-	WatchPeers(*emptypb.Empty, PeerDiscovery_WatchPeersServer) error
 	mustEmbedUnimplementedPeerDiscoveryServer()
 }
 
@@ -115,9 +78,6 @@ type UnimplementedPeerDiscoveryServer struct {
 
 func (UnimplementedPeerDiscoveryServer) ListPeers(context.Context, *emptypb.Empty) (*ListRaftPeersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPeers not implemented")
-}
-func (UnimplementedPeerDiscoveryServer) WatchPeers(*emptypb.Empty, PeerDiscovery_WatchPeersServer) error {
-	return status.Errorf(codes.Unimplemented, "method WatchPeers not implemented")
 }
 func (UnimplementedPeerDiscoveryServer) mustEmbedUnimplementedPeerDiscoveryServer() {}
 
@@ -150,27 +110,6 @@ func _PeerDiscovery_ListPeers_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PeerDiscovery_WatchPeers_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(PeerDiscoveryServer).WatchPeers(m, &peerDiscoveryWatchPeersServer{stream})
-}
-
-type PeerDiscovery_WatchPeersServer interface {
-	Send(*RaftPeer) error
-	grpc.ServerStream
-}
-
-type peerDiscoveryWatchPeersServer struct {
-	grpc.ServerStream
-}
-
-func (x *peerDiscoveryWatchPeersServer) Send(m *RaftPeer) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 // PeerDiscovery_ServiceDesc is the grpc.ServiceDesc for PeerDiscovery service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -183,12 +122,6 @@ var PeerDiscovery_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PeerDiscovery_ListPeers_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "WatchPeers",
-			Handler:       _PeerDiscovery_WatchPeers_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/peer_discovery.proto",
 }

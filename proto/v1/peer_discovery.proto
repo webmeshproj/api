@@ -49,6 +49,4 @@ message RaftPeer {
 service PeerDiscovery {
     // ListPeers returns a list of peers currently known to the mesh.
     rpc ListPeers (google.protobuf.Empty) returns (ListRaftPeersResponse) {}
-    // WatchPeers returns a stream of peers currently known to the mesh.
-    rpc WatchPeers (google.protobuf.Empty) returns (stream RaftPeer) {}
 }
