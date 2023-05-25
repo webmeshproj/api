@@ -1100,10 +1100,17 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
               
                 <tr>
-                  <td>endpoint</td>
+                  <td>primary_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>endpoint is the endpoint of the peer, if applicable. </p></td>
+                  <td><p>primary_endpoint is the primary endpoint of the peer, if applicable. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>endpoints are alternative endpoints of the peer, if applicable. </p></td>
                 </tr>
               
                 <tr>
