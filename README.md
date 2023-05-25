@@ -585,12 +585,12 @@ ListRaftPeersResponse is the response to ListPeers.
 
 RaftPeer is a peer in the Raft cluster.
 
-| Field   | Type              | Label | Description                               |
-|---------|-------------------|-------|-------------------------------------------|
-| id      | [string](#string) |       | ID is the ID of the peer.                 |
-| address | [string](#string) |       | Address is the gRPC address of the peer.  |
-| voter   | [bool](#bool)     |       | Voter is whether the peer is a voter.     |
-| leader  | [bool](#bool)     |       | Leader is whether the peer is the leader. |
+| Field   | Type              | Label | Description                                     |
+|---------|-------------------|-------|-------------------------------------------------|
+| id      | [string](#string) |       | ID is the ID of the peer.                       |
+| address | [string](#string) |       | Address is the public gRPC address of the peer. |
+| voter   | [bool](#bool)     |       | Voter is whether the peer is a voter.           |
+| leader  | [bool](#bool)     |       | Leader is whether the peer is the leader.       |
 
 ### PeerDiscovery
 
