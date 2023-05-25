@@ -78,19 +78,20 @@ GetNodeRequest is a request to get a node.
 
 MeshNode is a node that has been registered with the controller.
 
-| Field          | Type                                                    | Label | Description                                              |
-|----------------|---------------------------------------------------------|-------|----------------------------------------------------------|
-| id             | [string](#string)                                       |       | id is the ID of the node.                                |
-| endpoint       | [string](#string)                                       |       | endpoint is the endpoint of the node.                    |
-| raft_port      | [int32](#int32)                                         |       | raft_port is the Raft listen port of the node.           |
-| grpc_port      | [int32](#int32)                                         |       | grpc_port is the gRPC listen port of the node.           |
-| wireguard_port | [int32](#int32)                                         |       | wireguard_port is the Wireguard listen port of the node. |
-| public_key     | [string](#string)                                       |       | public_key is the public key of the node.                |
-| private_ipv4   | [string](#string)                                       |       | private_ipv4 is the private IPv4 address of the node.    |
-| private_ipv6   | [string](#string)                                       |       | private_ipv6 is the private IPv6 address of the node.    |
-| updated_at     | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       | updated_at is the last time the node joined the cluster. |
-| created_at     | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       | created_at is the creation time for the node.            |
-| cluster_status | [ClusterStatus](#v1.ClusterStatus)                      |       | cluster_status is the status of the node in the cluster. |
+| Field            | Type                                                    | Label    | Description                                              |
+|------------------|---------------------------------------------------------|----------|----------------------------------------------------------|
+| id               | [string](#string)                                       |          | id is the ID of the node.                                |
+| primary_endpoint | [string](#string)                                       |          | primary_endpoint is the primary_endpoint of the node.    |
+| endpoints        | [string](#string)                                       | repeated | endpoints are alternate endpoints for the node.          |
+| raft_port        | [int32](#int32)                                         |          | raft_port is the Raft listen port of the node.           |
+| grpc_port        | [int32](#int32)                                         |          | grpc_port is the gRPC listen port of the node.           |
+| wireguard_port   | [int32](#int32)                                         |          | wireguard_port is the Wireguard listen port of the node. |
+| public_key       | [string](#string)                                       |          | public_key is the public key of the node.                |
+| private_ipv4     | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.    |
+| private_ipv6     | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.    |
+| updated_at       | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | updated_at is the last time the node joined the cluster. |
+| created_at       | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | created_at is the creation time for the node.            |
+| cluster_status   | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster. |
 
 ### NodeList
 
@@ -189,17 +190,18 @@ GetStatusRequest is a request to get the status of a node.
 
 JoinRequest is a request to join the cluster.
 
-| Field            | Type              | Label | Description                                                                                                                      |
-|------------------|-------------------|-------|----------------------------------------------------------------------------------------------------------------------------------|
-| id               | [string](#string) |       | id is the ID of the node.                                                                                                        |
-| public_key       | [string](#string) |       | public_key is the public wireguard key of the node to broadcast to peers.                                                        |
-| raft_port        | [int32](#int32)   |       | raft_port is the Raft listen port of the node.                                                                                   |
-| grpc_port        | [int32](#int32)   |       | grpc_port is the gRPC listen port of the node.                                                                                   |
-| wireguard_port   | [int32](#int32)   |       | wireguard_port is the Wireguard listen port of the node.                                                                         |
-| endpoint         | [string](#string) |       | endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.  |
-| assign_ipv4      | [bool](#bool)     |       | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                           |
-| prefer_raft_ipv6 | [bool](#bool)     |       | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true. |
-| as_voter         | [bool](#bool)     |       | as_voter is whether the node should receive a vote in elections.                                                                 |
+| Field            | Type              | Label    | Description                                                                                                                             |
+|------------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id               | [string](#string) |          | id is the ID of the node.                                                                                                               |
+| public_key       | [string](#string) |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
+| raft_port        | [int32](#int32)   |          | raft_port is the Raft listen port of the node.                                                                                          |
+| grpc_port        | [int32](#int32)   |          | grpc_port is the gRPC listen port of the node.                                                                                          |
+| wireguard_port   | [int32](#int32)   |          | wireguard_port is the Wireguard listen port of the node.                                                                                |
+| primary_endpoint | [string](#string) |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
+| endpoints        | [string](#string) | repeated | endpoints are additional endpoints routable to the node. See primary_endpoint.                                                          |
+| assign_ipv4      | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
+| prefer_raft_ipv6 | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
+| as_voter         | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
 
 ### JoinResponse
 
