@@ -55,10 +55,11 @@ type NodeClient interface {
 	// GetStatus gets the status of a node in the cluster.
 	GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error)
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
-	// and a node in the cluster. The handling server will send the target node an SDP offer,
+	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
-	// responds with an answer to the offer that is forwarded to the client. Afterwards, the
-	// stream can be used to exchange ICE candidates between the client and the node.
+	// responds with an offer to be forwarded to the client. When the handler receives an answer
+	// from the client, it forwards it to the node. Once the node receives the answer, the stream
+	// can optionally be used to exchange ICE candidates.
 	NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error)
 }
 
@@ -142,10 +143,11 @@ type NodeServer interface {
 	// GetStatus gets the status of a node in the cluster.
 	GetStatus(context.Context, *GetStatusRequest) (*Status, error)
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
-	// and a node in the cluster. The handling server will send the target node an SDP offer,
+	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
-	// responds with an answer to the offer that is forwarded to the client. Afterwards, the
-	// stream can be used to exchange ICE candidates between the client and the node.
+	// responds with an offer to be forwarded to the client. When the handler receives an answer
+	// from the client, it forwards it to the node. Once the node receives the answer, the stream
+	// can optionally be used to exchange ICE candidates.
 	NegotiateDataChannel(Node_NegotiateDataChannelServer) error
 	mustEmbedUnimplementedNodeServer()
 }
