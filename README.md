@@ -122,9 +122,10 @@ Feature is a list of features supported by a node.
 | LEADER_PROXY    | 2      | LEADER_PROXY is the feature for leader proxying.          |
 | MESH_API        | 3      | MESH_API is the feature for the mesh API.                 |
 | PEER_DISCOVERY  | 4      | PEER_DISCOVERY is the feature for peer discovery.         |
-| METRICS_GRPC    | 5      | METRICS_GRPC is the feature for gRPC metrics.             |
-| METRICS_NODE    | 6      | METRICS_NODE is the feature for node metrics.             |
-| ICE_NEGOTIATION | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.       |
+| METRICS         | 5      | METRICS is the feature for exposing metrics.              |
+| ICE_NEGOTIATION | 6      | ICE_NEGOTIATION is the feature for ICE negotiation.       |
+| TURN_SERVER     | 7      | TURN_SERVER is the feature for TURN server.               |
+| MESH_DNS        | 8      | MESH_DNS is the feature for mesh DNS.                     |
 
 <div class="file-heading">
 
