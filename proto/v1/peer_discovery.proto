@@ -47,6 +47,6 @@ message RaftPeer {
 // It only makes sense to expose this service on a public address on a member of the
 // Raft cluster. It is not necessary to expose this service on every node in the mesh.
 service PeerDiscovery {
-    // ListPeers returns a list of peers currently known to the mesh.
+    // ListPeers returns a list of public peers currently known to the mesh.
     rpc ListPeers (google.protobuf.Empty) returns (ListRaftPeersResponse) {}
 }

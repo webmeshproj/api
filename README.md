@@ -614,9 +614,9 @@ member of the
 Raft cluster. It is not necessary to expose this service on every node
 in the mesh.
 
-| Method Name | Request Type                                     | Response Type                                      | Description                                                    |
-|-------------|--------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------|
-| ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of peers currently known to the mesh. |
+| Method Name | Request Type                                     | Response Type                                      | Description                                                           |
+|-------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
+| ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of public peers currently known to the mesh. |
 
 <div class="file-heading">
 

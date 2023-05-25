@@ -42,7 +42,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PeerDiscoveryClient interface {
-	// ListPeers returns a list of peers currently known to the mesh.
+	// ListPeers returns a list of public peers currently known to the mesh.
 	ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListRaftPeersResponse, error)
 }
 
@@ -67,7 +67,7 @@ func (c *peerDiscoveryClient) ListPeers(ctx context.Context, in *emptypb.Empty, 
 // All implementations must embed UnimplementedPeerDiscoveryServer
 // for forward compatibility
 type PeerDiscoveryServer interface {
-	// ListPeers returns a list of peers currently known to the mesh.
+	// ListPeers returns a list of public peers currently known to the mesh.
 	ListPeers(context.Context, *emptypb.Empty) (*ListRaftPeersResponse, error)
 	mustEmbedUnimplementedPeerDiscoveryServer()
 }
