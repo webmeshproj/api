@@ -650,7 +650,7 @@ or not. </p></td>
 
       
         <h3 id="v1.Admin">Admin</h3>
-        <p>Admin is the service that provides cluster admin operations. Most methods </p><p>require the leader to be contacted.</p>
+        <p>Admin is the service that provides cluster admin operations. Most methods </p><p>require the leader to be contacted.</p><p>Raft ACL Operations</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -1367,6 +1367,13 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>address_ipv6 is the private IPv6 wireguard address of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>allowed_ips</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
                 </tr>
               
             </tbody>

@@ -132,6 +132,8 @@ methods
 
 require the leader to be contacted.
 
+Raft ACL Operations
+
 | Method Name   | Request Type                                     | Response Type                                    | Description                                         |
 |---------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|
 | PutRaftACL    | [.RaftACL](#RaftACL)                             | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRaftACL creates or updates an ACL.               |
@@ -319,13 +321,14 @@ Status represents the status of a node.
 
 WireguardPeer is a peer in the Wireguard network.
 
-| Field           | Type              | Label | Description                                                        |
-|-----------------|-------------------|-------|--------------------------------------------------------------------|
-| id              | [string](#string) |       | id is the ID of the peer.                                          |
-| public_key      | [string](#string) |       | public_key is the public key of the peer.                          |
-| public_endpoint | [string](#string) |       | public_endpoint is the public endpoint of the peer, if applicable. |
-| address_ipv4    | [string](#string) |       | address_ipv4 is the private IPv4 wireguard address of the peer.    |
-| address_ipv6    | [string](#string) |       | address_ipv6 is the private IPv6 wireguard address of the peer.    |
+| Field           | Type              | Label    | Description                                                        |
+|-----------------|-------------------|----------|--------------------------------------------------------------------|
+| id              | [string](#string) |          | id is the ID of the peer.                                          |
+| public_key      | [string](#string) |          | public_key is the public key of the peer.                          |
+| public_endpoint | [string](#string) |          | public_endpoint is the public endpoint of the peer, if applicable. |
+| address_ipv4    | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.    |
+| address_ipv6    | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.    |
+| allowed_ips     | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.               |
 
 ### DataChannel
 

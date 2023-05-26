@@ -67,9 +67,11 @@ message WireguardPeer {
     // public_endpoint is the public endpoint of the peer, if applicable.
     string public_endpoint = 3;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
-    string address_ipv4 = 5;
+    string address_ipv4 = 4;
     // address_ipv6 is the private IPv6 wireguard address of the peer.
-    string address_ipv6 = 6;
+    string address_ipv6 = 5;
+    // allowed_ips is the list of allowed IPs for the peer.
+    repeated string allowed_ips = 6;
 }
 
 // LeaveRequest is a request to leave the cluster.

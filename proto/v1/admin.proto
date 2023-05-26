@@ -25,6 +25,8 @@ import "v1/admin_messages.proto";
 // Admin is the service that provides cluster admin operations. Most methods 
 // require the leader to be contacted.
 service Admin {
+    // Raft ACL Operations
+
     // PutRaftACL creates or updates an ACL.
     rpc PutRaftACL(RaftACL) returns (google.protobuf.Empty) {}
     // DeleteRaftACL deletes an ACL by name.
