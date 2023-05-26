@@ -112,10 +112,10 @@ RaftACLList is a list of RaftACLs.
 
 ACLAction is the action of an ACL.
 
-| Name           | Number | Description                       |
-|----------------|--------|-----------------------------------|
-| ACLActionDeny  | 0      | ACLActionDeny denies the action.  |
-| ACLActionAllow | 1      | ACLActionAllow allows the action. |
+| Name  | Number | Description              |
+|-------|--------|--------------------------|
+| DENY  | 0      | DENY denies the action.  |
+| ALLOW | 1      | ALLOW allows the action. |
 
 <div class="file-heading">
 

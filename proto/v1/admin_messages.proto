@@ -20,10 +20,10 @@ import "google/protobuf/timestamp.proto";
 
 // ACLAction is the action of an ACL.
 enum ACLAction {
-    // ACLActionDeny denies the action.
-    ACLActionDeny = 0;
-    // ACLActionAllow allows the action.
-    ACLActionAllow = 1;
+    // DENY denies the action.
+    DENY = 0;
+    // ALLOW allows the action.
+    ALLOW = 1;
 }
 
 // RaftACL is an ACL that applies to Raft nodes.
