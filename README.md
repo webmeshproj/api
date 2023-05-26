@@ -4,6 +4,14 @@
 
 <div id="toc-container">
 
+- [v1/admin_messages.proto](#v1%2fadmin_messages.proto)
+  - [<span class="badge">M</span>DeleteRaftACLRequest](#.DeleteRaftACLRequest)
+  - [<span class="badge">M</span>GetRaftACLRequest](#.GetRaftACLRequest)
+  - [<span class="badge">M</span>RaftACL](#.RaftACL)
+  - [<span class="badge">M</span>RaftACLList](#.RaftACLList)
+  - [<span class="badge">E</span>ACLAction](#.ACLAction)
+- [v1/admin.proto](#v1%2fadmin.proto)
+  - [<span class="badge">S</span>Admin](#v1.Admin)
 - [v1/mesh_messages.proto](#v1%2fmesh_messages.proto)
   - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
   - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
@@ -57,6 +65,79 @@
 - [Scalar Value Types](#scalar-value-types)
 
 </div>
+
+<div class="file-heading">
+
+## v1/admin_messages.proto
+
+[Top](#title)
+
+</div>
+
+### DeleteRaftACLRequest
+
+DeleteRaftACLRequest is a request to delete a RaftACL.
+
+| Field | Type              | Label | Description                  |
+|-------|-------------------|-------|------------------------------|
+| name  | [string](#string) |       | name is the name of the ACL. |
+
+### GetRaftACLRequest
+
+GetRaftACLRequest is a request to get a RaftACL.
+
+| Field | Type              | Label | Description                  |
+|-------|-------------------|-------|------------------------------|
+| name  | [string](#string) |       | name is the name of the ACL. |
+
+### RaftACL
+
+RaftACL is an ACL that applies to Raft nodes.
+
+| Field    | Type                    | Label    | Description                                                                                                           |
+|----------|-------------------------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| name     | [string](#string)       |          | name is the name of the ACL.                                                                                          |
+| patterns | [string](#string)       | repeated | patterns is a list of node patterns this ACL applies to.                                                              |
+| action   | [ACLAction](#ACLAction) |          | action is the action of this ACL. For RaftACLs This is if the matching nodes are allowed to vote in elections or not. |
+
+### RaftACLList
+
+RaftACLList is a list of RaftACLs.
+
+| Field | Type                | Label    | Description                  |
+|-------|---------------------|----------|------------------------------|
+| items | [RaftACL](#RaftACL) | repeated | items is a list of RaftACLs. |
+
+### ACLAction
+
+ACLAction is the action of an ACL.
+
+| Name           | Number | Description                       |
+|----------------|--------|-----------------------------------|
+| ACLActionDeny  | 0      | ACLActionDeny denies the action.  |
+| ACLActionAllow | 1      | ACLActionAllow allows the action. |
+
+<div class="file-heading">
+
+## v1/admin.proto
+
+[Top](#title)
+
+</div>
+
+### Admin
+
+Admin is the service that provides cluster admin operations. Most
+methods
+
+require the leader to be contacted.
+
+| Method Name   | Request Type                                     | Response Type                                    | Description                                         |
+|---------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|
+| PutRaftACL    | [.RaftACL](#RaftACL)                             | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRaftACL creates or updates an ACL.               |
+| DeleteRaftACL | [.DeleteRaftACLRequest](#DeleteRaftACLRequest)   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRaftACL deletes an ACL by name.               |
+| GetRaftACL    | [.GetRaftACLRequest](#GetRaftACLRequest)         | [.RaftACL](#RaftACL)                             | GetRaftACL returns an ACL by name.                  |
+| ListRaftACLs  | [.google.protobuf.Empty](#google.protobuf.Empty) | [.RaftACLList](#RaftACLList)                     | ListRaftACLs returns the ACLs for the Raft cluster. |
 
 <div class="file-heading">
 
@@ -141,13 +222,11 @@ Feature is a list of features supported by a node.
 Mesh is a service that can optionally be exposed by a node. It provides
 methods for
 
-interfacing with the webmesh from the outside.
+interfacing with the webmesh from the outside. Some methods are only
+available on the
 
-Nodes can optionally be configured to proxy requests to the leader. To
-prefer the leader
-
-handle the request when a non-leader can otherwise serve it, use the
-"prefer-leader" header.
+leader. Nodes can enable the leader proxy to expose the leader's Mesh
+service.
 
 | Method Name | Request Type                                     | Response Type            | Description                |
 |-------------|--------------------------------------------------|--------------------------|----------------------------|

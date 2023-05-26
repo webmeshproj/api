@@ -1,0 +1,36 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+
+import "v1/admin_messages.proto";
+
+// Admin is the service that provides cluster admin operations. Most methods 
+// require the leader to be contacted.
+service Admin {
+    // PutRaftACL creates or updates an ACL.
+    rpc PutRaftACL(RaftACL) returns (google.protobuf.Empty) {}
+    // DeleteRaftACL deletes an ACL by name.
+    rpc DeleteRaftACL(DeleteRaftACLRequest) returns (google.protobuf.Empty) {}
+    // GetRaftACL returns an ACL by name.
+    rpc GetRaftACL(GetRaftACLRequest) returns (RaftACL) {}
+    // ListRaftACLs returns the ACLs for the Raft cluster.
+    rpc ListRaftACLs(google.protobuf.Empty) returns (RaftACLList) {}
+}

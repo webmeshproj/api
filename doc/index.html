@@ -175,6 +175,52 @@
         
           
           <li>
+            <a href="#v1%2fadmin_messages.proto">v1/admin_messages.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#.DeleteRaftACLRequest"><span class="badge">M</span>DeleteRaftACLRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#.GetRaftACLRequest"><span class="badge">M</span>GetRaftACLRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#.RaftACL"><span class="badge">M</span>RaftACL</a>
+                </li>
+              
+                <li>
+                  <a href="#.RaftACLList"><span class="badge">M</span>RaftACLList</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#.ACLAction"><span class="badge">E</span>ACLAction</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#v1%2fadmin.proto">v1/admin.proto</a>
+            <ul>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.Admin"><span class="badge">S</span>Admin</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fmesh_messages.proto">v1/mesh_messages.proto</a>
             <ul>
               
@@ -440,6 +486,209 @@
       </ul>
     </div>
 
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/admin_messages.proto">v1/admin_messages.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id=".DeleteRaftACLRequest">DeleteRaftACLRequest</h3>
+        <p>DeleteRaftACLRequest is a request to delete a RaftACL.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the ACL. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id=".GetRaftACLRequest">GetRaftACLRequest</h3>
+        <p>GetRaftACLRequest is a request to get a RaftACL.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the ACL. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id=".RaftACL">RaftACL</h3>
+        <p>RaftACL is an ACL that applies to Raft nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the ACL. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>patterns</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>patterns is a list of node patterns this ACL applies to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#ACLAction">ACLAction</a></td>
+                  <td></td>
+                  <td><p>action is the action of this ACL. For RaftACLs This is 
+if the matching nodes are allowed to vote in elections 
+or not. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id=".RaftACLList">RaftACLList</h3>
+        <p>RaftACLList is a list of RaftACLs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#RaftACL">RaftACL</a></td>
+                  <td>repeated</td>
+                  <td><p>items is a list of RaftACLs. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id=".ACLAction">ACLAction</h3>
+        <p>ACLAction is the action of an ACL.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACLActionDeny</td>
+                <td>0</td>
+                <td><p>ACLActionDeny denies the action.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACLActionAllow</td>
+                <td>1</td>
+                <td><p>ACLActionAllow allows the action.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/admin.proto">v1/admin.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.Admin">Admin</h3>
+        <p>Admin is the service that provides cluster admin operations. Most methods </p><p>require the leader to be contacted.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PutRaftACL</td>
+                <td><a href="#RaftACL">.RaftACL</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>PutRaftACL creates or updates an ACL.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteRaftACL</td>
+                <td><a href="#DeleteRaftACLRequest">.DeleteRaftACLRequest</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>DeleteRaftACL deletes an ACL by name.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetRaftACL</td>
+                <td><a href="#GetRaftACLRequest">.GetRaftACLRequest</a></td>
+                <td><a href="#RaftACL">.RaftACL</a></td>
+                <td><p>GetRaftACL returns an ACL by name.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListRaftACLs</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#RaftACLList">.RaftACLList</a></td>
+                <td><p>ListRaftACLs returns the ACLs for the Raft cluster.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
     
       
       <div class="file-heading">
@@ -718,7 +967,7 @@
 
       
         <h3 id="v1.Mesh">Mesh</h3>
-        <p>Mesh is a service that can optionally be exposed by a node. It provides methods for </p><p>interfacing with the webmesh from the outside.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p>
+        <p>Mesh is a service that can optionally be exposed by a node. It provides methods for </p><p>interfacing with the webmesh from the outside. Some methods are only available on the</p><p>leader. Nodes can enable the leader proxy to expose the leader's Mesh service.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>

@@ -23,10 +23,8 @@ import "google/protobuf/empty.proto";
 import "v1/mesh_messages.proto";
 
 // Mesh is a service that can optionally be exposed by a node. It provides methods for 
-// interfacing with the webmesh from the outside.
-// 
-// Nodes can optionally be configured to proxy requests to the leader. To prefer the leader 
-// handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.
+// interfacing with the webmesh from the outside. Some methods are only available on the
+// leader. Nodes can enable the leader proxy to expose the leader's Mesh service.
 service Mesh {
     // GetNode gets a node by ID.
     rpc GetNode(GetNodeRequest) returns (MeshNode) {}
