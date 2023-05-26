@@ -159,20 +159,19 @@ GetNodeRequest is a request to get a node.
 
 MeshNode is a node that has been registered with the controller.
 
-| Field            | Type                                                    | Label    | Description                                              |
-|------------------|---------------------------------------------------------|----------|----------------------------------------------------------|
-| id               | [string](#string)                                       |          | id is the ID of the node.                                |
-| primary_endpoint | [string](#string)                                       |          | primary_endpoint is the primary_endpoint of the node.    |
-| endpoints        | [string](#string)                                       | repeated | endpoints are alternate endpoints for the node.          |
-| raft_port        | [int32](#int32)                                         |          | raft_port is the Raft listen port of the node.           |
-| grpc_port        | [int32](#int32)                                         |          | grpc_port is the gRPC listen port of the node.           |
-| wireguard_port   | [int32](#int32)                                         |          | wireguard_port is the Wireguard listen port of the node. |
-| public_key       | [string](#string)                                       |          | public_key is the public key of the node.                |
-| private_ipv4     | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.    |
-| private_ipv6     | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.    |
-| updated_at       | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | updated_at is the last time the node joined the cluster. |
-| created_at       | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | created_at is the creation time for the node.            |
-| cluster_status   | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster. |
+| Field           | Type                                                    | Label | Description                                              |
+|-----------------|---------------------------------------------------------|-------|----------------------------------------------------------|
+| id              | [string](#string)                                       |       | id is the ID of the node.                                |
+| public_endpoint | [string](#string)                                       |       | public_endpoint is the primary_endpoint of the node.     |
+| raft_port       | [int32](#int32)                                         |       | raft_port is the Raft listen port of the node.           |
+| grpc_port       | [int32](#int32)                                         |       | grpc_port is the gRPC listen port of the node.           |
+| wireguard_port  | [int32](#int32)                                         |       | wireguard_port is the Wireguard listen port of the node. |
+| public_key      | [string](#string)                                       |       | public_key is the public key of the node.                |
+| private_ipv4    | [string](#string)                                       |       | private_ipv4 is the private IPv4 address of the node.    |
+| private_ipv6    | [string](#string)                                       |       | private_ipv6 is the private IPv6 address of the node.    |
+| updated_at      | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       | updated_at is the last time the node joined the cluster. |
+| created_at      | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       | created_at is the creation time for the node.            |
+| cluster_status  | [ClusterStatus](#v1.ClusterStatus)                      |       | cluster_status is the status of the node in the cluster. |
 
 ### NodeList
 
