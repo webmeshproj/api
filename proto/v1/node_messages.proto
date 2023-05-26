@@ -34,18 +34,16 @@ message JoinRequest {
     int32 grpc_port = 4;
     // wireguard_port is the Wireguard listen port of the node.
     int32 wireguard_port = 5;
-    // primary_endpoint is a routable address for the node. If left unset, 
+    // public_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 6;
-    // endpoints are additional endpoints routable to the node. See primary_endpoint.
-    repeated string endpoints = 7;
+    string public_endpoint = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 8;
+    bool assign_ipv4 = 7;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 9;
+    bool prefer_raft_ipv6 = 8;
     // as_voter is whether the node should receive a vote in elections.
-    bool as_voter = 10;
+    bool as_voter = 9;
 }
 
 // JoinResponse is a response to a join request.

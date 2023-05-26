@@ -33,11 +33,11 @@ service Node {
     // Join is used to join a node to the mesh. The joining node will be added to the mesh 
     // as an observer, and will be able to query the mesh state, but will not be able to vote 
     // in elections. To join as a voter pass the as_voter flag.
-    rpc Join (JoinRequest) returns (JoinResponse) {}
+    rpc Join(JoinRequest) returns (JoinResponse) {}
 
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.
-    rpc Leave (LeaveRequest) returns (google.protobuf.Empty) {}
+    rpc Leave(LeaveRequest) returns (google.protobuf.Empty) {}
 
     // GetStatus gets the status of a node in the cluster.
     rpc GetStatus(GetStatusRequest) returns (Status) {}
