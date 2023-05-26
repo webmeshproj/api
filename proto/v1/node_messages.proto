@@ -64,10 +64,8 @@ message WireguardPeer {
     string id = 1;
     // public_key is the public key of the peer.
     string public_key = 2;
-    // primary_endpoint is the primary endpoint of the peer, if applicable.
-    string primary_endpoint = 3;
-    // endpoints are alternative endpoints of the peer, if applicable.
-    repeated string endpoints = 4;
+    // public_endpoint is the public endpoint of the peer, if applicable.
+    string public_endpoint = 3;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
     string address_ipv4 = 5;
     // address_ipv6 is the private IPv6 wireguard address of the peer.

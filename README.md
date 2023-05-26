@@ -319,14 +319,13 @@ Status represents the status of a node.
 
 WireguardPeer is a peer in the Wireguard network.
 
-| Field            | Type              | Label    | Description                                                          |
-|------------------|-------------------|----------|----------------------------------------------------------------------|
-| id               | [string](#string) |          | id is the ID of the peer.                                            |
-| public_key       | [string](#string) |          | public_key is the public key of the peer.                            |
-| primary_endpoint | [string](#string) |          | primary_endpoint is the primary endpoint of the peer, if applicable. |
-| endpoints        | [string](#string) | repeated | endpoints are alternative endpoints of the peer, if applicable.      |
-| address_ipv4     | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.      |
-| address_ipv6     | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.      |
+| Field           | Type              | Label | Description                                                        |
+|-----------------|-------------------|-------|--------------------------------------------------------------------|
+| id              | [string](#string) |       | id is the ID of the peer.                                          |
+| public_key      | [string](#string) |       | public_key is the public key of the peer.                          |
+| public_endpoint | [string](#string) |       | public_endpoint is the public endpoint of the peer, if applicable. |
+| address_ipv4    | [string](#string) |       | address_ipv4 is the private IPv4 wireguard address of the peer.    |
+| address_ipv6    | [string](#string) |       | address_ipv6 is the private IPv6 wireguard address of the peer.    |
 
 ### DataChannel
 
