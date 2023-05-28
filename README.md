@@ -14,6 +14,8 @@
   - [<span class="badge">S</span>Admin](#v1.Admin)
 - [v1/mesh_messages.proto](#v1%2fmesh_messages.proto)
   - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
+  - [<span class="badge">M</span>MeshEdge](#v1.MeshEdge)
+  - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
   - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
   - [<span class="badge">M</span>NodeList](#v1.NodeList)
   - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
@@ -157,6 +159,26 @@ GetNodeRequest is a request to get a node.
 |-------|-------------------|-------|---------------------------|
 | id    | [string](#string) |       | id is the ID of the node. |
 
+### MeshEdge
+
+MeshEdge is an edge between two nodes.
+
+| Field  | Type              | Label | Description                       |
+|--------|-------------------|-------|-----------------------------------|
+| source | [string](#string) |       | source is the source node.        |
+| target | [string](#string) |       | target is the target node.        |
+| weight | [int32](#int32)   |       | weight is the weight of the edge. |
+
+### MeshGraph
+
+MeshGraph is a graph of nodes.
+
+| Field | Type                     | Label    | Description                                 |
+|-------|--------------------------|----------|---------------------------------------------|
+| nodes | [string](#string)        | repeated | nodes is the list of nodes.                 |
+| edges | [MeshEdge](#v1.MeshEdge) | repeated | edges is the list of edges.                 |
+| dot   | [string](#string)        |          | dot is the DOT representation of the graph. |
+
 ### MeshNode
 
 MeshNode is a node that has been registered with the controller.
@@ -229,10 +251,11 @@ available on the
 leader. Nodes can enable the leader proxy to expose the leader's Mesh
 service.
 
-| Method Name | Request Type                                     | Response Type            | Description                |
-|-------------|--------------------------------------------------|--------------------------|----------------------------|
-| GetNode     | [GetNodeRequest](#v1.GetNodeRequest)             | [MeshNode](#v1.MeshNode) | GetNode gets a node by ID. |
-| ListNodes   | [.google.protobuf.Empty](#google.protobuf.Empty) | [NodeList](#v1.NodeList) | ListNodes lists all nodes. |
+| Method Name  | Request Type                                     | Response Type              | Description                                                                                                |
+|--------------|--------------------------------------------------|----------------------------|------------------------------------------------------------------------------------------------------------|
+| GetNode      | [GetNodeRequest](#v1.GetNodeRequest)             | [MeshNode](#v1.MeshNode)   | GetNode gets a node by ID.                                                                                 |
+| ListNodes    | [.google.protobuf.Empty](#google.protobuf.Empty) | [NodeList](#v1.NodeList)   | ListNodes lists all nodes.                                                                                 |
+| GetMeshGraph | [.google.protobuf.Empty](#google.protobuf.Empty) | [MeshGraph](#v1.MeshGraph) | GetMeshGraph fetches the mesh graph. It returns a list of nodes, edges, and a rendering in the dot format. |
 
 <div class="file-heading">
 

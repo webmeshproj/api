@@ -92,3 +92,23 @@ message NodeList {
     // nodes is the list of nodes.
     repeated MeshNode nodes = 1;
 }
+
+// MeshEdge is an edge between two nodes.
+message MeshEdge {
+    // source is the source node.
+    string source = 1;
+    // target is the target node.
+    string target = 2;
+    // weight is the weight of the edge.
+    int32 weight = 3;
+}
+
+// MeshGraph is a graph of nodes.
+message MeshGraph {
+    // nodes is the list of nodes.
+    repeated string nodes = 1;
+    // edges is the list of edges.
+    repeated MeshEdge edges = 2;
+    // dot is the DOT representation of the graph.
+    string dot = 3;
+}

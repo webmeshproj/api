@@ -229,6 +229,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.MeshEdge"><span class="badge">M</span>MeshEdge</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MeshGraph"><span class="badge">M</span>MeshGraph</a>
+                </li>
+              
+                <li>
                   <a href="#v1.MeshNode"><span class="badge">M</span>MeshNode</a>
                 </li>
               
@@ -721,6 +729,82 @@ or not. </p></td>
 
         
       
+        <h3 id="v1.MeshEdge">MeshEdge</h3>
+        <p>MeshEdge is an edge between two nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>source</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>source is the source node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>target</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>target is the target node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>weight</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>weight is the weight of the edge. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MeshGraph">MeshGraph</h3>
+        <p>MeshGraph is a graph of nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>nodes is the list of nodes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>edges</td>
+                  <td><a href="#v1.MeshEdge">MeshEdge</a></td>
+                  <td>repeated</td>
+                  <td><p>edges is the list of edges. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dot</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dot is the DOT representation of the graph. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.MeshNode">MeshNode</h3>
         <p>MeshNode is a node that has been registered with the controller.</p>
 
@@ -979,6 +1063,14 @@ or not. </p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.NodeList">NodeList</a></td>
                 <td><p>ListNodes lists all nodes.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetMeshGraph</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.MeshGraph">MeshGraph</a></td>
+                <td><p>GetMeshGraph fetches the mesh graph. It returns a list of nodes,
+edges, and a rendering in the dot format.</p></td>
               </tr>
             
           </tbody>

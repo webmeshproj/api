@@ -31,4 +31,8 @@ service Mesh {
 
     // ListNodes lists all nodes.
     rpc ListNodes(google.protobuf.Empty) returns (NodeList) {}
+
+    // GetMeshGraph fetches the mesh graph. It returns a list of nodes,
+    // edges, and a rendering in the dot format.
+    rpc GetMeshGraph(google.protobuf.Empty) returns (MeshGraph) {}
 }

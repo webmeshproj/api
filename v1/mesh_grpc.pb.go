@@ -35,8 +35,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Mesh_GetNode_FullMethodName   = "/v1.Mesh/GetNode"
-	Mesh_ListNodes_FullMethodName = "/v1.Mesh/ListNodes"
+	Mesh_GetNode_FullMethodName      = "/v1.Mesh/GetNode"
+	Mesh_ListNodes_FullMethodName    = "/v1.Mesh/ListNodes"
+	Mesh_GetMeshGraph_FullMethodName = "/v1.Mesh/GetMeshGraph"
 )
 
 // MeshClient is the client API for Mesh service.
@@ -47,6 +48,9 @@ type MeshClient interface {
 	GetNode(ctx context.Context, in *GetNodeRequest, opts ...grpc.CallOption) (*MeshNode, error)
 	// ListNodes lists all nodes.
 	ListNodes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NodeList, error)
+	// GetMeshGraph fetches the mesh graph. It returns a list of nodes,
+	// edges, and a rendering in the dot format.
+	GetMeshGraph(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MeshGraph, error)
 }
 
 type meshClient struct {
@@ -75,6 +79,15 @@ func (c *meshClient) ListNodes(ctx context.Context, in *emptypb.Empty, opts ...g
 	return out, nil
 }
 
+func (c *meshClient) GetMeshGraph(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MeshGraph, error) {
+	out := new(MeshGraph)
+	err := c.cc.Invoke(ctx, Mesh_GetMeshGraph_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MeshServer is the server API for Mesh service.
 // All implementations must embed UnimplementedMeshServer
 // for forward compatibility
@@ -83,6 +96,9 @@ type MeshServer interface {
 	GetNode(context.Context, *GetNodeRequest) (*MeshNode, error)
 	// ListNodes lists all nodes.
 	ListNodes(context.Context, *emptypb.Empty) (*NodeList, error)
+	// GetMeshGraph fetches the mesh graph. It returns a list of nodes,
+	// edges, and a rendering in the dot format.
+	GetMeshGraph(context.Context, *emptypb.Empty) (*MeshGraph, error)
 	mustEmbedUnimplementedMeshServer()
 }
 
@@ -95,6 +111,9 @@ func (UnimplementedMeshServer) GetNode(context.Context, *GetNodeRequest) (*MeshN
 }
 func (UnimplementedMeshServer) ListNodes(context.Context, *emptypb.Empty) (*NodeList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNodes not implemented")
+}
+func (UnimplementedMeshServer) GetMeshGraph(context.Context, *emptypb.Empty) (*MeshGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMeshGraph not implemented")
 }
 func (UnimplementedMeshServer) mustEmbedUnimplementedMeshServer() {}
 
@@ -145,6 +164,24 @@ func _Mesh_ListNodes_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Mesh_GetMeshGraph_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MeshServer).GetMeshGraph(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Mesh_GetMeshGraph_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MeshServer).GetMeshGraph(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Mesh_ServiceDesc is the grpc.ServiceDesc for Mesh service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -159,6 +196,10 @@ var Mesh_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListNodes",
 			Handler:    _Mesh_ListNodes_Handler,
+		},
+		{
+			MethodName: "GetMeshGraph",
+			Handler:    _Mesh_GetMeshGraph_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
