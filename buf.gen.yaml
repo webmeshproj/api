@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: gitlab.com/webmesh/api/webmesh/v1
+    default: github.com/webmeshproj/api/webmesh/v1
 plugins:
   - plugin: buf.build/protocolbuffers/go
     out: .

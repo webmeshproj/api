@@ -1,4 +1,4 @@
-module gitlab.com/webmesh/api
+module github.com/webmeshproj/api
 
 go 1.20
 
