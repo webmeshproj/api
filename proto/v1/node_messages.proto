@@ -34,16 +34,20 @@ message JoinRequest {
     int32 grpc_port = 4;
     // wireguard_port is the Wireguard listen port of the node.
     int32 wireguard_port = 5;
-    // public_endpoint is a routable address for the node. If left unset, 
+    // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string public_endpoint = 6;
+    string primary_endpoint = 6;
+    // additional_endpoints is a list of additional endpoints for the node.
+    repeated string additional_endpoints = 7;
+    // zone_awareness_id is the zone awareness ID of the node.
+    string zone_awareness_id = 8;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 7;
+    bool assign_ipv4 = 9;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 8;
+    bool prefer_raft_ipv6 = 10;
     // as_voter is whether the node should receive a vote in elections.
-    bool as_voter = 9;
+    bool as_voter = 11;
 }
 
 // JoinResponse is a response to a join request.
@@ -64,14 +68,18 @@ message WireguardPeer {
     string id = 1;
     // public_key is the public key of the peer.
     string public_key = 2;
-    // public_endpoint is the public endpoint of the peer, if applicable.
-    string public_endpoint = 3;
+    // primary_endpoint is the preferred endpoint of the peer, if applicable.
+    string primary_endpoint = 3;
+    // additonal_endpoints is a list of additional endpoints for the peer.
+    repeated string additional_endpoints = 4;
+    // zone_awareness_id is the zone awareness ID of the peer.
+    string zone_awareness_id = 5;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
-    string address_ipv4 = 4;
+    string address_ipv4 = 6;
     // address_ipv6 is the private IPv6 wireguard address of the peer.
-    string address_ipv6 = 5;
+    string address_ipv6 = 7;
     // allowed_ips is the list of allowed IPs for the peer.
-    repeated string allowed_ips = 6;
+    repeated string allowed_ips = 8;
 }
 
 // LeaveRequest is a request to leave the cluster.

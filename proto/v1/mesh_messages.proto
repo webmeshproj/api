@@ -65,26 +65,30 @@ message GetNodeRequest {
 message MeshNode {
     // id is the ID of the node.
     string id = 1;
-    // public_endpoint is the primary_endpoint of the node.
-    string public_endpoint = 2;
+    // primary_endpoint is the primary endpoint of the node.
+    string primary_endpoint = 2;
+    // additional_endpoints is a list of additional endpoints of the node.
+    repeated string additional_endpoints = 3;
+    // zone_awareness_id is the zone awareness ID of the node.
+    string zone_awareness_id = 4;
     // raft_port is the Raft listen port of the node.
-    int32 raft_port = 3;
+    int32 raft_port = 5;
     // grpc_port is the gRPC listen port of the node.
-    int32 grpc_port = 4;
+    int32 grpc_port = 6;
     // wireguard_port is the Wireguard listen port of the node.
-    int32 wireguard_port = 5;
+    int32 wireguard_port = 7;
     // public_key is the public key of the node.
-    string public_key = 6;
+    string public_key = 8;
     // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 7;
+    string private_ipv4 = 9;
     // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 8;
+    string private_ipv6 = 10;
     // updated_at is the last time the node joined the cluster.
-    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp updated_at = 11;
     // created_at is the creation time for the node.
-    google.protobuf.Timestamp created_at = 10;
+    google.protobuf.Timestamp created_at = 12;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 11;
+    ClusterStatus cluster_status = 13;
 }
 
 // NodeList is a list of nodes.
