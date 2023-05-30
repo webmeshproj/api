@@ -303,7 +303,7 @@
                 </li>
               
                 <li>
-                  <a href="#v1.WireguardPeer"><span class="badge">M</span>WireguardPeer</a>
+                  <a href="#v1.WireGuardPeer"><span class="badge">M</span>WireGuardPeer</a>
                 </li>
               
               
@@ -1307,7 +1307,7 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
               
                 <tr>
                   <td>peers</td>
-                  <td><a href="#v1.WireguardPeer">WireguardPeer</a></td>
+                  <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
                   <td>repeated</td>
                   <td><p>peers is a list of wireguard peers to connect to. </p></td>
                 </tr>
@@ -1430,8 +1430,8 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
 
         
       
-        <h3 id="v1.WireguardPeer">WireguardPeer</h3>
-        <p>WireguardPeer is a peer in the Wireguard network.</p>
+        <h3 id="v1.WireGuardPeer">WireGuardPeer</h3>
+        <p>WireGuardPeer is a peer in the Wireguard network.</p>
 
         
           <table class="field-table">
@@ -1452,6 +1452,13 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>public_key is the public key of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>primary_endpoint is the primary endpoint of the peer. </p></td>
                 </tr>
               
                 <tr>

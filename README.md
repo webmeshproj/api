@@ -29,7 +29,7 @@
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>Status](#v1.Status)
-  - [<span class="badge">M</span>WireguardPeer](#v1.WireguardPeer)
+  - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
   - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">S</span>Node](#v1.Node)
@@ -315,7 +315,7 @@ JoinResponse is a response to a join request.
 |--------------|------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. |
 | network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network assigned to the node.                                                                                                                                          |
-| peers        | [WireguardPeer](#v1.WireguardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                               |
+| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                               |
 
 ### LeaveRequest
 
@@ -342,14 +342,15 @@ Status represents the status of a node.
 | cluster_status  | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.    |
 | current_leader  | [string](#string)                                       |          | current_leader is the current leader of the cluster.        |
 
-### WireguardPeer
+### WireGuardPeer
 
-WireguardPeer is a peer in the Wireguard network.
+WireGuardPeer is a peer in the Wireguard network.
 
 | Field               | Type              | Label    | Description                                                                  |
 |---------------------|-------------------|----------|------------------------------------------------------------------------------|
 | id                  | [string](#string) |          | id is the ID of the peer.                                                    |
 | public_key          | [string](#string) |          | public_key is the public key of the peer.                                    |
+| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                        |
 | wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
 | zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                      |
 | address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |

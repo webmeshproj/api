@@ -57,17 +57,19 @@ message JoinResponse {
     // network_ipv6 is the IPv6 network assigned to the node.
     string network_ipv6 = 2;
     // peers is a list of wireguard peers to connect to.
-    repeated WireguardPeer peers = 3;
+    repeated WireGuardPeer peers = 3;
 }
 
-// WireguardPeer is a peer in the Wireguard network.
-message WireguardPeer {
+// WireGuardPeer is a peer in the Wireguard network.
+message WireGuardPeer {
     // id is the ID of the peer.
     string id = 1;
     // public_key is the public key of the peer.
     string public_key = 2;
+    // primary_endpoint is the primary endpoint of the peer.
+    string primary_endpoint = 3;
     // wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.
-    repeated string wireguard_endpoints = 3;
+    repeated string wireguard_endpoints = 4;
     // zone_awareness_id is the zone awareness ID of the peer.
     string zone_awareness_id = 5;
     // address_ipv4 is the private IPv4 wireguard address of the peer.
