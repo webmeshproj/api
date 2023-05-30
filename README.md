@@ -183,21 +183,20 @@ MeshGraph is a graph of nodes.
 
 MeshNode is a node that has been registered with the controller.
 
-| Field                | Type                                                    | Label    | Description                                                         |
-|----------------------|---------------------------------------------------------|----------|---------------------------------------------------------------------|
-| id                   | [string](#string)                                       |          | id is the ID of the node.                                           |
-| primary_endpoint     | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.               |
-| additional_endpoints | [string](#string)                                       | repeated | additional_endpoints is a list of additional endpoints of the node. |
-| zone_awareness_id    | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.             |
-| raft_port            | [int32](#int32)                                         |          | raft_port is the Raft listen port of the node.                      |
-| grpc_port            | [int32](#int32)                                         |          | grpc_port is the gRPC listen port of the node.                      |
-| wireguard_port       | [int32](#int32)                                         |          | wireguard_port is the Wireguard listen port of the node.            |
-| public_key           | [string](#string)                                       |          | public_key is the public key of the node.                           |
-| private_ipv4         | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.               |
-| private_ipv6         | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.               |
-| updated_at           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | updated_at is the last time the node joined the cluster.            |
-| created_at           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | created_at is the creation time for the node.                       |
-| cluster_status       | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.            |
+| Field               | Type                                                    | Label    | Description                                                        |
+|---------------------|---------------------------------------------------------|----------|--------------------------------------------------------------------|
+| id                  | [string](#string)                                       |          | id is the ID of the node.                                          |
+| primary_endpoint    | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.              |
+| wireguard_endpoints | [string](#string)                                       | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node. |
+| zone_awareness_id   | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.            |
+| raft_port           | [int32](#int32)                                         |          | raft_port is the Raft listen port of the node.                     |
+| grpc_port           | [int32](#int32)                                         |          | grpc_port is the gRPC listen port of the node.                     |
+| public_key          | [string](#string)                                       |          | public_key is the public key of the node.                          |
+| private_ipv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.              |
+| private_ipv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.              |
+| updated_at          | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | updated_at is the last time the node joined the cluster.           |
+| created_at          | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | created_at is the creation time for the node.                      |
+| cluster_status      | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.           |
 
 ### NodeList
 
@@ -295,19 +294,18 @@ GetStatusRequest is a request to get the status of a node.
 
 JoinRequest is a request to join the cluster.
 
-| Field                | Type              | Label    | Description                                                                                                                             |
-|----------------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| id                   | [string](#string) |          | id is the ID of the node.                                                                                                               |
-| public_key           | [string](#string) |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
-| raft_port            | [int32](#int32)   |          | raft_port is the Raft listen port of the node.                                                                                          |
-| grpc_port            | [int32](#int32)   |          | grpc_port is the gRPC listen port of the node.                                                                                          |
-| wireguard_port       | [int32](#int32)   |          | wireguard_port is the Wireguard listen port of the node.                                                                                |
-| primary_endpoint     | [string](#string) |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
-| additional_endpoints | [string](#string) | repeated | additional_endpoints is a list of additional endpoints for the node.                                                                    |
-| zone_awareness_id    | [string](#string) |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
-| assign_ipv4          | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
-| prefer_raft_ipv6     | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
-| as_voter             | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
+| Field               | Type              | Label    | Description                                                                                                                             |
+|---------------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | [string](#string) |          | id is the ID of the node.                                                                                                               |
+| public_key          | [string](#string) |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
+| raft_port           | [int32](#int32)   |          | raft_port is the Raft listen port of the node.                                                                                          |
+| grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC listen port of the node.                                                                                          |
+| primary_endpoint    | [string](#string) |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
+| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
+| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
+| assign_ipv4         | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
+| prefer_raft_ipv6    | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
+| as_voter            | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
 
 ### JoinResponse
 
@@ -348,16 +346,15 @@ Status represents the status of a node.
 
 WireguardPeer is a peer in the Wireguard network.
 
-| Field                | Type              | Label    | Description                                                            |
-|----------------------|-------------------|----------|------------------------------------------------------------------------|
-| id                   | [string](#string) |          | id is the ID of the peer.                                              |
-| public_key           | [string](#string) |          | public_key is the public key of the peer.                              |
-| primary_endpoint     | [string](#string) |          | primary_endpoint is the preferred endpoint of the peer, if applicable. |
-| additional_endpoints | [string](#string) | repeated | additonal_endpoints is a list of additional endpoints for the peer.    |
-| zone_awareness_id    | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                |
-| address_ipv4         | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.        |
-| address_ipv6         | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.        |
-| allowed_ips          | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                   |
+| Field               | Type              | Label    | Description                                                                  |
+|---------------------|-------------------|----------|------------------------------------------------------------------------------|
+| id                  | [string](#string) |          | id is the ID of the peer.                                                    |
+| public_key          | [string](#string) |          | public_key is the public key of the peer.                                    |
+| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
+| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                      |
+| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
+| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
+| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
 
 ### DataChannel
 

@@ -830,10 +830,10 @@ or not. </p></td>
                 </tr>
               
                 <tr>
-                  <td>additional_endpoints</td>
+                  <td>wireguard_endpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>additional_endpoints is a list of additional endpoints of the node. </p></td>
+                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
                 </tr>
               
                 <tr>
@@ -855,13 +855,6 @@ or not. </p></td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
                   <td><p>grpc_port is the gRPC listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>wireguard_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>wireguard_port is the Wireguard listen port of the node. </p></td>
                 </tr>
               
                 <tr>
@@ -1236,13 +1229,6 @@ local node is returned. </p></td>
                 </tr>
               
                 <tr>
-                  <td>wireguard_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>wireguard_port is the Wireguard listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
                   <td>primary_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -1251,10 +1237,10 @@ the node is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
                 <tr>
-                  <td>additional_endpoints</td>
+                  <td>wireguard_endpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>additional_endpoints is a list of additional endpoints for the node. </p></td>
+                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
                 </tr>
               
                 <tr>
@@ -1469,17 +1455,10 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
               
                 <tr>
-                  <td>primary_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>primary_endpoint is the preferred endpoint of the peer, if applicable. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>additional_endpoints</td>
+                  <td>wireguard_endpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>additonal_endpoints is a list of additional endpoints for the peer. </p></td>
+                  <td><p>wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. </p></td>
                 </tr>
               
                 <tr>
