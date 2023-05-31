@@ -53,11 +53,14 @@ message JoinResponse {
     // address_ipv4 is the private IPv4 wireguard address of the node
     // in CIDR format representing the network. This is only set if
     // assign_ipv4 was set in the request or no network_ipv6 was provided.
+    // The bits are set to the network bits of the Mesh IPv4 network.
     string address_ipv4 = 1;
-    // network_ipv6 is the IPv6 network assigned to the node.
-    string network_ipv6 = 2;
+    // address_ipv6 is the IPv6 network assigned to the node.
+    string address_ipv6 = 2;
+    // network_ipv6 is the IPv6 network of the Mesh.
+    string network_ipv6 = 3;
     // peers is a list of wireguard peers to connect to.
-    repeated WireGuardPeer peers = 3;
+    repeated WireGuardPeer peers = 4;
 }
 
 // WireGuardPeer is a peer in the Wireguard network.

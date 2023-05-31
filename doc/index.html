@@ -1295,14 +1295,22 @@ This is only used if assign_ipv4 is true. </p></td>
                   <td></td>
                   <td><p>address_ipv4 is the private IPv4 wireguard address of the node
 in CIDR format representing the network. This is only set if
-assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
+assign_ipv4 was set in the request or no network_ipv6 was provided.
+The bits are set to the network bits of the Mesh IPv4 network. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_ipv6 is the IPv6 network assigned to the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>network_ipv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>network_ipv6 is the IPv6 network assigned to the node. </p></td>
+                  <td><p>network_ipv6 is the IPv6 network of the Mesh. </p></td>
                 </tr>
               
                 <tr>

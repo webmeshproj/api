@@ -311,11 +311,12 @@ JoinRequest is a request to join the cluster.
 
 JoinResponse is a response to a join request.
 
-| Field        | Type                               | Label    | Description                                                                                                                                                                                     |
-|--------------|------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. |
-| network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network assigned to the node.                                                                                                                                          |
-| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                               |
+| Field        | Type                               | Label    | Description                                                                                                                                                                                                                                                    |
+|--------------|------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. The bits are set to the network bits of the Mesh IPv4 network. |
+| address_ipv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                                                         |
+| network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                                                  |
+| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                                              |
 
 ### LeaveRequest
 
