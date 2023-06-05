@@ -34,14 +34,7 @@
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">S</span>Node](#v1.Node)
 - [v1/node_metrics.proto](#v1%2fnode_metrics.proto)
-  - [<span class="badge">M</span>CPUTimes](#v1.CPUTimes)
-  - [<span class="badge">M</span>DiskInfo](#v1.DiskInfo)
-  - [<span class="badge">M</span>HostInfo](#v1.HostInfo)
-  - [<span class="badge">M</span>HostMetrics](#v1.HostMetrics)
-  - [<span class="badge">M</span>LoadAverage](#v1.LoadAverage)
-  - [<span class="badge">M</span>MemoryInfo](#v1.MemoryInfo)
   - [<span class="badge">M</span>NodeMetrics](#v1.NodeMetrics)
-  - [<span class="badge">M</span>OSInfo](#v1.OSInfo)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
 - [v1/node_raft.proto](#v1%2fnode_raft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
@@ -412,91 +405,6 @@ handle the request when a non-leader can otherwise serve it, use the
 
 </div>
 
-### CPUTimes
-
-CPUTimes is the CPU times.
-
-| Field        | Type                           | Label | Description                        |
-|--------------|--------------------------------|-------|------------------------------------|
-| load_average | [LoadAverage](#v1.LoadAverage) |       |                                    |
-| user         | [string](#string)              |       | user is the user CPU time.         |
-| system       | [string](#string)              |       | system is the system CPU time.     |
-| idle         | [string](#string)              |       | idle is the idle CPU time.         |
-| io_wait      | [string](#string)              |       | io_wait is the IO wait CPU time.   |
-| irq          | [string](#string)              |       | irq is the IRQ CPU time.           |
-| nice         | [string](#string)              |       | nice is the nice CPU time.         |
-| soft_irq     | [string](#string)              |       | soft_irq is the soft IRQ CPU time. |
-| steal        | [string](#string)              |       | steal is the steal CPU time.       |
-
-### DiskInfo
-
-DiskInfo is the disk information.
-
-| Field               | Type              | Label | Description                                         |
-|---------------------|-------------------|-------|-----------------------------------------------------|
-| filesystem_path     | [string](#string) |       | filesystem_path is the path the disk is mounted to. |
-| device              | [string](#string) |       | device is the device of the disk.                   |
-| total               | [uint64](#uint64) |       | total is the total disk space.                      |
-| free                | [uint64](#uint64) |       | free is the free disk space.                        |
-| used                | [uint64](#uint64) |       | used is the used disk space.                        |
-| used_percent        | [float](#float)   |       | used_percent is the used disk space percentage.     |
-| inodes_total        | [uint64](#uint64) |       | inodes_total is the total inodes.                   |
-| inodes_free         | [uint64](#uint64) |       | inodes_free is the free inodes.                     |
-| inodes_used         | [uint64](#uint64) |       | inodes_used is the used inodes.                     |
-| inodes_used_percent | [float](#float)   |       | inodes_used_percent is the used inodes percentage.  |
-
-### HostInfo
-
-HostInfo is the host information.
-
-| Field          | Type                 | Label    | Description                                         |
-|----------------|----------------------|----------|-----------------------------------------------------|
-| architecture   | [string](#string)    |          | architecture is the architecture of the host.       |
-| boot_time      | [string](#string)    |          | boot_time is the boot time of the host.             |
-| containerized  | [bool](#bool)        |          | containerized is whether the host is containerized. |
-| hostname       | [string](#string)    |          | hostname is the hostname of the host.               |
-| ips            | [string](#string)    | repeated | ips is the list of IP addresses of the host.        |
-| kernel_version | [string](#string)    |          | kernel_version is the kernel version of the host.   |
-| macs           | [string](#string)    | repeated | macs is the list of MAC addresses of the host.      |
-| os             | [OSInfo](#v1.OSInfo) |          | os is the OS of the host.                           |
-| timezone       | [string](#string)    |          | timezone is the timezone of the host.               |
-| uptime         | [string](#string)    |          | uptime is the uptime of the host.                   |
-
-### HostMetrics
-
-HostMetrics is the metrics for the host.
-
-| Field  | Type                         | Label    | Description                   |
-|--------|------------------------------|----------|-------------------------------|
-| host   | [HostInfo](#v1.HostInfo)     |          | host is the host metrics.     |
-| cpu    | [CPUTimes](#v1.CPUTimes)     |          | cpu is the CPU metrics.       |
-| memory | [MemoryInfo](#v1.MemoryInfo) |          | memory is the memory metrics. |
-| disks  | [DiskInfo](#v1.DiskInfo)     | repeated | disks is the disk metrics.    |
-
-### LoadAverage
-
-LoadAverage is the load average.
-
-| Field   | Type            | Label | Description                            |
-|---------|-----------------|-------|----------------------------------------|
-| one     | [float](#float) |       | one is the 1 minute load average.      |
-| five    | [float](#float) |       | five is the 5 minute load average.     |
-| fifteen | [float](#float) |       | fifteen is the 15 minute load average. |
-
-### MemoryInfo
-
-MemoryInfo is the memory information.
-
-| Field         | Type              | Label | Description                                |
-|---------------|-------------------|-------|--------------------------------------------|
-| total         | [uint64](#uint64) |       | total is the total memory.                 |
-| used          | [uint64](#uint64) |       | used is the used memory.                   |
-| available     | [uint64](#uint64) |       | available is the available memory.         |
-| free          | [uint64](#uint64) |       | free is the free memory.                   |
-| virtual_total | [uint64](#uint64) |       | virtual_total is the total virtual memory. |
-| virtual_used  | [uint64](#uint64) |       | virtual_used is the used virtual memory.   |
-| virtual_free  | [uint64](#uint64) |       | virtual_free is the free virtual memory.   |
-
 ### NodeMetrics
 
 NodeMetrics is the metrics for the node.
@@ -512,24 +420,6 @@ NodeMetrics is the metrics for the node.
 | total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
 | total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
 | peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
-| system               | [HostMetrics](#v1.HostMetrics) |          | system is the system metrics for the node.                     |
-
-### OSInfo
-
-OSInfo is the OS information.
-
-| Field    | Type              | Label | Description                       |
-|----------|-------------------|-------|-----------------------------------|
-| type     | [string](#string) |       | type is the type of OS.           |
-| family   | [string](#string) |       | family is the family of OS.       |
-| platform | [string](#string) |       | platform is the platform of OS.   |
-| name     | [string](#string) |       | name is the name of OS.           |
-| version  | [string](#string) |       | version is the version of OS.     |
-| major    | [int64](#int64)   |       | major is the major version of OS. |
-| minor    | [int64](#int64)   |       | minor is the minor version of OS. |
-| patch    | [int64](#int64)   |       | patch is the patch version of OS. |
-| build    | [string](#string) |       | build is the build version of OS. |
-| codename | [string](#string) |       | codename is the codename of OS.   |
 
 ### PeerMetrics
 
