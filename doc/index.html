@@ -275,6 +275,25 @@
         
           
           <li>
+            <a href="#v1%2fnode_metrics.proto">v1/node_metrics.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.InterfaceMetrics"><span class="badge">M</span>InterfaceMetrics</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PeerMetrics"><span class="badge">M</span>PeerMetrics</a>
+                </li>
+              
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fnode_messages.proto">v1/node_messages.proto</a>
             <ul>
               
@@ -327,25 +346,6 @@
                 <li>
                   <a href="#v1.Node"><span class="badge">S</span>Node</a>
                 </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
-            <a href="#v1%2fnode_metrics.proto">v1/node_metrics.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.NodeMetrics"><span class="badge">M</span>NodeMetrics</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.PeerMetrics"><span class="badge">M</span>PeerMetrics</a>
-                </li>
-              
-              
-              
               
             </ul>
           </li>
@@ -1059,6 +1059,180 @@ edges, and a rendering in the dot format.</p></td>
     
       
       <div class="file-heading">
+        <h2 id="v1/node_metrics.proto">v1/node_metrics.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.InterfaceMetrics">InterfaceMetrics</h3>
+        <p>InterfaceMetrics is the metrics for the WireGuard interface on a node.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>device_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>device_name is the name of the device. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public key of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_v4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_v4 is the IPv4 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_v6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_v6 is the IPv6 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>type is the type of interface being used for wireguard. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>listen_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>listen_port is the port wireguard is listening on. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_receive_bytes</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>total_receive_bytes is the total number of bytes received. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>total_transmit_bytes</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>total_transmit_bytes is the total number of bytes transmitted. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>num_peers</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>num_peers is the number of peers connected to the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>peers</td>
+                  <td><a href="#v1.PeerMetrics">PeerMetrics</a></td>
+                  <td>repeated</td>
+                  <td><p>peers are the per-peer statistics. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PeerMetrics">PeerMetrics</h3>
+        <p>PeerMetrics are the metrics for a node's peer.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public key of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>endpoint is the connected endpoint of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>persistent_keep_alive</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>persistent_keep_alive is the persistent keep alive interval for the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_handshake_time</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>last_handshake_time is the last handshake time for the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>allowed_ips</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>protocol_version</td>
+                  <td><a href="#int64">int64</a></td>
+                  <td></td>
+                  <td><p>protocol_version is the version of the wireguard protocol negotiated with the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>receive_bytes</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>receive_bytes is the bytes received from the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>transmit_bytes</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>transmit_bytes is the bytes transmitted to the peer. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
         <h2 id="v1/node_messages.proto">v1/node_messages.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -1383,13 +1557,6 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
                 </tr>
               
                 <tr>
-                  <td>wireguard_peers</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>wireguard_peers is the number of wireguard peers connected. </p></td>
-                </tr>
-              
-                <tr>
                   <td>cluster_status</td>
                   <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
                   <td></td>
@@ -1401,6 +1568,34 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>current_leader is the current leader of the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>current_term</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>current_term is the current term of the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_log_index</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>last_log_index is the last log index of the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last_applied</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>last_applied is the last applied index of the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>interface_metrics</td>
+                  <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
+                  <td></td>
+                  <td><p>interface_metrics are the metrics for the node&#39;s interfaces. </p></td>
                 </tr>
               
             </tbody>
@@ -1578,173 +1773,6 @@ can optionally be used to exchange ICE candidates.</p></td>
         </table>
 
         
-    
-      
-      <div class="file-heading">
-        <h2 id="v1/node_metrics.proto">v1/node_metrics.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.NodeMetrics">NodeMetrics</h3>
-        <p>NodeMetrics is the metrics for the node.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>device_name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>device_name is the name of the device. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_v4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_v4 is the IPv4 address of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_v6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_v6 is the IPv6 address of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>type is the type of interface being used for wireguard. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>listen_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>listen_port is the port wireguard is listening on. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>total_receive_bytes</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>total_receive_bytes is the total number of bytes received. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>total_transmit_bytes</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>total_transmit_bytes is the total number of bytes transmitted. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>peers</td>
-                  <td><a href="#v1.PeerMetrics">PeerMetrics</a></td>
-                  <td>repeated</td>
-                  <td><p>peers are the per-peer statistics. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.PeerMetrics">PeerMetrics</h3>
-        <p>PeerMetrics are the metrics for a node's peer.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>endpoint is the connected endpoint of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>persistent_keep_alive</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>persistent_keep_alive is the persistent keep alive interval for the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>last_handshake_time</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>last_handshake_time is the last handshake time for the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>allowed_ips</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>protocol_version</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>protocol_version is the version of the wireguard protocol negotiated with the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>receive_bytes</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>receive_bytes is the bytes received from the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>transmit_bytes</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>transmit_bytes is the bytes transmitted to the peer. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-
-      
-
-      
     
       
       <div class="file-heading">

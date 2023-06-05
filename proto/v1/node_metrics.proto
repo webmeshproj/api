@@ -18,8 +18,8 @@ syntax = "proto3";
 
 package v1;
 
-// NodeMetrics is the metrics for the node.
-message NodeMetrics {
+// InterfaceMetrics is the metrics for the WireGuard interface on a node.
+message InterfaceMetrics {
   // device_name is the name of the device.
   string device_name = 1;
   // public_key is the public key of the node.
@@ -36,8 +36,10 @@ message NodeMetrics {
   uint64 total_receive_bytes = 7;
   // total_transmit_bytes is the total number of bytes transmitted.
   uint64 total_transmit_bytes = 8;
+  // num_peers is the number of peers connected to the node.
+  int32 num_peers = 9;
   // peers are the per-peer statistics.
-  repeated PeerMetrics peers = 9;
+  repeated PeerMetrics peers = 10;
 }
 
 // PeerMetrics are the metrics for a node's peer.

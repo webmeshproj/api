@@ -21,6 +21,7 @@ package v1;
 import "google/protobuf/timestamp.proto";
 
 import "v1/mesh_messages.proto";
+import "v1/node_metrics.proto";
 
 // JoinRequest is a request to join the cluster.
 message JoinRequest {
@@ -112,12 +113,18 @@ message Status {
     google.protobuf.Timestamp started_at = 6;
     // features is the list of features currently enabled.
     repeated Feature features = 7;
-    // wireguard_peers is the number of wireguard peers connected.
-    uint32 wireguard_peers = 8;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 9;
+    ClusterStatus cluster_status = 8;
     // current_leader is the current leader of the cluster.
-    string current_leader = 10;
+    string current_leader = 9;
+    // current_term is the current term of the cluster.
+    uint64 current_term = 10;
+    // last_log_index is the last log index of the cluster.
+    uint64 last_log_index = 11;
+    // last_applied is the last applied index of the cluster.
+    uint64 last_applied = 12;
+    // interface_metrics are the metrics for the node's interfaces.
+    InterfaceMetrics interface_metrics = 13;
 }
 
 // DataChannel are the data channels used when communicating over ICE

@@ -22,6 +22,9 @@
   - [<span class="badge">E</span>Feature](#v1.Feature)
 - [v1/mesh.proto](#v1%2fmesh.proto)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
+- [v1/node_metrics.proto](#v1%2fnode_metrics.proto)
+  - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
+  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
 - [v1/node_messages.proto](#v1%2fnode_messages.proto)
   - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
   - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
@@ -33,9 +36,6 @@
   - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">S</span>Node](#v1.Node)
-- [v1/node_metrics.proto](#v1%2fnode_metrics.proto)
-  - [<span class="badge">M</span>NodeMetrics](#v1.NodeMetrics)
-  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
 - [v1/node_raft.proto](#v1%2fnode_raft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
@@ -253,6 +253,46 @@ service.
 
 <div class="file-heading">
 
+## v1/node_metrics.proto
+
+[Top](#title)
+
+</div>
+
+### InterfaceMetrics
+
+InterfaceMetrics is the metrics for the WireGuard interface on a node.
+
+| Field                | Type                           | Label    | Description                                                    |
+|----------------------|--------------------------------|----------|----------------------------------------------------------------|
+| device_name          | [string](#string)              |          | device_name is the name of the device.                         |
+| public_key           | [string](#string)              |          | public_key is the public key of the node.                      |
+| address_v4           | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
+| address_v6           | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
+| type                 | [string](#string)              |          | type is the type of interface being used for wireguard.        |
+| listen_port          | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
+| total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
+| total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
+| num_peers            | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
+| peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
+
+### PeerMetrics
+
+PeerMetrics are the metrics for a node's peer.
+
+| Field                 | Type              | Label    | Description                                                                         |
+|-----------------------|-------------------|----------|-------------------------------------------------------------------------------------|
+| public_key            | [string](#string) |          | public_key is the public key of the peer.                                           |
+| endpoint              | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
+| persistent_keep_alive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
+| last_handshake_time   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
+| allowed_ips           | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
+| protocol_version      | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
+| receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
+| transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
+
+<div class="file-heading">
+
 ## v1/node_messages.proto
 
 [Top](#title)
@@ -323,18 +363,21 @@ LeaveRequest is a request to leave the cluster.
 
 Status represents the status of a node.
 
-| Field           | Type                                                    | Label    | Description                                                 |
-|-----------------|---------------------------------------------------------|----------|-------------------------------------------------------------|
-| id              | [string](#string)                                       |          | id is the ID of the node.                                   |
-| version         | [string](#string)                                       |          | version is the version of the node.                         |
-| commit          | [string](#string)                                       |          | commit is the commit of the node.                           |
-| build_date      | [string](#string)                                       |          | build_date is the build date of the node.                   |
-| uptime          | [string](#string)                                       |          | uptime is the uptime of the node.                           |
-| started_at      | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                    |
-| features        | [Feature](#v1.Feature)                                  | repeated | features is the list of features currently enabled.         |
-| wireguard_peers | [uint32](#uint32)                                       |          | wireguard_peers is the number of wireguard peers connected. |
-| cluster_status  | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.    |
-| current_leader  | [string](#string)                                       |          | current_leader is the current leader of the cluster.        |
+| Field             | Type                                                    | Label    | Description                                                  |
+|-------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
+| id                | [string](#string)                                       |          | id is the ID of the node.                                    |
+| version           | [string](#string)                                       |          | version is the version of the node.                          |
+| commit            | [string](#string)                                       |          | commit is the commit of the node.                            |
+| build_date        | [string](#string)                                       |          | build_date is the build date of the node.                    |
+| uptime            | [string](#string)                                       |          | uptime is the uptime of the node.                            |
+| started_at        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
+| features          | [Feature](#v1.Feature)                                  | repeated | features is the list of features currently enabled.          |
+| cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
+| current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
+| current_term      | [uint64](#uint64)                                       |          | current_term is the current term of the cluster.             |
+| last_log_index    | [uint64](#uint64)                                       |          | last_log_index is the last log index of the cluster.         |
+| last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
+| interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
 
 ### WireGuardPeer
 
@@ -396,45 +439,6 @@ handle the request when a non-leader can otherwise serve it, use the
 | Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
-
-<div class="file-heading">
-
-## v1/node_metrics.proto
-
-[Top](#title)
-
-</div>
-
-### NodeMetrics
-
-NodeMetrics is the metrics for the node.
-
-| Field                | Type                           | Label    | Description                                                    |
-|----------------------|--------------------------------|----------|----------------------------------------------------------------|
-| device_name          | [string](#string)              |          | device_name is the name of the device.                         |
-| public_key           | [string](#string)              |          | public_key is the public key of the node.                      |
-| address_v4           | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
-| address_v6           | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
-| type                 | [string](#string)              |          | type is the type of interface being used for wireguard.        |
-| listen_port          | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
-| total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
-| total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
-| peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
-
-### PeerMetrics
-
-PeerMetrics are the metrics for a node's peer.
-
-| Field                 | Type              | Label    | Description                                                                         |
-|-----------------------|-------------------|----------|-------------------------------------------------------------------------------------|
-| public_key            | [string](#string) |          | public_key is the public key of the peer.                                           |
-| endpoint              | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
-| persistent_keep_alive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
-| last_handshake_time   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
-| allowed_ips           | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
-| protocol_version      | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
-| receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
-| transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
 
 <div class="file-heading">
 
