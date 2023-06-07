@@ -514,6 +514,7 @@ func (x *RoleBindings) GetRoleBindings() []*RoleBinding {
 	return nil
 }
 
+// Subject is a subject to which a role can be bound.
 type Subject struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -571,6 +572,74 @@ func (x *Subject) GetType() SubjectType {
 	return SubjectType_SUBJECT_UNKNOWN
 }
 
+// Action is an action that can be performed on a resource.
+type Action struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// resource is the resource on which the action is performed.
+	Resource RuleResource `protobuf:"varint,1,opt,name=resource,proto3,enum=v1.RuleResource" json:"resource,omitempty"`
+	// resource_name is the name of the resource on which the action is
+	// performed.
+	ResourceName string `protobuf:"bytes,2,opt,name=resource_name,json=resourceName,proto3" json:"resource_name,omitempty"`
+	// verb is the verb that is performed on the resource.
+	Verb RuleVerbs `protobuf:"varint,3,opt,name=verb,proto3,enum=v1.RuleVerbs" json:"verb,omitempty"`
+}
+
+func (x *Action) Reset() {
+	*x = Action{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_rbac_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Action) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Action) ProtoMessage() {}
+
+func (x *Action) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_rbac_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Action.ProtoReflect.Descriptor instead.
+func (*Action) Descriptor() ([]byte, []int) {
+	return file_v1_rbac_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Action) GetResource() RuleResource {
+	if x != nil {
+		return x.Resource
+	}
+	return RuleResource_RESOURCE_UNKNOWN
+}
+
+func (x *Action) GetResourceName() string {
+	if x != nil {
+		return x.ResourceName
+	}
+	return ""
+}
+
+func (x *Action) GetVerb() RuleVerbs {
+	if x != nil {
+		return x.Verb
+	}
+	return RuleVerbs_VERB_UNKNOWN
+}
+
 var File_v1_rbac_proto protoreflect.FileDescriptor
 
 var file_v1_rbac_proto_rawDesc = []byte{
@@ -604,7 +673,15 @@ var file_v1_rbac_proto_rawDesc = []byte{
 	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
 	0x6d, 0x65, 0x12, 0x23, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e,
 	0x32, 0x0f, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x79, 0x70,
-	0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x2a, 0x96, 0x01, 0x0a, 0x0c, 0x52, 0x75, 0x6c, 0x65,
+	0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x7e, 0x0a, 0x06, 0x41, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x2c, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x75, 0x6c, 0x65, 0x52, 0x65, 0x73,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x52, 0x08, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12,
+	0x23, 0x0a, 0x0d, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x21, 0x0a, 0x04, 0x76, 0x65, 0x72, 0x62, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x0d, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x75, 0x6c, 0x65, 0x56, 0x65, 0x72, 0x62,
+	0x73, 0x52, 0x04, 0x76, 0x65, 0x72, 0x62, 0x2a, 0x96, 0x01, 0x0a, 0x0c, 0x52, 0x75, 0x6c, 0x65,
 	0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x14, 0x0a, 0x10, 0x52, 0x45, 0x53, 0x4f,
 	0x55, 0x52, 0x43, 0x45, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x12,
 	0x0a, 0x0e, 0x52, 0x45, 0x53, 0x4f, 0x55, 0x52, 0x43, 0x45, 0x5f, 0x56, 0x4f, 0x54, 0x45, 0x53,
@@ -649,7 +726,7 @@ func file_v1_rbac_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_rbac_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_v1_rbac_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_v1_rbac_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_v1_rbac_proto_goTypes = []interface{}{
 	(RuleResource)(0),    // 0: v1.RuleResource
 	(RuleVerbs)(0),       // 1: v1.RuleVerbs
@@ -660,6 +737,7 @@ var file_v1_rbac_proto_goTypes = []interface{}{
 	(*RoleBinding)(nil),  // 6: v1.RoleBinding
 	(*RoleBindings)(nil), // 7: v1.RoleBindings
 	(*Subject)(nil),      // 8: v1.Subject
+	(*Action)(nil),       // 9: v1.Action
 }
 var file_v1_rbac_proto_depIdxs = []int32{
 	0, // 0: v1.Rule.resources:type_name -> v1.RuleResource
@@ -669,11 +747,13 @@ var file_v1_rbac_proto_depIdxs = []int32{
 	8, // 4: v1.RoleBinding.subjects:type_name -> v1.Subject
 	6, // 5: v1.RoleBindings.role_bindings:type_name -> v1.RoleBinding
 	2, // 6: v1.Subject.type:type_name -> v1.SubjectType
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	0, // 7: v1.Action.resource:type_name -> v1.RuleResource
+	1, // 8: v1.Action.verb:type_name -> v1.RuleVerbs
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_v1_rbac_proto_init() }
@@ -754,6 +834,18 @@ func file_v1_rbac_proto_init() {
 				return nil
 			}
 		}
+		file_v1_rbac_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Action); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -761,7 +853,7 @@ func file_v1_rbac_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_rbac_proto_rawDesc,
 			NumEnums:      3,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

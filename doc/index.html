@@ -179,6 +179,10 @@
             <ul>
               
                 <li>
+                  <a href="#v1.Action"><span class="badge">M</span>Action</a>
+                </li>
+              
+                <li>
                   <a href="#v1.Role"><span class="badge">M</span>Role</a>
                 </li>
               
@@ -446,6 +450,45 @@
       <p></p>
 
       
+        <h3 id="v1.Action">Action</h3>
+        <p>Action is an action that can be performed on a resource.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>resource</td>
+                  <td><a href="#v1.RuleResource">RuleResource</a></td>
+                  <td></td>
+                  <td><p>resource is the resource on which the action is performed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>resource_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>resource_name is the name of the resource on which the action is
+performed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verb</td>
+                  <td><a href="#v1.RuleVerbs">RuleVerbs</a></td>
+                  <td></td>
+                  <td><p>verb is the verb that is performed on the resource. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.Role">Role</h3>
         <p>Role is a role that can be assigned to a subject.</p>
 
@@ -602,7 +645,7 @@
         
       
         <h3 id="v1.Subject">Subject</h3>
-        <p></p>
+        <p>Subject is a subject to which a role can be bound.</p>
 
         
           <table class="field-table">

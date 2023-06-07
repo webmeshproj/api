@@ -5,6 +5,7 @@
 <div id="toc-container">
 
 - [v1/rbac.proto](#v1%2frbac.proto)
+  - [<span class="badge">M</span>Action](#v1.Action)
   - [<span class="badge">M</span>Role](#v1.Role)
   - [<span class="badge">M</span>RoleBinding](#v1.RoleBinding)
   - [<span class="badge">M</span>RoleBindings](#v1.RoleBindings)
@@ -69,6 +70,16 @@
 
 </div>
 
+### Action
+
+Action is an action that can be performed on a resource.
+
+| Field         | Type                             | Label | Description                                                                 |
+|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
+| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
+| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
+| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
+
 ### Role
 
 Role is a role that can be assigned to a subject.
@@ -115,6 +126,8 @@ Rule is a rule that applies to a resource.
 | verbs          | [RuleVerbs](#v1.RuleVerbs)       | repeated | verbs is the list of verbs that apply to the resource.                  |
 
 ### Subject
+
+Subject is a subject to which a role can be bound.
 
 | Field | Type                           | Label | Description                      |
 |-------|--------------------------------|-------|----------------------------------|

@@ -109,9 +109,21 @@ message RoleBindings {
     repeated RoleBinding role_bindings = 1;
 }
 
+// Subject is a subject to which a role can be bound.
 message Subject {
     // name is the name of the subject.
     string name = 1;
     // type is the type of the subject.
     SubjectType type = 2;
+}
+
+// Action is an action that can be performed on a resource.
+message Action {
+    // resource is the resource on which the action is performed.
+    RuleResource resource = 1;
+    // resource_name is the name of the resource on which the action is
+    // performed.
+    string resource_name = 2;
+    // verb is the verb that is performed on the resource.
+    RuleVerbs verb = 3;
 }
