@@ -43,16 +43,18 @@ enum Feature {
     LEADER_PROXY = 2;
     // MESH_API is the feature for the mesh API.
     MESH_API = 3;
+    // ADMIN_API is the feature for the admin API.
+    ADMIN_API = 4;
     // PEER_DISCOVERY is the feature for peer discovery.
-    PEER_DISCOVERY = 4;
+    PEER_DISCOVERY = 5;
     // METRICS is the feature for exposing metrics.
-    METRICS = 5;
+    METRICS = 6;
     // ICE_NEGOTIATION is the feature for ICE negotiation.
-    ICE_NEGOTIATION = 6;
+    ICE_NEGOTIATION = 7;
     // TURN_SERVER is the feature for TURN server.
-    TURN_SERVER = 7;
+    TURN_SERVER = 8;
     // MESH_DNS is the feature for mesh DNS.
-    MESH_DNS = 8;
+    MESH_DNS = 9;
 }
 
 // DataChannel are the data channels used when communicating over ICE
