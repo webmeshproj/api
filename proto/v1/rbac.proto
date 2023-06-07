@@ -63,6 +63,10 @@ enum SubjectType {
     SUBJECT_USER = 2;
     // SUBJECT_GROUP is a subject type for a group.
     SUBJECT_GROUP = 3;
+
+    // SUBJECT_ALL is a wildcard subject type that matches all subject types.
+    // It can be used with a subject named '*' to match all subjects.
+    SUBJECT_ALL = 999;
 }
 
 // Rule is a rule that applies to a resource.

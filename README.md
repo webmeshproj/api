@@ -150,12 +150,13 @@ RuleVerbs is the verb type for a rule.
 
 SubjectType is the type of a subject.
 
-| Name            | Number | Description                                  |
-|-----------------|--------|----------------------------------------------|
-| SUBJECT_UNKNOWN | 0      | SUBJECT_UNKNOWN is an unknown subject type.  |
-| SUBJECT_NODE    | 1      | SUBJECT_NODE is a subject type for a node.   |
-| SUBJECT_USER    | 2      | SUBJECT_USER is a subject type for a user.   |
-| SUBJECT_GROUP   | 3      | SUBJECT_GROUP is a subject type for a group. |
+| Name            | Number | Description                                                                                                                            |
+|-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------|
+| SUBJECT_UNKNOWN | 0      | SUBJECT_UNKNOWN is an unknown subject type.                                                                                            |
+| SUBJECT_NODE    | 1      | SUBJECT_NODE is a subject type for a node.                                                                                             |
+| SUBJECT_USER    | 2      | SUBJECT_USER is a subject type for a user.                                                                                             |
+| SUBJECT_GROUP   | 3      | SUBJECT_GROUP is a subject type for a group.                                                                                           |
+| SUBJECT_ALL     | 999    | SUBJECT_ALL is a wildcard subject type that matches all subject types. It can be used with a subject named '\*' to match all subjects. |
 
 <div class="file-heading">
 
