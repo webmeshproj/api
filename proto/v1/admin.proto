@@ -43,4 +43,13 @@ service Admin {
     rpc GetRoleBinding(RoleBinding) returns (RoleBinding) {}
     // ListRoleBindings gets all role bindings.
     rpc ListRoleBindings(google.protobuf.Empty) returns (RoleBindings) {}
+
+    // PutGroup creates or updates a group.
+    rpc PutGroup(Group) returns (google.protobuf.Empty) {}
+    // DeleteGroup deletes a group.
+    rpc DeleteGroup(Group) returns (google.protobuf.Empty) {}
+    // GetGroup gets a group.
+    rpc GetGroup(Group) returns (Group) {}
+    // ListGroups gets all groups.
+    rpc ListGroups(google.protobuf.Empty) returns (Groups) {}
 }

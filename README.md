@@ -6,6 +6,8 @@
 
 - [v1/rbac.proto](#v1%2frbac.proto)
   - [<span class="badge">M</span>Action](#v1.Action)
+  - [<span class="badge">M</span>Group](#v1.Group)
+  - [<span class="badge">M</span>Groups](#v1.Groups)
   - [<span class="badge">M</span>Role](#v1.Role)
   - [<span class="badge">M</span>RoleBinding](#v1.RoleBinding)
   - [<span class="badge">M</span>RoleBindings](#v1.RoleBindings)
@@ -79,6 +81,23 @@ Action is an action that can be performed on a resource.
 | resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
 | resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
 | verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
+
+### Group
+
+Group is a group of subjects.
+
+| Field    | Type                   | Label    | Description                                    |
+|----------|------------------------|----------|------------------------------------------------|
+| name     | [string](#string)      |          | name is the name of the group.                 |
+| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects in the group. |
+
+### Groups
+
+Groups is a list of groups.
+
+| Field  | Type               | Label    | Description                   |
+|--------|--------------------|----------|-------------------------------|
+| groups | [Group](#v1.Group) | repeated | groups is the list of groups. |
 
 ### Role
 
@@ -198,6 +217,10 @@ RBAC operations
 | DeleteRoleBinding | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoleBinding deletes a role binding.         |
 | GetRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [RoleBinding](#v1.RoleBinding)                   | GetRoleBinding gets a role binding.               |
 | ListRoleBindings  | [.google.protobuf.Empty](#google.protobuf.Empty) | [RoleBindings](#v1.RoleBindings)                 | ListRoleBindings gets all role bindings.          |
+| PutGroup          | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutGroup creates or updates a group.              |
+| DeleteGroup       | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteGroup deletes a group.                      |
+| GetGroup          | [Group](#v1.Group)                               | [Group](#v1.Group)                               | GetGroup gets a group.                            |
+| ListGroups        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Groups](#v1.Groups)                             | ListGroups gets all groups.                       |
 
 <div class="file-heading">
 

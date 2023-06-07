@@ -43,6 +43,10 @@ const (
 	Admin_DeleteRoleBinding_FullMethodName = "/v1.Admin/DeleteRoleBinding"
 	Admin_GetRoleBinding_FullMethodName    = "/v1.Admin/GetRoleBinding"
 	Admin_ListRoleBindings_FullMethodName  = "/v1.Admin/ListRoleBindings"
+	Admin_PutGroup_FullMethodName          = "/v1.Admin/PutGroup"
+	Admin_DeleteGroup_FullMethodName       = "/v1.Admin/DeleteGroup"
+	Admin_GetGroup_FullMethodName          = "/v1.Admin/GetGroup"
+	Admin_ListGroups_FullMethodName        = "/v1.Admin/ListGroups"
 )
 
 // AdminClient is the client API for Admin service.
@@ -65,6 +69,14 @@ type AdminClient interface {
 	GetRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*RoleBinding, error)
 	// ListRoleBindings gets all role bindings.
 	ListRoleBindings(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RoleBindings, error)
+	// PutGroup creates or updates a group.
+	PutGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteGroup deletes a group.
+	DeleteGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetGroup gets a group.
+	GetGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error)
+	// ListGroups gets all groups.
+	ListGroups(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Groups, error)
 }
 
 type adminClient struct {
@@ -147,6 +159,42 @@ func (c *adminClient) ListRoleBindings(ctx context.Context, in *emptypb.Empty, o
 	return out, nil
 }
 
+func (c *adminClient) PutGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_PutGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error) {
+	out := new(Group)
+	err := c.cc.Invoke(ctx, Admin_GetGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) ListGroups(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Groups, error) {
+	out := new(Groups)
+	err := c.cc.Invoke(ctx, Admin_ListGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
@@ -167,6 +215,14 @@ type AdminServer interface {
 	GetRoleBinding(context.Context, *RoleBinding) (*RoleBinding, error)
 	// ListRoleBindings gets all role bindings.
 	ListRoleBindings(context.Context, *emptypb.Empty) (*RoleBindings, error)
+	// PutGroup creates or updates a group.
+	PutGroup(context.Context, *Group) (*emptypb.Empty, error)
+	// DeleteGroup deletes a group.
+	DeleteGroup(context.Context, *Group) (*emptypb.Empty, error)
+	// GetGroup gets a group.
+	GetGroup(context.Context, *Group) (*Group, error)
+	// ListGroups gets all groups.
+	ListGroups(context.Context, *emptypb.Empty) (*Groups, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -197,6 +253,18 @@ func (UnimplementedAdminServer) GetRoleBinding(context.Context, *RoleBinding) (*
 }
 func (UnimplementedAdminServer) ListRoleBindings(context.Context, *emptypb.Empty) (*RoleBindings, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRoleBindings not implemented")
+}
+func (UnimplementedAdminServer) PutGroup(context.Context, *Group) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutGroup not implemented")
+}
+func (UnimplementedAdminServer) DeleteGroup(context.Context, *Group) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGroup not implemented")
+}
+func (UnimplementedAdminServer) GetGroup(context.Context, *Group) (*Group, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGroup not implemented")
+}
+func (UnimplementedAdminServer) ListGroups(context.Context, *emptypb.Empty) (*Groups, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGroups not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -355,6 +423,78 @@ func _Admin_ListRoleBindings_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_PutGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).PutGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_PutGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).PutGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Group)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetGroup(ctx, req.(*Group))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_ListGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).ListGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_ListGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).ListGroups(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -393,6 +533,22 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRoleBindings",
 			Handler:    _Admin_ListRoleBindings_Handler,
+		},
+		{
+			MethodName: "PutGroup",
+			Handler:    _Admin_PutGroup_Handler,
+		},
+		{
+			MethodName: "DeleteGroup",
+			Handler:    _Admin_DeleteGroup_Handler,
+		},
+		{
+			MethodName: "GetGroup",
+			Handler:    _Admin_GetGroup_Handler,
+		},
+		{
+			MethodName: "ListGroups",
+			Handler:    _Admin_ListGroups_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

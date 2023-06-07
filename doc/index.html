@@ -183,6 +183,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.Group"><span class="badge">M</span>Group</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.Groups"><span class="badge">M</span>Groups</a>
+                </li>
+              
+                <li>
                   <a href="#v1.Role"><span class="badge">M</span>Role</a>
                 </li>
               
@@ -480,6 +488,61 @@ performed. </p></td>
                   <td><a href="#v1.RuleVerbs">RuleVerbs</a></td>
                   <td></td>
                   <td><p>verb is the verb that is performed on the resource. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Group">Group</h3>
+        <p>Group is a group of subjects.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the group. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>subjects</td>
+                  <td><a href="#v1.Subject">Subject</a></td>
+                  <td>repeated</td>
+                  <td><p>subjects is the list of subjects in the group. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Groups">Groups</h3>
+        <p>Groups is a list of groups.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>groups</td>
+                  <td><a href="#v1.Group">Group</a></td>
+                  <td>repeated</td>
+                  <td><p>groups is the list of groups. </p></td>
                 </tr>
               
             </tbody>
@@ -888,6 +951,34 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.RoleBindings">RoleBindings</a></td>
                 <td><p>ListRoleBindings gets all role bindings.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PutGroup</td>
+                <td><a href="#v1.Group">Group</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>PutGroup creates or updates a group.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteGroup</td>
+                <td><a href="#v1.Group">Group</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>DeleteGroup deletes a group.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetGroup</td>
+                <td><a href="#v1.Group">Group</a></td>
+                <td><a href="#v1.Group">Group</a></td>
+                <td><p>GetGroup gets a group.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListGroups</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.Groups">Groups</a></td>
+                <td><p>ListGroups gets all groups.</p></td>
               </tr>
             
           </tbody>

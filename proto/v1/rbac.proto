@@ -117,6 +117,20 @@ message Subject {
     SubjectType type = 2;
 }
 
+// Group is a group of subjects.
+message Group {
+    // name is the name of the group.
+    string name = 1;
+    // subjects is the list of subjects in the group.
+    repeated Subject subjects = 2;
+}
+
+// Groups is a list of groups.
+message Groups {
+    // groups is the list of groups.
+    repeated Group groups = 1;
+}
+
 // Action is an action that can be performed on a resource.
 message Action {
     // resource is the resource on which the action is performed.
