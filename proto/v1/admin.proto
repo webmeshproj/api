@@ -19,20 +19,28 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/empty.proto";
-
-import "v1/admin_messages.proto";
+import "v1/rbac.proto";
 
 // Admin is the service that provides cluster admin operations. Most methods 
 // require the leader to be contacted.
 service Admin {
-    // Raft ACL Operations
+    // RBAC operations
 
-    // PutRaftACL creates or updates an ACL.
-    rpc PutRaftACL(RaftACL) returns (google.protobuf.Empty) {}
-    // DeleteRaftACL deletes an ACL by name.
-    rpc DeleteRaftACL(DeleteRaftACLRequest) returns (google.protobuf.Empty) {}
-    // GetRaftACL returns an ACL by name.
-    rpc GetRaftACL(GetRaftACLRequest) returns (RaftACL) {}
-    // ListRaftACLs returns the ACLs for the Raft cluster.
-    rpc ListRaftACLs(google.protobuf.Empty) returns (RaftACLList) {}
+    // PutRole creates or updates a role.
+    rpc PutRole(Role) returns (google.protobuf.Empty) {}
+    // DeleteRole deletes a role.
+    rpc DeleteRole(Role) returns (google.protobuf.Empty) {}
+    // GetRole gets a role.
+    rpc GetRole(Role) returns (Role) {}
+    // ListRoles gets all roles.
+    rpc ListRoles(google.protobuf.Empty) returns (Roles) {}
+
+    // PutRoleBinding creates or updates a role binding.
+    rpc PutRoleBinding(RoleBinding) returns (google.protobuf.Empty) {}
+    // DeleteRoleBinding deletes a role binding.
+    rpc DeleteRoleBinding(RoleBinding) returns (google.protobuf.Empty) {}
+    // GetRoleBinding gets a role binding.
+    rpc GetRoleBinding(RoleBinding) returns (RoleBinding) {}
+    // ListRoleBindings gets all role bindings.
+    rpc ListRoleBindings(google.protobuf.Empty) returns (RoleBindings) {}
 }

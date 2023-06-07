@@ -18,7 +18,34 @@ syntax = "proto3";
 
 package v1;
 
-import "v1/webrtc_messages.proto";
+// StartDataChannelRequest is a request to start a data channel.
+// The answer and candidate fields are populated after the offer 
+// is received.
+message StartDataChannelRequest {
+  // node_id is the ID of the node to send the data to.
+  string node_id = 1;
+  // proto is the protocol of the traffic.
+  string proto = 2;
+  // dst is the destination address of the traffic.
+  string dst = 3;
+  // port is the destination port of the traffic.
+  uint32 port = 4;
+  // answer is the answer to the offer.
+  string answer = 5;
+  // candidate is an ICE candidate.
+  string candidate = 6;
+}
+
+// DataChannelOffer is an offer for a data channel. Candidates
+// are sent after the offer is sent.
+message DataChannelOffer {
+  // offer is the offer.
+  string offer = 1;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 2;
+  // candidate is an ICE candidate.
+  string candidate = 3;
+}
 
 // WebRTC is a service for negotiating WebRTC connections to nodes in the mesh.
 // It is typically run alongside a TURN server, however the server can be configured

@@ -4,39 +4,44 @@
 
 <div id="toc-container">
 
-- [v1/admin_messages.proto](#v1%2fadmin_messages.proto)
-  - [<span class="badge">M</span>DeleteRaftACLRequest](#.DeleteRaftACLRequest)
-  - [<span class="badge">M</span>GetRaftACLRequest](#.GetRaftACLRequest)
-  - [<span class="badge">M</span>RaftACL](#.RaftACL)
-  - [<span class="badge">M</span>RaftACLList](#.RaftACLList)
-  - [<span class="badge">E</span>ACLAction](#.ACLAction)
+- [v1/rbac.proto](#v1%2frbac.proto)
+  - [<span class="badge">M</span>Role](#v1.Role)
+  - [<span class="badge">M</span>RoleBinding](#v1.RoleBinding)
+  - [<span class="badge">M</span>RoleBindings](#v1.RoleBindings)
+  - [<span class="badge">M</span>Roles](#v1.Roles)
+  - [<span class="badge">M</span>Rule](#v1.Rule)
+  - [<span class="badge">M</span>Subject](#v1.Subject)
+  - [<span class="badge">E</span>RuleResource](#v1.RuleResource)
+  - [<span class="badge">E</span>RuleVerbs](#v1.RuleVerbs)
+  - [<span class="badge">E</span>SubjectType](#v1.SubjectType)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
-- [v1/mesh_messages.proto](#v1%2fmesh_messages.proto)
+- [v1/node.proto](#v1%2fnode.proto)
+  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
+  - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
+  - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
+  - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
+  - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
+  - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
+  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
+  - [<span class="badge">M</span>Status](#v1.Status)
+  - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
+  - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
+  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
+  - [<span class="badge">E</span>Feature](#v1.Feature)
+  - [<span class="badge">S</span>Node](#v1.Node)
+- [v1/mesh.proto](#v1%2fmesh.proto)
   - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
   - [<span class="badge">M</span>MeshEdge](#v1.MeshEdge)
   - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
   - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
   - [<span class="badge">M</span>NodeList](#v1.NodeList)
-  - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
-  - [<span class="badge">E</span>Feature](#v1.Feature)
-- [v1/mesh.proto](#v1%2fmesh.proto)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
-- [v1/node_metrics.proto](#v1%2fnode_metrics.proto)
-  - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
-  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
-- [v1/node_messages.proto](#v1%2fnode_messages.proto)
-  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
-  - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
-  - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
-  - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
-  - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
-  - [<span class="badge">M</span>Status](#v1.Status)
-  - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
-  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
-- [v1/node.proto](#v1%2fnode.proto)
-  - [<span class="badge">S</span>Node](#v1.Node)
-- [v1/node_raft.proto](#v1%2fnode_raft.proto)
+- [v1/peer_discovery.proto](#v1%2fpeer_discovery.proto)
+  - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
+  - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
+  - [<span class="badge">S</span>PeerDiscovery](#v1.PeerDiscovery)
+- [v1/raft.proto](#v1%2fraft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
   - [<span class="badge">M</span>SQLExec](#v1.SQLExec)
@@ -48,14 +53,9 @@
   - [<span class="badge">M</span>SQLValues](#v1.SQLValues)
   - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
   - [<span class="badge">E</span>SQLParameterType](#v1.SQLParameterType)
-- [v1/peer_discovery.proto](#v1%2fpeer_discovery.proto)
-  - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
-  - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
-  - [<span class="badge">S</span>PeerDiscovery](#v1.PeerDiscovery)
-- [v1/webrtc_messages.proto](#v1%2fwebrtc_messages.proto)
+- [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
   - [<span class="badge">M</span>StartDataChannelRequest](#v1.StartDataChannelRequest)
-- [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">S</span>WebRTC](#v1.WebRTC)
 - [Scalar Value Types](#scalar-value-types)
 
@@ -63,54 +63,98 @@
 
 <div class="file-heading">
 
-## v1/admin_messages.proto
+## v1/rbac.proto
 
 [Top](#title)
 
 </div>
 
-### DeleteRaftACLRequest
+### Role
 
-DeleteRaftACLRequest is a request to delete a RaftACL.
+Role is a role that can be assigned to a subject.
 
-| Field | Type              | Label | Description                  |
-|-------|-------------------|-------|------------------------------|
-| name  | [string](#string) |       | name is the name of the ACL. |
+| Field | Type              | Label    | Description                                        |
+|-------|-------------------|----------|----------------------------------------------------|
+| name  | [string](#string) |          | name is the name of the role.                      |
+| rules | [Rule](#v1.Rule)  | repeated | rules is the list of rules that apply to the role. |
 
-### GetRaftACLRequest
+### RoleBinding
 
-GetRaftACLRequest is a request to get a RaftACL.
+RoleBinding is a binding of a role to one or more subjects.
 
-| Field | Type              | Label | Description                  |
-|-------|-------------------|-------|------------------------------|
-| name  | [string](#string) |       | name is the name of the ACL. |
+| Field    | Type                   | Label    | Description                                                    |
+|----------|------------------------|----------|----------------------------------------------------------------|
+| role     | [string](#string)      |          | role is the name of the role to which the binding applies.     |
+| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects to which the binding applies. |
 
-### RaftACL
+### RoleBindings
 
-RaftACL is an ACL that applies to Raft nodes.
+RoleBindings is a list of role bindings.
 
-| Field    | Type                    | Label    | Description                                                                                                           |
-|----------|-------------------------|----------|-----------------------------------------------------------------------------------------------------------------------|
-| name     | [string](#string)       |          | name is the name of the ACL.                                                                                          |
-| patterns | [string](#string)       | repeated | patterns is a list of node patterns this ACL applies to.                                                              |
-| action   | [ACLAction](#ACLAction) |          | action is the action of this ACL. For RaftACLs This is if the matching nodes are allowed to vote in elections or not. |
+| Field         | Type                           | Label    | Description                                 |
+|---------------|--------------------------------|----------|---------------------------------------------|
+| role_bindings | [RoleBinding](#v1.RoleBinding) | repeated | role_bindings is the list of role bindings. |
 
-### RaftACLList
+### Roles
 
-RaftACLList is a list of RaftACLs.
+Roles is a list of roles.
 
-| Field | Type                | Label    | Description                  |
-|-------|---------------------|----------|------------------------------|
-| items | [RaftACL](#RaftACL) | repeated | items is a list of RaftACLs. |
+| Field | Type             | Label    | Description                 |
+|-------|------------------|----------|-----------------------------|
+| roles | [Role](#v1.Role) | repeated | roles is the list of roles. |
 
-### ACLAction
+### Rule
 
-ACLAction is the action of an ACL.
+Rule is a rule that applies to a resource.
 
-| Name  | Number | Description              |
-|-------|--------|--------------------------|
-| DENY  | 0      | DENY denies the action.  |
-| ALLOW | 1      | ALLOW allows the action. |
+| Field          | Type                             | Label    | Description                                                             |
+|----------------|----------------------------------|----------|-------------------------------------------------------------------------|
+| resources      | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
+| resource_names | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
+| verbs          | [RuleVerbs](#v1.RuleVerbs)       | repeated | verbs is the list of verbs that apply to the resource.                  |
+
+### Subject
+
+| Field | Type                           | Label | Description                      |
+|-------|--------------------------------|-------|----------------------------------|
+| name  | [string](#string)              |       | name is the name of the subject. |
+| type  | [SubjectType](#v1.SubjectType) |       | type is the type of the subject. |
+
+### RuleResource
+
+RuleResource is the resource type for a rule.
+
+| Name                   | Number | Description                                                                                                    |
+|------------------------|--------|----------------------------------------------------------------------------------------------------------------|
+| RESOURCE_UNKNOWN       | 0      | RESOURCE_UNKNOWN is an unknown resource.                                                                       |
+| RESOURCE_VOTES         | 1      | RESOURCE_VOTES is the resource for voting in raft elections. The only verb evaluated for this resource is PUT. |
+| RESOURCE_ROLES         | 2      | RESOURCE_ROLES is the resource for managing roles.                                                             |
+| RESOURCE_ROLE_BINDINGS | 3      | RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.                                             |
+| RESOURCE_NETWORK_ACLS  | 4      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
+| RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
+
+### RuleVerbs
+
+RuleVerbs is the verb type for a rule.
+
+| Name         | Number | Description                                               |
+|--------------|--------|-----------------------------------------------------------|
+| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                          |
+| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource. |
+| VERB_GET     | 2      | VERB_GET is the verb for getting a resource.              |
+| VERB_DELETE  | 3      | VERB_DELETE is the verb for deleting a resource.          |
+| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.       |
+
+### SubjectType
+
+SubjectType is the type of a subject.
+
+| Name            | Number | Description                                  |
+|-----------------|--------|----------------------------------------------|
+| SUBJECT_UNKNOWN | 0      | SUBJECT_UNKNOWN is an unknown subject type.  |
+| SUBJECT_NODE    | 1      | SUBJECT_NODE is a subject type for a node.   |
+| SUBJECT_USER    | 2      | SUBJECT_USER is a subject type for a user.   |
+| SUBJECT_GROUP   | 3      | SUBJECT_GROUP is a subject type for a group. |
 
 <div class="file-heading">
 
@@ -127,18 +171,222 @@ methods
 
 require the leader to be contacted.
 
-Raft ACL Operations
+RBAC operations
 
-| Method Name   | Request Type                                     | Response Type                                    | Description                                         |
-|---------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|
-| PutRaftACL    | [.RaftACL](#RaftACL)                             | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRaftACL creates or updates an ACL.               |
-| DeleteRaftACL | [.DeleteRaftACLRequest](#DeleteRaftACLRequest)   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRaftACL deletes an ACL by name.               |
-| GetRaftACL    | [.GetRaftACLRequest](#GetRaftACLRequest)         | [.RaftACL](#RaftACL)                             | GetRaftACL returns an ACL by name.                  |
-| ListRaftACLs  | [.google.protobuf.Empty](#google.protobuf.Empty) | [.RaftACLList](#RaftACLList)                     | ListRaftACLs returns the ACLs for the Raft cluster. |
+| Method Name       | Request Type                                     | Response Type                                    | Description                                       |
+|-------------------|--------------------------------------------------|--------------------------------------------------|---------------------------------------------------|
+| PutRole           | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRole creates or updates a role.                |
+| DeleteRole        | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRole deletes a role.                        |
+| GetRole           | [Role](#v1.Role)                                 | [Role](#v1.Role)                                 | GetRole gets a role.                              |
+| ListRoles         | [.google.protobuf.Empty](#google.protobuf.Empty) | [Roles](#v1.Roles)                               | ListRoles gets all roles.                         |
+| PutRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoleBinding creates or updates a role binding. |
+| DeleteRoleBinding | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoleBinding deletes a role binding.         |
+| GetRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [RoleBinding](#v1.RoleBinding)                   | GetRoleBinding gets a role binding.               |
+| ListRoleBindings  | [.google.protobuf.Empty](#google.protobuf.Empty) | [RoleBindings](#v1.RoleBindings)                 | ListRoleBindings gets all role bindings.          |
 
 <div class="file-heading">
 
-## v1/mesh_messages.proto
+## v1/node.proto
+
+[Top](#title)
+
+</div>
+
+### DataChannelNegotiation
+
+DataChannelNegotiation is the message for communicating data channels to
+nodes.
+
+| Field        | Type              | Label    | Description                                                         |
+|--------------|-------------------|----------|---------------------------------------------------------------------|
+| proto        | [string](#string) |          | proto is the protocol of the traffic.                               |
+| src          | [string](#string) |          | src is the address of the client that initiated the request.        |
+| dst          | [string](#string) |          | dst is the destination address of the traffic.                      |
+| port         | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
+| offer        | [string](#string) |          | offer is the offer for the node to use as its local description.    |
+| answer       | [string](#string) |          | answer is the answer for the node to use as its remote description. |
+| candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
+| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
+
+### GetStatusRequest
+
+GetStatusRequest is a request to get the status of a node.
+
+| Field | Type              | Label | Description                                                                   |
+|-------|-------------------|-------|-------------------------------------------------------------------------------|
+| id    | [string](#string) |       | id is the ID of the node. If unset, the status of the local node is returned. |
+
+### InterfaceMetrics
+
+InterfaceMetrics is the metrics for the WireGuard interface on a node.
+
+| Field                | Type                           | Label    | Description                                                    |
+|----------------------|--------------------------------|----------|----------------------------------------------------------------|
+| device_name          | [string](#string)              |          | device_name is the name of the device.                         |
+| public_key           | [string](#string)              |          | public_key is the public key of the node.                      |
+| address_v4           | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
+| address_v6           | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
+| type                 | [string](#string)              |          | type is the type of interface being used for wireguard.        |
+| listen_port          | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
+| total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
+| total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
+| num_peers            | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
+| peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
+
+### JoinRequest
+
+JoinRequest is a request to join the cluster.
+
+| Field               | Type              | Label    | Description                                                                                                                             |
+|---------------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | [string](#string) |          | id is the ID of the node.                                                                                                               |
+| public_key          | [string](#string) |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
+| raft_port           | [int32](#int32)   |          | raft_port is the Raft listen port of the node.                                                                                          |
+| grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC listen port of the node.                                                                                          |
+| primary_endpoint    | [string](#string) |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
+| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
+| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
+| assign_ipv4         | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
+| prefer_raft_ipv6    | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
+| as_voter            | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
+
+### JoinResponse
+
+JoinResponse is a response to a join request.
+
+| Field        | Type                               | Label    | Description                                                                                                                                                                                                                                                    |
+|--------------|------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. The bits are set to the network bits of the Mesh IPv4 network. |
+| address_ipv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                                                         |
+| network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                                                  |
+| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                                              |
+
+### LeaveRequest
+
+LeaveRequest is a request to leave the cluster.
+
+| Field | Type              | Label | Description               |
+|-------|-------------------|-------|---------------------------|
+| id    | [string](#string) |       | id is the ID of the node. |
+
+### PeerMetrics
+
+PeerMetrics are the metrics for a node's peer.
+
+| Field                 | Type              | Label    | Description                                                                         |
+|-----------------------|-------------------|----------|-------------------------------------------------------------------------------------|
+| public_key            | [string](#string) |          | public_key is the public key of the peer.                                           |
+| endpoint              | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
+| persistent_keep_alive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
+| last_handshake_time   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
+| allowed_ips           | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
+| protocol_version      | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
+| receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
+| transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
+
+### Status
+
+Status represents the status of a node.
+
+| Field             | Type                                                    | Label    | Description                                                  |
+|-------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
+| id                | [string](#string)                                       |          | id is the ID of the node.                                    |
+| version           | [string](#string)                                       |          | version is the version of the node.                          |
+| commit            | [string](#string)                                       |          | commit is the commit of the node.                            |
+| build_date        | [string](#string)                                       |          | build_date is the build date of the node.                    |
+| uptime            | [string](#string)                                       |          | uptime is the uptime of the node.                            |
+| started_at        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
+| features          | [Feature](#v1.Feature)                                  | repeated | features is the list of features currently enabled.          |
+| cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
+| current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
+| current_term      | [uint64](#uint64)                                       |          | current_term is the current term of the cluster.             |
+| last_log_index    | [uint64](#uint64)                                       |          | last_log_index is the last log index of the cluster.         |
+| last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
+| interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
+
+### WireGuardPeer
+
+WireGuardPeer is a peer in the Wireguard network.
+
+| Field               | Type              | Label    | Description                                                                  |
+|---------------------|-------------------|----------|------------------------------------------------------------------------------|
+| id                  | [string](#string) |          | id is the ID of the peer.                                                    |
+| public_key          | [string](#string) |          | public_key is the public key of the peer.                                    |
+| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                        |
+| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
+| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                      |
+| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
+| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
+| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
+
+### ClusterStatus
+
+ClusterStatus is the status of the node in the cluster.
+
+| Name                   | Number | Description                                           |
+|------------------------|--------|-------------------------------------------------------|
+| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.         |
+| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.     |
+| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.         |
+| CLUSTER_NON_VOTER      | 3      | CLUSTER_NON_VOTER is the status for a non-voter node. |
+
+### DataChannel
+
+DataChannel are the data channels used when communicating over ICE
+
+with a node.
+
+| Name        | Number | Description                                                                                                                                                                                                             |
+|-------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CHANNELS    | 0      | CHANNELS is the data channel used for negotiating new channels. This is the first channel that is opened. The ID of the channel should be 0.                                                                            |
+| CONNECTIONS | 1      | CONNECTIONS is the data channel used for negotiating new connections. This is a channel that is opened for each incoming connection from a client. The ID should start at 0 and be incremented for each new connection. |
+
+### Feature
+
+Feature is a list of features supported by a node.
+
+| Name            | Number | Description                                               |
+|-----------------|--------|-----------------------------------------------------------|
+| FEATURE_NONE    | 0      | FEATURE_NONE is the default feature set.                  |
+| NODES           | 1      | NODES is the feature for nodes. This is always supported. |
+| LEADER_PROXY    | 2      | LEADER_PROXY is the feature for leader proxying.          |
+| MESH_API        | 3      | MESH_API is the feature for the mesh API.                 |
+| PEER_DISCOVERY  | 4      | PEER_DISCOVERY is the feature for peer discovery.         |
+| METRICS         | 5      | METRICS is the feature for exposing metrics.              |
+| ICE_NEGOTIATION | 6      | ICE_NEGOTIATION is the feature for ICE negotiation.       |
+| TURN_SERVER     | 7      | TURN_SERVER is the feature for TURN server.               |
+| MESH_DNS        | 8      | MESH_DNS is the feature for mesh DNS.                     |
+
+### Node
+
+Node is the service exposed on every node in the mesh to communicate
+network
+
+information amongst themselves. Some methods are only available on the
+currently
+
+elected leader. This service can optionally be exposed on public
+interfaces to allow
+
+external users to query the mesh state, join as an observer, or
+proxy/inspect traffic.
+
+Nodes can optionally be configured to proxy requests to the leader. To
+prefer the leader
+
+handle the request when a non-leader can otherwise serve it, use the
+"prefer-leader" header.
+
+| Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                                                                                 |
+| Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
+| GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
+
+<div class="file-heading">
+
+## v1/mesh.proto
 
 [Top](#title)
 
@@ -199,41 +447,6 @@ NodeList is a list of nodes.
 |-------|--------------------------|----------|-----------------------------|
 | nodes | [MeshNode](#v1.MeshNode) | repeated | nodes is the list of nodes. |
 
-### ClusterStatus
-
-ClusterStatus is the status of the node in the cluster.
-
-| Name                   | Number | Description                                           |
-|------------------------|--------|-------------------------------------------------------|
-| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.         |
-| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.     |
-| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.         |
-| CLUSTER_NON_VOTER      | 3      | CLUSTER_NON_VOTER is the status for a non-voter node. |
-
-### Feature
-
-Feature is a list of features supported by a node.
-
-| Name            | Number | Description                                               |
-|-----------------|--------|-----------------------------------------------------------|
-| FEATURE_NONE    | 0      | FEATURE_NONE is the default feature set.                  |
-| NODES           | 1      | NODES is the feature for nodes. This is always supported. |
-| LEADER_PROXY    | 2      | LEADER_PROXY is the feature for leader proxying.          |
-| MESH_API        | 3      | MESH_API is the feature for the mesh API.                 |
-| PEER_DISCOVERY  | 4      | PEER_DISCOVERY is the feature for peer discovery.         |
-| METRICS         | 5      | METRICS is the feature for exposing metrics.              |
-| ICE_NEGOTIATION | 6      | ICE_NEGOTIATION is the feature for ICE negotiation.       |
-| TURN_SERVER     | 7      | TURN_SERVER is the feature for TURN server.               |
-| MESH_DNS        | 8      | MESH_DNS is the feature for mesh DNS.                     |
-
-<div class="file-heading">
-
-## v1/mesh.proto
-
-[Top](#title)
-
-</div>
-
 ### Mesh
 
 Mesh is a service that can optionally be exposed by a node. It provides
@@ -253,196 +466,60 @@ service.
 
 <div class="file-heading">
 
-## v1/node_metrics.proto
+## v1/peer_discovery.proto
 
 [Top](#title)
 
 </div>
 
-### InterfaceMetrics
+### ListRaftPeersResponse
 
-InterfaceMetrics is the metrics for the WireGuard interface on a node.
+ListRaftPeersResponse is the response to ListPeers.
 
-| Field                | Type                           | Label    | Description                                                    |
-|----------------------|--------------------------------|----------|----------------------------------------------------------------|
-| device_name          | [string](#string)              |          | device_name is the name of the device.                         |
-| public_key           | [string](#string)              |          | public_key is the public key of the node.                      |
-| address_v4           | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
-| address_v6           | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
-| type                 | [string](#string)              |          | type is the type of interface being used for wireguard.        |
-| listen_port          | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
-| total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
-| total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
-| num_peers            | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
-| peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
+| Field | Type                     | Label    | Description                 |
+|-------|--------------------------|----------|-----------------------------|
+| peers | [RaftPeer](#v1.RaftPeer) | repeated | Peers is the list of peers. |
 
-### PeerMetrics
+### RaftPeer
 
-PeerMetrics are the metrics for a node's peer.
+RaftPeer is a peer in the Raft cluster.
 
-| Field                 | Type              | Label    | Description                                                                         |
-|-----------------------|-------------------|----------|-------------------------------------------------------------------------------------|
-| public_key            | [string](#string) |          | public_key is the public key of the peer.                                           |
-| endpoint              | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
-| persistent_keep_alive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
-| last_handshake_time   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
-| allowed_ips           | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
-| protocol_version      | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
-| receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
-| transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
+| Field   | Type              | Label | Description                                     |
+|---------|-------------------|-------|-------------------------------------------------|
+| id      | [string](#string) |       | ID is the ID of the peer.                       |
+| address | [string](#string) |       | Address is the public gRPC address of the peer. |
+| voter   | [bool](#bool)     |       | Voter is whether the peer is a voter.           |
+| leader  | [bool](#bool)     |       | Leader is whether the peer is the leader.       |
 
-<div class="file-heading">
+### PeerDiscovery
 
-## v1/node_messages.proto
+PeerDiscovery is the service that provides peer discovery. This is a
+service
 
-[Top](#title)
+that can optionally be exposed by nodes in the mesh to provide peer
+discovery
 
-</div>
+to other nodes. Alternative methods of peer discovery can be used, such
+as
 
-### DataChannelNegotiation
+static files or DNS, but running one or more publicly accessible nodes
+with this
 
-DataChannelNegotiation is the message for communicating data channels to
-nodes.
+service registered is the simplest method.
 
-| Field        | Type              | Label    | Description                                                         |
-|--------------|-------------------|----------|---------------------------------------------------------------------|
-| proto        | [string](#string) |          | proto is the protocol of the traffic.                               |
-| src          | [string](#string) |          | src is the address of the client that initiated the request.        |
-| dst          | [string](#string) |          | dst is the destination address of the traffic.                      |
-| port         | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
-| offer        | [string](#string) |          | offer is the offer for the node to use as its local description.    |
-| answer       | [string](#string) |          | answer is the answer for the node to use as its remote description. |
-| candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
-| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
+It only makes sense to expose this service on a public address on a
+member of the
 
-### GetStatusRequest
+Raft cluster. It is not necessary to expose this service on every node
+in the mesh.
 
-GetStatusRequest is a request to get the status of a node.
-
-| Field | Type              | Label | Description                                                                   |
-|-------|-------------------|-------|-------------------------------------------------------------------------------|
-| id    | [string](#string) |       | id is the ID of the node. If unset, the status of the local node is returned. |
-
-### JoinRequest
-
-JoinRequest is a request to join the cluster.
-
-| Field               | Type              | Label    | Description                                                                                                                             |
-|---------------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string) |          | id is the ID of the node.                                                                                                               |
-| public_key          | [string](#string) |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
-| raft_port           | [int32](#int32)   |          | raft_port is the Raft listen port of the node.                                                                                          |
-| grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC listen port of the node.                                                                                          |
-| primary_endpoint    | [string](#string) |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
-| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
-| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
-| assign_ipv4         | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
-| prefer_raft_ipv6    | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
-| as_voter            | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
-
-### JoinResponse
-
-JoinResponse is a response to a join request.
-
-| Field        | Type                               | Label    | Description                                                                                                                                                                                                                                                    |
-|--------------|------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. The bits are set to the network bits of the Mesh IPv4 network. |
-| address_ipv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                                                         |
-| network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                                                  |
-| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                                              |
-
-### LeaveRequest
-
-LeaveRequest is a request to leave the cluster.
-
-| Field | Type              | Label | Description               |
-|-------|-------------------|-------|---------------------------|
-| id    | [string](#string) |       | id is the ID of the node. |
-
-### Status
-
-Status represents the status of a node.
-
-| Field             | Type                                                    | Label    | Description                                                  |
-|-------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
-| id                | [string](#string)                                       |          | id is the ID of the node.                                    |
-| version           | [string](#string)                                       |          | version is the version of the node.                          |
-| commit            | [string](#string)                                       |          | commit is the commit of the node.                            |
-| build_date        | [string](#string)                                       |          | build_date is the build date of the node.                    |
-| uptime            | [string](#string)                                       |          | uptime is the uptime of the node.                            |
-| started_at        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
-| features          | [Feature](#v1.Feature)                                  | repeated | features is the list of features currently enabled.          |
-| cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
-| current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
-| current_term      | [uint64](#uint64)                                       |          | current_term is the current term of the cluster.             |
-| last_log_index    | [uint64](#uint64)                                       |          | last_log_index is the last log index of the cluster.         |
-| last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
-| interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
-
-### WireGuardPeer
-
-WireGuardPeer is a peer in the Wireguard network.
-
-| Field               | Type              | Label    | Description                                                                  |
-|---------------------|-------------------|----------|------------------------------------------------------------------------------|
-| id                  | [string](#string) |          | id is the ID of the peer.                                                    |
-| public_key          | [string](#string) |          | public_key is the public key of the peer.                                    |
-| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                        |
-| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
-| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                      |
-| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
-| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
-| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
-
-### DataChannel
-
-DataChannel are the data channels used when communicating over ICE
-
-with a node.
-
-| Name        | Number | Description                                                                                                                                                                                                             |
-|-------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CHANNELS    | 0      | CHANNELS is the data channel used for negotiating new channels. This is the first channel that is opened. The ID of the channel should be 0.                                                                            |
-| CONNECTIONS | 1      | CONNECTIONS is the data channel used for negotiating new connections. This is a channel that is opened for each incoming connection from a client. The ID should start at 0 and be incremented for each new connection. |
+| Method Name | Request Type                                     | Response Type                                      | Description                                                           |
+|-------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
+| ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of public peers currently known to the mesh. |
 
 <div class="file-heading">
 
-## v1/node.proto
-
-[Top](#title)
-
-</div>
-
-### Node
-
-Node is the service exposed on every node in the mesh to communicate
-network
-
-information amongst themselves. Some methods are only available on the
-currently
-
-elected leader. This service can optionally be exposed on public
-interfaces to allow
-
-external users to query the mesh state, join as an observer, or
-proxy/inspect traffic.
-
-Nodes can optionally be configured to proxy requests to the leader. To
-prefer the leader
-
-handle the request when a non-leader can otherwise serve it, use the
-"prefer-leader" header.
-
-| Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                                                                                 |
-| Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
-| GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
-
-<div class="file-heading">
-
-## v1/node_raft.proto
+## v1/raft.proto
 
 [Top](#title)
 
@@ -571,60 +648,7 @@ Raft log.
 
 <div class="file-heading">
 
-## v1/peer_discovery.proto
-
-[Top](#title)
-
-</div>
-
-### ListRaftPeersResponse
-
-ListRaftPeersResponse is the response to ListPeers.
-
-| Field | Type                     | Label    | Description                 |
-|-------|--------------------------|----------|-----------------------------|
-| peers | [RaftPeer](#v1.RaftPeer) | repeated | Peers is the list of peers. |
-
-### RaftPeer
-
-RaftPeer is a peer in the Raft cluster.
-
-| Field   | Type              | Label | Description                                     |
-|---------|-------------------|-------|-------------------------------------------------|
-| id      | [string](#string) |       | ID is the ID of the peer.                       |
-| address | [string](#string) |       | Address is the public gRPC address of the peer. |
-| voter   | [bool](#bool)     |       | Voter is whether the peer is a voter.           |
-| leader  | [bool](#bool)     |       | Leader is whether the peer is the leader.       |
-
-### PeerDiscovery
-
-PeerDiscovery is the service that provides peer discovery. This is a
-service
-
-that can optionally be exposed by nodes in the mesh to provide peer
-discovery
-
-to other nodes. Alternative methods of peer discovery can be used, such
-as
-
-static files or DNS, but running one or more publicly accessible nodes
-with this
-
-service registered is the simplest method.
-
-It only makes sense to expose this service on a public address on a
-member of the
-
-Raft cluster. It is not necessary to expose this service on every node
-in the mesh.
-
-| Method Name | Request Type                                     | Response Type                                      | Description                                                           |
-|-------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
-| ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of public peers currently known to the mesh. |
-
-<div class="file-heading">
-
-## v1/webrtc_messages.proto
+## v1/webrtc.proto
 
 [Top](#title)
 
@@ -658,14 +682,6 @@ is received.
 | port      | [uint32](#uint32) |       | port is the destination port of the traffic.       |
 | answer    | [string](#string) |       | answer is the answer to the offer.                 |
 | candidate | [string](#string) |       | candidate is an ICE candidate.                     |
-
-<div class="file-heading">
-
-## v1/webrtc.proto
-
-[Top](#title)
-
-</div>
 
 ### WebRTC
 

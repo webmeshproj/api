@@ -19,8 +19,222 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
-import "v1/node_messages.proto";
+// ClusterStatus is the status of the node in the cluster.
+enum ClusterStatus {
+    // CLUSTER_STATUS_UNKNOWN is the default status.
+    CLUSTER_STATUS_UNKNOWN = 0;
+    // CLUSTER_LEADER is the status for the leader node.
+    CLUSTER_LEADER = 1;
+    // CLUSTER_VOTER is the status for a voter node.
+    CLUSTER_VOTER = 2;
+    // CLUSTER_NON_VOTER is the status for a non-voter node.
+    CLUSTER_NON_VOTER = 3;
+}
+
+// Feature is a list of features supported by a node.
+enum Feature {
+    // FEATURE_NONE is the default feature set.
+    FEATURE_NONE = 0;
+    // NODES is the feature for nodes. This is always supported.
+    NODES = 1;
+    // LEADER_PROXY is the feature for leader proxying.
+    LEADER_PROXY = 2;
+    // MESH_API is the feature for the mesh API.
+    MESH_API = 3;
+    // PEER_DISCOVERY is the feature for peer discovery.
+    PEER_DISCOVERY = 4;
+    // METRICS is the feature for exposing metrics.
+    METRICS = 5;
+    // ICE_NEGOTIATION is the feature for ICE negotiation.
+    ICE_NEGOTIATION = 6;
+    // TURN_SERVER is the feature for TURN server.
+    TURN_SERVER = 7;
+    // MESH_DNS is the feature for mesh DNS.
+    MESH_DNS = 8;
+}
+
+// DataChannel are the data channels used when communicating over ICE
+// with a node.
+enum DataChannel {
+  // CHANNELS is the data channel used for negotiating new channels.
+  // This is the first channel that is opened. The ID of the channel
+  // should be 0.
+  CHANNELS = 0;
+  // CONNECTIONS is the data channel used for negotiating new connections.
+  // This is a channel that is opened for each incoming connection from a
+  // client. The ID should start at 0 and be incremented for each new connection.
+  CONNECTIONS = 1;
+}
+
+// JoinRequest is a request to join the cluster.
+message JoinRequest {
+    // id is the ID of the node.
+    string id = 1;
+    // public_key is the public wireguard key of the node to broadcast to peers.
+    string public_key = 2;
+    // raft_port is the Raft listen port of the node.
+    int32 raft_port = 3;
+    // grpc_port is the gRPC listen port of the node.
+    int32 grpc_port = 4;
+    // primary_endpoint is a routable address for the node. If left unset, 
+    // the node is assumed to be behind a NAT and not directly accessible.
+    string primary_endpoint = 6;
+    // wireguard_endpoints is a list of WireGuard endpoints for the node.
+    repeated string wireguard_endpoints = 7;
+    // zone_awareness_id is the zone awareness ID of the node.
+    string zone_awareness_id = 8;
+    // assign_ipv4 is whether an IPv4 address should be assigned to the node.
+    bool assign_ipv4 = 9;
+    // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
+    // This is only used if assign_ipv4 is true.
+    bool prefer_raft_ipv6 = 10;
+    // as_voter is whether the node should receive a vote in elections.
+    bool as_voter = 11;
+}
+
+// JoinResponse is a response to a join request.
+message JoinResponse {
+    // address_ipv4 is the private IPv4 wireguard address of the node
+    // in CIDR format representing the network. This is only set if
+    // assign_ipv4 was set in the request or no network_ipv6 was provided.
+    // The bits are set to the network bits of the Mesh IPv4 network.
+    string address_ipv4 = 1;
+    // address_ipv6 is the IPv6 network assigned to the node.
+    string address_ipv6 = 2;
+    // network_ipv6 is the IPv6 network of the Mesh.
+    string network_ipv6 = 3;
+    // peers is a list of wireguard peers to connect to.
+    repeated WireGuardPeer peers = 4;
+}
+
+// WireGuardPeer is a peer in the Wireguard network.
+message WireGuardPeer {
+    // id is the ID of the peer.
+    string id = 1;
+    // public_key is the public key of the peer.
+    string public_key = 2;
+    // primary_endpoint is the primary endpoint of the peer.
+    string primary_endpoint = 3;
+    // wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.
+    repeated string wireguard_endpoints = 4;
+    // zone_awareness_id is the zone awareness ID of the peer.
+    string zone_awareness_id = 5;
+    // address_ipv4 is the private IPv4 wireguard address of the peer.
+    string address_ipv4 = 6;
+    // address_ipv6 is the private IPv6 wireguard address of the peer.
+    string address_ipv6 = 7;
+    // allowed_ips is the list of allowed IPs for the peer.
+    repeated string allowed_ips = 8;
+}
+
+// LeaveRequest is a request to leave the cluster.
+message LeaveRequest {
+    // id is the ID of the node.
+    string id = 1;
+}
+
+// GetStatusRequest is a request to get the status of a node.
+message GetStatusRequest {
+    // id is the ID of the node. If unset, the status of the 
+    // local node is returned.
+    string id = 1;
+}
+
+// Status represents the status of a node.
+message Status {
+    // id is the ID of the node.
+    string id = 1;
+    // version is the version of the node.
+    string version = 2;
+    // commit is the commit of the node.
+    string commit = 3;
+    // build_date is the build date of the node.
+    string build_date = 4;
+    // uptime is the uptime of the node.
+    string uptime = 5;
+    // started_at is the time the node started.
+    google.protobuf.Timestamp started_at = 6;
+    // features is the list of features currently enabled.
+    repeated Feature features = 7;
+    // cluster_status is the status of the node in the cluster.
+    ClusterStatus cluster_status = 8;
+    // current_leader is the current leader of the cluster.
+    string current_leader = 9;
+    // current_term is the current term of the cluster.
+    uint64 current_term = 10;
+    // last_log_index is the last log index of the cluster.
+    uint64 last_log_index = 11;
+    // last_applied is the last applied index of the cluster.
+    uint64 last_applied = 12;
+    // interface_metrics are the metrics for the node's interfaces.
+    InterfaceMetrics interface_metrics = 13;
+}
+
+// DataChannelNegotiation is the message for communicating data channels to nodes.
+message DataChannelNegotiation {
+  // proto is the protocol of the traffic.
+  string proto = 1;
+  // src is the address of the client that initiated the request.
+  string src = 2;
+  // dst is the destination address of the traffic.
+  string dst = 3;
+  // port is the destination port of the traffic.
+  uint32 port = 4;
+  // offer is the offer for the node to use as its local description.
+  string offer = 5;
+  // answer is the answer for the node to use as its remote description.
+  string answer = 6;
+  // candidate is an ICE candidate.
+  string candidate = 7;
+  // stun_servers is the list of STUN servers to use.
+  repeated string stun_servers = 8;
+}
+
+// InterfaceMetrics is the metrics for the WireGuard interface on a node.
+message InterfaceMetrics {
+  // device_name is the name of the device.
+  string device_name = 1;
+  // public_key is the public key of the node.
+  string public_key = 2;
+  // address_v4 is the IPv4 address of the node.
+  string address_v4 = 3;
+  // address_v6 is the IPv6 address of the node.
+  string address_v6 = 4;
+  // type is the type of interface being used for wireguard.
+  string type = 5;
+  // listen_port is the port wireguard is listening on.
+  int32 listen_port = 6;
+  // total_receive_bytes is the total number of bytes received.
+  uint64 total_receive_bytes = 7;
+  // total_transmit_bytes is the total number of bytes transmitted.
+  uint64 total_transmit_bytes = 8;
+  // num_peers is the number of peers connected to the node.
+  int32 num_peers = 9;
+  // peers are the per-peer statistics.
+  repeated PeerMetrics peers = 10;
+}
+
+// PeerMetrics are the metrics for a node's peer.
+message PeerMetrics {
+  // public_key is the public key of the peer.
+  string public_key = 1;
+  // endpoint is the connected endpoint of the peer.
+  string endpoint = 2;
+  // persistent_keep_alive is the persistent keep alive interval for the peer.
+  string persistent_keep_alive = 3;
+  // last_handshake_time is the last handshake time for the peer.
+  string last_handshake_time = 4;
+  // allowed_ips is the list of allowed IPs for the peer.
+  repeated string allowed_ips = 5;
+  // protocol_version is the version of the wireguard protocol negotiated with the peer.
+  int64 protocol_version = 6;
+  // receive_bytes is the bytes received from the peer.
+  uint64 receive_bytes = 7;
+  // transmit_bytes is the bytes transmitted to the peer.
+  uint64 transmit_bytes = 8;
+}
 
 // Node is the service exposed on every node in the mesh to communicate network
 // information amongst themselves. Some methods are only available on the currently

@@ -1,0 +1,111 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// RuleResource is the resource type for a rule.
+enum RuleResource {
+    // RESOURCE_UNKNOWN is an unknown resource.
+    RESOURCE_UNKNOWN = 0;
+
+    // RESOURCE_VOTES is the resource for voting in raft elections. The only
+    // verb evaluated for this resource is PUT.
+    RESOURCE_VOTES = 1;
+    // RESOURCE_ROLES is the resource for managing roles.
+    RESOURCE_ROLES = 2;
+    // RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.
+    RESOURCE_ROLE_BINDINGS = 3;
+    // RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.
+    RESOURCE_NETWORK_ACLS = 4;
+
+    // RESOURCE_ALL is a wildcard resource that matches all resources.
+    RESOURCE_ALL = 999;
+}
+
+// RuleVerbs is the verb type for a rule.
+enum RuleVerbs {
+    // VERB_UNKNOWN is an unknown verb.
+    VERB_UNKNOWN = 0;
+
+    // VERB_PUT is the verb for creating or updating a resource.
+    VERB_PUT = 1;
+    // VERB_GET is the verb for getting a resource.
+    VERB_GET = 2;
+    // VERB_DELETE is the verb for deleting a resource.
+    VERB_DELETE = 3;
+
+    // VERB_ALL is a wildcard verb that matches all verbs.
+    VERB_ALL = 999;
+}
+
+// SubjectType is the type of a subject.
+enum SubjectType {
+    // SUBJECT_UNKNOWN is an unknown subject type.
+    SUBJECT_UNKNOWN = 0;
+    // SUBJECT_NODE is a subject type for a node.
+    SUBJECT_NODE = 1;
+    // SUBJECT_USER is a subject type for a user.
+    SUBJECT_USER = 2;
+    // SUBJECT_GROUP is a subject type for a group.
+    SUBJECT_GROUP = 3;
+}
+
+// Rule is a rule that applies to a resource.
+message Rule {
+    // resources is the resources to which the rule applies.
+    repeated RuleResource resources = 1;
+    // resource_names is the list of resource names to which the rule applies.
+    repeated string resource_names = 2;
+    // verbs is the list of verbs that apply to the resource.
+    repeated RuleVerbs verbs = 3;
+}
+
+// Role is a role that can be assigned to a subject.
+message Role {
+    // name is the name of the role.
+    string name = 1;
+    // rules is the list of rules that apply to the role.
+    repeated Rule rules = 2;
+}
+
+// Roles is a list of roles.
+message Roles {
+    // roles is the list of roles.
+    repeated Role roles = 1;
+}
+
+// RoleBinding is a binding of a role to one or more subjects.
+message RoleBinding {
+    // role is the name of the role to which the binding applies.
+    string role = 1;
+    // subjects is the list of subjects to which the binding applies.
+    repeated Subject subjects = 2;
+}
+
+// RoleBindings is a list of role bindings.
+message RoleBindings {
+    // role_bindings is the list of role bindings.
+    repeated RoleBinding role_bindings = 1;
+}
+
+message Subject {
+    // name is the name of the subject.
+    string name = 1;
+    // type is the type of the subject.
+    SubjectType type = 2;
+}

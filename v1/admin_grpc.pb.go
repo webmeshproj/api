@@ -35,24 +35,36 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Admin_PutRaftACL_FullMethodName    = "/v1.Admin/PutRaftACL"
-	Admin_DeleteRaftACL_FullMethodName = "/v1.Admin/DeleteRaftACL"
-	Admin_GetRaftACL_FullMethodName    = "/v1.Admin/GetRaftACL"
-	Admin_ListRaftACLs_FullMethodName  = "/v1.Admin/ListRaftACLs"
+	Admin_PutRole_FullMethodName           = "/v1.Admin/PutRole"
+	Admin_DeleteRole_FullMethodName        = "/v1.Admin/DeleteRole"
+	Admin_GetRole_FullMethodName           = "/v1.Admin/GetRole"
+	Admin_ListRoles_FullMethodName         = "/v1.Admin/ListRoles"
+	Admin_PutRoleBinding_FullMethodName    = "/v1.Admin/PutRoleBinding"
+	Admin_DeleteRoleBinding_FullMethodName = "/v1.Admin/DeleteRoleBinding"
+	Admin_GetRoleBinding_FullMethodName    = "/v1.Admin/GetRoleBinding"
+	Admin_ListRoleBindings_FullMethodName  = "/v1.Admin/ListRoleBindings"
 )
 
 // AdminClient is the client API for Admin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminClient interface {
-	// PutRaftACL creates or updates an ACL.
-	PutRaftACL(ctx context.Context, in *RaftACL, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// DeleteRaftACL deletes an ACL by name.
-	DeleteRaftACL(ctx context.Context, in *DeleteRaftACLRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// GetRaftACL returns an ACL by name.
-	GetRaftACL(ctx context.Context, in *GetRaftACLRequest, opts ...grpc.CallOption) (*RaftACL, error)
-	// ListRaftACLs returns the ACLs for the Raft cluster.
-	ListRaftACLs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RaftACLList, error)
+	// PutRole creates or updates a role.
+	PutRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteRole deletes a role.
+	DeleteRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetRole gets a role.
+	GetRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Role, error)
+	// ListRoles gets all roles.
+	ListRoles(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Roles, error)
+	// PutRoleBinding creates or updates a role binding.
+	PutRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteRoleBinding deletes a role binding.
+	DeleteRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetRoleBinding gets a role binding.
+	GetRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*RoleBinding, error)
+	// ListRoleBindings gets all role bindings.
+	ListRoleBindings(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RoleBindings, error)
 }
 
 type adminClient struct {
@@ -63,36 +75,72 @@ func NewAdminClient(cc grpc.ClientConnInterface) AdminClient {
 	return &adminClient{cc}
 }
 
-func (c *adminClient) PutRaftACL(ctx context.Context, in *RaftACL, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *adminClient) PutRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Admin_PutRaftACL_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Admin_PutRole_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminClient) DeleteRaftACL(ctx context.Context, in *DeleteRaftACLRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *adminClient) DeleteRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Admin_DeleteRaftACL_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Admin_DeleteRole_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminClient) GetRaftACL(ctx context.Context, in *GetRaftACLRequest, opts ...grpc.CallOption) (*RaftACL, error) {
-	out := new(RaftACL)
-	err := c.cc.Invoke(ctx, Admin_GetRaftACL_FullMethodName, in, out, opts...)
+func (c *adminClient) GetRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Role, error) {
+	out := new(Role)
+	err := c.cc.Invoke(ctx, Admin_GetRole_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminClient) ListRaftACLs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RaftACLList, error) {
-	out := new(RaftACLList)
-	err := c.cc.Invoke(ctx, Admin_ListRaftACLs_FullMethodName, in, out, opts...)
+func (c *adminClient) ListRoles(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Roles, error) {
+	out := new(Roles)
+	err := c.cc.Invoke(ctx, Admin_ListRoles_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) PutRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_PutRoleBinding_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteRoleBinding_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetRoleBinding(ctx context.Context, in *RoleBinding, opts ...grpc.CallOption) (*RoleBinding, error) {
+	out := new(RoleBinding)
+	err := c.cc.Invoke(ctx, Admin_GetRoleBinding_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) ListRoleBindings(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RoleBindings, error) {
+	out := new(RoleBindings)
+	err := c.cc.Invoke(ctx, Admin_ListRoleBindings_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,14 +151,22 @@ func (c *adminClient) ListRaftACLs(ctx context.Context, in *emptypb.Empty, opts 
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
 type AdminServer interface {
-	// PutRaftACL creates or updates an ACL.
-	PutRaftACL(context.Context, *RaftACL) (*emptypb.Empty, error)
-	// DeleteRaftACL deletes an ACL by name.
-	DeleteRaftACL(context.Context, *DeleteRaftACLRequest) (*emptypb.Empty, error)
-	// GetRaftACL returns an ACL by name.
-	GetRaftACL(context.Context, *GetRaftACLRequest) (*RaftACL, error)
-	// ListRaftACLs returns the ACLs for the Raft cluster.
-	ListRaftACLs(context.Context, *emptypb.Empty) (*RaftACLList, error)
+	// PutRole creates or updates a role.
+	PutRole(context.Context, *Role) (*emptypb.Empty, error)
+	// DeleteRole deletes a role.
+	DeleteRole(context.Context, *Role) (*emptypb.Empty, error)
+	// GetRole gets a role.
+	GetRole(context.Context, *Role) (*Role, error)
+	// ListRoles gets all roles.
+	ListRoles(context.Context, *emptypb.Empty) (*Roles, error)
+	// PutRoleBinding creates or updates a role binding.
+	PutRoleBinding(context.Context, *RoleBinding) (*emptypb.Empty, error)
+	// DeleteRoleBinding deletes a role binding.
+	DeleteRoleBinding(context.Context, *RoleBinding) (*emptypb.Empty, error)
+	// GetRoleBinding gets a role binding.
+	GetRoleBinding(context.Context, *RoleBinding) (*RoleBinding, error)
+	// ListRoleBindings gets all role bindings.
+	ListRoleBindings(context.Context, *emptypb.Empty) (*RoleBindings, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -118,17 +174,29 @@ type AdminServer interface {
 type UnimplementedAdminServer struct {
 }
 
-func (UnimplementedAdminServer) PutRaftACL(context.Context, *RaftACL) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PutRaftACL not implemented")
+func (UnimplementedAdminServer) PutRole(context.Context, *Role) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutRole not implemented")
 }
-func (UnimplementedAdminServer) DeleteRaftACL(context.Context, *DeleteRaftACLRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteRaftACL not implemented")
+func (UnimplementedAdminServer) DeleteRole(context.Context, *Role) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRole not implemented")
 }
-func (UnimplementedAdminServer) GetRaftACL(context.Context, *GetRaftACLRequest) (*RaftACL, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRaftACL not implemented")
+func (UnimplementedAdminServer) GetRole(context.Context, *Role) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRole not implemented")
 }
-func (UnimplementedAdminServer) ListRaftACLs(context.Context, *emptypb.Empty) (*RaftACLList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRaftACLs not implemented")
+func (UnimplementedAdminServer) ListRoles(context.Context, *emptypb.Empty) (*Roles, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRoles not implemented")
+}
+func (UnimplementedAdminServer) PutRoleBinding(context.Context, *RoleBinding) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutRoleBinding not implemented")
+}
+func (UnimplementedAdminServer) DeleteRoleBinding(context.Context, *RoleBinding) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRoleBinding not implemented")
+}
+func (UnimplementedAdminServer) GetRoleBinding(context.Context, *RoleBinding) (*RoleBinding, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoleBinding not implemented")
+}
+func (UnimplementedAdminServer) ListRoleBindings(context.Context, *emptypb.Empty) (*RoleBindings, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRoleBindings not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -143,74 +211,146 @@ func RegisterAdminServer(s grpc.ServiceRegistrar, srv AdminServer) {
 	s.RegisterService(&Admin_ServiceDesc, srv)
 }
 
-func _Admin_PutRaftACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RaftACL)
+func _Admin_PutRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Role)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServer).PutRaftACL(ctx, in)
+		return srv.(AdminServer).PutRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Admin_PutRaftACL_FullMethodName,
+		FullMethod: Admin_PutRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServer).PutRaftACL(ctx, req.(*RaftACL))
+		return srv.(AdminServer).PutRole(ctx, req.(*Role))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Admin_DeleteRaftACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRaftACLRequest)
+func _Admin_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Role)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServer).DeleteRaftACL(ctx, in)
+		return srv.(AdminServer).DeleteRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Admin_DeleteRaftACL_FullMethodName,
+		FullMethod: Admin_DeleteRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServer).DeleteRaftACL(ctx, req.(*DeleteRaftACLRequest))
+		return srv.(AdminServer).DeleteRole(ctx, req.(*Role))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Admin_GetRaftACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRaftACLRequest)
+func _Admin_GetRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Role)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServer).GetRaftACL(ctx, in)
+		return srv.(AdminServer).GetRole(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Admin_GetRaftACL_FullMethodName,
+		FullMethod: Admin_GetRole_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServer).GetRaftACL(ctx, req.(*GetRaftACLRequest))
+		return srv.(AdminServer).GetRole(ctx, req.(*Role))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Admin_ListRaftACLs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Admin_ListRoles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServer).ListRaftACLs(ctx, in)
+		return srv.(AdminServer).ListRoles(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Admin_ListRaftACLs_FullMethodName,
+		FullMethod: Admin_ListRoles_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServer).ListRaftACLs(ctx, req.(*emptypb.Empty))
+		return srv.(AdminServer).ListRoles(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_PutRoleBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleBinding)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).PutRoleBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_PutRoleBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).PutRoleBinding(ctx, req.(*RoleBinding))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteRoleBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleBinding)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteRoleBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteRoleBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteRoleBinding(ctx, req.(*RoleBinding))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetRoleBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleBinding)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetRoleBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetRoleBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetRoleBinding(ctx, req.(*RoleBinding))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_ListRoleBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).ListRoleBindings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_ListRoleBindings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).ListRoleBindings(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -223,20 +363,36 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AdminServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PutRaftACL",
-			Handler:    _Admin_PutRaftACL_Handler,
+			MethodName: "PutRole",
+			Handler:    _Admin_PutRole_Handler,
 		},
 		{
-			MethodName: "DeleteRaftACL",
-			Handler:    _Admin_DeleteRaftACL_Handler,
+			MethodName: "DeleteRole",
+			Handler:    _Admin_DeleteRole_Handler,
 		},
 		{
-			MethodName: "GetRaftACL",
-			Handler:    _Admin_GetRaftACL_Handler,
+			MethodName: "GetRole",
+			Handler:    _Admin_GetRole_Handler,
 		},
 		{
-			MethodName: "ListRaftACLs",
-			Handler:    _Admin_ListRaftACLs_Handler,
+			MethodName: "ListRoles",
+			Handler:    _Admin_ListRoles_Handler,
+		},
+		{
+			MethodName: "PutRoleBinding",
+			Handler:    _Admin_PutRoleBinding_Handler,
+		},
+		{
+			MethodName: "DeleteRoleBinding",
+			Handler:    _Admin_DeleteRoleBinding_Handler,
+		},
+		{
+			MethodName: "GetRoleBinding",
+			Handler:    _Admin_GetRoleBinding_Handler,
+		},
+		{
+			MethodName: "ListRoleBindings",
+			Handler:    _Admin_ListRoleBindings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
