@@ -30,8 +30,10 @@ enum RuleResource {
     RESOURCE_ROLES = 2;
     // RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.
     RESOURCE_ROLE_BINDINGS = 3;
+    // RESOURCE_GROUPS is the resource for managing groups.
+    RESOURCE_GROUPS = 4;
     // RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.
-    RESOURCE_NETWORK_ACLS = 4;
+    RESOURCE_NETWORK_ACLS = 5;
 
     // RESOURCE_ALL is a wildcard resource that matches all resources.
     RESOURCE_ALL = 999;

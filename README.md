@@ -163,7 +163,8 @@ RuleResource is the resource type for a rule.
 | RESOURCE_VOTES         | 1      | RESOURCE_VOTES is the resource for voting in raft elections. The only verb evaluated for this resource is PUT. |
 | RESOURCE_ROLES         | 2      | RESOURCE_ROLES is the resource for managing roles.                                                             |
 | RESOURCE_ROLE_BINDINGS | 3      | RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.                                             |
-| RESOURCE_NETWORK_ACLS  | 4      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
+| RESOURCE_GROUPS        | 4      | RESOURCE_GROUPS is the resource for managing groups.                                                           |
+| RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerbs
