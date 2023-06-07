@@ -91,10 +91,12 @@ message Roles {
 
 // RoleBinding is a binding of a role to one or more subjects.
 message RoleBinding {
+    // name is the name of the role binding.
+    string name = 1;
     // role is the name of the role to which the binding applies.
-    string role = 1;
+    string role = 2;
     // subjects is the list of subjects to which the binding applies.
-    repeated Subject subjects = 2;
+    repeated Subject subjects = 3;
 }
 
 // RoleBindings is a list of role bindings.

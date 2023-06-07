@@ -84,6 +84,7 @@ RoleBinding is a binding of a role to one or more subjects.
 
 | Field    | Type                   | Label    | Description                                                    |
 |----------|------------------------|----------|----------------------------------------------------------------|
+| name     | [string](#string)      |          | name is the name of the role binding.                          |
 | role     | [string](#string)      |          | role is the name of the role to which the binding applies.     |
 | subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects to which the binding applies. |
 
