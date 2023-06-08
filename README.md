@@ -169,6 +169,7 @@ RuleResource is the resource type for a rule.
 | RESOURCE_ROLE_BINDINGS | 3      | RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.                                             |
 | RESOURCE_GROUPS        | 4      | RESOURCE_GROUPS is the resource for managing groups.                                                           |
 | RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
+| RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerbs

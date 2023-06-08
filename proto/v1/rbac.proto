@@ -34,6 +34,8 @@ enum RuleResource {
     RESOURCE_GROUPS = 4;
     // RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.
     RESOURCE_NETWORK_ACLS = 5;
+    // RESOURCE_ROUTES is the resource for managing routes.
+    RESOURCE_ROUTES = 6;
 
     // RESOURCE_ALL is a wildcard resource that matches all resources.
     RESOURCE_ALL = 999;
