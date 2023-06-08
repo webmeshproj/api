@@ -179,15 +179,15 @@
             <ul>
               
                 <li>
-                  <a href="#v1.Action"><span class="badge">M</span>Action</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Group"><span class="badge">M</span>Group</a>
                 </li>
               
                 <li>
                   <a href="#v1.Groups"><span class="badge">M</span>Groups</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RBACAction"><span class="badge">M</span>RBACAction</a>
                 </li>
               
                 <li>
@@ -243,6 +243,10 @@
               
                 <li>
                   <a href="#v1.NetworkACLs"><span class="badge">M</span>NetworkACLs</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.NetworkAction"><span class="badge">M</span>NetworkAction</a>
                 </li>
               
                 <li>
@@ -489,45 +493,6 @@
       <p></p>
 
       
-        <h3 id="v1.Action">Action</h3>
-        <p>Action is an action that can be performed on a resource.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>resource</td>
-                  <td><a href="#v1.RuleResource">RuleResource</a></td>
-                  <td></td>
-                  <td><p>resource is the resource on which the action is performed. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>resource_name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>resource_name is the name of the resource on which the action is
-performed. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>verb</td>
-                  <td><a href="#v1.RuleVerbs">RuleVerbs</a></td>
-                  <td></td>
-                  <td><p>verb is the verb that is performed on the resource. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.Group">Group</h3>
         <p>Group is a group of subjects.</p>
 
@@ -574,6 +539,45 @@ performed. </p></td>
                   <td><a href="#v1.Group">Group</a></td>
                   <td>repeated</td>
                   <td><p>items is the list of groups. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RBACAction">RBACAction</h3>
+        <p>RBACAction is an action that can be performed on a resource. It is used by implementations</p><p>to evaluate rules.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>resource</td>
+                  <td><a href="#v1.RuleResource">RuleResource</a></td>
+                  <td></td>
+                  <td><p>resource is the resource on which the action is performed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>resource_name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>resource_name is the name of the resource on which the action is
+performed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verb</td>
+                  <td><a href="#v1.RuleVerbs">RuleVerbs</a></td>
+                  <td></td>
+                  <td><p>verb is the verb that is performed on the resource. </p></td>
                 </tr>
               
             </tbody>
@@ -1022,6 +1026,65 @@ Protocols can be specified by name or number. </p></td>
                   <td><a href="#v1.NetworkACL">NetworkACL</a></td>
                   <td>repeated</td>
                   <td><p>items is the list of network ACLs. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.NetworkAction">NetworkAction</h3>
+        <p>NetworkAction is an action that can be performed on a network resource. It is used</p><p>by implementations to evaluate network ACLs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>src_node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>src_node is the source node of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>src_cidr</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>src_cidr is the source CIDR of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst_node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst_node is the destination node of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst_cidr</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst_cidr is the destination CIDR of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>protocol</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>protocol is the protocol of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>port</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td></td>
+                  <td><p>port is the port of the action. </p></td>
                 </tr>
               
             </tbody>

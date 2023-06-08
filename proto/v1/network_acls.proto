@@ -74,3 +74,20 @@ message Routes {
     // items is the list of routes.
     repeated Route items = 1;
 }
+
+// NetworkAction is an action that can be performed on a network resource. It is used
+// by implementations to evaluate network ACLs.
+message NetworkAction {
+    // src_node is the source node of the action.
+    string src_node = 1;
+    // src_cidr is the source CIDR of the action.
+    string src_cidr = 2;
+    // dst_node is the destination node of the action.
+    string dst_node = 3;
+    // dst_cidr is the destination CIDR of the action.
+    string dst_cidr = 4;
+    // protocol is the protocol of the action.
+    string protocol = 5;
+    // port is the port of the action.
+    uint32 port = 6;
+}

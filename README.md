@@ -5,9 +5,9 @@
 <div id="toc-container">
 
 - [v1/rbac.proto](#v1%2frbac.proto)
-  - [<span class="badge">M</span>Action](#v1.Action)
   - [<span class="badge">M</span>Group](#v1.Group)
   - [<span class="badge">M</span>Groups](#v1.Groups)
+  - [<span class="badge">M</span>RBACAction](#v1.RBACAction)
   - [<span class="badge">M</span>Role](#v1.Role)
   - [<span class="badge">M</span>RoleBinding](#v1.RoleBinding)
   - [<span class="badge">M</span>RoleBindings](#v1.RoleBindings)
@@ -20,6 +20,7 @@
 - [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
   - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
   - [<span class="badge">M</span>NetworkACLs](#v1.NetworkACLs)
+  - [<span class="badge">M</span>NetworkAction](#v1.NetworkAction)
   - [<span class="badge">M</span>Route](#v1.Route)
   - [<span class="badge">M</span>Routes](#v1.Routes)
   - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
@@ -78,16 +79,6 @@
 
 </div>
 
-### Action
-
-Action is an action that can be performed on a resource.
-
-| Field         | Type                             | Label | Description                                                                 |
-|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
-| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
-| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
-| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
-
 ### Group
 
 Group is a group of subjects.
@@ -104,6 +95,19 @@ Groups is a list of groups.
 | Field | Type               | Label    | Description                  |
 |-------|--------------------|----------|------------------------------|
 | items | [Group](#v1.Group) | repeated | items is the list of groups. |
+
+### RBACAction
+
+RBACAction is an action that can be performed on a resource. It is used
+by implementations
+
+to evaluate rules.
+
+| Field         | Type                             | Label | Description                                                                 |
+|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
+| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
+| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
+| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
 
 ### Role
 
@@ -229,6 +233,22 @@ NetworkACLs is a list of network ACLs.
 | Field | Type                         | Label    | Description                        |
 |-------|------------------------------|----------|------------------------------------|
 | items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
+
+### NetworkAction
+
+NetworkAction is an action that can be performed on a network resource.
+It is used
+
+by implementations to evaluate network ACLs.
+
+| Field    | Type              | Label | Description                                     |
+|----------|-------------------|-------|-------------------------------------------------|
+| src_node | [string](#string) |       | src_node is the source node of the action.      |
+| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.      |
+| dst_node | [string](#string) |       | dst_node is the destination node of the action. |
+| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. |
+| protocol | [string](#string) |       | protocol is the protocol of the action.         |
+| port     | [uint32](#uint32) |       | port is the port of the action.                 |
 
 ### Route
 

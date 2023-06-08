@@ -135,8 +135,9 @@ message Groups {
     repeated Group items = 1;
 }
 
-// Action is an action that can be performed on a resource.
-message Action {
+// RBACAction is an action that can be performed on a resource. It is used by implementations
+// to evaluate rules.
+message RBACAction {
     // resource is the resource on which the action is performed.
     RuleResource resource = 1;
     // resource_name is the name of the resource on which the action is
