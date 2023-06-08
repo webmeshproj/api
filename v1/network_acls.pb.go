@@ -216,7 +216,7 @@ type NetworkACLs struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is a list of network ACLs.
+	// items is the list of network ACLs.
 	Items []*NetworkACL `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -259,6 +259,131 @@ func (x *NetworkACLs) GetItems() []*NetworkACL {
 	return nil
 }
 
+// Route is a route that is broadcasted by one or more nodes.
+type Route struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// name is the name of the route.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// nodes is a list of nodes that broadcast the route.
+	Nodes []string `protobuf:"bytes,2,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	// destination_cidr is the destination CIDR of the route.
+	DestinationCidr string `protobuf:"bytes,3,opt,name=destination_cidr,json=destinationCidr,proto3" json:"destination_cidr,omitempty"`
+	// next_hop_nodes is a list of nodes that are the next hop for the route.
+	NextHopNodes []string `protobuf:"bytes,4,rep,name=next_hop_nodes,json=nextHopNodes,proto3" json:"next_hop_nodes,omitempty"`
+}
+
+func (x *Route) Reset() {
+	*x = Route{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_network_acls_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Route) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Route) ProtoMessage() {}
+
+func (x *Route) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_network_acls_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Route.ProtoReflect.Descriptor instead.
+func (*Route) Descriptor() ([]byte, []int) {
+	return file_v1_network_acls_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Route) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Route) GetNodes() []string {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+func (x *Route) GetDestinationCidr() string {
+	if x != nil {
+		return x.DestinationCidr
+	}
+	return ""
+}
+
+func (x *Route) GetNextHopNodes() []string {
+	if x != nil {
+		return x.NextHopNodes
+	}
+	return nil
+}
+
+// Routes is a list of routes.
+type Routes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// items is the list of routes.
+	Items []*Route `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+}
+
+func (x *Routes) Reset() {
+	*x = Routes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_network_acls_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Routes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Routes) ProtoMessage() {}
+
+func (x *Routes) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_network_acls_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Routes.ProtoReflect.Descriptor instead.
+func (*Routes) Descriptor() ([]byte, []int) {
+	return file_v1_network_acls_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Routes) GetItems() []*Route {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
 var File_v1_network_acls_proto protoreflect.FileDescriptor
 
 var file_v1_network_acls_proto_rawDesc = []byte{
@@ -286,7 +411,18 @@ var file_v1_network_acls_proto_rawDesc = []byte{
 	0x70, 0x6f, 0x72, 0x74, 0x73, 0x22, 0x33, 0x0a, 0x0b, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
 	0x41, 0x43, 0x4c, 0x73, 0x12, 0x24, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20,
 	0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x76, 0x31, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b,
-	0x41, 0x43, 0x4c, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x2a, 0x43, 0x0a, 0x09, 0x41, 0x43,
+	0x41, 0x43, 0x4c, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x22, 0x82, 0x01, 0x0a, 0x05, 0x52,
+	0x6f, 0x75, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x64, 0x65,
+	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x6e, 0x6f, 0x64, 0x65, 0x73, 0x12, 0x29,
+	0x0a, 0x10, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x69,
+	0x64, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x64, 0x65, 0x73, 0x74, 0x69, 0x6e,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x69, 0x64, 0x72, 0x12, 0x24, 0x0a, 0x0e, 0x6e, 0x65, 0x78,
+	0x74, 0x5f, 0x68, 0x6f, 0x70, 0x5f, 0x6e, 0x6f, 0x64, 0x65, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x0c, 0x6e, 0x65, 0x78, 0x74, 0x48, 0x6f, 0x70, 0x4e, 0x6f, 0x64, 0x65, 0x73, 0x22,
+	0x29, 0x0a, 0x06, 0x52, 0x6f, 0x75, 0x74, 0x65, 0x73, 0x12, 0x1f, 0x0a, 0x05, 0x69, 0x74, 0x65,
+	0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x6f,
+	0x75, 0x74, 0x65, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x2a, 0x43, 0x0a, 0x09, 0x41, 0x43,
 	0x4c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x0e, 0x41, 0x43, 0x54, 0x49, 0x4f,
 	0x4e, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x11, 0x0a, 0x0d, 0x41,
 	0x43, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x41, 0x43, 0x43, 0x45, 0x50, 0x54, 0x10, 0x01, 0x12, 0x0f,
@@ -314,20 +450,23 @@ func file_v1_network_acls_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_network_acls_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_v1_network_acls_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_v1_network_acls_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_v1_network_acls_proto_goTypes = []interface{}{
 	(ACLAction)(0),      // 0: v1.ACLAction
 	(*NetworkACL)(nil),  // 1: v1.NetworkACL
 	(*NetworkACLs)(nil), // 2: v1.NetworkACLs
+	(*Route)(nil),       // 3: v1.Route
+	(*Routes)(nil),      // 4: v1.Routes
 }
 var file_v1_network_acls_proto_depIdxs = []int32{
 	0, // 0: v1.NetworkACL.action:type_name -> v1.ACLAction
 	1, // 1: v1.NetworkACLs.items:type_name -> v1.NetworkACL
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 2: v1.Routes.items:type_name -> v1.Route
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_v1_network_acls_proto_init() }
@@ -360,6 +499,30 @@ func file_v1_network_acls_proto_init() {
 				return nil
 			}
 		}
+		file_v1_network_acls_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Route); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_network_acls_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Routes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -367,7 +530,7 @@ func file_v1_network_acls_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_network_acls_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

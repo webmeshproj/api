@@ -20,6 +20,8 @@
 - [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
   - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
   - [<span class="badge">M</span>NetworkACLs](#v1.NetworkACLs)
+  - [<span class="badge">M</span>Route](#v1.Route)
+  - [<span class="badge">M</span>Routes](#v1.Routes)
   - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
@@ -224,9 +226,28 @@ NetworkACL is a network ACL.
 
 NetworkACLs is a list of network ACLs.
 
-| Field | Type                         | Label    | Description                      |
-|-------|------------------------------|----------|----------------------------------|
-| items | [NetworkACL](#v1.NetworkACL) | repeated | items is a list of network ACLs. |
+| Field | Type                         | Label    | Description                        |
+|-------|------------------------------|----------|------------------------------------|
+| items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
+
+### Route
+
+Route is a route that is broadcasted by one or more nodes.
+
+| Field            | Type              | Label    | Description                                                            |
+|------------------|-------------------|----------|------------------------------------------------------------------------|
+| name             | [string](#string) |          | name is the name of the route.                                         |
+| nodes            | [string](#string) | repeated | nodes is a list of nodes that broadcast the route.                     |
+| destination_cidr | [string](#string) |          | destination_cidr is the destination CIDR of the route.                 |
+| next_hop_nodes   | [string](#string) | repeated | next_hop_nodes is a list of nodes that are the next hop for the route. |
+
+### Routes
+
+Routes is a list of routes.
+
+| Field | Type               | Label    | Description                  |
+|-------|--------------------|----------|------------------------------|
+| items | [Route](#v1.Route) | repeated | items is the list of routes. |
 
 ### ACLAction
 
@@ -273,6 +294,10 @@ RBAC operations
 | DeleteNetworkACL  | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteNetworkACL deletes a network ACL.           |
 | GetNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [NetworkACL](#v1.NetworkACL)                     | GetNetworkACL gets a network ACL.                 |
 | ListNetworkACLs   | [.google.protobuf.Empty](#google.protobuf.Empty) | [NetworkACLs](#v1.NetworkACLs)                   | ListNetworkACLs gets all network ACLs.            |
+| PutRoute          | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoute creates or updates a route.              |
+| DeleteRoute       | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoute deletes a route.                      |
+| GetRoute          | [Route](#v1.Route)                               | [Route](#v1.Route)                               | GetRoute gets a route.                            |
+| ListRoutes        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Routes](#v1.Routes)                             | ListRoutes gets all routes.                       |
 
 <div class="file-heading">
 
@@ -339,6 +364,7 @@ JoinRequest is a request to join the cluster.
 | assign_ipv4         | [bool](#bool)     |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                  |
 | prefer_raft_ipv6    | [bool](#bool)     |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.        |
 | as_voter            | [bool](#bool)     |          | as_voter is whether the node should receive a vote in elections.                                                                        |
+| routes              | [string](#string) | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                  |
 
 ### JoinResponse
 

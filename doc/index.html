@@ -245,6 +245,14 @@
                   <a href="#v1.NetworkACLs"><span class="badge">M</span>NetworkACLs</a>
                 </li>
               
+                <li>
+                  <a href="#v1.Route"><span class="badge">M</span>Route</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.Routes"><span class="badge">M</span>Routes</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.ACLAction"><span class="badge">E</span>ACLAction</a>
@@ -1013,7 +1021,76 @@ Protocols can be specified by name or number. </p></td>
                   <td>items</td>
                   <td><a href="#v1.NetworkACL">NetworkACL</a></td>
                   <td>repeated</td>
-                  <td><p>items is a list of network ACLs. </p></td>
+                  <td><p>items is the list of network ACLs. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Route">Route</h3>
+        <p>Route is a route that is broadcasted by one or more nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the route. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>nodes is a list of nodes that broadcast the route. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_cidr</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>destination_cidr is the destination CIDR of the route. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_hop_nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>next_hop_nodes is a list of nodes that are the next hop for the route. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Routes">Routes</h3>
+        <p>Routes is a list of routes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#v1.Route">Route</a></td>
+                  <td>repeated</td>
+                  <td><p>items is the list of routes. </p></td>
                 </tr>
               
             </tbody>
@@ -1190,6 +1267,34 @@ Protocols can be specified by name or number. </p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.NetworkACLs">NetworkACLs</a></td>
                 <td><p>ListNetworkACLs gets all network ACLs.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PutRoute</td>
+                <td><a href="#v1.Route">Route</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>PutRoute creates or updates a route.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteRoute</td>
+                <td><a href="#v1.Route">Route</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>DeleteRoute deletes a route.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetRoute</td>
+                <td><a href="#v1.Route">Route</a></td>
+                <td><a href="#v1.Route">Route</a></td>
+                <td><p>GetRoute gets a route.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListRoutes</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.Routes">Routes</a></td>
+                <td><p>ListRoutes gets all routes.</p></td>
               </tr>
             
           </tbody>
@@ -1469,6 +1574,14 @@ This is only used if assign_ipv4 is true. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>as_voter is whether the node should receive a vote in elections. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>routes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+if the node is not allowed to put routes. </p></td>
                 </tr>
               
             </tbody>

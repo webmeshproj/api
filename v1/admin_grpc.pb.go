@@ -51,6 +51,10 @@ const (
 	Admin_DeleteNetworkACL_FullMethodName  = "/v1.Admin/DeleteNetworkACL"
 	Admin_GetNetworkACL_FullMethodName     = "/v1.Admin/GetNetworkACL"
 	Admin_ListNetworkACLs_FullMethodName   = "/v1.Admin/ListNetworkACLs"
+	Admin_PutRoute_FullMethodName          = "/v1.Admin/PutRoute"
+	Admin_DeleteRoute_FullMethodName       = "/v1.Admin/DeleteRoute"
+	Admin_GetRoute_FullMethodName          = "/v1.Admin/GetRoute"
+	Admin_ListRoutes_FullMethodName        = "/v1.Admin/ListRoutes"
 )
 
 // AdminClient is the client API for Admin service.
@@ -89,6 +93,14 @@ type AdminClient interface {
 	GetNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*NetworkACL, error)
 	// ListNetworkACLs gets all network ACLs.
 	ListNetworkACLs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NetworkACLs, error)
+	// PutRoute creates or updates a route.
+	PutRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteRoute deletes a route.
+	DeleteRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetRoute gets a route.
+	GetRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*Route, error)
+	// ListRoutes gets all routes.
+	ListRoutes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Routes, error)
 }
 
 type adminClient struct {
@@ -243,6 +255,42 @@ func (c *adminClient) ListNetworkACLs(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
+func (c *adminClient) PutRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_PutRoute_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteRoute_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*Route, error) {
+	out := new(Route)
+	err := c.cc.Invoke(ctx, Admin_GetRoute_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) ListRoutes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Routes, error) {
+	out := new(Routes)
+	err := c.cc.Invoke(ctx, Admin_ListRoutes_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
@@ -279,6 +327,14 @@ type AdminServer interface {
 	GetNetworkACL(context.Context, *NetworkACL) (*NetworkACL, error)
 	// ListNetworkACLs gets all network ACLs.
 	ListNetworkACLs(context.Context, *emptypb.Empty) (*NetworkACLs, error)
+	// PutRoute creates or updates a route.
+	PutRoute(context.Context, *Route) (*emptypb.Empty, error)
+	// DeleteRoute deletes a route.
+	DeleteRoute(context.Context, *Route) (*emptypb.Empty, error)
+	// GetRoute gets a route.
+	GetRoute(context.Context, *Route) (*Route, error)
+	// ListRoutes gets all routes.
+	ListRoutes(context.Context, *emptypb.Empty) (*Routes, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -333,6 +389,18 @@ func (UnimplementedAdminServer) GetNetworkACL(context.Context, *NetworkACL) (*Ne
 }
 func (UnimplementedAdminServer) ListNetworkACLs(context.Context, *emptypb.Empty) (*NetworkACLs, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNetworkACLs not implemented")
+}
+func (UnimplementedAdminServer) PutRoute(context.Context, *Route) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutRoute not implemented")
+}
+func (UnimplementedAdminServer) DeleteRoute(context.Context, *Route) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRoute not implemented")
+}
+func (UnimplementedAdminServer) GetRoute(context.Context, *Route) (*Route, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoute not implemented")
+}
+func (UnimplementedAdminServer) ListRoutes(context.Context, *emptypb.Empty) (*Routes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRoutes not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -635,6 +703,78 @@ func _Admin_ListNetworkACLs_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_PutRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Route)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).PutRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_PutRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).PutRoute(ctx, req.(*Route))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Route)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteRoute(ctx, req.(*Route))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Route)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetRoute(ctx, req.(*Route))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).ListRoutes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_ListRoutes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).ListRoutes(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -705,6 +845,22 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListNetworkACLs",
 			Handler:    _Admin_ListNetworkACLs_Handler,
+		},
+		{
+			MethodName: "PutRoute",
+			Handler:    _Admin_PutRoute_Handler,
+		},
+		{
+			MethodName: "DeleteRoute",
+			Handler:    _Admin_DeleteRoute_Handler,
+		},
+		{
+			MethodName: "GetRoute",
+			Handler:    _Admin_GetRoute_Handler,
+		},
+		{
+			MethodName: "ListRoutes",
+			Handler:    _Admin_ListRoutes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

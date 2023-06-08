@@ -94,6 +94,9 @@ message JoinRequest {
     bool prefer_raft_ipv6 = 10;
     // as_voter is whether the node should receive a vote in elections.
     bool as_voter = 11;
+    // routes is a list of routes to advertise to peers. The request will be denied
+    // if the node is not allowed to put routes.
+    repeated string routes = 12;
 }
 
 // JoinResponse is a response to a join request.

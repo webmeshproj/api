@@ -63,4 +63,13 @@ service Admin {
     rpc GetNetworkACL(NetworkACL) returns (NetworkACL) {}
     // ListNetworkACLs gets all network ACLs.
     rpc ListNetworkACLs(google.protobuf.Empty) returns (NetworkACLs) {}
+
+    // PutRoute creates or updates a route.
+    rpc PutRoute(Route) returns (google.protobuf.Empty) {}
+    // DeleteRoute deletes a route.
+    rpc DeleteRoute(Route) returns (google.protobuf.Empty) {}
+    // GetRoute gets a route.
+    rpc GetRoute(Route) returns (Route) {}
+    // ListRoutes gets all routes.
+    rpc ListRoutes(google.protobuf.Empty) returns (Routes) {}
 }

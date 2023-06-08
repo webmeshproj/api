@@ -53,6 +53,24 @@ message NetworkACL {
 
 // NetworkACLs is a list of network ACLs.
 message NetworkACLs {
-    // items is a list of network ACLs.
+    // items is the list of network ACLs.
     repeated NetworkACL items = 1;
+}
+
+// Route is a route that is broadcasted by one or more nodes.
+message Route {
+    // name is the name of the route.
+    string name = 1;
+    // nodes is a list of nodes that broadcast the route.
+    repeated string nodes = 2;
+    // destination_cidr is the destination CIDR of the route.
+    string destination_cidr = 3;
+    // next_hop_nodes is a list of nodes that are the next hop for the route.
+    repeated string next_hop_nodes = 4;
+}
+
+// Routes is a list of routes.
+message Routes {
+    // items is the list of routes.
+    repeated Route items = 1;
 }
