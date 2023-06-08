@@ -1056,10 +1056,10 @@ Protocols can be specified by name or number. </p></td>
                 </tr>
               
                 <tr>
-                  <td>destination_cidr</td>
+                  <td>destination_cidrs</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>destination_cidr is the destination CIDR of the route. </p></td>
+                  <td>repeated</td>
+                  <td><p>destination_cidrs are the destination CIDRs of the route. </p></td>
                 </tr>
               
                 <tr>
@@ -1150,7 +1150,7 @@ Protocols can be specified by name or number. </p></td>
 
       
         <h3 id="v1.Admin">Admin</h3>
-        <p>Admin is the service that provides cluster admin operations. Most methods </p><p>require the leader to be contacted.</p><p>RBAC operations</p>
+        <p>Admin is the service that provides cluster admin operations. Most methods </p><p>require the leader to be contacted.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>

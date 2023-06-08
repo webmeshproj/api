@@ -234,12 +234,12 @@ NetworkACLs is a list of network ACLs.
 
 Route is a route that is broadcasted by one or more nodes.
 
-| Field            | Type              | Label    | Description                                                            |
-|------------------|-------------------|----------|------------------------------------------------------------------------|
-| name             | [string](#string) |          | name is the name of the route.                                         |
-| nodes            | [string](#string) | repeated | nodes is a list of nodes that broadcast the route.                     |
-| destination_cidr | [string](#string) |          | destination_cidr is the destination CIDR of the route.                 |
-| next_hop_nodes   | [string](#string) | repeated | next_hop_nodes is a list of nodes that are the next hop for the route. |
+| Field             | Type              | Label    | Description                                                            |
+|-------------------|-------------------|----------|------------------------------------------------------------------------|
+| name              | [string](#string) |          | name is the name of the route.                                         |
+| nodes             | [string](#string) | repeated | nodes is a list of nodes that broadcast the route.                     |
+| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.              |
+| next_hop_nodes    | [string](#string) | repeated | next_hop_nodes is a list of nodes that are the next hop for the route. |
 
 ### Routes
 
@@ -273,8 +273,6 @@ Admin is the service that provides cluster admin operations. Most
 methods
 
 require the leader to be contacted.
-
-RBAC operations
 
 | Method Name       | Request Type                                     | Response Type                                    | Description                                       |
 |-------------------|--------------------------------------------------|--------------------------------------------------|---------------------------------------------------|

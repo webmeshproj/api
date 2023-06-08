@@ -63,8 +63,8 @@ message Route {
     string name = 1;
     // nodes is a list of nodes that broadcast the route.
     repeated string nodes = 2;
-    // destination_cidr is the destination CIDR of the route.
-    string destination_cidr = 3;
+    // destination_cidrs are the destination CIDRs of the route.
+    repeated string destination_cidrs = 3;
     // next_hop_nodes is a list of nodes that are the next hop for the route.
     repeated string next_hop_nodes = 4;
 }

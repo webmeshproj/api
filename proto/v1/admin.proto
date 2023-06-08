@@ -26,8 +26,6 @@ import "v1/network_acls.proto";
 // Admin is the service that provides cluster admin operations. Most methods 
 // require the leader to be contacted.
 service Admin {
-    // RBAC operations
-
     // PutRole creates or updates a role.
     rpc PutRole(Role) returns (google.protobuf.Empty) {}
     // DeleteRole deletes a role.
