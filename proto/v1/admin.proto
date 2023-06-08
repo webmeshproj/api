@@ -19,7 +19,9 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/empty.proto";
+
 import "v1/rbac.proto";
+import "v1/network_acls.proto";
 
 // Admin is the service that provides cluster admin operations. Most methods 
 // require the leader to be contacted.
@@ -52,4 +54,13 @@ service Admin {
     rpc GetGroup(Group) returns (Group) {}
     // ListGroups gets all groups.
     rpc ListGroups(google.protobuf.Empty) returns (Groups) {}
+
+    // PutNetworkACL creates or updates a network ACL.
+    rpc PutNetworkACL(NetworkACL) returns (google.protobuf.Empty) {}
+    // DeleteNetworkACL deletes a network ACL.
+    rpc DeleteNetworkACL(NetworkACL) returns (google.protobuf.Empty) {}
+    // GetNetworkACL gets a network ACL.
+    rpc GetNetworkACL(NetworkACL) returns (NetworkACL) {}
+    // ListNetworkACLs gets all network ACLs.
+    rpc ListNetworkACLs(google.protobuf.Empty) returns (NetworkACLs) {}
 }

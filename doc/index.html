@@ -234,6 +234,29 @@
         
           
           <li>
+            <a href="#v1%2fnetwork_acls.proto">v1/network_acls.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.NetworkACL"><span class="badge">M</span>NetworkACL</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.NetworkACLs"><span class="badge">M</span>NetworkACLs</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.ACLAction"><span class="badge">E</span>ACLAction</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fadmin.proto">v1/admin.proto</a>
             <ul>
               
@@ -884,6 +907,154 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
     
       
       <div class="file-heading">
+        <h2 id="v1/network_acls.proto">v1/network_acls.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.NetworkACL">NetworkACL</h3>
+        <p>NetworkACL is a network ACL.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the ACL. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>priority</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>priority is the priority of the ACL. ACLs with higher priority are evaluated first. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#v1.ACLAction">ACLAction</a></td>
+                  <td></td>
+                  <td><p>action is the action to take when a request matches the ACL. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_cidrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_cidrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>protocols</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>protocols is a list of protocols to match against. If empty, all protocols are matched.
+Protocols can be specified by name or number. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ports</td>
+                  <td><a href="#uint32">uint32</a></td>
+                  <td>repeated</td>
+                  <td><p>ports is a list of ports to match against. If empty, all ports are matched. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.NetworkACLs">NetworkACLs</h3>
+        <p>NetworkACLs is a list of network ACLs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                  <td>repeated</td>
+                  <td><p>items is a list of network ACLs. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.ACLAction">ACLAction</h3>
+        <p>ACLAction is the action to take when a request matches an ACL.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACTION_UNKNOWN</td>
+                <td>0</td>
+                <td><p>ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACTION_ACCEPT</td>
+                <td>1</td>
+                <td><p>ACTION_ACCEPT allows the request to proceed.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACTION_DENY</td>
+                <td>2</td>
+                <td><p>ACTION_DENY denies the request.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
         <h2 id="v1/admin.proto">v1/admin.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -985,6 +1156,34 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.Groups">Groups</a></td>
                 <td><p>ListGroups gets all groups.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PutNetworkACL</td>
+                <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>PutNetworkACL creates or updates a network ACL.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteNetworkACL</td>
+                <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>DeleteNetworkACL deletes a network ACL.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetNetworkACL</td>
+                <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                <td><p>GetNetworkACL gets a network ACL.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListNetworkACLs</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.NetworkACLs">NetworkACLs</a></td>
+                <td><p>ListNetworkACLs gets all network ACLs.</p></td>
               </tr>
             
           </tbody>

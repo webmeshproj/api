@@ -17,6 +17,10 @@
   - [<span class="badge">E</span>RuleResource](#v1.RuleResource)
   - [<span class="badge">E</span>RuleVerbs](#v1.RuleVerbs)
   - [<span class="badge">E</span>SubjectType](#v1.SubjectType)
+- [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
+  - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
+  - [<span class="badge">M</span>NetworkACLs](#v1.NetworkACLs)
+  - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
 - [v1/node.proto](#v1%2fnode.proto)
@@ -193,6 +197,48 @@ SubjectType is the type of a subject.
 
 <div class="file-heading">
 
+## v1/network_acls.proto
+
+[Top](#title)
+
+</div>
+
+### NetworkACL
+
+NetworkACL is a network ACL.
+
+| Field             | Type                       | Label    | Description                                                                                                                           |
+|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
+| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                          |
+| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                   |
+| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                          |
+| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched.                                             |
+| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                   |
+| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                             |
+| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                   |
+| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number. |
+| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                           |
+
+### NetworkACLs
+
+NetworkACLs is a list of network ACLs.
+
+| Field | Type                         | Label    | Description                      |
+|-------|------------------------------|----------|----------------------------------|
+| items | [NetworkACL](#v1.NetworkACL) | repeated | items is a list of network ACLs. |
+
+### ACLAction
+
+ACLAction is the action to take when a request matches an ACL.
+
+| Name           | Number | Description                                                                       |
+|----------------|--------|-----------------------------------------------------------------------------------|
+| ACTION_UNKNOWN | 0      | ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY. |
+| ACTION_ACCEPT  | 1      | ACTION_ACCEPT allows the request to proceed.                                      |
+| ACTION_DENY    | 2      | ACTION_DENY denies the request.                                                   |
+
+<div class="file-heading">
+
 ## v1/admin.proto
 
 [Top](#title)
@@ -222,6 +268,10 @@ RBAC operations
 | DeleteGroup       | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteGroup deletes a group.                      |
 | GetGroup          | [Group](#v1.Group)                               | [Group](#v1.Group)                               | GetGroup gets a group.                            |
 | ListGroups        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Groups](#v1.Groups)                             | ListGroups gets all groups.                       |
+| PutNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | PutNetworkACL creates or updates a network ACL.   |
+| DeleteNetworkACL  | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteNetworkACL deletes a network ACL.           |
+| GetNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [NetworkACL](#v1.NetworkACL)                     | GetNetworkACL gets a network ACL.                 |
+| ListNetworkACLs   | [.google.protobuf.Empty](#google.protobuf.Empty) | [NetworkACLs](#v1.NetworkACLs)                   | ListNetworkACLs gets all network ACLs.            |
 
 <div class="file-heading">
 

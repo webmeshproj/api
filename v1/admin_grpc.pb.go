@@ -47,6 +47,10 @@ const (
 	Admin_DeleteGroup_FullMethodName       = "/v1.Admin/DeleteGroup"
 	Admin_GetGroup_FullMethodName          = "/v1.Admin/GetGroup"
 	Admin_ListGroups_FullMethodName        = "/v1.Admin/ListGroups"
+	Admin_PutNetworkACL_FullMethodName     = "/v1.Admin/PutNetworkACL"
+	Admin_DeleteNetworkACL_FullMethodName  = "/v1.Admin/DeleteNetworkACL"
+	Admin_GetNetworkACL_FullMethodName     = "/v1.Admin/GetNetworkACL"
+	Admin_ListNetworkACLs_FullMethodName   = "/v1.Admin/ListNetworkACLs"
 )
 
 // AdminClient is the client API for Admin service.
@@ -77,6 +81,14 @@ type AdminClient interface {
 	GetGroup(ctx context.Context, in *Group, opts ...grpc.CallOption) (*Group, error)
 	// ListGroups gets all groups.
 	ListGroups(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Groups, error)
+	// PutNetworkACL creates or updates a network ACL.
+	PutNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteNetworkACL deletes a network ACL.
+	DeleteNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetNetworkACL gets a network ACL.
+	GetNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*NetworkACL, error)
+	// ListNetworkACLs gets all network ACLs.
+	ListNetworkACLs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NetworkACLs, error)
 }
 
 type adminClient struct {
@@ -195,6 +207,42 @@ func (c *adminClient) ListGroups(ctx context.Context, in *emptypb.Empty, opts ..
 	return out, nil
 }
 
+func (c *adminClient) PutNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_PutNetworkACL_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteNetworkACL_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetNetworkACL(ctx context.Context, in *NetworkACL, opts ...grpc.CallOption) (*NetworkACL, error) {
+	out := new(NetworkACL)
+	err := c.cc.Invoke(ctx, Admin_GetNetworkACL_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) ListNetworkACLs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*NetworkACLs, error) {
+	out := new(NetworkACLs)
+	err := c.cc.Invoke(ctx, Admin_ListNetworkACLs_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
@@ -223,6 +271,14 @@ type AdminServer interface {
 	GetGroup(context.Context, *Group) (*Group, error)
 	// ListGroups gets all groups.
 	ListGroups(context.Context, *emptypb.Empty) (*Groups, error)
+	// PutNetworkACL creates or updates a network ACL.
+	PutNetworkACL(context.Context, *NetworkACL) (*emptypb.Empty, error)
+	// DeleteNetworkACL deletes a network ACL.
+	DeleteNetworkACL(context.Context, *NetworkACL) (*emptypb.Empty, error)
+	// GetNetworkACL gets a network ACL.
+	GetNetworkACL(context.Context, *NetworkACL) (*NetworkACL, error)
+	// ListNetworkACLs gets all network ACLs.
+	ListNetworkACLs(context.Context, *emptypb.Empty) (*NetworkACLs, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -265,6 +321,18 @@ func (UnimplementedAdminServer) GetGroup(context.Context, *Group) (*Group, error
 }
 func (UnimplementedAdminServer) ListGroups(context.Context, *emptypb.Empty) (*Groups, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListGroups not implemented")
+}
+func (UnimplementedAdminServer) PutNetworkACL(context.Context, *NetworkACL) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutNetworkACL not implemented")
+}
+func (UnimplementedAdminServer) DeleteNetworkACL(context.Context, *NetworkACL) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteNetworkACL not implemented")
+}
+func (UnimplementedAdminServer) GetNetworkACL(context.Context, *NetworkACL) (*NetworkACL, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNetworkACL not implemented")
+}
+func (UnimplementedAdminServer) ListNetworkACLs(context.Context, *emptypb.Empty) (*NetworkACLs, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNetworkACLs not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -495,6 +563,78 @@ func _Admin_ListGroups_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_PutNetworkACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NetworkACL)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).PutNetworkACL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_PutNetworkACL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).PutNetworkACL(ctx, req.(*NetworkACL))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteNetworkACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NetworkACL)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteNetworkACL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteNetworkACL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteNetworkACL(ctx, req.(*NetworkACL))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetNetworkACL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NetworkACL)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetNetworkACL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetNetworkACL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetNetworkACL(ctx, req.(*NetworkACL))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_ListNetworkACLs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).ListNetworkACLs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_ListNetworkACLs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).ListNetworkACLs(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -549,6 +689,22 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListGroups",
 			Handler:    _Admin_ListGroups_Handler,
+		},
+		{
+			MethodName: "PutNetworkACL",
+			Handler:    _Admin_PutNetworkACL_Handler,
+		},
+		{
+			MethodName: "DeleteNetworkACL",
+			Handler:    _Admin_DeleteNetworkACL_Handler,
+		},
+		{
+			MethodName: "GetNetworkACL",
+			Handler:    _Admin_GetNetworkACL_Handler,
+		},
+		{
+			MethodName: "ListNetworkACLs",
+			Handler:    _Admin_ListNetworkACLs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
