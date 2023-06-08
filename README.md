@@ -99,9 +99,9 @@ Group is a group of subjects.
 
 Groups is a list of groups.
 
-| Field  | Type               | Label    | Description                   |
-|--------|--------------------|----------|-------------------------------|
-| groups | [Group](#v1.Group) | repeated | groups is the list of groups. |
+| Field | Type               | Label    | Description                  |
+|-------|--------------------|----------|------------------------------|
+| items | [Group](#v1.Group) | repeated | items is the list of groups. |
 
 ### Role
 
@@ -126,9 +126,9 @@ RoleBinding is a binding of a role to one or more subjects.
 
 RoleBindings is a list of role bindings.
 
-| Field         | Type                           | Label    | Description                                 |
-|---------------|--------------------------------|----------|---------------------------------------------|
-| role_bindings | [RoleBinding](#v1.RoleBinding) | repeated | role_bindings is the list of role bindings. |
+| Field | Type                           | Label    | Description                         |
+|-------|--------------------------------|----------|-------------------------------------|
+| items | [RoleBinding](#v1.RoleBinding) | repeated | items is the list of role bindings. |
 
 ### Roles
 
@@ -136,7 +136,7 @@ Roles is a list of roles.
 
 | Field | Type             | Label    | Description                 |
 |-------|------------------|----------|-----------------------------|
-| roles | [Role](#v1.Role) | repeated | roles is the list of roles. |
+| items | [Role](#v1.Role) | repeated | items is the list of roles. |
 
 ### Rule
 

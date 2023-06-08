@@ -91,8 +91,8 @@ message Role {
 
 // Roles is a list of roles.
 message Roles {
-    // roles is the list of roles.
-    repeated Role roles = 1;
+    // items is the list of roles.
+    repeated Role items = 1;
 }
 
 // RoleBinding is a binding of a role to one or more subjects.
@@ -107,8 +107,8 @@ message RoleBinding {
 
 // RoleBindings is a list of role bindings.
 message RoleBindings {
-    // role_bindings is the list of role bindings.
-    repeated RoleBinding role_bindings = 1;
+    // items is the list of role bindings.
+    repeated RoleBinding items = 1;
 }
 
 // Subject is a subject to which a role can be bound.
@@ -129,8 +129,8 @@ message Group {
 
 // Groups is a list of groups.
 message Groups {
-    // groups is the list of groups.
-    repeated Group groups = 1;
+    // items is the list of groups.
+    repeated Group items = 1;
 }
 
 // Action is an action that can be performed on a resource.
