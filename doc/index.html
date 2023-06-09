@@ -827,6 +827,12 @@ verb evaluated for this resource is PUT.</p></td>
               </tr>
             
               <tr>
+                <td>RESOURCE_DATA_CHANNELS</td>
+                <td>7</td>
+                <td><p>RESOURCE_DATA_CHANNELS is the resource for creating data channels.</p></td>
+              </tr>
+            
+              <tr>
                 <td>RESOURCE_ALL</td>
                 <td>999</td>
                 <td><p>RESOURCE_ALL is a wildcard resource that matches all resources.</p></td>
@@ -965,7 +971,8 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                   <td>source_nodes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. </p></td>
+                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+can be specified with the prefix &#34;group:&#34;. </p></td>
                 </tr>
               
                 <tr>

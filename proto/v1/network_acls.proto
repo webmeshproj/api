@@ -36,7 +36,8 @@ message NetworkACL {
     int32 priority = 2;
     // action is the action to take when a request matches the ACL.
     ACLAction action = 3;
-    // source_nodes is a list of source nodes to match against. If empty, all nodes are matched.
+    // source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+    // can be specified with the prefix "group:".
     repeated string source_nodes = 4;
     // destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
     repeated string destination_nodes = 5;

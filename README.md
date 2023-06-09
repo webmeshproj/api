@@ -176,6 +176,7 @@ RuleResource is the resource type for a rule.
 | RESOURCE_GROUPS        | 4      | RESOURCE_GROUPS is the resource for managing groups.                                                           |
 | RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
 | RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
+| RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerbs
@@ -214,17 +215,17 @@ SubjectType is the type of a subject.
 
 NetworkACL is a network ACL.
 
-| Field             | Type                       | Label    | Description                                                                                                                           |
-|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                          |
-| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                   |
-| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                          |
-| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched.                                             |
-| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                   |
-| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                             |
-| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                   |
-| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number. |
-| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                           |
+| Field             | Type                       | Label    | Description                                                                                                                                 |
+|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                |
+| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                         |
+| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                |
+| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". |
+| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                         |
+| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                                   |
+| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                         |
+| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number.       |
+| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                                 |
 
 ### NetworkACLs
 
