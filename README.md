@@ -822,9 +822,9 @@ request.
 PluginConfiguration is the message containing the configuration of a
 plugin.
 
-| Field  | Type                                        | Label | Description                                |
-|--------|---------------------------------------------|-------|--------------------------------------------|
-| config | [google.protobuf.Any](#google.protobuf.Any) |       | Config is the configuration of the plugin. |
+| Field  | Type                                              | Label | Description                                |
+|--------|---------------------------------------------------|-------|--------------------------------------------|
+| config | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is the configuration of the plugin. |
 
 ### PluginInfo
 

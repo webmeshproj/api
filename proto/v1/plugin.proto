@@ -19,6 +19,7 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
 import "google/protobuf/any.proto";
 
 import "v1/raft.proto";
@@ -50,7 +51,7 @@ message PluginInfo {
 // PluginConfiguration is the message containing the configuration of a plugin.
 message PluginConfiguration {
     // Config is the configuration of the plugin.
-    google.protobuf.Any config = 1;
+    google.protobuf.Struct config = 1;
 }
 
 // AuthenticationRequest is the message containing an authentication request.
