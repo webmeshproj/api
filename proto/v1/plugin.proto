@@ -1,0 +1,74 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+import "v1/raft.proto";
+
+// PluginCapability is the capabilities of a plugin.
+enum PluginCapability {
+    // PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.
+    PLUGIN_CAPABILITY_UNKNOWN = 0;
+    // PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.
+    PLUGIN_CAPABILITY_STORE = 1;
+    // PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.
+    PLUGIN_CAPABILITY_AUTH = 2;
+}
+
+// PluginInfo is the information of a plugin.
+message PluginInfo {
+    // Name is the name of the plugin.
+    string name = 1;
+    // Version is the version of the plugin.
+    string version = 2;
+    // Description is the description of the plugin.
+    string description = 3;
+    // Capabilities is the capabilities of the plugin.
+    repeated PluginCapability capabilities = 5;
+}
+
+// PluginConfiguration is the message containing the configuration of a plugin.
+message PluginConfiguration {
+    // Config is the configuration of the plugin.
+    google.protobuf.Any config = 1;
+}
+
+// AuthenticationRequest is the message containing an authentication request.
+message AuthenticationRequest {
+    // node_id is the node id of the node to be authenticated.
+    string node_id = 1;
+    // headers are the headers of the request.
+    map<string, string> headers = 2;
+    // certificates are the DER encoded certificates of the request.
+    repeated bytes certificates = 3;
+}
+
+// Plugin is the service definiteion for a WebMesh plugin.
+service Plugin {
+    // GetInfo returns the information for the plugin.
+    rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
+    // Configure configures the plugin.
+    rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
+    // Store applies a raft log entry to the store.
+    rpc Store(RaftLogEntry) returns (RaftApplyResponse) {}
+    // Authenticate authenticates a request.
+    rpc Authenticate (AuthenticationRequest) returns (google.protobuf.Empty) {}
+}

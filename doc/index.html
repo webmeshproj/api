@@ -460,6 +460,41 @@
         
           
           <li>
+            <a href="#v1%2fplugin.proto">v1/plugin.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.AuthenticationRequest"><span class="badge">M</span>AuthenticationRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AuthenticationRequest.HeadersEntry"><span class="badge">M</span>AuthenticationRequest.HeadersEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PluginConfiguration"><span class="badge">M</span>PluginConfiguration</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PluginInfo"><span class="badge">M</span>PluginInfo</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#v1.Plugin"><span class="badge">S</span>Plugin</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fwebrtc.proto">v1/webrtc.proto</a>
             <ul>
               
@@ -3029,6 +3064,227 @@ sql_query is the SQL query of the log entry. </p></td>
       
 
       
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/plugin.proto">v1/plugin.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.AuthenticationRequest">AuthenticationRequest</h3>
+        <p>AuthenticationRequest is the message containing an authentication request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the node id of the node to be authenticated. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>headers</td>
+                  <td><a href="#v1.AuthenticationRequest.HeadersEntry">AuthenticationRequest.HeadersEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>headers are the headers of the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>certificates</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td>repeated</td>
+                  <td><p>certificates are the DER encoded certificates of the request. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AuthenticationRequest.HeadersEntry">AuthenticationRequest.HeadersEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PluginConfiguration">PluginConfiguration</h3>
+        <p>PluginConfiguration is the message containing the configuration of a plugin.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
+                  <td></td>
+                  <td><p>Config is the configuration of the plugin. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PluginInfo">PluginInfo</h3>
+        <p>PluginInfo is the information of a plugin.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Name is the name of the plugin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Version is the version of the plugin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description is the description of the plugin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>capabilities</td>
+                  <td><a href="#v1.PluginCapability">PluginCapability</a></td>
+                  <td>repeated</td>
+                  <td><p>Capabilities is the capabilities of the plugin. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.PluginCapability">PluginCapability</h3>
+        <p>PluginCapability is the capabilities of a plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_UNKNOWN</td>
+                <td>0</td>
+                <td><p>PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_STORE</td>
+                <td>1</td>
+                <td><p>PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_AUTH</td>
+                <td>2</td>
+                <td><p>PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="v1.Plugin">Plugin</h3>
+        <p>Plugin is the service definiteion for a WebMesh plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetInfo</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.PluginInfo">PluginInfo</a></td>
+                <td><p>GetInfo returns the information for the plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Configure</td>
+                <td><a href="#v1.PluginConfiguration">PluginConfiguration</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Configure configures the plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Store</td>
+                <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
+                <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
+                <td><p>Store applies a raft log entry to the store.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Authenticate</td>
+                <td><a href="#v1.AuthenticationRequest">AuthenticationRequest</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Authenticate authenticates a request.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
     
       
       <div class="file-heading">
