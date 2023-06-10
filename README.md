@@ -453,6 +453,7 @@ WireGuardPeer is a peer in the Wireguard network.
 | address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
 | address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
 | allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
+| allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                   |
 
 ### ClusterStatus
 

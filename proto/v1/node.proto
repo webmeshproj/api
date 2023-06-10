@@ -132,6 +132,8 @@ message WireGuardPeer {
     string address_ipv6 = 7;
     // allowed_ips is the list of allowed IPs for the peer.
     repeated string allowed_ips = 8;
+    // allowed_routes is the list of allowed routes for the peer.
+    repeated string allowed_routes = 9;
 }
 
 // LeaveRequest is a request to leave the cluster.
