@@ -53,7 +53,7 @@ type PluginClient interface {
 	// Store applies a raft log entry to the store.
 	Store(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
-	Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error)
 	// Emit emits a watch event.
 	Emit(ctx context.Context, in *WatchEvent, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -93,8 +93,8 @@ func (c *pluginClient) Store(ctx context.Context, in *RaftLogEntry, opts ...grpc
 	return out, nil
 }
 
-func (c *pluginClient) Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *pluginClient) Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error) {
+	out := new(AuthenticationResponse)
 	err := c.cc.Invoke(ctx, Plugin_Authenticate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ type PluginServer interface {
 	// Store applies a raft log entry to the store.
 	Store(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
-	Authenticate(context.Context, *AuthenticationRequest) (*emptypb.Empty, error)
+	Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error)
 	// Emit emits a watch event.
 	Emit(context.Context, *WatchEvent) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
@@ -141,7 +141,7 @@ func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration
 func (UnimplementedPluginServer) Store(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Store not implemented")
 }
-func (UnimplementedPluginServer) Authenticate(context.Context, *AuthenticationRequest) (*emptypb.Empty, error) {
+func (UnimplementedPluginServer) Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
 }
 func (UnimplementedPluginServer) Emit(context.Context, *WatchEvent) (*emptypb.Empty, error) {

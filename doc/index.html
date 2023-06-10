@@ -472,6 +472,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.AuthenticationResponse"><span class="badge">M</span>AuthenticationResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PluginConfiguration"><span class="badge">M</span>PluginConfiguration</a>
                 </li>
               
@@ -3087,13 +3091,6 @@ sql_query is the SQL query of the log entry. </p></td>
             <tbody>
               
                 <tr>
-                  <td>node_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>node_id is the node id of the node to be authenticated. </p></td>
-                </tr>
-              
-                <tr>
                   <td>headers</td>
                   <td><a href="#v1.AuthenticationRequest.HeadersEntry">AuthenticationRequest.HeadersEntry</a></td>
                   <td>repeated</td>
@@ -3136,6 +3133,30 @@ sql_query is the SQL query of the log entry. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AuthenticationResponse">AuthenticationResponse</h3>
+        <p>AuthenticationResponse is the message containing an authentication response.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the id of the authenticated user. </p></td>
                 </tr>
               
             </tbody>
@@ -3318,7 +3339,7 @@ sql_query is the SQL query of the log entry. </p></td>
               <tr>
                 <td>Authenticate</td>
                 <td><a href="#v1.AuthenticationRequest">AuthenticationRequest</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.AuthenticationResponse">AuthenticationResponse</a></td>
                 <td><p>Authenticate authenticates a request.</p></td>
               </tr>
             

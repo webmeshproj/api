@@ -66,6 +66,7 @@
 - [v1/plugin.proto](#v1%2fplugin.proto)
   - [<span class="badge">M</span>AuthenticationRequest](#v1.AuthenticationRequest)
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
+  - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
   - [<span class="badge">M</span>WatchEvent](#v1.WatchEvent)
@@ -806,7 +807,6 @@ request.
 
 | Field        | Type                                                                         | Label    | Description                                                   |
 |--------------|------------------------------------------------------------------------------|----------|---------------------------------------------------------------|
-| node_id      | [string](#string)                                                            |          | node_id is the node id of the node to be authenticated.       |
 | headers      | [AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry) | repeated | headers are the headers of the request.                       |
 | certificates | [bytes](#bytes)                                                              | repeated | certificates are the DER encoded certificates of the request. |
 
@@ -816,6 +816,15 @@ request.
 |-------|-------------------|-------|-------------|
 | key   | [string](#string) |       |             |
 | value | [string](#string) |       |             |
+
+### AuthenticationResponse
+
+AuthenticationResponse is the message containing an authentication
+response.
+
+| Field | Type              | Label | Description                             |
+|-------|-------------------|-------|-----------------------------------------|
+| id    | [string](#string) |       | id is the id of the authenticated user. |
 
 ### PluginConfiguration
 
@@ -861,13 +870,13 @@ PluginCapability is the capabilities of a plugin.
 
 Plugin is the service definiteion for a WebMesh plugin.
 
-| Method Name  | Request Type                                       | Response Type                                    | Description                                     |
-|--------------|----------------------------------------------------|--------------------------------------------------|-------------------------------------------------|
-| GetInfo      | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin. |
-| Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                |
-| Store        | [RaftLogEntry](#v1.RaftLogEntry)                   | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store applies a raft log entry to the store.    |
-| Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) | Authenticate authenticates a request.           |
-| Emit         | [WatchEvent](#v1.WatchEvent)                       | [.google.protobuf.Empty](#google.protobuf.Empty) | Emit emits a watch event.                       |
+| Method Name  | Request Type                                       | Response Type                                        | Description                                     |
+|--------------|----------------------------------------------------|------------------------------------------------------|-------------------------------------------------|
+| GetInfo      | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                         | GetInfo returns the information for the plugin. |
+| Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                |
+| Store        | [RaftLogEntry](#v1.RaftLogEntry)                   | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store applies a raft log entry to the store.    |
+| Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.           |
+| Emit         | [WatchEvent](#v1.WatchEvent)                       | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit emits a watch event.                       |
 
 <div class="file-heading">
 
