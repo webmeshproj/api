@@ -255,12 +255,12 @@ by implementations to evaluate network ACLs.
 
 Route is a route that is broadcasted by one or more nodes.
 
-| Field             | Type              | Label    | Description                                                            |
-|-------------------|-------------------|----------|------------------------------------------------------------------------|
-| name              | [string](#string) |          | name is the name of the route.                                         |
-| nodes             | [string](#string) | repeated | nodes is a list of nodes that broadcast the route.                     |
-| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.              |
-| next_hop_nodes    | [string](#string) | repeated | next_hop_nodes is a list of nodes that are the next hop for the route. |
+| Field             | Type              | Label    | Description                                                                                    |
+|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
+| name              | [string](#string) |          | name is the name of the route.                                                                 |
+| nodes             | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
+| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
+| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
 
 ### Routes
 

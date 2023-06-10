@@ -62,12 +62,12 @@ message NetworkACLs {
 message Route {
     // name is the name of the route.
     string name = 1;
-    // nodes is a list of nodes that broadcast the route.
-    repeated string nodes = 2;
+    // node is the node that broadcasts the route. A group can be specified with the prefix "group:".
+    string nodes = 2;
     // destination_cidrs are the destination CIDRs of the route.
     repeated string destination_cidrs = 3;
-    // next_hop_nodes is a list of nodes that are the next hop for the route.
-    repeated string next_hop_nodes = 4;
+    // next_hop_node is an optional node that is used as the next hop for the route.
+    string next_hop_node = 4;
 }
 
 // Routes is a list of routes.
