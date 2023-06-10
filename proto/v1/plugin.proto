@@ -31,6 +31,8 @@ enum PluginCapability {
     PLUGIN_CAPABILITY_STORE = 1;
     // PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.
     PLUGIN_CAPABILITY_AUTH = 2;
+    // PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.
+    PLUGIN_CAPABILITY_WATCH = 3;
 }
 
 // PluginInfo is the information of a plugin.
@@ -61,6 +63,14 @@ message AuthenticationRequest {
     repeated bytes certificates = 3;
 }
 
+// WatchEvent is the message containing a watch event.
+message WatchEvent {
+    // type is the type of the watch event.
+    string type = 1;
+    // object is the object of the watch event.
+    google.protobuf.Any object = 2;
+}
+
 // Plugin is the service definiteion for a WebMesh plugin.
 service Plugin {
     // GetInfo returns the information for the plugin.
@@ -71,4 +81,6 @@ service Plugin {
     rpc Store(RaftLogEntry) returns (RaftApplyResponse) {}
     // Authenticate authenticates a request.
     rpc Authenticate (AuthenticationRequest) returns (google.protobuf.Empty) {}
+    // Emit emits a watch event.
+    rpc Emit (WatchEvent) returns (google.protobuf.Empty) {}
 }

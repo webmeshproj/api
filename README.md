@@ -68,6 +68,7 @@
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
+  - [<span class="badge">M</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
@@ -836,15 +837,25 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                        |          | Description is the description of the plugin.   |
 | capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
+### WatchEvent
+
+WatchEvent is the message containing a watch event.
+
+| Field  | Type                                        | Label | Description                              |
+|--------|---------------------------------------------|-------|------------------------------------------|
+| type   | [string](#string)                           |       | type is the type of the watch event.     |
+| object | [google.protobuf.Any](#google.protobuf.Any) |       | object is the object of the watch event. |
+
 ### PluginCapability
 
 PluginCapability is the capabilities of a plugin.
 
-| Name                      | Number | Description                                                               |
-|---------------------------|--------|---------------------------------------------------------------------------|
-| PLUGIN_CAPABILITY_UNKNOWN | 0      | PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.       |
-| PLUGIN_CAPABILITY_STORE   | 1      | PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin. |
-| PLUGIN_CAPABILITY_AUTH    | 2      | PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.       |
+| Name                      | Number | Description                                                                      |
+|---------------------------|--------|----------------------------------------------------------------------------------|
+| PLUGIN_CAPABILITY_UNKNOWN | 0      | PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.              |
+| PLUGIN_CAPABILITY_STORE   | 1      | PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.        |
+| PLUGIN_CAPABILITY_AUTH    | 2      | PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.              |
+| PLUGIN_CAPABILITY_WATCH   | 3      | PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events. |
 
 ### Plugin
 
@@ -856,6 +867,7 @@ Plugin is the service definiteion for a WebMesh plugin.
 | Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                |
 | Store        | [RaftLogEntry](#v1.RaftLogEntry)                   | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store applies a raft log entry to the store.    |
 | Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) | Authenticate authenticates a request.           |
+| Emit         | [WatchEvent](#v1.WatchEvent)                       | [.google.protobuf.Empty](#google.protobuf.Empty) | Emit emits a watch event.                       |
 
 <div class="file-heading">
 

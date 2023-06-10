@@ -479,6 +479,10 @@
                   <a href="#v1.PluginInfo"><span class="badge">M</span>PluginInfo</a>
                 </li>
               
+                <li>
+                  <a href="#v1.WatchEvent"><span class="badge">M</span>WatchEvent</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
@@ -3210,6 +3214,37 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.WatchEvent">WatchEvent</h3>
+        <p>WatchEvent is the message containing a watch event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>type is the type of the watch event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>object</td>
+                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
+                  <td></td>
+                  <td><p>object is the object of the watch event. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="v1.PluginCapability">PluginCapability</h3>
@@ -3236,6 +3271,12 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td>PLUGIN_CAPABILITY_AUTH</td>
                 <td>2</td>
                 <td><p>PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_WATCH</td>
+                <td>3</td>
+                <td><p>PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.</p></td>
               </tr>
             
           </tbody>
@@ -3279,6 +3320,13 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td><a href="#v1.AuthenticationRequest">AuthenticationRequest</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Authenticate authenticates a request.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Emit</td>
+                <td><a href="#v1.WatchEvent">WatchEvent</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Emit emits a watch event.</p></td>
               </tr>
             
           </tbody>
