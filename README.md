@@ -831,11 +831,10 @@ response.
 
 Event is the message containing a watch event.
 
-| Field  | Type                         | Label | Description                                       |
-|--------|------------------------------|-------|---------------------------------------------------|
-| type   | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.              |
-| node   | [MeshNode](#v1.MeshNode)     |       | node is the node that joined or left the cluster. |
-| leader | [MeshNode](#v1.MeshNode)     |       | leader is the leader of the cluster.              |
+| Field | Type                         | Label | Description                               |
+|-------|------------------------------|-------|-------------------------------------------|
+| type  | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.      |
+| node  | [MeshNode](#v1.MeshNode)     |       | node is the node that the event is about. |
 
 ### PluginConfiguration
 

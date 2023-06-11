@@ -86,10 +86,8 @@ message Event {
     WatchEvent type = 1;
     // event is the data of the watch event.
     oneof event {
-        // node is the node that joined or left the cluster.
+        // node is the node that the event is about.
         MeshNode node = 2;
-        // leader is the leader of the cluster.
-        MeshNode leader = 3;
     }
 }
 
