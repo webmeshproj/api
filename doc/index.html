@@ -476,6 +476,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.Event"><span class="badge">M</span>Event</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PluginConfiguration"><span class="badge">M</span>PluginConfiguration</a>
                 </li>
               
@@ -483,13 +487,13 @@
                   <a href="#v1.PluginInfo"><span class="badge">M</span>PluginInfo</a>
                 </li>
               
-                <li>
-                  <a href="#v1.WatchEvent"><span class="badge">M</span>WatchEvent</a>
-                </li>
-              
               
                 <li>
                   <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.WatchEvent"><span class="badge">E</span>WatchEvent</a>
                 </li>
               
               
@@ -3166,6 +3170,44 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.Event">Event</h3>
+        <p>Event is the message containing a watch event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#v1.WatchEvent">WatchEvent</a></td>
+                  <td></td>
+                  <td><p>type is the type of the watch event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td></td>
+                  <td><p>node is the node that joined or left the cluster. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>leader</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td></td>
+                  <td><p>leader is the leader of the cluster. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.PluginConfiguration">PluginConfiguration</h3>
         <p>PluginConfiguration is the message containing the configuration of a plugin.</p>
 
@@ -3235,37 +3277,6 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
-        <h3 id="v1.WatchEvent">WatchEvent</h3>
-        <p>WatchEvent is the message containing a watch event.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>type is the type of the watch event. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>object</td>
-                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
-                  <td></td>
-                  <td><p>object is the object of the watch event. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
 
       
         <h3 id="v1.PluginCapability">PluginCapability</h3>
@@ -3298,6 +3309,41 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td>PLUGIN_CAPABILITY_WATCH</td>
                 <td>3</td>
                 <td><p>PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.WatchEvent">WatchEvent</h3>
+        <p>WatchEvent is the type of a watch event.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>WATCH_EVENT_UNKNOWN</td>
+                <td>0</td>
+                <td><p>WATCH_EVENT_UNKNOWN is the default value of WatchEvent.</p></td>
+              </tr>
+            
+              <tr>
+                <td>WATCH_EVENT_NODE_JOIN</td>
+                <td>1</td>
+                <td><p>WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>WATCH_EVENT_NODE_LEAVE</td>
+                <td>2</td>
+                <td><p>WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>WATCH_EVENT_LEADER_CHANGE</td>
+                <td>3</td>
+                <td><p>WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed.</p></td>
               </tr>
             
           </tbody>
@@ -3345,9 +3391,9 @@ sql_query is the SQL query of the log entry. </p></td>
             
               <tr>
                 <td>Emit</td>
-                <td><a href="#v1.WatchEvent">WatchEvent</a></td>
+                <td><a href="#v1.Event">Event</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>Emit emits a watch event.</p></td>
+                <td><p>Emit handles a watch event.</p></td>
               </tr>
             
           </tbody>

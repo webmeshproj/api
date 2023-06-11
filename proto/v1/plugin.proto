@@ -20,9 +20,9 @@ package v1;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
-import "google/protobuf/any.proto";
 
 import "v1/raft.proto";
+import "v1/mesh.proto";
 
 // PluginCapability is the capabilities of a plugin.
 enum PluginCapability {
@@ -34,6 +34,18 @@ enum PluginCapability {
     PLUGIN_CAPABILITY_AUTH = 2;
     // PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.
     PLUGIN_CAPABILITY_WATCH = 3;
+}
+
+// WatchEvent is the type of a watch event.
+enum WatchEvent {
+    // WATCH_EVENT_UNKNOWN is the default value of WatchEvent.
+    WATCH_EVENT_UNKNOWN = 0;
+    // WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.
+    WATCH_EVENT_NODE_JOIN = 1;
+    // WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.
+    WATCH_EVENT_NODE_LEAVE = 2;
+    // WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed.
+    WATCH_EVENT_LEADER_CHANGE = 3;
 }
 
 // PluginInfo is the information of a plugin.
@@ -68,12 +80,17 @@ message AuthenticationResponse {
     string id = 1;
 }
 
-// WatchEvent is the message containing a watch event.
-message WatchEvent {
+// Event is the message containing a watch event.
+message Event {
     // type is the type of the watch event.
-    string type = 1;
-    // object is the object of the watch event.
-    google.protobuf.Any object = 2;
+    WatchEvent type = 1;
+    // event is the data of the watch event.
+    oneof event {
+        // node is the node that joined or left the cluster.
+        MeshNode node = 2;
+        // leader is the leader of the cluster.
+        MeshNode leader = 3;
+    }
 }
 
 // Plugin is the service definiteion for a WebMesh plugin.
@@ -86,6 +103,6 @@ service Plugin {
     rpc Store(RaftLogEntry) returns (RaftApplyResponse) {}
     // Authenticate authenticates a request.
     rpc Authenticate (AuthenticationRequest) returns (AuthenticationResponse) {}
-    // Emit emits a watch event.
-    rpc Emit (WatchEvent) returns (google.protobuf.Empty) {}
+    // Emit handles a watch event.
+    rpc Emit (Event) returns (google.protobuf.Empty) {}
 }

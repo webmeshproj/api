@@ -54,8 +54,8 @@ type PluginClient interface {
 	Store(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
 	Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error)
-	// Emit emits a watch event.
-	Emit(ctx context.Context, in *WatchEvent, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Emit handles a watch event.
+	Emit(ctx context.Context, in *Event, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type pluginClient struct {
@@ -102,7 +102,7 @@ func (c *pluginClient) Authenticate(ctx context.Context, in *AuthenticationReque
 	return out, nil
 }
 
-func (c *pluginClient) Emit(ctx context.Context, in *WatchEvent, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *pluginClient) Emit(ctx context.Context, in *Event, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Plugin_Emit_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -123,8 +123,8 @@ type PluginServer interface {
 	Store(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
 	Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error)
-	// Emit emits a watch event.
-	Emit(context.Context, *WatchEvent) (*emptypb.Empty, error)
+	// Emit handles a watch event.
+	Emit(context.Context, *Event) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
 }
 
@@ -144,7 +144,7 @@ func (UnimplementedPluginServer) Store(context.Context, *RaftLogEntry) (*RaftApp
 func (UnimplementedPluginServer) Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
 }
-func (UnimplementedPluginServer) Emit(context.Context, *WatchEvent) (*emptypb.Empty, error) {
+func (UnimplementedPluginServer) Emit(context.Context, *Event) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Emit not implemented")
 }
 func (UnimplementedPluginServer) mustEmbedUnimplementedPluginServer() {}
@@ -233,7 +233,7 @@ func _Plugin_Authenticate_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _Plugin_Emit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WatchEvent)
+	in := new(Event)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -245,7 +245,7 @@ func _Plugin_Emit_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: Plugin_Emit_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Emit(ctx, req.(*WatchEvent))
+		return srv.(PluginServer).Emit(ctx, req.(*Event))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -67,10 +67,11 @@
   - [<span class="badge">M</span>AuthenticationRequest](#v1.AuthenticationRequest)
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
+  - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
-  - [<span class="badge">M</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
+  - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
@@ -826,6 +827,16 @@ response.
 |-------|-------------------|-------|-----------------------------------------|
 | id    | [string](#string) |       | id is the id of the authenticated user. |
 
+### Event
+
+Event is the message containing a watch event.
+
+| Field  | Type                         | Label | Description                                       |
+|--------|------------------------------|-------|---------------------------------------------------|
+| type   | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.              |
+| node   | [MeshNode](#v1.MeshNode)     |       | node is the node that joined or left the cluster. |
+| leader | [MeshNode](#v1.MeshNode)     |       | leader is the leader of the cluster.              |
+
 ### PluginConfiguration
 
 PluginConfiguration is the message containing the configuration of a
@@ -846,15 +857,6 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                        |          | Description is the description of the plugin.   |
 | capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
-### WatchEvent
-
-WatchEvent is the message containing a watch event.
-
-| Field  | Type                                        | Label | Description                              |
-|--------|---------------------------------------------|-------|------------------------------------------|
-| type   | [string](#string)                           |       | type is the type of the watch event.     |
-| object | [google.protobuf.Any](#google.protobuf.Any) |       | object is the object of the watch event. |
-
 ### PluginCapability
 
 PluginCapability is the capabilities of a plugin.
@@ -866,6 +868,17 @@ PluginCapability is the capabilities of a plugin.
 | PLUGIN_CAPABILITY_AUTH    | 2      | PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.              |
 | PLUGIN_CAPABILITY_WATCH   | 3      | PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events. |
 
+### WatchEvent
+
+WatchEvent is the type of a watch event.
+
+| Name                      | Number | Description                                                                     |
+|---------------------------|--------|---------------------------------------------------------------------------------|
+| WATCH_EVENT_UNKNOWN       | 0      | WATCH_EVENT_UNKNOWN is the default value of WatchEvent.                         |
+| WATCH_EVENT_NODE_JOIN     | 1      | WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.             |
+| WATCH_EVENT_NODE_LEAVE    | 2      | WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.              |
+| WATCH_EVENT_LEADER_CHANGE | 3      | WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed. |
+
 ### Plugin
 
 Plugin is the service definiteion for a WebMesh plugin.
@@ -876,7 +889,7 @@ Plugin is the service definiteion for a WebMesh plugin.
 | Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                |
 | Store        | [RaftLogEntry](#v1.RaftLogEntry)                   | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store applies a raft log entry to the store.    |
 | Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.           |
-| Emit         | [WatchEvent](#v1.WatchEvent)                       | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit emits a watch event.                       |
+| Emit         | [Event](#v1.Event)                                 | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit handles a watch event.                     |
 
 <div class="file-heading">
 
