@@ -34,6 +34,8 @@
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
+  - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
+  - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
   - [<span class="badge">M</span>Status](#v1.Status)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
   - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
@@ -430,6 +432,20 @@ PeerMetrics are the metrics for a node's peer.
 | receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
 | transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
 
+### SnapshotRequest
+
+SnapshotRequest is a request to create a snapshot. It is intentionally
+
+empty for now as there are no options.
+
+### SnapshotResponse
+
+SnapshotResponse is a response to a snapshot request.
+
+| Field    | Type            | Label | Description                    |
+|----------|-----------------|-------|--------------------------------|
+| snapshot | [bytes](#bytes) |       | snapshot is the snapshot data. |
+
 ### Status
 
 Status represents the status of a node.
@@ -530,6 +546,7 @@ handle the request when a non-leader can otherwise serve it, use the
 | Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                                                                                 |
 | Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Snapshot             | [SnapshotRequest](#v1.SnapshotRequest)                      | [SnapshotResponse](#v1.SnapshotResponse)                    | Snapshot is used to create a snapshot of the current state of the mesh. The snapshot can be used to restore the mesh state.                                                                                                                                                                                                                                                                                                                                                                                         |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
 
 <div class="file-heading">

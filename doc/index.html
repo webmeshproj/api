@@ -316,6 +316,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.SnapshotRequest"><span class="badge">M</span>SnapshotRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SnapshotResponse"><span class="badge">M</span>SnapshotResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
@@ -1857,6 +1865,37 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
 
         
       
+        <h3 id="v1.SnapshotRequest">SnapshotRequest</h3>
+        <p>SnapshotRequest is a request to create a snapshot. It is intentionally</p><p>empty for now as there are no options.</p>
+
+        
+
+        
+      
+        <h3 id="v1.SnapshotResponse">SnapshotResponse</h3>
+        <p>SnapshotResponse is a response to a snapshot request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>snapshot</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>snapshot is the snapshot data. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.Status">Status</h3>
         <p>Status represents the status of a node.</p>
 
@@ -2214,6 +2253,14 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
                 <td><a href="#v1.GetStatusRequest">GetStatusRequest</a></td>
                 <td><a href="#v1.Status">Status</a></td>
                 <td><p>GetStatus gets the status of a node in the cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Snapshot</td>
+                <td><a href="#v1.SnapshotRequest">SnapshotRequest</a></td>
+                <td><a href="#v1.SnapshotResponse">SnapshotResponse</a></td>
+                <td><p>Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
+can be used to restore the mesh state.</p></td>
               </tr>
             
               <tr>

@@ -243,6 +243,17 @@ message PeerMetrics {
   uint64 transmit_bytes = 8;
 }
 
+// SnapshotRequest is a request to create a snapshot. It is intentionally
+// empty for now as there are no options.
+message SnapshotRequest {
+}
+
+// SnapshotResponse is a response to a snapshot request.
+message SnapshotResponse {
+    // snapshot is the snapshot data.
+    bytes snapshot = 1;
+}
+
 // Node is the service exposed on every node in the mesh to communicate network
 // information amongst themselves. Some methods are only available on the currently
 // elected leader. This service can optionally be exposed on public interfaces to allow
@@ -262,6 +273,10 @@ service Node {
 
     // GetStatus gets the status of a node in the cluster.
     rpc GetStatus(GetStatusRequest) returns (Status) {}
+
+    // Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
+    // can be used to restore the mesh state.
+    rpc Snapshot(SnapshotRequest) returns (SnapshotResponse) {}
 
     // NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
     // and a node in the cluster. The handling server will send the target node the source address, 
