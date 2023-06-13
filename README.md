@@ -708,12 +708,10 @@ SQLExec is a SQL exec.
 
 SQLExecResult is the result of a SQL exec.
 
-| Field          | Type              | Label | Description                                      |
-|----------------|-------------------|-------|--------------------------------------------------|
-| last_insert_id | [int64](#int64)   |       | last_insert_id is the last insert ID.            |
-| rows_affected  | [int64](#int64)   |       | rows_affected is the number of rows affected.    |
-| error          | [string](#string) |       | error is an error that occurred during the exec. |
-| time           | [string](#string) |       | time is the time it took to execute the exec.    |
+| Field          | Type            | Label | Description                                   |
+|----------------|-----------------|-------|-----------------------------------------------|
+| last_insert_id | [int64](#int64) |       | last_insert_id is the last insert ID.         |
+| rows_affected  | [int64](#int64) |       | rows_affected is the number of rows affected. |
 
 ### SQLParameter
 
@@ -743,13 +741,11 @@ SQLQuery is a SQL query.
 
 SQLQueryResult contains the rows of a SQL query.
 
-| Field   | Type                       | Label    | Description                                       |
-|---------|----------------------------|----------|---------------------------------------------------|
-| columns | [string](#string)          | repeated | columns is the list of columns.                   |
-| types   | [string](#string)          | repeated | types is the list of types.                       |
-| values  | [SQLValues](#v1.SQLValues) | repeated | values is the list of values.                     |
-| error   | [string](#string)          |          | error is an error that occurred during the query. |
-| time    | [string](#string)          |          | time is the time it took to execute the query.    |
+| Field   | Type                       | Label    | Description                     |
+|---------|----------------------------|----------|---------------------------------|
+| columns | [string](#string)          | repeated | columns is the list of columns. |
+| types   | [string](#string)          | repeated | types is the list of types.     |
+| values  | [SQLValues](#v1.SQLValues) | repeated | values is the list of values.   |
 
 ### SQLStatement
 

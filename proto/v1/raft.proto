@@ -101,10 +101,6 @@ message SQLQueryResult {
 	repeated string types = 2;
     // values is the list of values.
 	repeated SQLValues values = 3;
-    // error is an error that occurred during the query.
-	string error = 4;
-    // time is the time it took to execute the query.
-	string time = 5;
 }
 
 // SQLExecResult is the result of a SQL exec.
@@ -113,10 +109,6 @@ message SQLExecResult {
 	int64 last_insert_id = 1;
     // rows_affected is the number of rows affected.
 	int64 rows_affected = 2;
-    // error is an error that occurred during the exec.
-	string error = 3;
-    // time is the time it took to execute the exec.
-	string time = 4;
 }
 
 // RaftLogEntry is the data of an entry in the Raft log.
