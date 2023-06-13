@@ -92,8 +92,12 @@ message StoreLogRequest {
 
 // DataSnapshot is the message containing a snapshot of the data.
 message DataSnapshot {
+    // term is the term of the log entry.
+    uint64 term = 1;
+    // index is the index of the log entry.
+    uint64 index = 2;
     // data is the snapshot of the data.
-    bytes data = 1;
+    bytes data = 3;
 }
 
 // Event is the message containing a watch event.

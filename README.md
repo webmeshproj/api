@@ -846,9 +846,11 @@ response.
 
 DataSnapshot is the message containing a snapshot of the data.
 
-| Field | Type            | Label | Description                       |
-|-------|-----------------|-------|-----------------------------------|
-| data  | [bytes](#bytes) |       | data is the snapshot of the data. |
+| Field | Type              | Label | Description                          |
+|-------|-------------------|-------|--------------------------------------|
+| term  | [uint64](#uint64) |       | term is the term of the log entry.   |
+| index | [uint64](#uint64) |       | index is the index of the log entry. |
+| data  | [bytes](#bytes)   |       | data is the snapshot of the data.    |
 
 ### Event
 
