@@ -70,6 +70,7 @@
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
+  - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
   - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
@@ -852,6 +853,16 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                        |          | Description is the description of the plugin.   |
 | capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
+### StoreLogRequest
+
+StoreLogRequest is the message containing a raft log entry.
+
+| Field | Type                             | Label | Description                          |
+|-------|----------------------------------|-------|--------------------------------------|
+| term  | [uint64](#uint64)                |       | term is the term of the log entry.   |
+| index | [uint64](#uint64)                |       | index is the index of the log entry. |
+| log   | [RaftLogEntry](#v1.RaftLogEntry) |       | log is the log entry.                |
+
 ### PluginCapability
 
 PluginCapability is the capabilities of a plugin.
@@ -882,7 +893,7 @@ Plugin is the service definiteion for a WebMesh plugin.
 |--------------|----------------------------------------------------|------------------------------------------------------|-------------------------------------------------|
 | GetInfo      | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                         | GetInfo returns the information for the plugin. |
 | Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                |
-| Store        | [RaftLogEntry](#v1.RaftLogEntry)                   | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store applies a raft log entry to the store.    |
+| Store        | [StoreLogRequest](#v1.StoreLogRequest)             | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store applies a raft log entry to the store.    |
 | Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.           |
 | Emit         | [Event](#v1.Event)                                 | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit handles a watch event.                     |
 

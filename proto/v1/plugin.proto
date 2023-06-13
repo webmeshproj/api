@@ -80,6 +80,16 @@ message AuthenticationResponse {
     string id = 1;
 }
 
+// StoreLogRequest is the message containing a raft log entry.
+message StoreLogRequest {
+    // term is the term of the log entry.
+    uint64 term = 1;
+    // index is the index of the log entry.
+    uint64 index = 2;
+    // log is the log entry.
+    RaftLogEntry log = 3;
+}
+
 // Event is the message containing a watch event.
 message Event {
     // type is the type of the watch event.
@@ -98,7 +108,7 @@ service Plugin {
     // Configure configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
     // Store applies a raft log entry to the store.
-    rpc Store(RaftLogEntry) returns (RaftApplyResponse) {}
+    rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
     // Authenticate authenticates a request.
     rpc Authenticate (AuthenticationRequest) returns (AuthenticationResponse) {}
     // Emit handles a watch event.

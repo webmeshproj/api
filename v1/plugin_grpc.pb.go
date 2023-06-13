@@ -51,7 +51,7 @@ type PluginClient interface {
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Store applies a raft log entry to the store.
-	Store(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
+	Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
 	Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error)
 	// Emit handles a watch event.
@@ -84,7 +84,7 @@ func (c *pluginClient) Configure(ctx context.Context, in *PluginConfiguration, o
 	return out, nil
 }
 
-func (c *pluginClient) Store(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
+func (c *pluginClient) Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
 	out := new(RaftApplyResponse)
 	err := c.cc.Invoke(ctx, Plugin_Store_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -120,7 +120,7 @@ type PluginServer interface {
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
 	// Store applies a raft log entry to the store.
-	Store(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
+	Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error)
 	// Authenticate authenticates a request.
 	Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error)
 	// Emit handles a watch event.
@@ -138,7 +138,7 @@ func (UnimplementedPluginServer) GetInfo(context.Context, *emptypb.Empty) (*Plug
 func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
 }
-func (UnimplementedPluginServer) Store(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
+func (UnimplementedPluginServer) Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Store not implemented")
 }
 func (UnimplementedPluginServer) Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error) {
@@ -197,7 +197,7 @@ func _Plugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _Plugin_Store_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RaftLogEntry)
+	in := new(StoreLogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -209,7 +209,7 @@ func _Plugin_Store_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: Plugin_Store_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PluginServer).Store(ctx, req.(*RaftLogEntry))
+		return srv.(PluginServer).Store(ctx, req.(*StoreLogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

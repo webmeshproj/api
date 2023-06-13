@@ -487,6 +487,10 @@
                   <a href="#v1.PluginInfo"><span class="badge">M</span>PluginInfo</a>
                 </li>
               
+                <li>
+                  <a href="#v1.StoreLogRequest"><span class="badge">M</span>StoreLogRequest</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
@@ -3242,6 +3246,44 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.StoreLogRequest">StoreLogRequest</h3>
+        <p>StoreLogRequest is the message containing a raft log entry.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>term</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>term is the term of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>index</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>index is the index of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>log</td>
+                  <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
+                  <td></td>
+                  <td><p>log is the log entry. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="v1.PluginCapability">PluginCapability</h3>
@@ -3342,7 +3384,7 @@ sql_query is the SQL query of the log entry. </p></td>
             
               <tr>
                 <td>Store</td>
-                <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
+                <td><a href="#v1.StoreLogRequest">StoreLogRequest</a></td>
                 <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
                 <td><p>Store applies a raft log entry to the store.</p></td>
               </tr>
