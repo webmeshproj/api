@@ -90,6 +90,12 @@ message StoreLogRequest {
     RaftLogEntry log = 3;
 }
 
+// DataSnapshot is the message containing a snapshot of the data.
+message DataSnapshot {
+    // data is the snapshot of the data.
+    bytes data = 1;
+}
+
 // Event is the message containing a watch event.
 message Event {
     // type is the type of the watch event.
@@ -107,8 +113,10 @@ service Plugin {
     rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
     // Configure configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
-    // Store applies a raft log entry to the store.
+    // Store dispatches a Raft log entry for storage.
     rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
+    // RestoreSnapshot should drop any existing state and restore from the snapshot.
+    rpc RestoreSnapshot (DataSnapshot) returns (google.protobuf.Empty) {}
     // Authenticate authenticates a request.
     rpc Authenticate (AuthenticationRequest) returns (AuthenticationResponse) {}
     // Emit handles a watch event.

@@ -35,11 +35,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Plugin_GetInfo_FullMethodName      = "/v1.Plugin/GetInfo"
-	Plugin_Configure_FullMethodName    = "/v1.Plugin/Configure"
-	Plugin_Store_FullMethodName        = "/v1.Plugin/Store"
-	Plugin_Authenticate_FullMethodName = "/v1.Plugin/Authenticate"
-	Plugin_Emit_FullMethodName         = "/v1.Plugin/Emit"
+	Plugin_GetInfo_FullMethodName         = "/v1.Plugin/GetInfo"
+	Plugin_Configure_FullMethodName       = "/v1.Plugin/Configure"
+	Plugin_Store_FullMethodName           = "/v1.Plugin/Store"
+	Plugin_RestoreSnapshot_FullMethodName = "/v1.Plugin/RestoreSnapshot"
+	Plugin_Authenticate_FullMethodName    = "/v1.Plugin/Authenticate"
+	Plugin_Emit_FullMethodName            = "/v1.Plugin/Emit"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -50,8 +51,10 @@ type PluginClient interface {
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// Store applies a raft log entry to the store.
+	// Store dispatches a Raft log entry for storage.
 	Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error)
+	// RestoreSnapshot should drop any existing state and restore from the snapshot.
+	RestoreSnapshot(ctx context.Context, in *DataSnapshot, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Authenticate authenticates a request.
 	Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error)
 	// Emit handles a watch event.
@@ -93,6 +96,15 @@ func (c *pluginClient) Store(ctx context.Context, in *StoreLogRequest, opts ...g
 	return out, nil
 }
 
+func (c *pluginClient) RestoreSnapshot(ctx context.Context, in *DataSnapshot, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Plugin_RestoreSnapshot_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *pluginClient) Authenticate(ctx context.Context, in *AuthenticationRequest, opts ...grpc.CallOption) (*AuthenticationResponse, error) {
 	out := new(AuthenticationResponse)
 	err := c.cc.Invoke(ctx, Plugin_Authenticate_FullMethodName, in, out, opts...)
@@ -119,8 +131,10 @@ type PluginServer interface {
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
-	// Store applies a raft log entry to the store.
+	// Store dispatches a Raft log entry for storage.
 	Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error)
+	// RestoreSnapshot should drop any existing state and restore from the snapshot.
+	RestoreSnapshot(context.Context, *DataSnapshot) (*emptypb.Empty, error)
 	// Authenticate authenticates a request.
 	Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error)
 	// Emit handles a watch event.
@@ -140,6 +154,9 @@ func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration
 }
 func (UnimplementedPluginServer) Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Store not implemented")
+}
+func (UnimplementedPluginServer) RestoreSnapshot(context.Context, *DataSnapshot) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestoreSnapshot not implemented")
 }
 func (UnimplementedPluginServer) Authenticate(context.Context, *AuthenticationRequest) (*AuthenticationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
@@ -214,6 +231,24 @@ func _Plugin_Store_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Plugin_RestoreSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DataSnapshot)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PluginServer).RestoreSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Plugin_RestoreSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PluginServer).RestoreSnapshot(ctx, req.(*DataSnapshot))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Plugin_Authenticate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AuthenticationRequest)
 	if err := dec(in); err != nil {
@@ -268,6 +303,10 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Store",
 			Handler:    _Plugin_Store_Handler,
+		},
+		{
+			MethodName: "RestoreSnapshot",
+			Handler:    _Plugin_RestoreSnapshot_Handler,
 		},
 		{
 			MethodName: "Authenticate",

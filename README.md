@@ -69,6 +69,7 @@
   - [<span class="badge">M</span>AuthenticationRequest](#v1.AuthenticationRequest)
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
+  - [<span class="badge">M</span>DataSnapshot](#v1.DataSnapshot)
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
@@ -841,6 +842,14 @@ response.
 |-------|-------------------|-------|-----------------------------------------|
 | id    | [string](#string) |       | id is the id of the authenticated user. |
 
+### DataSnapshot
+
+DataSnapshot is the message containing a snapshot of the data.
+
+| Field | Type            | Label | Description                       |
+|-------|-----------------|-------|-----------------------------------|
+| data  | [bytes](#bytes) |       | data is the snapshot of the data. |
+
 ### Event
 
 Event is the message containing a watch event.
@@ -906,13 +915,14 @@ WatchEvent is the type of a watch event.
 
 Plugin is the service definiteion for a WebMesh plugin.
 
-| Method Name  | Request Type                                       | Response Type                                        | Description                                     |
-|--------------|----------------------------------------------------|------------------------------------------------------|-------------------------------------------------|
-| GetInfo      | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                         | GetInfo returns the information for the plugin. |
-| Configure    | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                |
-| Store        | [StoreLogRequest](#v1.StoreLogRequest)             | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store applies a raft log entry to the store.    |
-| Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.           |
-| Emit         | [Event](#v1.Event)                                 | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit handles a watch event.                     |
+| Method Name     | Request Type                                       | Response Type                                        | Description                                                                   |
+|-----------------|----------------------------------------------------|------------------------------------------------------|-------------------------------------------------------------------------------|
+| GetInfo         | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                         | GetInfo returns the information for the plugin.                               |
+| Configure       | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                                              |
+| Store           | [StoreLogRequest](#v1.StoreLogRequest)             | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store dispatches a Raft log entry for storage.                                |
+| RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)                   | [.google.protobuf.Empty](#google.protobuf.Empty)     | RestoreSnapshot should drop any existing state and restore from the snapshot. |
+| Authenticate    | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.                                         |
+| Emit            | [Event](#v1.Event)                                 | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit handles a watch event.                                                   |
 
 <div class="file-heading">
 

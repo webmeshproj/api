@@ -484,6 +484,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.DataSnapshot"><span class="badge">M</span>DataSnapshot</a>
+                </li>
+              
+                <li>
                   <a href="#v1.Event"><span class="badge">M</span>Event</a>
                 </li>
               
@@ -3193,6 +3197,30 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.DataSnapshot">DataSnapshot</h3>
+        <p>DataSnapshot is the message containing a snapshot of the data.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>data is the snapshot of the data. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.Event">Event</h3>
         <p>Event is the message containing a watch event.</p>
 
@@ -3433,7 +3461,14 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td>Store</td>
                 <td><a href="#v1.StoreLogRequest">StoreLogRequest</a></td>
                 <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
-                <td><p>Store applies a raft log entry to the store.</p></td>
+                <td><p>Store dispatches a Raft log entry for storage.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RestoreSnapshot</td>
+                <td><a href="#v1.DataSnapshot">DataSnapshot</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>RestoreSnapshot should drop any existing state and restore from the snapshot.</p></td>
               </tr>
             
               <tr>
