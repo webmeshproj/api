@@ -226,17 +226,18 @@ Status represents the status of a node.
 
 WireGuardPeer is a peer in the Wireguard network.
 
-| Field               | Type              | Label    | Description                                                                  |
-|---------------------|-------------------|----------|------------------------------------------------------------------------------|
-| id                  | [string](#string) |          | id is the ID of the peer.                                                    |
-| public_key          | [string](#string) |          | public_key is the public key of the peer.                                    |
-| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                        |
-| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
-| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                      |
-| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
-| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
-| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
-| allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                   |
+| Field               | Type              | Label    | Description                                                                       |
+|---------------------|-------------------|----------|-----------------------------------------------------------------------------------|
+| id                  | [string](#string) |          | id is the ID of the peer.                                                         |
+| public_key          | [string](#string) |          | public_key is the public key of the peer.                                         |
+| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                             |
+| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.      |
+| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                           |
+| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.                   |
+| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.                   |
+| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
+| allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                        |
+| ice                 | [bool](#bool)     |          | ice indicates whether the connection to this peer should be established over ICE. |
 
 ### ClusterStatus
 

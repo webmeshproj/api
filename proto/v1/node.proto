@@ -134,6 +134,9 @@ message WireGuardPeer {
     repeated string allowed_ips = 8;
     // allowed_routes is the list of allowed routes for the peer.
     repeated string allowed_routes = 9;
+    // ice indicates whether the connection to this peer should be
+    // established over ICE.
+    bool ice = 10;
 }
 
 // LeaveRequest is a request to leave the cluster.
