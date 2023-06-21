@@ -262,7 +262,7 @@ type JoinRequest struct {
 	// if the node is not allowed to put routes.
 	Routes []string `protobuf:"bytes,12,rep,name=routes,proto3" json:"routes,omitempty"`
 	// direct_peers is a list of extra peers that should be connected to directly over ICE.
-	// The request will be denied if the node is not allowed to put data channels.
+	// The request will be denied if the node is not allowed to put data channels or edges.
 	// The default joining behavior creates non-ICE links between the caller and the joiner.
 	// If the caller has a primary endpoint, the joiner will link the caller to all
 	// other nodes with a primary endpoint. If the caller has a zone awareness ID,
