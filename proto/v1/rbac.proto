@@ -38,6 +38,8 @@ enum RuleResource {
     RESOURCE_ROUTES = 6;
     // RESOURCE_DATA_CHANNELS is the resource for creating data channels.
     RESOURCE_DATA_CHANNELS = 7;
+    // RESOURCE_EDGES is the resource for managing edges.
+    RESOURCE_EDGES = 8;
 
     // RESOURCE_ALL is a wildcard resource that matches all resources.
     RESOURCE_ALL = 999;

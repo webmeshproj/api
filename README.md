@@ -507,6 +507,7 @@ RuleResource is the resource type for a rule.
 | RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
 | RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
 | RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
+| RESOURCE_EDGES         | 8      | RESOURCE_EDGES is the resource for managing edges.                                                             |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerbs
