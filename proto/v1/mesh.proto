@@ -63,6 +63,15 @@ message NodeList {
     repeated MeshNode nodes = 1;
 }
 
+// EdgeAttributes are pre-defined edge attributes. They should
+// be used as their string values.
+enum EdgeAttributes {
+    // EDGE_ATTRIBUTE_UNKNOWN is an unknown edge attribute.
+    EDGE_ATTRIBUTE_UNKNOWN = 0;
+    // EDGE_ATTRIBUTE_ICE is an ICE edge attribute.
+    EDGE_ATTRIBUTE_ICE = 1;
+}
+
 // MeshEdge is an edge between two nodes.
 message MeshEdge {
     // source is the source node.

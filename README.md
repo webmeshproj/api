@@ -28,6 +28,7 @@
   - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
   - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
   - [<span class="badge">M</span>NodeList](#v1.NodeList)
+  - [<span class="badge">E</span>EdgeAttributes](#v1.EdgeAttributes)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
 - [v1/rbac.proto](#v1%2frbac.proto)
   - [<span class="badge">M</span>Group](#v1.Group)
@@ -384,6 +385,17 @@ NodeList is a list of nodes.
 | Field | Type                     | Label    | Description                 |
 |-------|--------------------------|----------|-----------------------------|
 | nodes | [MeshNode](#v1.MeshNode) | repeated | nodes is the list of nodes. |
+
+### EdgeAttributes
+
+EdgeAttributes are pre-defined edge attributes. They should
+
+be used as their string values.
+
+| Name                   | Number | Description                                          |
+|------------------------|--------|------------------------------------------------------|
+| EDGE_ATTRIBUTE_UNKNOWN | 0      | EDGE_ATTRIBUTE_UNKNOWN is an unknown edge attribute. |
+| EDGE_ATTRIBUTE_ICE     | 1      | EDGE_ATTRIBUTE_ICE is an ICE edge attribute.         |
 
 ### Mesh
 
