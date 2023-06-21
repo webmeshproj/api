@@ -832,7 +832,8 @@ This is only used if assign_ipv4 is true. </p></td>
                   <td>as_voter</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>as_voter is whether the node should receive a vote in elections. </p></td>
+                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+will be denied if the node is not allowed to vote. </p></td>
                 </tr>
               
                 <tr>
@@ -841,6 +842,19 @@ This is only used if assign_ipv4 is true. </p></td>
                   <td>repeated</td>
                   <td><p>routes is a list of routes to advertise to peers. The request will be denied
 if the node is not allowed to put routes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>direct_peers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>direct_peers is a list of extra peers that should be connected to directly over ICE. 
+The request will be denied if the node is not allowed to put data channels.
+The default joining behavior creates non-ICE links between the caller and the joiner.
+If the caller has a primary endpoint, the joiner will link the caller to all
+other nodes with a primary endpoint. If the caller has a zone awareness ID,
+the joiner will link the caller to all other nodes with the same zone awareness ID
+that also have a primary endpoint. </p></td>
                 </tr>
               
             </tbody>
@@ -897,7 +911,8 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
                   <td>repeated</td>
                   <td><p>ice_servers is a list of public nodes that can be used to negotiate
 ICE connections if required. This may only be populated when one of
-the peers has the ICE flag set. </p></td>
+the peers has the ICE flag set. This must be set if the requestor
+specifies direct_peers. </p></td>
                 </tr>
               
             </tbody>

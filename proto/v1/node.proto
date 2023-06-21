@@ -92,11 +92,20 @@ message JoinRequest {
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
     bool prefer_raft_ipv6 = 10;
-    // as_voter is whether the node should receive a vote in elections.
+    // as_voter is whether the node should receive a vote in elections. The request
+    // will be denied if the node is not allowed to vote.
     bool as_voter = 11;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
     repeated string routes = 12;
+    // direct_peers is a list of extra peers that should be connected to directly over ICE. 
+    // The request will be denied if the node is not allowed to put data channels.
+    // The default joining behavior creates non-ICE links between the caller and the joiner.
+    // If the caller has a primary endpoint, the joiner will link the caller to all
+    // other nodes with a primary endpoint. If the caller has a zone awareness ID,
+    // the joiner will link the caller to all other nodes with the same zone awareness ID
+    // that also have a primary endpoint.
+    repeated string direct_peers = 13;
 }
 
 // JoinResponse is a response to a join request.
@@ -114,7 +123,8 @@ message JoinResponse {
     repeated WireGuardPeer peers = 4;
     // ice_servers is a list of public nodes that can be used to negotiate
     // ICE connections if required. This may only be populated when one of
-    // the peers has the ICE flag set.
+    // the peers has the ICE flag set. This must be set if the requestor
+    // specifies direct_peers.
     repeated string ice_servers = 5;
 }
 
