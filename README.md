@@ -165,6 +165,7 @@ JoinResponse is a response to a join request.
 | address_ipv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                                                         |
 | network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                                                  |
 | peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                                              |
+| ice_servers  | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set.                                                                                        |
 
 ### LeaveRequest
 

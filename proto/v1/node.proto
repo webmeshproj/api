@@ -112,6 +112,10 @@ message JoinResponse {
     string network_ipv6 = 3;
     // peers is a list of wireguard peers to connect to.
     repeated WireGuardPeer peers = 4;
+    // ice_servers is a list of public nodes that can be used to negotiate
+    // ICE connections if required. This may only be populated when one of
+    // the peers has the ICE flag set.
+    repeated string ice_servers = 5;
 }
 
 // WireGuardPeer is a peer in the Wireguard network.

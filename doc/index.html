@@ -891,6 +891,15 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
                   <td><p>peers is a list of wireguard peers to connect to. </p></td>
                 </tr>
               
+                <tr>
+                  <td>ice_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
+ICE connections if required. This may only be populated when one of
+the peers has the ICE flag set. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
