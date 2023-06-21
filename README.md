@@ -4,6 +4,31 @@
 
 <div id="toc-container">
 
+- [v1/node.proto](#v1%2fnode.proto)
+  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
+  - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
+  - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
+  - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
+  - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
+  - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
+  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
+  - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
+  - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
+  - [<span class="badge">M</span>Status](#v1.Status)
+  - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
+  - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
+  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
+  - [<span class="badge">E</span>Feature](#v1.Feature)
+  - [<span class="badge">S</span>Node](#v1.Node)
+- [v1/mesh.proto](#v1%2fmesh.proto)
+  - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
+  - [<span class="badge">M</span>MeshEdge](#v1.MeshEdge)
+  - [<span class="badge">M</span>MeshEdge.AttributesEntry](#v1.MeshEdge.AttributesEntry)
+  - [<span class="badge">M</span>MeshEdges](#v1.MeshEdges)
+  - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
+  - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
+  - [<span class="badge">M</span>NodeList](#v1.NodeList)
+  - [<span class="badge">S</span>Mesh](#v1.Mesh)
 - [v1/rbac.proto](#v1%2frbac.proto)
   - [<span class="badge">M</span>Group](#v1.Group)
   - [<span class="badge">M</span>Groups](#v1.Groups)
@@ -26,29 +51,6 @@
   - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
-- [v1/node.proto](#v1%2fnode.proto)
-  - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
-  - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
-  - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
-  - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
-  - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
-  - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
-  - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
-  - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
-  - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
-  - [<span class="badge">M</span>Status](#v1.Status)
-  - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
-  - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
-  - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
-  - [<span class="badge">E</span>Feature](#v1.Feature)
-  - [<span class="badge">S</span>Node](#v1.Node)
-- [v1/mesh.proto](#v1%2fmesh.proto)
-  - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
-  - [<span class="badge">M</span>MeshEdge](#v1.MeshEdge)
-  - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
-  - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
-  - [<span class="badge">M</span>NodeList](#v1.NodeList)
-  - [<span class="badge">S</span>Mesh](#v1.Mesh)
 - [v1/peer_discovery.proto](#v1%2fpeer_discovery.proto)
   - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
   - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
@@ -84,253 +86,6 @@
 - [Scalar Value Types](#scalar-value-types)
 
 </div>
-
-<div class="file-heading">
-
-## v1/rbac.proto
-
-[Top](#title)
-
-</div>
-
-### Group
-
-Group is a group of subjects.
-
-| Field    | Type                   | Label    | Description                                    |
-|----------|------------------------|----------|------------------------------------------------|
-| name     | [string](#string)      |          | name is the name of the group.                 |
-| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects in the group. |
-
-### Groups
-
-Groups is a list of groups.
-
-| Field | Type               | Label    | Description                  |
-|-------|--------------------|----------|------------------------------|
-| items | [Group](#v1.Group) | repeated | items is the list of groups. |
-
-### RBACAction
-
-RBACAction is an action that can be performed on a resource. It is used
-by implementations
-
-to evaluate rules.
-
-| Field         | Type                             | Label | Description                                                                 |
-|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
-| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
-| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
-| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
-
-### Role
-
-Role is a role that can be assigned to a subject.
-
-| Field | Type              | Label    | Description                                        |
-|-------|-------------------|----------|----------------------------------------------------|
-| name  | [string](#string) |          | name is the name of the role.                      |
-| rules | [Rule](#v1.Rule)  | repeated | rules is the list of rules that apply to the role. |
-
-### RoleBinding
-
-RoleBinding is a binding of a role to one or more subjects.
-
-| Field    | Type                   | Label    | Description                                                    |
-|----------|------------------------|----------|----------------------------------------------------------------|
-| name     | [string](#string)      |          | name is the name of the role binding.                          |
-| role     | [string](#string)      |          | role is the name of the role to which the binding applies.     |
-| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects to which the binding applies. |
-
-### RoleBindings
-
-RoleBindings is a list of role bindings.
-
-| Field | Type                           | Label    | Description                         |
-|-------|--------------------------------|----------|-------------------------------------|
-| items | [RoleBinding](#v1.RoleBinding) | repeated | items is the list of role bindings. |
-
-### Roles
-
-Roles is a list of roles.
-
-| Field | Type             | Label    | Description                 |
-|-------|------------------|----------|-----------------------------|
-| items | [Role](#v1.Role) | repeated | items is the list of roles. |
-
-### Rule
-
-Rule is a rule that applies to a resource.
-
-| Field          | Type                             | Label    | Description                                                             |
-|----------------|----------------------------------|----------|-------------------------------------------------------------------------|
-| resources      | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
-| resource_names | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
-| verbs          | [RuleVerbs](#v1.RuleVerbs)       | repeated | verbs is the list of verbs that apply to the resource.                  |
-
-### Subject
-
-Subject is a subject to which a role can be bound.
-
-| Field | Type                           | Label | Description                      |
-|-------|--------------------------------|-------|----------------------------------|
-| name  | [string](#string)              |       | name is the name of the subject. |
-| type  | [SubjectType](#v1.SubjectType) |       | type is the type of the subject. |
-
-### RuleResource
-
-RuleResource is the resource type for a rule.
-
-| Name                   | Number | Description                                                                                                    |
-|------------------------|--------|----------------------------------------------------------------------------------------------------------------|
-| RESOURCE_UNKNOWN       | 0      | RESOURCE_UNKNOWN is an unknown resource.                                                                       |
-| RESOURCE_VOTES         | 1      | RESOURCE_VOTES is the resource for voting in raft elections. The only verb evaluated for this resource is PUT. |
-| RESOURCE_ROLES         | 2      | RESOURCE_ROLES is the resource for managing roles.                                                             |
-| RESOURCE_ROLE_BINDINGS | 3      | RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.                                             |
-| RESOURCE_GROUPS        | 4      | RESOURCE_GROUPS is the resource for managing groups.                                                           |
-| RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
-| RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
-| RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
-| RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
-
-### RuleVerbs
-
-RuleVerbs is the verb type for a rule.
-
-| Name         | Number | Description                                               |
-|--------------|--------|-----------------------------------------------------------|
-| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                          |
-| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource. |
-| VERB_GET     | 2      | VERB_GET is the verb for getting a resource.              |
-| VERB_DELETE  | 3      | VERB_DELETE is the verb for deleting a resource.          |
-| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.       |
-
-### SubjectType
-
-SubjectType is the type of a subject.
-
-| Name            | Number | Description                                                                                                                            |
-|-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------|
-| SUBJECT_UNKNOWN | 0      | SUBJECT_UNKNOWN is an unknown subject type.                                                                                            |
-| SUBJECT_NODE    | 1      | SUBJECT_NODE is a subject type for a node.                                                                                             |
-| SUBJECT_USER    | 2      | SUBJECT_USER is a subject type for a user.                                                                                             |
-| SUBJECT_GROUP   | 3      | SUBJECT_GROUP is a subject type for a group.                                                                                           |
-| SUBJECT_ALL     | 999    | SUBJECT_ALL is a wildcard subject type that matches all subject types. It can be used with a subject named '\*' to match all subjects. |
-
-<div class="file-heading">
-
-## v1/network_acls.proto
-
-[Top](#title)
-
-</div>
-
-### NetworkACL
-
-NetworkACL is a network ACL.
-
-| Field             | Type                       | Label    | Description                                                                                                                                 |
-|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                |
-| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                         |
-| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                |
-| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". |
-| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                         |
-| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                                   |
-| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                         |
-| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number.       |
-| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                                 |
-
-### NetworkACLs
-
-NetworkACLs is a list of network ACLs.
-
-| Field | Type                         | Label    | Description                        |
-|-------|------------------------------|----------|------------------------------------|
-| items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
-
-### NetworkAction
-
-NetworkAction is an action that can be performed on a network resource.
-It is used
-
-by implementations to evaluate network ACLs.
-
-| Field    | Type              | Label | Description                                     |
-|----------|-------------------|-------|-------------------------------------------------|
-| src_node | [string](#string) |       | src_node is the source node of the action.      |
-| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.      |
-| dst_node | [string](#string) |       | dst_node is the destination node of the action. |
-| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. |
-| protocol | [string](#string) |       | protocol is the protocol of the action.         |
-| port     | [uint32](#uint32) |       | port is the port of the action.                 |
-
-### Route
-
-Route is a route that is broadcasted by one or more nodes.
-
-| Field             | Type              | Label    | Description                                                                                    |
-|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
-| name              | [string](#string) |          | name is the name of the route.                                                                 |
-| node              | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
-| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
-| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
-
-### Routes
-
-Routes is a list of routes.
-
-| Field | Type               | Label    | Description                  |
-|-------|--------------------|----------|------------------------------|
-| items | [Route](#v1.Route) | repeated | items is the list of routes. |
-
-### ACLAction
-
-ACLAction is the action to take when a request matches an ACL.
-
-| Name           | Number | Description                                                                       |
-|----------------|--------|-----------------------------------------------------------------------------------|
-| ACTION_UNKNOWN | 0      | ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY. |
-| ACTION_ACCEPT  | 1      | ACTION_ACCEPT allows the request to proceed.                                      |
-| ACTION_DENY    | 2      | ACTION_DENY denies the request.                                                   |
-
-<div class="file-heading">
-
-## v1/admin.proto
-
-[Top](#title)
-
-</div>
-
-### Admin
-
-Admin is the service that provides cluster admin operations. Most
-methods
-
-require the leader to be contacted.
-
-| Method Name       | Request Type                                     | Response Type                                    | Description                                       |
-|-------------------|--------------------------------------------------|--------------------------------------------------|---------------------------------------------------|
-| PutRole           | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRole creates or updates a role.                |
-| DeleteRole        | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRole deletes a role.                        |
-| GetRole           | [Role](#v1.Role)                                 | [Role](#v1.Role)                                 | GetRole gets a role.                              |
-| ListRoles         | [.google.protobuf.Empty](#google.protobuf.Empty) | [Roles](#v1.Roles)                               | ListRoles gets all roles.                         |
-| PutRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoleBinding creates or updates a role binding. |
-| DeleteRoleBinding | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoleBinding deletes a role binding.         |
-| GetRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [RoleBinding](#v1.RoleBinding)                   | GetRoleBinding gets a role binding.               |
-| ListRoleBindings  | [.google.protobuf.Empty](#google.protobuf.Empty) | [RoleBindings](#v1.RoleBindings)                 | ListRoleBindings gets all role bindings.          |
-| PutGroup          | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutGroup creates or updates a group.              |
-| DeleteGroup       | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteGroup deletes a group.                      |
-| GetGroup          | [Group](#v1.Group)                               | [Group](#v1.Group)                               | GetGroup gets a group.                            |
-| ListGroups        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Groups](#v1.Groups)                             | ListGroups gets all groups.                       |
-| PutNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | PutNetworkACL creates or updates a network ACL.   |
-| DeleteNetworkACL  | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteNetworkACL deletes a network ACL.           |
-| GetNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [NetworkACL](#v1.NetworkACL)                     | GetNetworkACL gets a network ACL.                 |
-| ListNetworkACLs   | [.google.protobuf.Empty](#google.protobuf.Empty) | [NetworkACLs](#v1.NetworkACLs)                   | ListNetworkACLs gets all network ACLs.            |
-| PutRoute          | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoute creates or updates a route.              |
-| DeleteRoute       | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoute deletes a route.                      |
-| GetRoute          | [Route](#v1.Route)                               | [Route](#v1.Route)                               | GetRoute gets a route.                            |
-| ListRoutes        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Routes](#v1.Routes)                             | ListRoutes gets all routes.                       |
 
 <div class="file-heading">
 
@@ -570,11 +325,27 @@ GetNodeRequest is a request to get a node.
 
 MeshEdge is an edge between two nodes.
 
-| Field  | Type              | Label | Description                       |
-|--------|-------------------|-------|-----------------------------------|
-| source | [string](#string) |       | source is the source node.        |
-| target | [string](#string) |       | target is the target node.        |
-| weight | [int32](#int32)   |       | weight is the weight of the edge. |
+| Field      | Type                                                     | Label    | Description                                      |
+|------------|----------------------------------------------------------|----------|--------------------------------------------------|
+| source     | [string](#string)                                        |          | source is the source node.                       |
+| target     | [string](#string)                                        |          | target is the target node.                       |
+| weight     | [int32](#int32)                                          |          | weight is the weight of the edge.                |
+| attributes | [MeshEdge.AttributesEntry](#v1.MeshEdge.AttributesEntry) | repeated | attributes is a list of attributes for the edge. |
+
+### MeshEdge.AttributesEntry
+
+| Field | Type              | Label | Description |
+|-------|-------------------|-------|-------------|
+| key   | [string](#string) |       |             |
+| value | [string](#string) |       |             |
+
+### MeshEdges
+
+MeshEdges is a list of edges.
+
+| Field | Type                     | Label    | Description                 |
+|-------|--------------------------|----------|-----------------------------|
+| items | [MeshEdge](#v1.MeshEdge) | repeated | items is the list of edges. |
 
 ### MeshGraph
 
@@ -629,6 +400,257 @@ service.
 | GetNode      | [GetNodeRequest](#v1.GetNodeRequest)             | [MeshNode](#v1.MeshNode)   | GetNode gets a node by ID.                                                                                 |
 | ListNodes    | [.google.protobuf.Empty](#google.protobuf.Empty) | [NodeList](#v1.NodeList)   | ListNodes lists all nodes.                                                                                 |
 | GetMeshGraph | [.google.protobuf.Empty](#google.protobuf.Empty) | [MeshGraph](#v1.MeshGraph) | GetMeshGraph fetches the mesh graph. It returns a list of nodes, edges, and a rendering in the dot format. |
+
+<div class="file-heading">
+
+## v1/rbac.proto
+
+[Top](#title)
+
+</div>
+
+### Group
+
+Group is a group of subjects.
+
+| Field    | Type                   | Label    | Description                                    |
+|----------|------------------------|----------|------------------------------------------------|
+| name     | [string](#string)      |          | name is the name of the group.                 |
+| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects in the group. |
+
+### Groups
+
+Groups is a list of groups.
+
+| Field | Type               | Label    | Description                  |
+|-------|--------------------|----------|------------------------------|
+| items | [Group](#v1.Group) | repeated | items is the list of groups. |
+
+### RBACAction
+
+RBACAction is an action that can be performed on a resource. It is used
+by implementations
+
+to evaluate rules.
+
+| Field         | Type                             | Label | Description                                                                 |
+|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
+| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
+| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
+| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
+
+### Role
+
+Role is a role that can be assigned to a subject.
+
+| Field | Type              | Label    | Description                                        |
+|-------|-------------------|----------|----------------------------------------------------|
+| name  | [string](#string) |          | name is the name of the role.                      |
+| rules | [Rule](#v1.Rule)  | repeated | rules is the list of rules that apply to the role. |
+
+### RoleBinding
+
+RoleBinding is a binding of a role to one or more subjects.
+
+| Field    | Type                   | Label    | Description                                                    |
+|----------|------------------------|----------|----------------------------------------------------------------|
+| name     | [string](#string)      |          | name is the name of the role binding.                          |
+| role     | [string](#string)      |          | role is the name of the role to which the binding applies.     |
+| subjects | [Subject](#v1.Subject) | repeated | subjects is the list of subjects to which the binding applies. |
+
+### RoleBindings
+
+RoleBindings is a list of role bindings.
+
+| Field | Type                           | Label    | Description                         |
+|-------|--------------------------------|----------|-------------------------------------|
+| items | [RoleBinding](#v1.RoleBinding) | repeated | items is the list of role bindings. |
+
+### Roles
+
+Roles is a list of roles.
+
+| Field | Type             | Label    | Description                 |
+|-------|------------------|----------|-----------------------------|
+| items | [Role](#v1.Role) | repeated | items is the list of roles. |
+
+### Rule
+
+Rule is a rule that applies to a resource.
+
+| Field          | Type                             | Label    | Description                                                             |
+|----------------|----------------------------------|----------|-------------------------------------------------------------------------|
+| resources      | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
+| resource_names | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
+| verbs          | [RuleVerbs](#v1.RuleVerbs)       | repeated | verbs is the list of verbs that apply to the resource.                  |
+
+### Subject
+
+Subject is a subject to which a role can be bound.
+
+| Field | Type                           | Label | Description                      |
+|-------|--------------------------------|-------|----------------------------------|
+| name  | [string](#string)              |       | name is the name of the subject. |
+| type  | [SubjectType](#v1.SubjectType) |       | type is the type of the subject. |
+
+### RuleResource
+
+RuleResource is the resource type for a rule.
+
+| Name                   | Number | Description                                                                                                    |
+|------------------------|--------|----------------------------------------------------------------------------------------------------------------|
+| RESOURCE_UNKNOWN       | 0      | RESOURCE_UNKNOWN is an unknown resource.                                                                       |
+| RESOURCE_VOTES         | 1      | RESOURCE_VOTES is the resource for voting in raft elections. The only verb evaluated for this resource is PUT. |
+| RESOURCE_ROLES         | 2      | RESOURCE_ROLES is the resource for managing roles.                                                             |
+| RESOURCE_ROLE_BINDINGS | 3      | RESOURCE_ROLE_BINDINGS is the resource for managing role bindings.                                             |
+| RESOURCE_GROUPS        | 4      | RESOURCE_GROUPS is the resource for managing groups.                                                           |
+| RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
+| RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
+| RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
+| RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
+
+### RuleVerbs
+
+RuleVerbs is the verb type for a rule.
+
+| Name         | Number | Description                                               |
+|--------------|--------|-----------------------------------------------------------|
+| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                          |
+| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource. |
+| VERB_GET     | 2      | VERB_GET is the verb for getting a resource.              |
+| VERB_DELETE  | 3      | VERB_DELETE is the verb for deleting a resource.          |
+| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.       |
+
+### SubjectType
+
+SubjectType is the type of a subject.
+
+| Name            | Number | Description                                                                                                                            |
+|-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------|
+| SUBJECT_UNKNOWN | 0      | SUBJECT_UNKNOWN is an unknown subject type.                                                                                            |
+| SUBJECT_NODE    | 1      | SUBJECT_NODE is a subject type for a node.                                                                                             |
+| SUBJECT_USER    | 2      | SUBJECT_USER is a subject type for a user.                                                                                             |
+| SUBJECT_GROUP   | 3      | SUBJECT_GROUP is a subject type for a group.                                                                                           |
+| SUBJECT_ALL     | 999    | SUBJECT_ALL is a wildcard subject type that matches all subject types. It can be used with a subject named '\*' to match all subjects. |
+
+<div class="file-heading">
+
+## v1/network_acls.proto
+
+[Top](#title)
+
+</div>
+
+### NetworkACL
+
+NetworkACL is a network ACL.
+
+| Field             | Type                       | Label    | Description                                                                                                                                 |
+|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                |
+| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                         |
+| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                |
+| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". |
+| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                         |
+| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                                   |
+| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                         |
+| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number.       |
+| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                                 |
+
+### NetworkACLs
+
+NetworkACLs is a list of network ACLs.
+
+| Field | Type                         | Label    | Description                        |
+|-------|------------------------------|----------|------------------------------------|
+| items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
+
+### NetworkAction
+
+NetworkAction is an action that can be performed on a network resource.
+It is used
+
+by implementations to evaluate network ACLs.
+
+| Field    | Type              | Label | Description                                     |
+|----------|-------------------|-------|-------------------------------------------------|
+| src_node | [string](#string) |       | src_node is the source node of the action.      |
+| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.      |
+| dst_node | [string](#string) |       | dst_node is the destination node of the action. |
+| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. |
+| protocol | [string](#string) |       | protocol is the protocol of the action.         |
+| port     | [uint32](#uint32) |       | port is the port of the action.                 |
+
+### Route
+
+Route is a route that is broadcasted by one or more nodes.
+
+| Field             | Type              | Label    | Description                                                                                    |
+|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
+| name              | [string](#string) |          | name is the name of the route.                                                                 |
+| node              | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
+| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
+| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
+
+### Routes
+
+Routes is a list of routes.
+
+| Field | Type               | Label    | Description                  |
+|-------|--------------------|----------|------------------------------|
+| items | [Route](#v1.Route) | repeated | items is the list of routes. |
+
+### ACLAction
+
+ACLAction is the action to take when a request matches an ACL.
+
+| Name           | Number | Description                                                                       |
+|----------------|--------|-----------------------------------------------------------------------------------|
+| ACTION_UNKNOWN | 0      | ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY. |
+| ACTION_ACCEPT  | 1      | ACTION_ACCEPT allows the request to proceed.                                      |
+| ACTION_DENY    | 2      | ACTION_DENY denies the request.                                                   |
+
+<div class="file-heading">
+
+## v1/admin.proto
+
+[Top](#title)
+
+</div>
+
+### Admin
+
+Admin is the service that provides cluster admin operations. Most
+methods
+
+require the leader to be contacted.
+
+| Method Name       | Request Type                                     | Response Type                                    | Description                                           |
+|-------------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------------|
+| PutRole           | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRole creates or updates a role.                    |
+| DeleteRole        | [Role](#v1.Role)                                 | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRole deletes a role.                            |
+| GetRole           | [Role](#v1.Role)                                 | [Role](#v1.Role)                                 | GetRole gets a role.                                  |
+| ListRoles         | [.google.protobuf.Empty](#google.protobuf.Empty) | [Roles](#v1.Roles)                               | ListRoles gets all roles.                             |
+| PutRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoleBinding creates or updates a role binding.     |
+| DeleteRoleBinding | [RoleBinding](#v1.RoleBinding)                   | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoleBinding deletes a role binding.             |
+| GetRoleBinding    | [RoleBinding](#v1.RoleBinding)                   | [RoleBinding](#v1.RoleBinding)                   | GetRoleBinding gets a role binding.                   |
+| ListRoleBindings  | [.google.protobuf.Empty](#google.protobuf.Empty) | [RoleBindings](#v1.RoleBindings)                 | ListRoleBindings gets all role bindings.              |
+| PutGroup          | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutGroup creates or updates a group.                  |
+| DeleteGroup       | [Group](#v1.Group)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteGroup deletes a group.                          |
+| GetGroup          | [Group](#v1.Group)                               | [Group](#v1.Group)                               | GetGroup gets a group.                                |
+| ListGroups        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Groups](#v1.Groups)                             | ListGroups gets all groups.                           |
+| PutNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | PutNetworkACL creates or updates a network ACL.       |
+| DeleteNetworkACL  | [NetworkACL](#v1.NetworkACL)                     | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteNetworkACL deletes a network ACL.               |
+| GetNetworkACL     | [NetworkACL](#v1.NetworkACL)                     | [NetworkACL](#v1.NetworkACL)                     | GetNetworkACL gets a network ACL.                     |
+| ListNetworkACLs   | [.google.protobuf.Empty](#google.protobuf.Empty) | [NetworkACLs](#v1.NetworkACLs)                   | ListNetworkACLs gets all network ACLs.                |
+| PutRoute          | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | PutRoute creates or updates a route.                  |
+| DeleteRoute       | [Route](#v1.Route)                               | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteRoute deletes a route.                          |
+| GetRoute          | [Route](#v1.Route)                               | [Route](#v1.Route)                               | GetRoute gets a route.                                |
+| ListRoutes        | [.google.protobuf.Empty](#google.protobuf.Empty) | [Routes](#v1.Routes)                             | ListRoutes gets all routes.                           |
+| PutEdge           | [MeshEdge](#v1.MeshEdge)                         | [.google.protobuf.Empty](#google.protobuf.Empty) | PutEdge creates or updates an edge between two nodes. |
+| DeleteEdge        | [MeshEdge](#v1.MeshEdge)                         | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteEdge deletes an edge between two nodes.         |
+| GetEdge           | [MeshEdge](#v1.MeshEdge)                         | [MeshEdge](#v1.MeshEdge)                         | GetEdge gets an edge between two nodes.               |
+| ListEdges         | [.google.protobuf.Empty](#google.protobuf.Empty) | [MeshEdges](#v1.MeshEdges)                       | ListEdges gets all current edges.                     |
 
 <div class="file-heading">
 

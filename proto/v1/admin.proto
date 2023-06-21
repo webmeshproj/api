@@ -20,6 +20,7 @@ package v1;
 
 import "google/protobuf/empty.proto";
 
+import "v1/mesh.proto";
 import "v1/rbac.proto";
 import "v1/network_acls.proto";
 
@@ -70,4 +71,13 @@ service Admin {
     rpc GetRoute(Route) returns (Route) {}
     // ListRoutes gets all routes.
     rpc ListRoutes(google.protobuf.Empty) returns (Routes) {}
+
+    // PutEdge creates or updates an edge between two nodes.
+    rpc PutEdge(MeshEdge) returns (google.protobuf.Empty) {}
+    // DeleteEdge deletes an edge between two nodes.
+    rpc DeleteEdge(MeshEdge) returns (google.protobuf.Empty) {}
+    // GetEdge gets an edge between two nodes.
+    rpc GetEdge(MeshEdge) returns (MeshEdge) {}
+    // ListEdges gets all current edges.
+    rpc ListEdges(google.protobuf.Empty) returns (MeshEdges) {}
 }

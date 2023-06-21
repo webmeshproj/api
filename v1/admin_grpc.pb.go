@@ -55,6 +55,10 @@ const (
 	Admin_DeleteRoute_FullMethodName       = "/v1.Admin/DeleteRoute"
 	Admin_GetRoute_FullMethodName          = "/v1.Admin/GetRoute"
 	Admin_ListRoutes_FullMethodName        = "/v1.Admin/ListRoutes"
+	Admin_PutEdge_FullMethodName           = "/v1.Admin/PutEdge"
+	Admin_DeleteEdge_FullMethodName        = "/v1.Admin/DeleteEdge"
+	Admin_GetEdge_FullMethodName           = "/v1.Admin/GetEdge"
+	Admin_ListEdges_FullMethodName         = "/v1.Admin/ListEdges"
 )
 
 // AdminClient is the client API for Admin service.
@@ -101,6 +105,14 @@ type AdminClient interface {
 	GetRoute(ctx context.Context, in *Route, opts ...grpc.CallOption) (*Route, error)
 	// ListRoutes gets all routes.
 	ListRoutes(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Routes, error)
+	// PutEdge creates or updates an edge between two nodes.
+	PutEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteEdge deletes an edge between two nodes.
+	DeleteEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// GetEdge gets an edge between two nodes.
+	GetEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*MeshEdge, error)
+	// ListEdges gets all current edges.
+	ListEdges(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MeshEdges, error)
 }
 
 type adminClient struct {
@@ -291,6 +303,42 @@ func (c *adminClient) ListRoutes(ctx context.Context, in *emptypb.Empty, opts ..
 	return out, nil
 }
 
+func (c *adminClient) PutEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_PutEdge_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Admin_DeleteEdge_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetEdge(ctx context.Context, in *MeshEdge, opts ...grpc.CallOption) (*MeshEdge, error) {
+	out := new(MeshEdge)
+	err := c.cc.Invoke(ctx, Admin_GetEdge_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) ListEdges(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MeshEdges, error) {
+	out := new(MeshEdges)
+	err := c.cc.Invoke(ctx, Admin_ListEdges_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
@@ -335,6 +383,14 @@ type AdminServer interface {
 	GetRoute(context.Context, *Route) (*Route, error)
 	// ListRoutes gets all routes.
 	ListRoutes(context.Context, *emptypb.Empty) (*Routes, error)
+	// PutEdge creates or updates an edge between two nodes.
+	PutEdge(context.Context, *MeshEdge) (*emptypb.Empty, error)
+	// DeleteEdge deletes an edge between two nodes.
+	DeleteEdge(context.Context, *MeshEdge) (*emptypb.Empty, error)
+	// GetEdge gets an edge between two nodes.
+	GetEdge(context.Context, *MeshEdge) (*MeshEdge, error)
+	// ListEdges gets all current edges.
+	ListEdges(context.Context, *emptypb.Empty) (*MeshEdges, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -401,6 +457,18 @@ func (UnimplementedAdminServer) GetRoute(context.Context, *Route) (*Route, error
 }
 func (UnimplementedAdminServer) ListRoutes(context.Context, *emptypb.Empty) (*Routes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRoutes not implemented")
+}
+func (UnimplementedAdminServer) PutEdge(context.Context, *MeshEdge) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutEdge not implemented")
+}
+func (UnimplementedAdminServer) DeleteEdge(context.Context, *MeshEdge) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEdge not implemented")
+}
+func (UnimplementedAdminServer) GetEdge(context.Context, *MeshEdge) (*MeshEdge, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEdge not implemented")
+}
+func (UnimplementedAdminServer) ListEdges(context.Context, *emptypb.Empty) (*MeshEdges, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEdges not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -775,6 +843,78 @@ func _Admin_ListRoutes_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_PutEdge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MeshEdge)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).PutEdge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_PutEdge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).PutEdge(ctx, req.(*MeshEdge))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteEdge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MeshEdge)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteEdge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteEdge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteEdge(ctx, req.(*MeshEdge))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetEdge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MeshEdge)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetEdge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetEdge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetEdge(ctx, req.(*MeshEdge))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_ListEdges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).ListEdges(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_ListEdges_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).ListEdges(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -861,6 +1001,22 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRoutes",
 			Handler:    _Admin_ListRoutes_Handler,
+		},
+		{
+			MethodName: "PutEdge",
+			Handler:    _Admin_PutEdge_Handler,
+		},
+		{
+			MethodName: "DeleteEdge",
+			Handler:    _Admin_DeleteEdge_Handler,
+		},
+		{
+			MethodName: "GetEdge",
+			Handler:    _Admin_GetEdge_Handler,
+		},
+		{
+			MethodName: "ListEdges",
+			Handler:    _Admin_ListEdges_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
