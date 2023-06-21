@@ -49,7 +49,8 @@ type StartDataChannelRequest struct {
 	Proto string `protobuf:"bytes,2,opt,name=proto,proto3" json:"proto,omitempty"`
 	// dst is the destination address of the traffic.
 	Dst string `protobuf:"bytes,3,opt,name=dst,proto3" json:"dst,omitempty"`
-	// port is the destination port of the traffic.
+	// port is the destination port of the traffic. A port of 0 coupled
+	// with the udp protocol indicates forwarding to the WireGuard interface.
 	Port uint32 `protobuf:"varint,4,opt,name=port,proto3" json:"port,omitempty"`
 	// answer is the answer to the offer.
 	Answer string `protobuf:"bytes,5,opt,name=answer,proto3" json:"answer,omitempty"`

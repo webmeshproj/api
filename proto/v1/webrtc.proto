@@ -28,7 +28,8 @@ message StartDataChannelRequest {
   string proto = 2;
   // dst is the destination address of the traffic.
   string dst = 3;
-  // port is the destination port of the traffic.
+  // port is the destination port of the traffic. A port of 0 coupled
+  // with the udp protocol indicates forwarding to the WireGuard interface.
   uint32 port = 4;
   // answer is the answer to the offer.
   string answer = 5;

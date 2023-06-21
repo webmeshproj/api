@@ -3732,7 +3732,8 @@ sql_query is the SQL query of the log entry. </p></td>
                   <td>port</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>port is the destination port of the traffic. </p></td>
+                  <td><p>port is the destination port of the traffic. A port of 0 coupled
+with the udp protocol indicates forwarding to the WireGuard interface. </p></td>
                 </tr>
               
                 <tr>

@@ -991,14 +991,14 @@ The answer and candidate fields are populated after the offer
 
 is received.
 
-| Field     | Type              | Label | Description                                        |
-|-----------|-------------------|-------|----------------------------------------------------|
-| node_id   | [string](#string) |       | node_id is the ID of the node to send the data to. |
-| proto     | [string](#string) |       | proto is the protocol of the traffic.              |
-| dst       | [string](#string) |       | dst is the destination address of the traffic.     |
-| port      | [uint32](#uint32) |       | port is the destination port of the traffic.       |
-| answer    | [string](#string) |       | answer is the answer to the offer.                 |
-| candidate | [string](#string) |       | candidate is an ICE candidate.                     |
+| Field     | Type              | Label | Description                                                                                                                             |
+|-----------|-------------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| node_id   | [string](#string) |       | node_id is the ID of the node to send the data to.                                                                                      |
+| proto     | [string](#string) |       | proto is the protocol of the traffic.                                                                                                   |
+| dst       | [string](#string) |       | dst is the destination address of the traffic.                                                                                          |
+| port      | [uint32](#uint32) |       | port is the destination port of the traffic. A port of 0 coupled with the udp protocol indicates forwarding to the WireGuard interface. |
+| answer    | [string](#string) |       | answer is the answer to the offer.                                                                                                      |
+| candidate | [string](#string) |       | candidate is an ICE candidate.                                                                                                          |
 
 ### WebRTC
 
