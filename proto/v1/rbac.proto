@@ -45,8 +45,8 @@ enum RuleResource {
     RESOURCE_ALL = 999;
 }
 
-// RuleVerbs is the verb type for a rule.
-enum RuleVerbs {
+// RuleVerb is the verb type for a rule.
+enum RuleVerb {
     // VERB_UNKNOWN is an unknown verb.
     VERB_UNKNOWN = 0;
 
@@ -84,7 +84,7 @@ message Rule {
     // resource_names is the list of resource names to which the rule applies.
     repeated string resource_names = 2;
     // verbs is the list of verbs that apply to the resource.
-    repeated RuleVerbs verbs = 3;
+    repeated RuleVerb verbs = 3;
 }
 
 // Role is a role that can be assigned to a subject.
@@ -148,5 +148,5 @@ message RBACAction {
     // performed.
     string resource_name = 2;
     // verb is the verb that is performed on the resource.
-    RuleVerbs verb = 3;
+    RuleVerb verb = 3;
 }

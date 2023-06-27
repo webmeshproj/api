@@ -41,7 +41,7 @@
   - [<span class="badge">M</span>Rule](#v1.Rule)
   - [<span class="badge">M</span>Subject](#v1.Subject)
   - [<span class="badge">E</span>RuleResource](#v1.RuleResource)
-  - [<span class="badge">E</span>RuleVerbs](#v1.RuleVerbs)
+  - [<span class="badge">E</span>RuleVerb](#v1.RuleVerb)
   - [<span class="badge">E</span>SubjectType](#v1.SubjectType)
 - [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
   - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
@@ -452,7 +452,7 @@ to evaluate rules.
 |---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
 | resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
 | resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
-| verb          | [RuleVerbs](#v1.RuleVerbs)       |       | verb is the verb that is performed on the resource.                         |
+| verb          | [RuleVerb](#v1.RuleVerb)         |       | verb is the verb that is performed on the resource.                         |
 
 ### Role
 
@@ -497,7 +497,7 @@ Rule is a rule that applies to a resource.
 |----------------|----------------------------------|----------|-------------------------------------------------------------------------|
 | resources      | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
 | resource_names | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
-| verbs          | [RuleVerbs](#v1.RuleVerbs)       | repeated | verbs is the list of verbs that apply to the resource.                  |
+| verbs          | [RuleVerb](#v1.RuleVerb)         | repeated | verbs is the list of verbs that apply to the resource.                  |
 
 ### Subject
 
@@ -525,9 +525,9 @@ RuleResource is the resource type for a rule.
 | RESOURCE_EDGES         | 8      | RESOURCE_EDGES is the resource for managing edges.                                                             |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
-### RuleVerbs
+### RuleVerb
 
-RuleVerbs is the verb type for a rule.
+RuleVerb is the verb type for a rule.
 
 | Name         | Number | Description                                               |
 |--------------|--------|-----------------------------------------------------------|
