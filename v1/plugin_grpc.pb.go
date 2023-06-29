@@ -491,7 +491,7 @@ const (
 type IPAMPluginClient interface {
 	// AllocateIP allocates an IP for a node.
 	AllocateIP(ctx context.Context, in *AllocateIPRequest, opts ...grpc.CallOption) (*AllocatedIP, error)
-	// LookupIP looks up an IP for a node or vice-versa.
+	// LookupIP looks up an IP for a node.
 	LookupIP(ctx context.Context, in *LookupIPRequest, opts ...grpc.CallOption) (*AllocatedIP, error)
 }
 
@@ -527,7 +527,7 @@ func (c *iPAMPluginClient) LookupIP(ctx context.Context, in *LookupIPRequest, op
 type IPAMPluginServer interface {
 	// AllocateIP allocates an IP for a node.
 	AllocateIP(context.Context, *AllocateIPRequest) (*AllocatedIP, error)
-	// LookupIP looks up an IP for a node or vice-versa.
+	// LookupIP looks up an IP for a node.
 	LookupIP(context.Context, *LookupIPRequest) (*AllocatedIP, error)
 	mustEmbedUnimplementedIPAMPluginServer()
 }

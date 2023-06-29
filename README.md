@@ -1021,10 +1021,10 @@ AuthPlugin is the service definition for a Webmesh auth plugin.
 
 IPAMPlugin is the service definition for a Webmesh IPAM plugin.
 
-| Method Name | Request Type                               | Response Type                  | Description                                       |
-|-------------|--------------------------------------------|--------------------------------|---------------------------------------------------|
-| AllocateIP  | [AllocateIPRequest](#v1.AllocateIPRequest) | [AllocatedIP](#v1.AllocatedIP) | AllocateIP allocates an IP for a node.            |
-| LookupIP    | [LookupIPRequest](#v1.LookupIPRequest)     | [AllocatedIP](#v1.AllocatedIP) | LookupIP looks up an IP for a node or vice-versa. |
+| Method Name | Request Type                               | Response Type                  | Description                            |
+|-------------|--------------------------------------------|--------------------------------|----------------------------------------|
+| AllocateIP  | [AllocateIPRequest](#v1.AllocateIPRequest) | [AllocatedIP](#v1.AllocatedIP) | AllocateIP allocates an IP for a node. |
+| LookupIP    | [LookupIPRequest](#v1.LookupIPRequest)     | [AllocatedIP](#v1.AllocatedIP) | LookupIP looks up an IP for a node.    |
 
 ### Plugin
 

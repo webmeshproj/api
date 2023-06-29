@@ -188,6 +188,6 @@ message LookupIPRequest {
 service IPAMPlugin {
     // AllocateIP allocates an IP for a node.
     rpc AllocateIP (AllocateIPRequest) returns (AllocatedIP) {}
-    // LookupIP looks up an IP for a node or vice-versa.
+    // LookupIP looks up an IP for a node.
     rpc LookupIP (LookupIPRequest) returns (AllocatedIP) {}
 }
