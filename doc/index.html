@@ -484,6 +484,14 @@
             <ul>
               
                 <li>
+                  <a href="#v1.AllocateIPRequest"><span class="badge">M</span>AllocateIPRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AllocatedIP"><span class="badge">M</span>AllocatedIP</a>
+                </li>
+              
+                <li>
                   <a href="#v1.AuthenticationRequest"><span class="badge">M</span>AuthenticationRequest</a>
                 </li>
               
@@ -504,6 +512,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.LookupIPRequest"><span class="badge">M</span>LookupIPRequest</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PluginConfiguration"><span class="badge">M</span>PluginConfiguration</a>
                 </li>
               
@@ -517,6 +529,14 @@
               
               
                 <li>
+                  <a href="#v1.AllocateIPRequest.IPVersion"><span class="badge">E</span>AllocateIPRequest.IPVersion</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LookupIPRequest.IPVersion"><span class="badge">E</span>LookupIPRequest.IPVersion</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
                 </li>
               
@@ -527,7 +547,23 @@
               
               
                 <li>
+                  <a href="#v1.AuthPlugin"><span class="badge">S</span>AuthPlugin</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.IPAMPlugin"><span class="badge">S</span>IPAMPlugin</a>
+                </li>
+              
+                <li>
                   <a href="#v1.Plugin"><span class="badge">S</span>Plugin</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StoragePlugin"><span class="badge">S</span>StoragePlugin</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.WatchPlugin"><span class="badge">S</span>WatchPlugin</a>
                 </li>
               
             </ul>
@@ -3274,6 +3310,68 @@ sql_query is the SQL query of the log entry. </p></td>
       <p></p>
 
       
+        <h3 id="v1.AllocateIPRequest">AllocateIPRequest</h3>
+        <p>AllocateIPRequest is the message containing an IP allocation request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the node that the IP should be allocated for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>subnet</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>subnet is the subnet that the IP should be allocated from. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#v1.AllocateIPRequest.IPVersion">AllocateIPRequest.IPVersion</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AllocatedIP">AllocatedIP</h3>
+        <p>AllocatedIP is the message containing an allocated IP.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ip</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ip is the allocated IP. It should be returned in CIDR notation. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.AuthenticationRequest">AuthenticationRequest</h3>
         <p>AuthenticationRequest is the message containing an authentication request.</p>
 
@@ -3429,6 +3527,37 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.LookupIPRequest">LookupIPRequest</h3>
+        <p>LookupIPRequest is the message containing an IP lookup request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the node that the IP should be looked up for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#v1.LookupIPRequest.IPVersion">LookupIPRequest.IPVersion</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.PluginConfiguration">PluginConfiguration</h3>
         <p>PluginConfiguration is the message containing the configuration of a plugin.</p>
 
@@ -3538,6 +3667,64 @@ sql_query is the SQL query of the log entry. </p></td>
       
 
       
+        <h3 id="v1.AllocateIPRequest.IPVersion">AllocateIPRequest.IPVersion</h3>
+        <p>version is the IP version that should be allocated.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>IP_VERSION_UNKNOWN</td>
+                <td>0</td>
+                <td><p>IP_VERSION_UNKNOWN is the default value of IPVersion.</p></td>
+              </tr>
+            
+              <tr>
+                <td>IP_VERSION_4</td>
+                <td>1</td>
+                <td><p>IP_VERSION_4 indicates that an IPv4 address should be allocated.</p></td>
+              </tr>
+            
+              <tr>
+                <td>IP_VERSION_6</td>
+                <td>2</td>
+                <td><p>IP_VERSION_6 indicates that an IPv6 address should be allocated.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.LookupIPRequest.IPVersion">LookupIPRequest.IPVersion</h3>
+        <p>version is the IP version that should be allocated.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>IP_VERSION_UNKNOWN</td>
+                <td>0</td>
+                <td><p>IP_VERSION_UNKNOWN is the default value of IPVersion.</p></td>
+              </tr>
+            
+              <tr>
+                <td>IP_VERSION_4</td>
+                <td>1</td>
+                <td><p>IP_VERSION_4 indicates that an IPv4 address should be allocated.</p></td>
+              </tr>
+            
+              <tr>
+                <td>IP_VERSION_6</td>
+                <td>2</td>
+                <td><p>IP_VERSION_6 indicates that an IPv6 address should be allocated.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="v1.PluginCapability">PluginCapability</h3>
         <p>PluginCapability is the capabilities of a plugin.</p>
         <table class="enum-table">
@@ -3568,6 +3755,18 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td>PLUGIN_CAPABILITY_WATCH</td>
                 <td>3</td>
                 <td><p>PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_IPAMV4</td>
+                <td>4</td>
+                <td><p>PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PLUGIN_CAPABILITY_IPAMV6</td>
+                <td>5</td>
+                <td><p>PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.</p></td>
               </tr>
             
           </tbody>
@@ -3612,8 +3811,53 @@ sql_query is the SQL query of the log entry. </p></td>
       
 
       
+        <h3 id="v1.AuthPlugin">AuthPlugin</h3>
+        <p>AuthPlugin is the service definition for a Webmesh auth plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Authenticate</td>
+                <td><a href="#v1.AuthenticationRequest">AuthenticationRequest</a></td>
+                <td><a href="#v1.AuthenticationResponse">AuthenticationResponse</a></td>
+                <td><p>Authenticate authenticates a request.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+        <h3 id="v1.IPAMPlugin">IPAMPlugin</h3>
+        <p>IPAMPlugin is the service definition for a Webmesh IPAM plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>AllocateIP</td>
+                <td><a href="#v1.AllocateIPRequest">AllocateIPRequest</a></td>
+                <td><a href="#v1.AllocatedIP">AllocatedIP</a></td>
+                <td><p>AllocateIP allocates an IP for a node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LookupIP</td>
+                <td><a href="#v1.LookupIPRequest">LookupIPRequest</a></td>
+                <td><a href="#v1.AllocatedIP">AllocatedIP</a></td>
+                <td><p>LookupIP looks up an IP for a node or vice-versa.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
         <h3 id="v1.Plugin">Plugin</h3>
-        <p>Plugin is the service definiteion for a WebMesh plugin.</p>
+        <p>Plugin is the general service definition for a Webmesh plugin.</p><p>It must be implemented by all plugins.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -3634,6 +3878,18 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td><p>Configure configures the plugin.</p></td>
               </tr>
             
+          </tbody>
+        </table>
+
+        
+        <h3 id="v1.StoragePlugin">StoragePlugin</h3>
+        <p>StoragePlugin is the service definition for a Webmesh storage plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
               <tr>
                 <td>Store</td>
                 <td><a href="#v1.StoreLogRequest">StoreLogRequest</a></td>
@@ -3648,12 +3904,17 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td><p>RestoreSnapshot should drop any existing state and restore from the snapshot.</p></td>
               </tr>
             
-              <tr>
-                <td>Authenticate</td>
-                <td><a href="#v1.AuthenticationRequest">AuthenticationRequest</a></td>
-                <td><a href="#v1.AuthenticationResponse">AuthenticationResponse</a></td>
-                <td><p>Authenticate authenticates a request.</p></td>
-              </tr>
+          </tbody>
+        </table>
+
+        
+        <h3 id="v1.WatchPlugin">WatchPlugin</h3>
+        <p>WatchPlugin is the service definition for a Webmesh watch plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
             
               <tr>
                 <td>Emit</td>

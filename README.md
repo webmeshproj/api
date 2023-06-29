@@ -69,17 +69,26 @@
   - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
   - [<span class="badge">E</span>SQLParameterType](#v1.SQLParameterType)
 - [v1/plugin.proto](#v1%2fplugin.proto)
+  - [<span class="badge">M</span>AllocateIPRequest](#v1.AllocateIPRequest)
+  - [<span class="badge">M</span>AllocatedIP](#v1.AllocatedIP)
   - [<span class="badge">M</span>AuthenticationRequest](#v1.AuthenticationRequest)
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
   - [<span class="badge">M</span>DataSnapshot](#v1.DataSnapshot)
   - [<span class="badge">M</span>Event](#v1.Event)
+  - [<span class="badge">M</span>LookupIPRequest](#v1.LookupIPRequest)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
+  - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
+  - [<span class="badge">E</span>LookupIPRequest.IPVersion](#v1.LookupIPRequest.IPVersion)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
   - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
+  - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
+  - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
+  - [<span class="badge">S</span>StoragePlugin](#v1.StoragePlugin)
+  - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
   - [<span class="badge">M</span>StartDataChannelRequest](#v1.StartDataChannelRequest)
@@ -854,6 +863,24 @@ Raft log.
 
 </div>
 
+### AllocateIPRequest
+
+AllocateIPRequest is the message containing an IP allocation request.
+
+| Field   | Type                                                           | Label | Description                                                |
+|---------|----------------------------------------------------------------|-------|------------------------------------------------------------|
+| node_id | [string](#string)                                              |       | node_id is the node that the IP should be allocated for.   |
+| subnet  | [string](#string)                                              |       | subnet is the subnet that the IP should be allocated from. |
+| version | [AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion) |       |                                                            |
+
+### AllocatedIP
+
+AllocatedIP is the message containing an allocated IP.
+
+| Field | Type              | Label | Description                                                     |
+|-------|-------------------|-------|-----------------------------------------------------------------|
+| ip    | [string](#string) |       | ip is the allocated IP. It should be returned in CIDR notation. |
+
 ### AuthenticationRequest
 
 AuthenticationRequest is the message containing an authentication
@@ -899,6 +926,15 @@ Event is the message containing a watch event.
 | type  | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.      |
 | node  | [MeshNode](#v1.MeshNode)     |       | node is the node that the event is about. |
 
+### LookupIPRequest
+
+LookupIPRequest is the message containing an IP lookup request.
+
+| Field   | Type                                                       | Label | Description                                              |
+|---------|------------------------------------------------------------|-------|----------------------------------------------------------|
+| node_id | [string](#string)                                          |       | node_id is the node that the IP should be looked up for. |
+| version | [LookupIPRequest.IPVersion](#v1.LookupIPRequest.IPVersion) |       |                                                          |
+
 ### PluginConfiguration
 
 PluginConfiguration is the message containing the configuration of a
@@ -929,6 +965,26 @@ StoreLogRequest is the message containing a raft log entry.
 | index | [uint64](#uint64)                |       | index is the index of the log entry. |
 | log   | [RaftLogEntry](#v1.RaftLogEntry) |       | log is the log entry.                |
 
+### AllocateIPRequest.IPVersion
+
+version is the IP version that should be allocated.
+
+| Name               | Number | Description                                                      |
+|--------------------|--------|------------------------------------------------------------------|
+| IP_VERSION_UNKNOWN | 0      | IP_VERSION_UNKNOWN is the default value of IPVersion.            |
+| IP_VERSION_4       | 1      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
+| IP_VERSION_6       | 2      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
+
+### LookupIPRequest.IPVersion
+
+version is the IP version that should be allocated.
+
+| Name               | Number | Description                                                      |
+|--------------------|--------|------------------------------------------------------------------|
+| IP_VERSION_UNKNOWN | 0      | IP_VERSION_UNKNOWN is the default value of IPVersion.            |
+| IP_VERSION_4       | 1      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
+| IP_VERSION_6       | 2      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
+
 ### PluginCapability
 
 PluginCapability is the capabilities of a plugin.
@@ -939,6 +995,8 @@ PluginCapability is the capabilities of a plugin.
 | PLUGIN_CAPABILITY_STORE   | 1      | PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.        |
 | PLUGIN_CAPABILITY_AUTH    | 2      | PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.              |
 | PLUGIN_CAPABILITY_WATCH   | 3      | PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events. |
+| PLUGIN_CAPABILITY_IPAMV4  | 4      | PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.       |
+| PLUGIN_CAPABILITY_IPAMV6  | 5      | PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.       |
 
 ### WatchEvent
 
@@ -951,18 +1009,50 @@ WatchEvent is the type of a watch event.
 | WATCH_EVENT_NODE_LEAVE    | 2      | WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.              |
 | WATCH_EVENT_LEADER_CHANGE | 3      | WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed. |
 
+### AuthPlugin
+
+AuthPlugin is the service definition for a Webmesh auth plugin.
+
+| Method Name  | Request Type                                       | Response Type                                        | Description                           |
+|--------------|----------------------------------------------------|------------------------------------------------------|---------------------------------------|
+| Authenticate | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request. |
+
+### IPAMPlugin
+
+IPAMPlugin is the service definition for a Webmesh IPAM plugin.
+
+| Method Name | Request Type                               | Response Type                  | Description                                       |
+|-------------|--------------------------------------------|--------------------------------|---------------------------------------------------|
+| AllocateIP  | [AllocateIPRequest](#v1.AllocateIPRequest) | [AllocatedIP](#v1.AllocatedIP) | AllocateIP allocates an IP for a node.            |
+| LookupIP    | [LookupIPRequest](#v1.LookupIPRequest)     | [AllocatedIP](#v1.AllocatedIP) | LookupIP looks up an IP for a node or vice-versa. |
+
 ### Plugin
 
-Plugin is the service definiteion for a WebMesh plugin.
+Plugin is the general service definition for a Webmesh plugin.
 
-| Method Name     | Request Type                                       | Response Type                                        | Description                                                                   |
-|-----------------|----------------------------------------------------|------------------------------------------------------|-------------------------------------------------------------------------------|
-| GetInfo         | [.google.protobuf.Empty](#google.protobuf.Empty)   | [PluginInfo](#v1.PluginInfo)                         | GetInfo returns the information for the plugin.                               |
-| Configure       | [PluginConfiguration](#v1.PluginConfiguration)     | [.google.protobuf.Empty](#google.protobuf.Empty)     | Configure configures the plugin.                                              |
-| Store           | [StoreLogRequest](#v1.StoreLogRequest)             | [RaftApplyResponse](#v1.RaftApplyResponse)           | Store dispatches a Raft log entry for storage.                                |
-| RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)                   | [.google.protobuf.Empty](#google.protobuf.Empty)     | RestoreSnapshot should drop any existing state and restore from the snapshot. |
-| Authenticate    | [AuthenticationRequest](#v1.AuthenticationRequest) | [AuthenticationResponse](#v1.AuthenticationResponse) | Authenticate authenticates a request.                                         |
-| Emit            | [Event](#v1.Event)                                 | [.google.protobuf.Empty](#google.protobuf.Empty)     | Emit handles a watch event.                                                   |
+It must be implemented by all plugins.
+
+| Method Name | Request Type                                     | Response Type                                    | Description                                     |
+|-------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------|
+| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin. |
+| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                |
+
+### StoragePlugin
+
+StoragePlugin is the service definition for a Webmesh storage plugin.
+
+| Method Name     | Request Type                           | Response Type                                    | Description                                                                   |
+|-----------------|----------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------|
+| Store           | [StoreLogRequest](#v1.StoreLogRequest) | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store dispatches a Raft log entry for storage.                                |
+| RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)       | [.google.protobuf.Empty](#google.protobuf.Empty) | RestoreSnapshot should drop any existing state and restore from the snapshot. |
+
+### WatchPlugin
+
+WatchPlugin is the service definition for a Webmesh watch plugin.
+
+| Method Name | Request Type       | Response Type                                    | Description                 |
+|-------------|--------------------|--------------------------------------------------|-----------------------------|
+| Emit        | [Event](#v1.Event) | [.google.protobuf.Empty](#google.protobuf.Empty) | Emit handles a watch event. |
 
 <div class="file-heading">
 

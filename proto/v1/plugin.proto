@@ -34,6 +34,10 @@ enum PluginCapability {
     PLUGIN_CAPABILITY_AUTH = 2;
     // PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.
     PLUGIN_CAPABILITY_WATCH = 3;
+    // PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.
+    PLUGIN_CAPABILITY_IPAMV4 = 4;
+    // PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.
+    PLUGIN_CAPABILITY_IPAMV6 = 5;
 }
 
 // WatchEvent is the type of a watch event.
@@ -66,18 +70,13 @@ message PluginConfiguration {
     google.protobuf.Struct config = 1;
 }
 
-// AuthenticationRequest is the message containing an authentication request.
-message AuthenticationRequest {
-    // headers are the headers of the request.
-    map<string, string> headers = 1;
-    // certificates are the DER encoded certificates of the request.
-    repeated bytes certificates = 2;
-}
-
-// AuthenticationResponse is the message containing an authentication response.
-message AuthenticationResponse {
-    // id is the id of the authenticated user.
-    string id = 1;
+// Plugin is the general service definition for a Webmesh plugin.
+// It must be implemented by all plugins.
+service Plugin {
+    // GetInfo returns the information for the plugin.
+    rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
+    // Configure configures the plugin.
+    rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
 }
 
 // StoreLogRequest is the message containing a raft log entry.
@@ -100,6 +99,34 @@ message DataSnapshot {
     bytes data = 3;
 }
 
+// StoragePlugin is the service definition for a Webmesh storage plugin.
+service StoragePlugin {
+    // Store dispatches a Raft log entry for storage.
+    rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
+    // RestoreSnapshot should drop any existing state and restore from the snapshot.
+    rpc RestoreSnapshot (DataSnapshot) returns (google.protobuf.Empty) {}
+}
+
+// AuthenticationRequest is the message containing an authentication request.
+message AuthenticationRequest {
+    // headers are the headers of the request.
+    map<string, string> headers = 1;
+    // certificates are the DER encoded certificates of the request.
+    repeated bytes certificates = 2;
+}
+
+// AuthenticationResponse is the message containing an authentication response.
+message AuthenticationResponse {
+    // id is the id of the authenticated user.
+    string id = 1;
+}
+
+// AuthPlugin is the service definition for a Webmesh auth plugin.
+service AuthPlugin {
+    // Authenticate authenticates a request.
+    rpc Authenticate (AuthenticationRequest) returns (AuthenticationResponse) {}
+}
+
 // Event is the message containing a watch event.
 message Event {
     // type is the type of the watch event.
@@ -111,18 +138,56 @@ message Event {
     }
 }
 
-// Plugin is the service definiteion for a WebMesh plugin.
-service Plugin {
-    // GetInfo returns the information for the plugin.
-    rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
-    // Configure configures the plugin.
-    rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
-    // Store dispatches a Raft log entry for storage.
-    rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
-    // RestoreSnapshot should drop any existing state and restore from the snapshot.
-    rpc RestoreSnapshot (DataSnapshot) returns (google.protobuf.Empty) {}
-    // Authenticate authenticates a request.
-    rpc Authenticate (AuthenticationRequest) returns (AuthenticationResponse) {}
+// WatchPlugin is the service definition for a Webmesh watch plugin.
+service WatchPlugin {
     // Emit handles a watch event.
     rpc Emit (Event) returns (google.protobuf.Empty) {}
+}
+
+// AllocateIPRequest is the message containing an IP allocation request.
+message AllocateIPRequest {
+    // node_id is the node that the IP should be allocated for.
+    string node_id = 1;
+    // subnet is the subnet that the IP should be allocated from.
+    string subnet = 2;
+    // version is the IP version that should be allocated.
+    enum IPVersion {
+        // IP_VERSION_UNKNOWN is the default value of IPVersion.
+        IP_VERSION_UNKNOWN = 0;
+        // IP_VERSION_4 indicates that an IPv4 address should be allocated.
+        IP_VERSION_4 = 1;
+        // IP_VERSION_6 indicates that an IPv6 address should be allocated.
+        IP_VERSION_6 = 2;
+    };
+    IPVersion version = 3;
+}
+
+// AllocatedIP is the message containing an allocated IP.
+message AllocatedIP {
+    // ip is the allocated IP. It should be returned in CIDR notation.
+    string ip = 1;
+}
+
+// LookupIPRequest is the message containing an IP lookup request.
+message LookupIPRequest {
+    // node_id is the node that the IP should be looked up for.
+    string node_id = 1;
+    // version is the IP version that should be allocated.
+    enum IPVersion {
+        // IP_VERSION_UNKNOWN is the default value of IPVersion.
+        IP_VERSION_UNKNOWN = 0;
+        // IP_VERSION_4 indicates that an IPv4 address should be allocated.
+        IP_VERSION_4 = 1;
+        // IP_VERSION_6 indicates that an IPv6 address should be allocated.
+        IP_VERSION_6 = 2;
+    };
+    IPVersion version = 3;
+}
+
+// IPAMPlugin is the service definition for a Webmesh IPAM plugin.
+service IPAMPlugin {
+    // AllocateIP allocates an IP for a node.
+    rpc AllocateIP (AllocateIPRequest) returns (AllocatedIP) {}
+    // LookupIP looks up an IP for a node or vice-versa.
+    rpc LookupIP (LookupIPRequest) returns (AllocatedIP) {}
 }
