@@ -37,6 +37,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Plugin_GetInfo_FullMethodName   = "/v1.Plugin/GetInfo"
 	Plugin_Configure_FullMethodName = "/v1.Plugin/Configure"
+	Plugin_Close_FullMethodName     = "/v1.Plugin/Close"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -47,6 +48,8 @@ type PluginClient interface {
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Close closes the plugin. It is called when the node is shutting down.
+	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type pluginClient struct {
@@ -75,6 +78,15 @@ func (c *pluginClient) Configure(ctx context.Context, in *PluginConfiguration, o
 	return out, nil
 }
 
+func (c *pluginClient) Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Plugin_Close_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PluginServer is the server API for Plugin service.
 // All implementations must embed UnimplementedPluginServer
 // for forward compatibility
@@ -83,6 +95,8 @@ type PluginServer interface {
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
+	// Close closes the plugin. It is called when the node is shutting down.
+	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
 }
 
@@ -95,6 +109,9 @@ func (UnimplementedPluginServer) GetInfo(context.Context, *emptypb.Empty) (*Plug
 }
 func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
+}
+func (UnimplementedPluginServer) Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Close not implemented")
 }
 func (UnimplementedPluginServer) mustEmbedUnimplementedPluginServer() {}
 
@@ -145,6 +162,24 @@ func _Plugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Plugin_Close_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PluginServer).Close(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Plugin_Close_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PluginServer).Close(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Plugin_ServiceDesc is the grpc.ServiceDesc for Plugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -159,6 +194,10 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Configure",
 			Handler:    _Plugin_Configure_Handler,
+		},
+		{
+			MethodName: "Close",
+			Handler:    _Plugin_Close_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

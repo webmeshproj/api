@@ -77,6 +77,8 @@ service Plugin {
     rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
     // Configure configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
+    // Close closes the plugin. It is called when the node is shutting down.
+    rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
 
 // StoreLogRequest is the message containing a raft log entry.

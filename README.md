@@ -1032,10 +1032,11 @@ Plugin is the general service definition for a Webmesh plugin.
 
 It must be implemented by all plugins.
 
-| Method Name | Request Type                                     | Response Type                                    | Description                                     |
-|-------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------|
-| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin. |
-| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                |
+| Method Name | Request Type                                     | Response Type                                    | Description                                                           |
+|-------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------------------|
+| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                       |
+| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                      |
+| Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down. |
 
 ### StoragePlugin
 
