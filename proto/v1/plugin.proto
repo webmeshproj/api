@@ -152,15 +152,17 @@ message AllocateIPRequest {
     string node_id = 1;
     // subnet is the subnet that the IP should be allocated from.
     string subnet = 2;
-    // version is the IP version that should be allocated.
+
     enum IPVersion {
         // IP_VERSION_UNKNOWN is the default value of IPVersion.
         IP_VERSION_UNKNOWN = 0;
         // IP_VERSION_4 indicates that an IPv4 address should be allocated.
-        IP_VERSION_4 = 1;
+        IP_VERSION_4 = 4;
         // IP_VERSION_6 indicates that an IPv6 address should be allocated.
-        IP_VERSION_6 = 2;
+        IP_VERSION_6 = 6;
     };
+
+    // version is the IP version that should be allocated.
     IPVersion version = 3;
 }
 

@@ -870,7 +870,7 @@ AllocateIPRequest is the message containing an IP allocation request.
 |---------|----------------------------------------------------------------|-------|------------------------------------------------------------|
 | node_id | [string](#string)                                              |       | node_id is the node that the IP should be allocated for.   |
 | subnet  | [string](#string)                                              |       | subnet is the subnet that the IP should be allocated from. |
-| version | [AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion) |       |                                                            |
+| version | [AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion) |       | version is the IP version that should be allocated.        |
 
 ### AllocatedIP
 
@@ -966,13 +966,11 @@ StoreLogRequest is the message containing a raft log entry.
 
 ### AllocateIPRequest.IPVersion
 
-version is the IP version that should be allocated.
-
 | Name               | Number | Description                                                      |
 |--------------------|--------|------------------------------------------------------------------|
 | IP_VERSION_UNKNOWN | 0      | IP_VERSION_UNKNOWN is the default value of IPVersion.            |
-| IP_VERSION_4       | 1      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
-| IP_VERSION_6       | 2      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
+| IP_VERSION_4       | 4      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
+| IP_VERSION_6       | 6      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
 
 ### PluginCapability
 
