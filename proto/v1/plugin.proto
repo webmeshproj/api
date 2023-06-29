@@ -164,22 +164,6 @@ message AllocateIPRequest {
     IPVersion version = 3;
 }
 
-// LookupIPRequest is the message containing an IP lookup request.
-message LookupIPRequest {
-    // node_id is the node that the IP should be looked up for.
-    string node_id = 1;
-    // version is the IP version that should be allocated.
-    enum IPVersion {
-        // IP_VERSION_UNKNOWN is the default value of IPVersion.
-        IP_VERSION_UNKNOWN = 0;
-        // IP_VERSION_4 indicates that an IPv4 address should be allocated.
-        IP_VERSION_4 = 1;
-        // IP_VERSION_6 indicates that an IPv6 address should be allocated.
-        IP_VERSION_6 = 2;
-    };
-    IPVersion version = 3;
-}
-
 // AllocatedIP is the message containing an allocated IP.
 message AllocatedIP {
     // ip is the allocated IP. It should be returned in CIDR notation.
@@ -198,8 +182,6 @@ message ReleaseIPRequest {
 service IPAMPlugin {
     // Allocate allocates an IP for a node.
     rpc Allocate (AllocateIPRequest) returns (AllocatedIP) {}
-    // Lookup looks up an IP for a node.
-    rpc Lookup (LookupIPRequest) returns (AllocatedIP) {}
     // Release releases an IP for a node.
     rpc Release (ReleaseIPRequest) returns (google.protobuf.Empty) {}
 }

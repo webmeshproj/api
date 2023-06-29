@@ -76,13 +76,11 @@
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
   - [<span class="badge">M</span>DataSnapshot](#v1.DataSnapshot)
   - [<span class="badge">M</span>Event](#v1.Event)
-  - [<span class="badge">M</span>LookupIPRequest](#v1.LookupIPRequest)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
-  - [<span class="badge">E</span>LookupIPRequest.IPVersion](#v1.LookupIPRequest.IPVersion)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
   - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
@@ -927,15 +925,6 @@ Event is the message containing a watch event.
 | type  | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.      |
 | node  | [MeshNode](#v1.MeshNode)     |       | node is the node that the event is about. |
 
-### LookupIPRequest
-
-LookupIPRequest is the message containing an IP lookup request.
-
-| Field   | Type                                                       | Label | Description                                              |
-|---------|------------------------------------------------------------|-------|----------------------------------------------------------|
-| node_id | [string](#string)                                          |       | node_id is the node that the IP should be looked up for. |
-| version | [LookupIPRequest.IPVersion](#v1.LookupIPRequest.IPVersion) |       |                                                          |
-
 ### PluginConfiguration
 
 PluginConfiguration is the message containing the configuration of a
@@ -985,16 +974,6 @@ version is the IP version that should be allocated.
 | IP_VERSION_4       | 1      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
 | IP_VERSION_6       | 2      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
 
-### LookupIPRequest.IPVersion
-
-version is the IP version that should be allocated.
-
-| Name               | Number | Description                                                      |
-|--------------------|--------|------------------------------------------------------------------|
-| IP_VERSION_UNKNOWN | 0      | IP_VERSION_UNKNOWN is the default value of IPVersion.            |
-| IP_VERSION_4       | 1      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
-| IP_VERSION_6       | 2      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
-
 ### PluginCapability
 
 PluginCapability is the capabilities of a plugin.
@@ -1034,7 +1013,6 @@ IPAMPlugin is the service definition for a Webmesh IPAM plugin.
 | Method Name | Request Type                               | Response Type                                    | Description                          |
 |-------------|--------------------------------------------|--------------------------------------------------|--------------------------------------|
 | Allocate    | [AllocateIPRequest](#v1.AllocateIPRequest) | [AllocatedIP](#v1.AllocatedIP)                   | Allocate allocates an IP for a node. |
-| Lookup      | [LookupIPRequest](#v1.LookupIPRequest)     | [AllocatedIP](#v1.AllocatedIP)                   | Lookup looks up an IP for a node.    |
 | Release     | [ReleaseIPRequest](#v1.ReleaseIPRequest)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Release releases an IP for a node.   |
 
 ### Plugin

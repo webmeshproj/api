@@ -521,7 +521,6 @@ var WatchPlugin_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	IPAMPlugin_Allocate_FullMethodName = "/v1.IPAMPlugin/Allocate"
-	IPAMPlugin_Lookup_FullMethodName   = "/v1.IPAMPlugin/Lookup"
 	IPAMPlugin_Release_FullMethodName  = "/v1.IPAMPlugin/Release"
 )
 
@@ -531,8 +530,6 @@ const (
 type IPAMPluginClient interface {
 	// Allocate allocates an IP for a node.
 	Allocate(ctx context.Context, in *AllocateIPRequest, opts ...grpc.CallOption) (*AllocatedIP, error)
-	// Lookup looks up an IP for a node.
-	Lookup(ctx context.Context, in *LookupIPRequest, opts ...grpc.CallOption) (*AllocatedIP, error)
 	// Release releases an IP for a node.
 	Release(ctx context.Context, in *ReleaseIPRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -554,15 +551,6 @@ func (c *iPAMPluginClient) Allocate(ctx context.Context, in *AllocateIPRequest, 
 	return out, nil
 }
 
-func (c *iPAMPluginClient) Lookup(ctx context.Context, in *LookupIPRequest, opts ...grpc.CallOption) (*AllocatedIP, error) {
-	out := new(AllocatedIP)
-	err := c.cc.Invoke(ctx, IPAMPlugin_Lookup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *iPAMPluginClient) Release(ctx context.Context, in *ReleaseIPRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IPAMPlugin_Release_FullMethodName, in, out, opts...)
@@ -578,8 +566,6 @@ func (c *iPAMPluginClient) Release(ctx context.Context, in *ReleaseIPRequest, op
 type IPAMPluginServer interface {
 	// Allocate allocates an IP for a node.
 	Allocate(context.Context, *AllocateIPRequest) (*AllocatedIP, error)
-	// Lookup looks up an IP for a node.
-	Lookup(context.Context, *LookupIPRequest) (*AllocatedIP, error)
 	// Release releases an IP for a node.
 	Release(context.Context, *ReleaseIPRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedIPAMPluginServer()
@@ -591,9 +577,6 @@ type UnimplementedIPAMPluginServer struct {
 
 func (UnimplementedIPAMPluginServer) Allocate(context.Context, *AllocateIPRequest) (*AllocatedIP, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Allocate not implemented")
-}
-func (UnimplementedIPAMPluginServer) Lookup(context.Context, *LookupIPRequest) (*AllocatedIP, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Lookup not implemented")
 }
 func (UnimplementedIPAMPluginServer) Release(context.Context, *ReleaseIPRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Release not implemented")
@@ -629,24 +612,6 @@ func _IPAMPlugin_Allocate_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IPAMPlugin_Lookup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LookupIPRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IPAMPluginServer).Lookup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: IPAMPlugin_Lookup_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IPAMPluginServer).Lookup(ctx, req.(*LookupIPRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _IPAMPlugin_Release_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReleaseIPRequest)
 	if err := dec(in); err != nil {
@@ -675,10 +640,6 @@ var IPAMPlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Allocate",
 			Handler:    _IPAMPlugin_Allocate_Handler,
-		},
-		{
-			MethodName: "Lookup",
-			Handler:    _IPAMPlugin_Lookup_Handler,
 		},
 		{
 			MethodName: "Release",
