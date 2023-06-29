@@ -524,6 +524,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ReleaseIPRequest"><span class="badge">M</span>ReleaseIPRequest</a>
+                </li>
+              
+                <li>
                   <a href="#v1.StoreLogRequest"><span class="badge">M</span>StoreLogRequest</a>
                 </li>
               
@@ -3627,6 +3631,37 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.ReleaseIPRequest">ReleaseIPRequest</h3>
+        <p>ReleaseIPRequest is the message containing an IP release request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the node that the IP should be released for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ip</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ip is the IP that should be released. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.StoreLogRequest">StoreLogRequest</h3>
         <p>StoreLogRequest is the message containing a raft log entry.</p>
 
@@ -3839,17 +3874,24 @@ sql_query is the SQL query of the log entry. </p></td>
           <tbody>
             
               <tr>
-                <td>AllocateIP</td>
+                <td>Allocate</td>
                 <td><a href="#v1.AllocateIPRequest">AllocateIPRequest</a></td>
                 <td><a href="#v1.AllocatedIP">AllocatedIP</a></td>
-                <td><p>AllocateIP allocates an IP for a node.</p></td>
+                <td><p>Allocate allocates an IP for a node.</p></td>
               </tr>
             
               <tr>
-                <td>LookupIP</td>
+                <td>Lookup</td>
                 <td><a href="#v1.LookupIPRequest">LookupIPRequest</a></td>
                 <td><a href="#v1.AllocatedIP">AllocatedIP</a></td>
-                <td><p>LookupIP looks up an IP for a node.</p></td>
+                <td><p>Lookup looks up an IP for a node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Release</td>
+                <td><a href="#v1.ReleaseIPRequest">ReleaseIPRequest</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Release releases an IP for a node.</p></td>
               </tr>
             
           </tbody>

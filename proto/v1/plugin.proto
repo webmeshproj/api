@@ -164,12 +164,6 @@ message AllocateIPRequest {
     IPVersion version = 3;
 }
 
-// AllocatedIP is the message containing an allocated IP.
-message AllocatedIP {
-    // ip is the allocated IP. It should be returned in CIDR notation.
-    string ip = 1;
-}
-
 // LookupIPRequest is the message containing an IP lookup request.
 message LookupIPRequest {
     // node_id is the node that the IP should be looked up for.
@@ -186,10 +180,26 @@ message LookupIPRequest {
     IPVersion version = 3;
 }
 
+// AllocatedIP is the message containing an allocated IP.
+message AllocatedIP {
+    // ip is the allocated IP. It should be returned in CIDR notation.
+    string ip = 1;
+}
+
+// ReleaseIPRequest is the message containing an IP release request.
+message ReleaseIPRequest {
+    // node_id is the node that the IP should be released for.
+    string node_id = 1;
+    // ip is the IP that should be released.
+    string ip = 2;
+}
+
 // IPAMPlugin is the service definition for a Webmesh IPAM plugin.
 service IPAMPlugin {
-    // AllocateIP allocates an IP for a node.
-    rpc AllocateIP (AllocateIPRequest) returns (AllocatedIP) {}
-    // LookupIP looks up an IP for a node.
-    rpc LookupIP (LookupIPRequest) returns (AllocatedIP) {}
+    // Allocate allocates an IP for a node.
+    rpc Allocate (AllocateIPRequest) returns (AllocatedIP) {}
+    // Lookup looks up an IP for a node.
+    rpc Lookup (LookupIPRequest) returns (AllocatedIP) {}
+    // Release releases an IP for a node.
+    rpc Release (ReleaseIPRequest) returns (google.protobuf.Empty) {}
 }
