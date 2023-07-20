@@ -520,6 +520,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PluginSQLQuery"><span class="badge">M</span>PluginSQLQuery</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PluginSQLQueryResult"><span class="badge">M</span>PluginSQLQueryResult</a>
+                </li>
+              
+                <li>
                   <a href="#v1.ReleaseIPRequest"><span class="badge">M</span>ReleaseIPRequest</a>
                 </li>
               
@@ -3599,6 +3607,68 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
+        <h3 id="v1.PluginSQLQuery">PluginSQLQuery</h3>
+        <p>PluginSQLQuery is the message containing a SQL query. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#v1.SQLQuery">SQLQuery</a></td>
+                  <td></td>
+                  <td><p>query is the SQL query. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PluginSQLQueryResult">PluginSQLQueryResult</h3>
+        <p>PluginSQLQueryResult is the message containing a SQL query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>result</td>
+                  <td><a href="#v1.SQLQueryResult">SQLQueryResult</a></td>
+                  <td></td>
+                  <td><p>result is the SQL query result. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.ReleaseIPRequest">ReleaseIPRequest</h3>
         <p>ReleaseIPRequest is the message containing an IP release request.</p>
 
@@ -3850,6 +3920,14 @@ sql_query is the SQL query of the log entry. </p></td>
                 <td><a href="#v1.PluginConfiguration">PluginConfiguration</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Configure configures the plugin.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Query</td>
+                <td><a href="#v1.PluginSQLQuery">PluginSQLQuery</a> stream</td>
+                <td><a href="#v1.PluginSQLQueryResult">PluginSQLQueryResult</a> stream</td>
+                <td><p>Query is a stream opened by the node to faciliate read-only queries
+against the mesh state.</p></td>
               </tr>
             
               <tr>

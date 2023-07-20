@@ -37,6 +37,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Plugin_GetInfo_FullMethodName   = "/v1.Plugin/GetInfo"
 	Plugin_Configure_FullMethodName = "/v1.Plugin/Configure"
+	Plugin_Query_FullMethodName     = "/v1.Plugin/Query"
 	Plugin_Close_FullMethodName     = "/v1.Plugin/Close"
 )
 
@@ -48,6 +49,9 @@ type PluginClient interface {
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Query is a stream opened by the node to faciliate read-only queries
+	// against the mesh state.
+	Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -78,6 +82,37 @@ func (c *pluginClient) Configure(ctx context.Context, in *PluginConfiguration, o
 	return out, nil
 }
 
+func (c *pluginClient) Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Plugin_ServiceDesc.Streams[0], Plugin_Query_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &pluginQueryClient{stream}
+	return x, nil
+}
+
+type Plugin_QueryClient interface {
+	Send(*PluginSQLQuery) error
+	Recv() (*PluginSQLQueryResult, error)
+	grpc.ClientStream
+}
+
+type pluginQueryClient struct {
+	grpc.ClientStream
+}
+
+func (x *pluginQueryClient) Send(m *PluginSQLQuery) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *pluginQueryClient) Recv() (*PluginSQLQueryResult, error) {
+	m := new(PluginSQLQueryResult)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *pluginClient) Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Plugin_Close_FullMethodName, in, out, opts...)
@@ -95,6 +130,9 @@ type PluginServer interface {
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
+	// Query is a stream opened by the node to faciliate read-only queries
+	// against the mesh state.
+	Query(Plugin_QueryServer) error
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
@@ -109,6 +147,9 @@ func (UnimplementedPluginServer) GetInfo(context.Context, *emptypb.Empty) (*Plug
 }
 func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
+}
+func (UnimplementedPluginServer) Query(Plugin_QueryServer) error {
+	return status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
 func (UnimplementedPluginServer) Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Close not implemented")
@@ -162,6 +203,32 @@ func _Plugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Plugin_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PluginServer).Query(&pluginQueryServer{stream})
+}
+
+type Plugin_QueryServer interface {
+	Send(*PluginSQLQueryResult) error
+	Recv() (*PluginSQLQuery, error)
+	grpc.ServerStream
+}
+
+type pluginQueryServer struct {
+	grpc.ServerStream
+}
+
+func (x *pluginQueryServer) Send(m *PluginSQLQueryResult) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *pluginQueryServer) Recv() (*PluginSQLQuery, error) {
+	m := new(PluginSQLQuery)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func _Plugin_Close_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -200,7 +267,14 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Plugin_Close_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Query",
+			Handler:       _Plugin_Query_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "v1/plugin.proto",
 }
 

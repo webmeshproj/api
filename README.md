@@ -78,6 +78,8 @@
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
+  - [<span class="badge">M</span>PluginSQLQuery](#v1.PluginSQLQuery)
+  - [<span class="badge">M</span>PluginSQLQueryResult](#v1.PluginSQLQueryResult)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
@@ -946,6 +948,29 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                        |          | Description is the description of the plugin.   |
 | capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
+### PluginSQLQuery
+
+PluginSQLQuery is the message containing a SQL query. It contains
+
+a request ID that is used to correlate the query with the result.
+
+| Field | Type                     | Label | Description                |
+|-------|--------------------------|-------|----------------------------|
+| id    | [string](#string)        |       | id is the ID of the query. |
+| query | [SQLQuery](#v1.SQLQuery) |       | query is the SQL query.    |
+
+### PluginSQLQueryResult
+
+PluginSQLQueryResult is the message containing a SQL query result. It
+contains
+
+a request ID that is used to correlate the query with the result.
+
+| Field  | Type                                 | Label | Description                     |
+|--------|--------------------------------------|-------|---------------------------------|
+| id     | [string](#string)                    |       | id is the ID of the query.      |
+| result | [SQLQueryResult](#v1.SQLQueryResult) |       | result is the SQL query result. |
+
 ### ReleaseIPRequest
 
 ReleaseIPRequest is the message containing an IP release request.
@@ -1020,11 +1045,12 @@ Plugin is the general service definition for a Webmesh plugin.
 
 It must be implemented by all plugins.
 
-| Method Name | Request Type                                     | Response Type                                    | Description                                                           |
-|-------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------------------|
-| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                       |
-| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                      |
-| Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down. |
+| Method Name | Request Type                                     | Response Type                                           | Description                                                                                 |
+|-------------|--------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                            | GetInfo returns the information for the plugin.                                             |
+| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty)        | Configure configures the plugin.                                                            |
+| Query       | [PluginSQLQuery](#v1.PluginSQLQuery) stream      | [PluginSQLQueryResult](#v1.PluginSQLQueryResult) stream | Query is a stream opened by the node to faciliate read-only queries against the mesh state. |
+| Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty)        | Close closes the plugin. It is called when the node is shutting down.                       |
 
 ### StoragePlugin
 

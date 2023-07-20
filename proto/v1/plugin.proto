@@ -70,6 +70,24 @@ message PluginConfiguration {
     google.protobuf.Struct config = 1;
 }
 
+// PluginSQLQuery is the message containing a SQL query. It contains
+// a request ID that is used to correlate the query with the result.
+message PluginSQLQuery {
+    // id is the ID of the query.
+    string id = 1;
+    // query is the SQL query.
+    SQLQuery query = 2;
+}
+
+// PluginSQLQueryResult is the message containing a SQL query result. It contains
+// a request ID that is used to correlate the query with the result.
+message PluginSQLQueryResult {
+    // id is the ID of the query.
+    string id = 1;
+    // result is the SQL query result.
+    SQLQueryResult result = 2;
+}
+
 // Plugin is the general service definition for a Webmesh plugin.
 // It must be implemented by all plugins.
 service Plugin {
@@ -77,6 +95,9 @@ service Plugin {
     rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
     // Configure configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
+    // Query is a stream opened by the node to faciliate read-only queries
+    // against the mesh state.
+    rpc Query (stream PluginSQLQuery) returns (stream PluginSQLQueryResult) {}
     // Close closes the plugin. It is called when the node is shutting down.
     rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }

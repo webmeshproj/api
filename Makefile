@@ -15,3 +15,6 @@ $(BUF):
 	test -s $(LOCALBIN)/buf || curl -sSL \
 		https://github.com/bufbuild/buf/releases/download/v$(BUF_VERSION)/buf-$(shell uname -s)-$(shell uname -m) \
 		-o $(LOCALBIN)/buf && chmod +x $(LOCALBIN)/buf
+
+publish: buf
+	cd proto/ ; $(BUF) push
