@@ -50,7 +50,10 @@ type PluginClient interface {
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Query is a stream opened by the node to faciliate read-only queries
-	// against the mesh state.
+	// against the mesh state. The signature is misleading, but it is required
+	// to be able to stream the query results back to the node. The node will
+	// open a stream to the plugin and send a PluginSQLQueryResult message
+	// for every query that is received.
 	Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -92,8 +95,8 @@ func (c *pluginClient) Query(ctx context.Context, opts ...grpc.CallOption) (Plug
 }
 
 type Plugin_QueryClient interface {
-	Send(*PluginSQLQuery) error
-	Recv() (*PluginSQLQueryResult, error)
+	Send(*PluginSQLQueryResult) error
+	Recv() (*PluginSQLQuery, error)
 	grpc.ClientStream
 }
 
@@ -101,12 +104,12 @@ type pluginQueryClient struct {
 	grpc.ClientStream
 }
 
-func (x *pluginQueryClient) Send(m *PluginSQLQuery) error {
+func (x *pluginQueryClient) Send(m *PluginSQLQueryResult) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *pluginQueryClient) Recv() (*PluginSQLQueryResult, error) {
-	m := new(PluginSQLQueryResult)
+func (x *pluginQueryClient) Recv() (*PluginSQLQuery, error) {
+	m := new(PluginSQLQuery)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -131,7 +134,10 @@ type PluginServer interface {
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
 	// Query is a stream opened by the node to faciliate read-only queries
-	// against the mesh state.
+	// against the mesh state. The signature is misleading, but it is required
+	// to be able to stream the query results back to the node. The node will
+	// open a stream to the plugin and send a PluginSQLQueryResult message
+	// for every query that is received.
 	Query(Plugin_QueryServer) error
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
@@ -208,8 +214,8 @@ func _Plugin_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
 }
 
 type Plugin_QueryServer interface {
-	Send(*PluginSQLQueryResult) error
-	Recv() (*PluginSQLQuery, error)
+	Send(*PluginSQLQuery) error
+	Recv() (*PluginSQLQueryResult, error)
 	grpc.ServerStream
 }
 
@@ -217,12 +223,12 @@ type pluginQueryServer struct {
 	grpc.ServerStream
 }
 
-func (x *pluginQueryServer) Send(m *PluginSQLQueryResult) error {
+func (x *pluginQueryServer) Send(m *PluginSQLQuery) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *pluginQueryServer) Recv() (*PluginSQLQuery, error) {
-	m := new(PluginSQLQuery)
+func (x *pluginQueryServer) Recv() (*PluginSQLQueryResult, error) {
+	m := new(PluginSQLQueryResult)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
