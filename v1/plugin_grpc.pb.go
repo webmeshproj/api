@@ -35,10 +35,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Plugin_GetInfo_FullMethodName   = "/v1.Plugin/GetInfo"
-	Plugin_Configure_FullMethodName = "/v1.Plugin/Configure"
-	Plugin_Query_FullMethodName     = "/v1.Plugin/Query"
-	Plugin_Close_FullMethodName     = "/v1.Plugin/Close"
+	Plugin_GetInfo_FullMethodName       = "/v1.Plugin/GetInfo"
+	Plugin_Configure_FullMethodName     = "/v1.Plugin/Configure"
+	Plugin_InjectQuerier_FullMethodName = "/v1.Plugin/InjectQuerier"
+	Plugin_Close_FullMethodName         = "/v1.Plugin/Close"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -49,14 +49,14 @@ type PluginClient interface {
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// Query is a stream opened by the node to faciliate read-only queries
+	// InjectQuerier is a stream opened by the node to faciliate read-only queries
 	// against the mesh state. The signature is misleading, but it is required
 	// to be able to stream the query results back to the node. The node will
 	// open a stream to the plugin and send a PluginSQLQueryResult message
 	// for every query that is received. The plugin can return an Unimplemented
 	// error or simply close the stream with no error it it does not wish to
 	// keep the stream open.
-	Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error)
+	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (Plugin_InjectQuerierClient, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -87,30 +87,30 @@ func (c *pluginClient) Configure(ctx context.Context, in *PluginConfiguration, o
 	return out, nil
 }
 
-func (c *pluginClient) Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Plugin_ServiceDesc.Streams[0], Plugin_Query_FullMethodName, opts...)
+func (c *pluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (Plugin_InjectQuerierClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Plugin_ServiceDesc.Streams[0], Plugin_InjectQuerier_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &pluginQueryClient{stream}
+	x := &pluginInjectQuerierClient{stream}
 	return x, nil
 }
 
-type Plugin_QueryClient interface {
+type Plugin_InjectQuerierClient interface {
 	Send(*PluginSQLQueryResult) error
 	Recv() (*PluginSQLQuery, error)
 	grpc.ClientStream
 }
 
-type pluginQueryClient struct {
+type pluginInjectQuerierClient struct {
 	grpc.ClientStream
 }
 
-func (x *pluginQueryClient) Send(m *PluginSQLQueryResult) error {
+func (x *pluginInjectQuerierClient) Send(m *PluginSQLQueryResult) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *pluginQueryClient) Recv() (*PluginSQLQuery, error) {
+func (x *pluginInjectQuerierClient) Recv() (*PluginSQLQuery, error) {
 	m := new(PluginSQLQuery)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -135,14 +135,14 @@ type PluginServer interface {
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
-	// Query is a stream opened by the node to faciliate read-only queries
+	// InjectQuerier is a stream opened by the node to faciliate read-only queries
 	// against the mesh state. The signature is misleading, but it is required
 	// to be able to stream the query results back to the node. The node will
 	// open a stream to the plugin and send a PluginSQLQueryResult message
 	// for every query that is received. The plugin can return an Unimplemented
 	// error or simply close the stream with no error it it does not wish to
 	// keep the stream open.
-	Query(Plugin_QueryServer) error
+	InjectQuerier(Plugin_InjectQuerierServer) error
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
@@ -158,8 +158,8 @@ func (UnimplementedPluginServer) GetInfo(context.Context, *emptypb.Empty) (*Plug
 func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
 }
-func (UnimplementedPluginServer) Query(Plugin_QueryServer) error {
-	return status.Errorf(codes.Unimplemented, "method Query not implemented")
+func (UnimplementedPluginServer) InjectQuerier(Plugin_InjectQuerierServer) error {
+	return status.Errorf(codes.Unimplemented, "method InjectQuerier not implemented")
 }
 func (UnimplementedPluginServer) Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Close not implemented")
@@ -213,25 +213,25 @@ func _Plugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PluginServer).Query(&pluginQueryServer{stream})
+func _Plugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PluginServer).InjectQuerier(&pluginInjectQuerierServer{stream})
 }
 
-type Plugin_QueryServer interface {
+type Plugin_InjectQuerierServer interface {
 	Send(*PluginSQLQuery) error
 	Recv() (*PluginSQLQueryResult, error)
 	grpc.ServerStream
 }
 
-type pluginQueryServer struct {
+type pluginInjectQuerierServer struct {
 	grpc.ServerStream
 }
 
-func (x *pluginQueryServer) Send(m *PluginSQLQuery) error {
+func (x *pluginInjectQuerierServer) Send(m *PluginSQLQuery) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *pluginQueryServer) Recv() (*PluginSQLQueryResult, error) {
+func (x *pluginInjectQuerierServer) Recv() (*PluginSQLQueryResult, error) {
 	m := new(PluginSQLQueryResult)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -279,8 +279,8 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Query",
-			Handler:       _Plugin_Query_Handler,
+			StreamName:    "InjectQuerier",
+			Handler:       _Plugin_InjectQuerier_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
