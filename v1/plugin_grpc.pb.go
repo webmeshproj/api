@@ -53,7 +53,9 @@ type PluginClient interface {
 	// against the mesh state. The signature is misleading, but it is required
 	// to be able to stream the query results back to the node. The node will
 	// open a stream to the plugin and send a PluginSQLQueryResult message
-	// for every query that is received.
+	// for every query that is received. The plugin can return an Unimplemented
+	// error or simply close the stream with no error it it does not wish to
+	// keep the stream open.
 	Query(ctx context.Context, opts ...grpc.CallOption) (Plugin_QueryClient, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -137,7 +139,9 @@ type PluginServer interface {
 	// against the mesh state. The signature is misleading, but it is required
 	// to be able to stream the query results back to the node. The node will
 	// open a stream to the plugin and send a PluginSQLQueryResult message
-	// for every query that is received.
+	// for every query that is received. The plugin can return an Unimplemented
+	// error or simply close the stream with no error it it does not wish to
+	// keep the stream open.
 	Query(Plugin_QueryServer) error
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)

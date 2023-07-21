@@ -86,6 +86,8 @@ message PluginSQLQueryResult {
     string id = 1;
     // result is the SQL query result.
     SQLQueryResult result = 2;
+    // error is an error that occurred during the query.
+    string error = 3;
 }
 
 // Plugin is the general service definition for a Webmesh plugin.
@@ -99,7 +101,9 @@ service Plugin {
     // against the mesh state. The signature is misleading, but it is required
     // to be able to stream the query results back to the node. The node will
     // open a stream to the plugin and send a PluginSQLQueryResult message
-    // for every query that is received.
+    // for every query that is received. The plugin can return an Unimplemented
+    // error or simply close the stream with no error it it does not wish to 
+    // keep the stream open.
     rpc Query (stream PluginSQLQueryResult) returns (stream PluginSQLQuery) {}
     // Close closes the plugin. It is called when the node is shutting down.
     rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}
