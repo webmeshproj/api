@@ -128,6 +128,8 @@ message JoinResponse {
     // the peers has the ICE flag set. This must be set if the requestor
     // specifies direct_peers.
     repeated string ice_servers = 6;
+    // mesh_domain is the domain of the mesh.
+    string mesh_domain = 7;
 }
 
 // WireGuardPeer is a peer in the Wireguard network.
