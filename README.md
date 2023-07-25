@@ -76,6 +76,7 @@
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
   - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
+  - [<span class="badge">E</span>PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand)
   - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
   - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
@@ -863,10 +864,11 @@ PluginQuery is the message containing a storage query. It contains
 
 a request ID that is used to correlate the query with the result.
 
-| Field | Type              | Label | Description                  |
-|-------|-------------------|-------|------------------------------|
-| id    | [string](#string) |       | id is the ID of the query.   |
-| key   | [string](#string) |       | key is the key of the query. |
+| Field   | Type                                                     | Label | Description                              |
+|---------|----------------------------------------------------------|-------|------------------------------------------|
+| id      | [string](#string)                                        |       | id is the ID of the query.               |
+| command | [PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand) |       | command is the command of the query.     |
+| query   | [string](#string)                                        |       | query is the key or prefix of the query. |
 
 ### PluginQueryResult
 
@@ -875,11 +877,12 @@ contains
 
 a request ID that is used to correlate the query with the result.
 
-| Field | Type              | Label | Description                                       |
-|-------|-------------------|-------|---------------------------------------------------|
-| id    | [string](#string) |       | id is the ID of the query.                        |
-| value | [string](#string) |       | value is the value of the query.                  |
-| error | [string](#string) |       | error is an error that occurred during the query. |
+| Field | Type              | Label    | Description                                                                                                                                                            |
+|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id    | [string](#string) |          | id is the ID of the query.                                                                                                                                             |
+| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
+| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
+| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
 
 ### ReleaseIPRequest
 
@@ -920,6 +923,16 @@ PluginCapability is the capabilities of a plugin.
 | PLUGIN_CAPABILITY_WATCH   | 3      | PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events. |
 | PLUGIN_CAPABILITY_IPAMV4  | 4      | PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.       |
 | PLUGIN_CAPABILITY_IPAMV6  | 5      | PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.       |
+
+### PluginQuery.QueryCommand
+
+QueryCommand is the type of the query.
+
+| Name | Number | Description                                                       |
+|------|--------|-------------------------------------------------------------------|
+| GET  | 0      | GET is the command to get a value.                                |
+| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
+| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
 
 ### WatchEvent
 

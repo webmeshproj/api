@@ -513,6 +513,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PluginQuery.QueryCommand"><span class="badge">E</span>PluginQuery.QueryCommand</a>
+                </li>
+              
+                <li>
                   <a href="#v1.WatchEvent"><span class="badge">E</span>WatchEvent</a>
                 </li>
               
@@ -3267,10 +3271,17 @@ Protocols can be specified by name or number. </p></td>
                 </tr>
               
                 <tr>
-                  <td>key</td>
+                  <td>command</td>
+                  <td><a href="#v1.PluginQuery.QueryCommand">PluginQuery.QueryCommand</a></td>
+                  <td></td>
+                  <td><p>command is the command of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>key is the key of the query. </p></td>
+                  <td><p>query is the key or prefix of the query. </p></td>
                 </tr>
               
             </tbody>
@@ -3298,17 +3309,27 @@ Protocols can be specified by name or number. </p></td>
                 </tr>
               
                 <tr>
-                  <td>value</td>
+                  <td>key</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>value is the value of the query. </p></td>
+                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
+For LIST queries it will be the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
+For LIST queries it will be the list of keys that match the prefix. </p></td>
                 </tr>
               
                 <tr>
                   <td>error</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>error is an error that occurred during the query. </p></td>
+                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
+&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
                 </tr>
               
             </tbody>
@@ -3460,6 +3481,35 @@ Protocols can be specified by name or number. </p></td>
                 <td>PLUGIN_CAPABILITY_IPAMV6</td>
                 <td>5</td>
                 <td><p>PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.PluginQuery.QueryCommand">PluginQuery.QueryCommand</h3>
+        <p>QueryCommand is the type of the query.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GET</td>
+                <td>0</td>
+                <td><p>GET is the command to get a value.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LIST</td>
+                <td>1</td>
+                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ITER</td>
+                <td>2</td>
+                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
               </tr>
             
           </tbody>
