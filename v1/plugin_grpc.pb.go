@@ -97,8 +97,8 @@ func (c *pluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOptio
 }
 
 type Plugin_InjectQuerierClient interface {
-	Send(*PluginSQLQueryResult) error
-	Recv() (*PluginSQLQuery, error)
+	Send(*PluginQueryResult) error
+	Recv() (*PluginQuery, error)
 	grpc.ClientStream
 }
 
@@ -106,12 +106,12 @@ type pluginInjectQuerierClient struct {
 	grpc.ClientStream
 }
 
-func (x *pluginInjectQuerierClient) Send(m *PluginSQLQueryResult) error {
+func (x *pluginInjectQuerierClient) Send(m *PluginQueryResult) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *pluginInjectQuerierClient) Recv() (*PluginSQLQuery, error) {
-	m := new(PluginSQLQuery)
+func (x *pluginInjectQuerierClient) Recv() (*PluginQuery, error) {
+	m := new(PluginQuery)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -218,8 +218,8 @@ func _Plugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) er
 }
 
 type Plugin_InjectQuerierServer interface {
-	Send(*PluginSQLQuery) error
-	Recv() (*PluginSQLQueryResult, error)
+	Send(*PluginQuery) error
+	Recv() (*PluginQueryResult, error)
 	grpc.ServerStream
 }
 
@@ -227,12 +227,12 @@ type pluginInjectQuerierServer struct {
 	grpc.ServerStream
 }
 
-func (x *pluginInjectQuerierServer) Send(m *PluginSQLQuery) error {
+func (x *pluginInjectQuerierServer) Send(m *PluginQuery) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *pluginInjectQuerierServer) Recv() (*PluginSQLQueryResult, error) {
-	m := new(PluginSQLQueryResult)
+func (x *pluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
+	m := new(PluginQueryResult)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

@@ -436,41 +436,9 @@
                   <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
                 </li>
               
-                <li>
-                  <a href="#v1.SQLExec"><span class="badge">M</span>SQLExec</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLExecResult"><span class="badge">M</span>SQLExecResult</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLParameter"><span class="badge">M</span>SQLParameter</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLQuery"><span class="badge">M</span>SQLQuery</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLQueryResult"><span class="badge">M</span>SQLQueryResult</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLStatement"><span class="badge">M</span>SQLStatement</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLValues"><span class="badge">M</span>SQLValues</a>
-                </li>
-              
               
                 <li>
                   <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SQLParameterType"><span class="badge">E</span>SQLParameterType</a>
                 </li>
               
               
@@ -520,11 +488,11 @@
                 </li>
               
                 <li>
-                  <a href="#v1.PluginSQLQuery"><span class="badge">M</span>PluginSQLQuery</a>
+                  <a href="#v1.PluginQuery"><span class="badge">M</span>PluginQuery</a>
                 </li>
               
                 <li>
-                  <a href="#v1.PluginSQLQueryResult"><span class="badge">M</span>PluginSQLQueryResult</a>
+                  <a href="#v1.PluginQueryResult"><span class="badge">M</span>PluginQueryResult</a>
                 </li>
               
                 <li>
@@ -2901,20 +2869,6 @@ Protocols can be specified by name or number. </p></td>
                 </tr>
               
                 <tr>
-                  <td>query_result</td>
-                  <td><a href="#v1.SQLQueryResult">SQLQueryResult</a></td>
-                  <td></td>
-                  <td><p>query is the query result of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>exec_result</td>
-                  <td><a href="#v1.SQLExecResult">SQLExecResult</a></td>
-                  <td></td>
-                  <td><p>exec is the exec result of the log entry. </p></td>
-                </tr>
-              
-                <tr>
                   <td>error</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -2946,277 +2900,17 @@ Protocols can be specified by name or number. </p></td>
                 </tr>
               
                 <tr>
-                  <td>sql_query</td>
-                  <td><a href="#v1.SQLQuery">SQLQuery</a></td>
-                  <td></td>
-                  <td><p>data is the data of the log entry.
-sql_query is the SQL query of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>sql_exec</td>
-                  <td><a href="#v1.SQLExec">SQLExec</a></td>
-                  <td></td>
-                  <td><p>sql_exec is the SQL exec of the log entry. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLExec">SQLExec</h3>
-        <p>SQLExec is a SQL exec.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>transaction</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>transaction flags whether the exec is a transaction. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>statement</td>
-                  <td><a href="#v1.SQLStatement">SQLStatement</a></td>
-                  <td></td>
-                  <td><p>statement is the statement of the SQL exec. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLExecResult">SQLExecResult</h3>
-        <p>SQLExecResult is the result of a SQL exec.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>last_insert_id</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>last_insert_id is the last insert ID. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>rows_affected</td>
-                  <td><a href="#int64">int64</a></td>
-                  <td></td>
-                  <td><p>rows_affected is the number of rows affected. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLParameter">SQLParameter</h3>
-        <p>SQLParameter is a parameter of a SQL query.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
+                  <td>key</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the parameter. </p></td>
+                  <td><p>key is the key of the log entry. </p></td>
                 </tr>
               
                 <tr>
-                  <td>type</td>
-                  <td><a href="#v1.SQLParameterType">SQLParameterType</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>int64</td>
-                  <td><a href="#sint64">sint64</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>double</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>bool</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>bytes</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>str</td>
+                  <td>value</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>time</td>
-                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLQuery">SQLQuery</h3>
-        <p>SQLQuery is a SQL query.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>transaction</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>transaction flags whether the query is a transaction. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>statement</td>
-                  <td><a href="#v1.SQLStatement">SQLStatement</a></td>
-                  <td></td>
-                  <td><p>statement is the statement of the SQL query. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLQueryResult">SQLQueryResult</h3>
-        <p>SQLQueryResult contains the rows of a SQL query.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>columns</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>columns is the list of columns. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>types</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>types is the list of types. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>values</td>
-                  <td><a href="#v1.SQLValues">SQLValues</a></td>
-                  <td>repeated</td>
-                  <td><p>values is the list of values. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLStatement">SQLStatement</h3>
-        <p>SQLStatement is a SQL statement.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>sql</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>sql is the SQL statement. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>parameters</td>
-                  <td><a href="#v1.SQLParameter">SQLParameter</a></td>
-                  <td>repeated</td>
-                  <td><p>parameters is the parameters of the SQL statement. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SQLValues">SQLValues</h3>
-        <p>SQLValues is a list of values.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>values</td>
-                  <td><a href="#v1.SQLParameter">SQLParameter</a></td>
-                  <td>repeated</td>
-                  <td><p>values is the list of values. </p></td>
+                  <td><p>value is the value of the log entry. </p></td>
                 </tr>
               
             </tbody>
@@ -3243,74 +2937,15 @@ sql_query is the SQL query of the log entry. </p></td>
               </tr>
             
               <tr>
-                <td>QUERY</td>
+                <td>PUT</td>
                 <td>1</td>
-                <td><p>QUERY is the query command type.</p></td>
+                <td><p>PUT is the command for putting a key/value pair.</p></td>
               </tr>
             
               <tr>
-                <td>EXECUTE</td>
+                <td>DELETE</td>
                 <td>2</td>
-                <td><p>EXECUTE is the execute command type.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.SQLParameterType">SQLParameterType</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>SQL_PARAM_UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the unknown parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_INT64</td>
-                <td>1</td>
-                <td><p>INT64 is the int64 parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_DOUBLE</td>
-                <td>2</td>
-                <td><p>DOUBLE is the double parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_BOOL</td>
-                <td>3</td>
-                <td><p>BOOL is the bool parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_BYTES</td>
-                <td>4</td>
-                <td><p>BYTES is the bytes parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_STRING</td>
-                <td>5</td>
-                <td><p>STRING is the string parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_TIME</td>
-                <td>6</td>
-                <td><p>TIME is the time parameter type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SQL_PARAM_NULL</td>
-                <td>7</td>
-                <td><p>NULL is the null parameter type.</p></td>
+                <td><p>DELETE is the command for deleting a key/value pair.</p></td>
               </tr>
             
           </tbody>
@@ -3614,8 +3249,8 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
-        <h3 id="v1.PluginSQLQuery">PluginSQLQuery</h3>
-        <p>PluginSQLQuery is the message containing a SQL query. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+        <h3 id="v1.PluginQuery">PluginQuery</h3>
+        <p>PluginQuery is the message containing a storage query. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
 
         
           <table class="field-table">
@@ -3632,10 +3267,10 @@ sql_query is the SQL query of the log entry. </p></td>
                 </tr>
               
                 <tr>
-                  <td>query</td>
-                  <td><a href="#v1.SQLQuery">SQLQuery</a></td>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>query is the SQL query. </p></td>
+                  <td><p>key is the key of the query. </p></td>
                 </tr>
               
             </tbody>
@@ -3645,8 +3280,8 @@ sql_query is the SQL query of the log entry. </p></td>
 
         
       
-        <h3 id="v1.PluginSQLQueryResult">PluginSQLQueryResult</h3>
-        <p>PluginSQLQueryResult is the message containing a SQL query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+        <h3 id="v1.PluginQueryResult">PluginQueryResult</h3>
+        <p>PluginQueryResult is the message containing a storage query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
 
         
           <table class="field-table">
@@ -3663,10 +3298,10 @@ sql_query is the SQL query of the log entry. </p></td>
                 </tr>
               
                 <tr>
-                  <td>result</td>
-                  <td><a href="#v1.SQLQueryResult">SQLQueryResult</a></td>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>result is the SQL query result. </p></td>
+                  <td><p>value is the value of the query. </p></td>
                 </tr>
               
                 <tr>
@@ -3938,8 +3573,8 @@ sql_query is the SQL query of the log entry. </p></td>
             
               <tr>
                 <td>InjectQuerier</td>
-                <td><a href="#v1.PluginSQLQueryResult">PluginSQLQueryResult</a> stream</td>
-                <td><a href="#v1.PluginSQLQuery">PluginSQLQuery</a> stream</td>
+                <td><a href="#v1.PluginQueryResult">PluginQueryResult</a> stream</td>
+                <td><a href="#v1.PluginQuery">PluginQuery</a> stream</td>
                 <td><p>InjectQuerier is a stream opened by the node to faciliate read-only queries
 against the mesh state. The signature is misleading, but it is required
 to be able to stream the query results back to the node. The node will

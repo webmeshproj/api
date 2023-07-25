@@ -59,15 +59,7 @@
 - [v1/raft.proto](#v1%2fraft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
-  - [<span class="badge">M</span>SQLExec](#v1.SQLExec)
-  - [<span class="badge">M</span>SQLExecResult](#v1.SQLExecResult)
-  - [<span class="badge">M</span>SQLParameter](#v1.SQLParameter)
-  - [<span class="badge">M</span>SQLQuery](#v1.SQLQuery)
-  - [<span class="badge">M</span>SQLQueryResult](#v1.SQLQueryResult)
-  - [<span class="badge">M</span>SQLStatement](#v1.SQLStatement)
-  - [<span class="badge">M</span>SQLValues](#v1.SQLValues)
   - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
-  - [<span class="badge">E</span>SQLParameterType](#v1.SQLParameterType)
 - [v1/plugin.proto](#v1%2fplugin.proto)
   - [<span class="badge">M</span>AllocateIPRequest](#v1.AllocateIPRequest)
   - [<span class="badge">M</span>AllocatedIP](#v1.AllocatedIP)
@@ -78,8 +70,8 @@
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
-  - [<span class="badge">M</span>PluginSQLQuery](#v1.PluginSQLQuery)
-  - [<span class="badge">M</span>PluginSQLQueryResult](#v1.PluginSQLQueryResult)
+  - [<span class="badge">M</span>PluginQuery](#v1.PluginQuery)
+  - [<span class="badge">M</span>PluginQueryResult](#v1.PluginQueryResult)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
@@ -747,91 +739,20 @@ RaftApplyResponse is the response to an apply request. It
 
 contains the result of applying the log entry.
 
-| Field        | Type                                 | Label | Description                                            |
-|--------------|--------------------------------------|-------|--------------------------------------------------------|
-| time         | [string](#string)                    |       | time is the total time it took to apply the log entry. |
-| query_result | [SQLQueryResult](#v1.SQLQueryResult) |       | query is the query result of the log entry.            |
-| exec_result  | [SQLExecResult](#v1.SQLExecResult)   |       | exec is the exec result of the log entry.              |
-| error        | [string](#string)                    |       | error is an error that occurred during the apply.      |
+| Field | Type              | Label | Description                                            |
+|-------|-------------------|-------|--------------------------------------------------------|
+| time  | [string](#string) |       | time is the total time it took to apply the log entry. |
+| error | [string](#string) |       | error is an error that occurred during the apply.      |
 
 ### RaftLogEntry
 
 RaftLogEntry is the data of an entry in the Raft log.
 
-| Field     | Type                                   | Label | Description                                                                     |
-|-----------|----------------------------------------|-------|---------------------------------------------------------------------------------|
-| type      | [RaftCommandType](#v1.RaftCommandType) |       | type is the type of the log entry.                                              |
-| sql_query | [SQLQuery](#v1.SQLQuery)               |       | data is the data of the log entry. sql_query is the SQL query of the log entry. |
-| sql_exec  | [SQLExec](#v1.SQLExec)                 |       | sql_exec is the SQL exec of the log entry.                                      |
-
-### SQLExec
-
-SQLExec is a SQL exec.
-
-| Field       | Type                             | Label | Description                                          |
-|-------------|----------------------------------|-------|------------------------------------------------------|
-| transaction | [bool](#bool)                    |       | transaction flags whether the exec is a transaction. |
-| statement   | [SQLStatement](#v1.SQLStatement) |       | statement is the statement of the SQL exec.          |
-
-### SQLExecResult
-
-SQLExecResult is the result of a SQL exec.
-
-| Field          | Type            | Label | Description                                   |
-|----------------|-----------------|-------|-----------------------------------------------|
-| last_insert_id | [int64](#int64) |       | last_insert_id is the last insert ID.         |
-| rows_affected  | [int64](#int64) |       | rows_affected is the number of rows affected. |
-
-### SQLParameter
-
-SQLParameter is a parameter of a SQL query.
-
-| Field  | Type                                                    | Label | Description                        |
-|--------|---------------------------------------------------------|-------|------------------------------------|
-| name   | [string](#string)                                       |       | name is the name of the parameter. |
-| type   | [SQLParameterType](#v1.SQLParameterType)                |       |                                    |
-| int64  | [sint64](#sint64)                                       |       |                                    |
-| double | [double](#double)                                       |       |                                    |
-| bool   | [bool](#bool)                                           |       |                                    |
-| bytes  | [bytes](#bytes)                                         |       |                                    |
-| str    | [string](#string)                                       |       |                                    |
-| time   | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       |                                    |
-
-### SQLQuery
-
-SQLQuery is a SQL query.
-
-| Field       | Type                             | Label | Description                                           |
-|-------------|----------------------------------|-------|-------------------------------------------------------|
-| transaction | [bool](#bool)                    |       | transaction flags whether the query is a transaction. |
-| statement   | [SQLStatement](#v1.SQLStatement) |       | statement is the statement of the SQL query.          |
-
-### SQLQueryResult
-
-SQLQueryResult contains the rows of a SQL query.
-
-| Field   | Type                       | Label    | Description                     |
-|---------|----------------------------|----------|---------------------------------|
-| columns | [string](#string)          | repeated | columns is the list of columns. |
-| types   | [string](#string)          | repeated | types is the list of types.     |
-| values  | [SQLValues](#v1.SQLValues) | repeated | values is the list of values.   |
-
-### SQLStatement
-
-SQLStatement is a SQL statement.
-
-| Field      | Type                             | Label    | Description                                        |
-|------------|----------------------------------|----------|----------------------------------------------------|
-| sql        | [string](#string)                |          | sql is the SQL statement.                          |
-| parameters | [SQLParameter](#v1.SQLParameter) | repeated | parameters is the parameters of the SQL statement. |
-
-### SQLValues
-
-SQLValues is a list of values.
-
-| Field  | Type                             | Label    | Description                   |
-|--------|----------------------------------|----------|-------------------------------|
-| values | [SQLParameter](#v1.SQLParameter) | repeated | values is the list of values. |
+| Field | Type                                   | Label | Description                          |
+|-------|----------------------------------------|-------|--------------------------------------|
+| type  | [RaftCommandType](#v1.RaftCommandType) |       | type is the type of the log entry.   |
+| key   | [string](#string)                      |       | key is the key of the log entry.     |
+| value | [string](#string)                      |       | value is the value of the log entry. |
 
 ### RaftCommandType
 
@@ -839,24 +760,11 @@ RaftCommandType is the type of command being sent to the
 
 Raft log.
 
-| Name    | Number | Description                          |
-|---------|--------|--------------------------------------|
-| UNKNOWN | 0      | UNKNOWN is the unknown command type. |
-| QUERY   | 1      | QUERY is the query command type.     |
-| EXECUTE | 2      | EXECUTE is the execute command type. |
-
-### SQLParameterType
-
-| Name              | Number | Description                            |
-|-------------------|--------|----------------------------------------|
-| SQL_PARAM_UNKNOWN | 0      | UNKNOWN is the unknown parameter type. |
-| SQL_PARAM_INT64   | 1      | INT64 is the int64 parameter type.     |
-| SQL_PARAM_DOUBLE  | 2      | DOUBLE is the double parameter type.   |
-| SQL_PARAM_BOOL    | 3      | BOOL is the bool parameter type.       |
-| SQL_PARAM_BYTES   | 4      | BYTES is the bytes parameter type.     |
-| SQL_PARAM_STRING  | 5      | STRING is the string parameter type.   |
-| SQL_PARAM_TIME    | 6      | TIME is the time parameter type.       |
-| SQL_PARAM_NULL    | 7      | NULL is the null parameter type.       |
+| Name    | Number | Description                                          |
+|---------|--------|------------------------------------------------------|
+| UNKNOWN | 0      | UNKNOWN is the unknown command type.                 |
+| PUT     | 1      | PUT is the command for putting a key/value pair.     |
+| DELETE  | 2      | DELETE is the command for deleting a key/value pair. |
 
 <div class="file-heading">
 
@@ -949,29 +857,29 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                        |          | Description is the description of the plugin.   |
 | capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
-### PluginSQLQuery
+### PluginQuery
 
-PluginSQLQuery is the message containing a SQL query. It contains
+PluginQuery is the message containing a storage query. It contains
 
 a request ID that is used to correlate the query with the result.
 
-| Field | Type                     | Label | Description                |
-|-------|--------------------------|-------|----------------------------|
-| id    | [string](#string)        |       | id is the ID of the query. |
-| query | [SQLQuery](#v1.SQLQuery) |       | query is the SQL query.    |
+| Field | Type              | Label | Description                  |
+|-------|-------------------|-------|------------------------------|
+| id    | [string](#string) |       | id is the ID of the query.   |
+| key   | [string](#string) |       | key is the key of the query. |
 
-### PluginSQLQueryResult
+### PluginQueryResult
 
-PluginSQLQueryResult is the message containing a SQL query result. It
+PluginQueryResult is the message containing a storage query result. It
 contains
 
 a request ID that is used to correlate the query with the result.
 
-| Field  | Type                                 | Label | Description                                       |
-|--------|--------------------------------------|-------|---------------------------------------------------|
-| id     | [string](#string)                    |       | id is the ID of the query.                        |
-| result | [SQLQueryResult](#v1.SQLQueryResult) |       | result is the SQL query result.                   |
-| error  | [string](#string)                    |       | error is an error that occurred during the query. |
+| Field | Type              | Label | Description                                       |
+|-------|-------------------|-------|---------------------------------------------------|
+| id    | [string](#string) |       | id is the ID of the query.                        |
+| value | [string](#string) |       | value is the value of the query.                  |
+| error | [string](#string) |       | error is an error that occurred during the query. |
 
 ### ReleaseIPRequest
 
@@ -1047,12 +955,12 @@ Plugin is the general service definition for a Webmesh plugin.
 
 It must be implemented by all plugins.
 
-| Method Name   | Request Type                                            | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|---------------|---------------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GetInfo       | [.google.protobuf.Empty](#google.protobuf.Empty)        | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Configure     | [PluginConfiguration](#v1.PluginConfiguration)          | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| InjectQuerier | [PluginSQLQueryResult](#v1.PluginSQLQueryResult) stream | [PluginSQLQuery](#v1.PluginSQLQuery) stream      | InjectQuerier is a stream opened by the node to faciliate read-only queries against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginSQLQueryResult message for every query that is received. The plugin can return an Unimplemented error or simply close the stream with no error it it does not wish to keep the stream open. |
-| Close         | [.google.protobuf.Empty](#google.protobuf.Empty)        | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down.                                                                                                                                                                                                                                                                                                                                                                                               |
+| Method Name   | Request Type                                      | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|---------------|---------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GetInfo       | [.google.protobuf.Empty](#google.protobuf.Empty)  | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Configure     | [PluginConfiguration](#v1.PluginConfiguration)    | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| InjectQuerier | [PluginQueryResult](#v1.PluginQueryResult) stream | [PluginQuery](#v1.PluginQuery) stream            | InjectQuerier is a stream opened by the node to faciliate read-only queries against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginSQLQueryResult message for every query that is received. The plugin can return an Unimplemented error or simply close the stream with no error it it does not wish to keep the stream open. |
+| Close         | [.google.protobuf.Empty](#google.protobuf.Empty)  | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down.                                                                                                                                                                                                                                                                                                                                                                                               |
 
 ### StoragePlugin
 

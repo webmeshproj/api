@@ -25,101 +25,20 @@ import "google/protobuf/timestamp.proto";
 enum RaftCommandType {
     // UNKNOWN is the unknown command type.
     UNKNOWN = 0;
-    // QUERY is the query command type.
-    QUERY = 1;
-    // EXECUTE is the execute command type.
-    EXECUTE = 2;
-}
-
-enum SQLParameterType {
-    // UNKNOWN is the unknown parameter type.
-    SQL_PARAM_UNKNOWN = 0;
-    // INT64 is the int64 parameter type.
-    SQL_PARAM_INT64 = 1;
-    // DOUBLE is the double parameter type.
-    SQL_PARAM_DOUBLE = 2;
-    // BOOL is the bool parameter type.
-    SQL_PARAM_BOOL = 3;
-    // BYTES is the bytes parameter type.
-    SQL_PARAM_BYTES = 4;
-    // STRING is the string parameter type.
-    SQL_PARAM_STRING = 5;
-    // TIME is the time parameter type.
-    SQL_PARAM_TIME = 6;
-    // NULL is the null parameter type.
-    SQL_PARAM_NULL = 7;
-}
-
-// SQLParameter is a parameter of a SQL query.
-message SQLParameter {
-    // name is the name of the parameter.
-    string name = 1;
-    SQLParameterType type = 2;
-    sint64 int64 = 3;
-    double double = 4;
-    bool bool = 5;
-    bytes bytes = 6;
-    string str = 7;
-    google.protobuf.Timestamp time = 8;
-}
-
-// SQLValues is a list of values.
-message SQLValues {
-    // values is the list of values.
-    repeated SQLParameter values = 1;
-}
-
-// SQLStatement is a SQL statement.
-message SQLStatement {
-    // sql is the SQL statement.
-	string sql = 1;
-    // parameters is the parameters of the SQL statement.
-	repeated SQLParameter parameters = 2;
-}
-
-// SQLQuery is a SQL query.
-message SQLQuery {
-    // transaction flags whether the query is a transaction.
-    bool transaction = 1;
-    // statement is the statement of the SQL query.
-    SQLStatement statement = 2;
-}
-
-// SQLExec is a SQL exec.
-message SQLExec {
-    // transaction flags whether the exec is a transaction.
-    bool transaction = 1;
-    // statement is the statement of the SQL exec.
-    SQLStatement statement = 2;
-}
-
-// SQLQueryResult contains the rows of a SQL query.
-message SQLQueryResult {
-    // columns is the list of columns.
-	repeated string columns = 1;
-    // types is the list of types.
-	repeated string types = 2;
-    // values is the list of values.
-	repeated SQLValues values = 3;
-}
-
-// SQLExecResult is the result of a SQL exec.
-message SQLExecResult {
-    // last_insert_id is the last insert ID.
-	int64 last_insert_id = 1;
-    // rows_affected is the number of rows affected.
-	int64 rows_affected = 2;
+    // PUT is the command for putting a key/value pair.
+    PUT = 1;
+    // DELETE is the command for deleting a key/value pair.
+    DELETE = 2;
 }
 
 // RaftLogEntry is the data of an entry in the Raft log.
 message RaftLogEntry {
     // type is the type of the log entry.
     RaftCommandType type = 1;
-    // data is the data of the log entry.
-    // sql_query is the SQL query of the log entry.
-    SQLQuery sql_query = 2;
-    // sql_exec is the SQL exec of the log entry.
-    SQLExec sql_exec = 3;
+    // key is the key of the log entry.
+    string key = 2;
+    // value is the value of the log entry.
+    string value = 3;
 }
 
 // RaftApplyResponse is the response to an apply request. It
@@ -127,10 +46,6 @@ message RaftLogEntry {
 message RaftApplyResponse {
     // time is the total time it took to apply the log entry.
     string time = 1;
-    // query is the query result of the log entry.
-    SQLQueryResult query_result = 2;
-    // exec is the exec result of the log entry.
-    SQLExecResult exec_result = 3;
     // error is an error that occurred during the apply.
-    string error = 4;
+    string error = 2;
 }

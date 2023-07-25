@@ -24,7 +24,7 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	_ "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -43,23 +43,23 @@ type RaftCommandType int32
 const (
 	// UNKNOWN is the unknown command type.
 	RaftCommandType_UNKNOWN RaftCommandType = 0
-	// QUERY is the query command type.
-	RaftCommandType_QUERY RaftCommandType = 1
-	// EXECUTE is the execute command type.
-	RaftCommandType_EXECUTE RaftCommandType = 2
+	// PUT is the command for putting a key/value pair.
+	RaftCommandType_PUT RaftCommandType = 1
+	// DELETE is the command for deleting a key/value pair.
+	RaftCommandType_DELETE RaftCommandType = 2
 )
 
 // Enum value maps for RaftCommandType.
 var (
 	RaftCommandType_name = map[int32]string{
 		0: "UNKNOWN",
-		1: "QUERY",
-		2: "EXECUTE",
+		1: "PUT",
+		2: "DELETE",
 	}
 	RaftCommandType_value = map[string]int32{
 		"UNKNOWN": 0,
-		"QUERY":   1,
-		"EXECUTE": 2,
+		"PUT":     1,
+		"DELETE":  2,
 	}
 )
 
@@ -90,531 +90,6 @@ func (RaftCommandType) EnumDescriptor() ([]byte, []int) {
 	return file_v1_raft_proto_rawDescGZIP(), []int{0}
 }
 
-type SQLParameterType int32
-
-const (
-	// UNKNOWN is the unknown parameter type.
-	SQLParameterType_SQL_PARAM_UNKNOWN SQLParameterType = 0
-	// INT64 is the int64 parameter type.
-	SQLParameterType_SQL_PARAM_INT64 SQLParameterType = 1
-	// DOUBLE is the double parameter type.
-	SQLParameterType_SQL_PARAM_DOUBLE SQLParameterType = 2
-	// BOOL is the bool parameter type.
-	SQLParameterType_SQL_PARAM_BOOL SQLParameterType = 3
-	// BYTES is the bytes parameter type.
-	SQLParameterType_SQL_PARAM_BYTES SQLParameterType = 4
-	// STRING is the string parameter type.
-	SQLParameterType_SQL_PARAM_STRING SQLParameterType = 5
-	// TIME is the time parameter type.
-	SQLParameterType_SQL_PARAM_TIME SQLParameterType = 6
-	// NULL is the null parameter type.
-	SQLParameterType_SQL_PARAM_NULL SQLParameterType = 7
-)
-
-// Enum value maps for SQLParameterType.
-var (
-	SQLParameterType_name = map[int32]string{
-		0: "SQL_PARAM_UNKNOWN",
-		1: "SQL_PARAM_INT64",
-		2: "SQL_PARAM_DOUBLE",
-		3: "SQL_PARAM_BOOL",
-		4: "SQL_PARAM_BYTES",
-		5: "SQL_PARAM_STRING",
-		6: "SQL_PARAM_TIME",
-		7: "SQL_PARAM_NULL",
-	}
-	SQLParameterType_value = map[string]int32{
-		"SQL_PARAM_UNKNOWN": 0,
-		"SQL_PARAM_INT64":   1,
-		"SQL_PARAM_DOUBLE":  2,
-		"SQL_PARAM_BOOL":    3,
-		"SQL_PARAM_BYTES":   4,
-		"SQL_PARAM_STRING":  5,
-		"SQL_PARAM_TIME":    6,
-		"SQL_PARAM_NULL":    7,
-	}
-)
-
-func (x SQLParameterType) Enum() *SQLParameterType {
-	p := new(SQLParameterType)
-	*p = x
-	return p
-}
-
-func (x SQLParameterType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SQLParameterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_v1_raft_proto_enumTypes[1].Descriptor()
-}
-
-func (SQLParameterType) Type() protoreflect.EnumType {
-	return &file_v1_raft_proto_enumTypes[1]
-}
-
-func (x SQLParameterType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SQLParameterType.Descriptor instead.
-func (SQLParameterType) EnumDescriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{1}
-}
-
-// SQLParameter is a parameter of a SQL query.
-type SQLParameter struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// name is the name of the parameter.
-	Name   string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Type   SQLParameterType       `protobuf:"varint,2,opt,name=type,proto3,enum=v1.SQLParameterType" json:"type,omitempty"`
-	Int64  int64                  `protobuf:"zigzag64,3,opt,name=int64,proto3" json:"int64,omitempty"`
-	Double float64                `protobuf:"fixed64,4,opt,name=double,proto3" json:"double,omitempty"`
-	Bool   bool                   `protobuf:"varint,5,opt,name=bool,proto3" json:"bool,omitempty"`
-	Bytes  []byte                 `protobuf:"bytes,6,opt,name=bytes,proto3" json:"bytes,omitempty"`
-	Str    string                 `protobuf:"bytes,7,opt,name=str,proto3" json:"str,omitempty"`
-	Time   *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=time,proto3" json:"time,omitempty"`
-}
-
-func (x *SQLParameter) Reset() {
-	*x = SQLParameter{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLParameter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLParameter) ProtoMessage() {}
-
-func (x *SQLParameter) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLParameter.ProtoReflect.Descriptor instead.
-func (*SQLParameter) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *SQLParameter) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *SQLParameter) GetType() SQLParameterType {
-	if x != nil {
-		return x.Type
-	}
-	return SQLParameterType_SQL_PARAM_UNKNOWN
-}
-
-func (x *SQLParameter) GetInt64() int64 {
-	if x != nil {
-		return x.Int64
-	}
-	return 0
-}
-
-func (x *SQLParameter) GetDouble() float64 {
-	if x != nil {
-		return x.Double
-	}
-	return 0
-}
-
-func (x *SQLParameter) GetBool() bool {
-	if x != nil {
-		return x.Bool
-	}
-	return false
-}
-
-func (x *SQLParameter) GetBytes() []byte {
-	if x != nil {
-		return x.Bytes
-	}
-	return nil
-}
-
-func (x *SQLParameter) GetStr() string {
-	if x != nil {
-		return x.Str
-	}
-	return ""
-}
-
-func (x *SQLParameter) GetTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Time
-	}
-	return nil
-}
-
-// SQLValues is a list of values.
-type SQLValues struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// values is the list of values.
-	Values []*SQLParameter `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`
-}
-
-func (x *SQLValues) Reset() {
-	*x = SQLValues{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLValues) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLValues) ProtoMessage() {}
-
-func (x *SQLValues) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLValues.ProtoReflect.Descriptor instead.
-func (*SQLValues) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *SQLValues) GetValues() []*SQLParameter {
-	if x != nil {
-		return x.Values
-	}
-	return nil
-}
-
-// SQLStatement is a SQL statement.
-type SQLStatement struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// sql is the SQL statement.
-	Sql string `protobuf:"bytes,1,opt,name=sql,proto3" json:"sql,omitempty"`
-	// parameters is the parameters of the SQL statement.
-	Parameters []*SQLParameter `protobuf:"bytes,2,rep,name=parameters,proto3" json:"parameters,omitempty"`
-}
-
-func (x *SQLStatement) Reset() {
-	*x = SQLStatement{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLStatement) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLStatement) ProtoMessage() {}
-
-func (x *SQLStatement) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLStatement.ProtoReflect.Descriptor instead.
-func (*SQLStatement) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *SQLStatement) GetSql() string {
-	if x != nil {
-		return x.Sql
-	}
-	return ""
-}
-
-func (x *SQLStatement) GetParameters() []*SQLParameter {
-	if x != nil {
-		return x.Parameters
-	}
-	return nil
-}
-
-// SQLQuery is a SQL query.
-type SQLQuery struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// transaction flags whether the query is a transaction.
-	Transaction bool `protobuf:"varint,1,opt,name=transaction,proto3" json:"transaction,omitempty"`
-	// statement is the statement of the SQL query.
-	Statement *SQLStatement `protobuf:"bytes,2,opt,name=statement,proto3" json:"statement,omitempty"`
-}
-
-func (x *SQLQuery) Reset() {
-	*x = SQLQuery{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLQuery) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLQuery) ProtoMessage() {}
-
-func (x *SQLQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLQuery.ProtoReflect.Descriptor instead.
-func (*SQLQuery) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *SQLQuery) GetTransaction() bool {
-	if x != nil {
-		return x.Transaction
-	}
-	return false
-}
-
-func (x *SQLQuery) GetStatement() *SQLStatement {
-	if x != nil {
-		return x.Statement
-	}
-	return nil
-}
-
-// SQLExec is a SQL exec.
-type SQLExec struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// transaction flags whether the exec is a transaction.
-	Transaction bool `protobuf:"varint,1,opt,name=transaction,proto3" json:"transaction,omitempty"`
-	// statement is the statement of the SQL exec.
-	Statement *SQLStatement `protobuf:"bytes,2,opt,name=statement,proto3" json:"statement,omitempty"`
-}
-
-func (x *SQLExec) Reset() {
-	*x = SQLExec{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLExec) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLExec) ProtoMessage() {}
-
-func (x *SQLExec) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLExec.ProtoReflect.Descriptor instead.
-func (*SQLExec) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *SQLExec) GetTransaction() bool {
-	if x != nil {
-		return x.Transaction
-	}
-	return false
-}
-
-func (x *SQLExec) GetStatement() *SQLStatement {
-	if x != nil {
-		return x.Statement
-	}
-	return nil
-}
-
-// SQLQueryResult contains the rows of a SQL query.
-type SQLQueryResult struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// columns is the list of columns.
-	Columns []string `protobuf:"bytes,1,rep,name=columns,proto3" json:"columns,omitempty"`
-	// types is the list of types.
-	Types []string `protobuf:"bytes,2,rep,name=types,proto3" json:"types,omitempty"`
-	// values is the list of values.
-	Values []*SQLValues `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
-}
-
-func (x *SQLQueryResult) Reset() {
-	*x = SQLQueryResult{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLQueryResult) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLQueryResult) ProtoMessage() {}
-
-func (x *SQLQueryResult) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLQueryResult.ProtoReflect.Descriptor instead.
-func (*SQLQueryResult) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *SQLQueryResult) GetColumns() []string {
-	if x != nil {
-		return x.Columns
-	}
-	return nil
-}
-
-func (x *SQLQueryResult) GetTypes() []string {
-	if x != nil {
-		return x.Types
-	}
-	return nil
-}
-
-func (x *SQLQueryResult) GetValues() []*SQLValues {
-	if x != nil {
-		return x.Values
-	}
-	return nil
-}
-
-// SQLExecResult is the result of a SQL exec.
-type SQLExecResult struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// last_insert_id is the last insert ID.
-	LastInsertId int64 `protobuf:"varint,1,opt,name=last_insert_id,json=lastInsertId,proto3" json:"last_insert_id,omitempty"`
-	// rows_affected is the number of rows affected.
-	RowsAffected int64 `protobuf:"varint,2,opt,name=rows_affected,json=rowsAffected,proto3" json:"rows_affected,omitempty"`
-}
-
-func (x *SQLExecResult) Reset() {
-	*x = SQLExecResult{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SQLExecResult) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SQLExecResult) ProtoMessage() {}
-
-func (x *SQLExecResult) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SQLExecResult.ProtoReflect.Descriptor instead.
-func (*SQLExecResult) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *SQLExecResult) GetLastInsertId() int64 {
-	if x != nil {
-		return x.LastInsertId
-	}
-	return 0
-}
-
-func (x *SQLExecResult) GetRowsAffected() int64 {
-	if x != nil {
-		return x.RowsAffected
-	}
-	return 0
-}
-
 // RaftLogEntry is the data of an entry in the Raft log.
 type RaftLogEntry struct {
 	state         protoimpl.MessageState
@@ -623,17 +98,16 @@ type RaftLogEntry struct {
 
 	// type is the type of the log entry.
 	Type RaftCommandType `protobuf:"varint,1,opt,name=type,proto3,enum=v1.RaftCommandType" json:"type,omitempty"`
-	// data is the data of the log entry.
-	// sql_query is the SQL query of the log entry.
-	SqlQuery *SQLQuery `protobuf:"bytes,2,opt,name=sql_query,json=sqlQuery,proto3" json:"sql_query,omitempty"`
-	// sql_exec is the SQL exec of the log entry.
-	SqlExec *SQLExec `protobuf:"bytes,3,opt,name=sql_exec,json=sqlExec,proto3" json:"sql_exec,omitempty"`
+	// key is the key of the log entry.
+	Key string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	// value is the value of the log entry.
+	Value string `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (x *RaftLogEntry) Reset() {
 	*x = RaftLogEntry{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[7]
+		mi := &file_v1_raft_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -646,7 +120,7 @@ func (x *RaftLogEntry) String() string {
 func (*RaftLogEntry) ProtoMessage() {}
 
 func (x *RaftLogEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[7]
+	mi := &file_v1_raft_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +133,7 @@ func (x *RaftLogEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RaftLogEntry.ProtoReflect.Descriptor instead.
 func (*RaftLogEntry) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{7}
+	return file_v1_raft_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *RaftLogEntry) GetType() RaftCommandType {
@@ -669,18 +143,18 @@ func (x *RaftLogEntry) GetType() RaftCommandType {
 	return RaftCommandType_UNKNOWN
 }
 
-func (x *RaftLogEntry) GetSqlQuery() *SQLQuery {
+func (x *RaftLogEntry) GetKey() string {
 	if x != nil {
-		return x.SqlQuery
+		return x.Key
 	}
-	return nil
+	return ""
 }
 
-func (x *RaftLogEntry) GetSqlExec() *SQLExec {
+func (x *RaftLogEntry) GetValue() string {
 	if x != nil {
-		return x.SqlExec
+		return x.Value
 	}
-	return nil
+	return ""
 }
 
 // RaftApplyResponse is the response to an apply request. It
@@ -692,18 +166,14 @@ type RaftApplyResponse struct {
 
 	// time is the total time it took to apply the log entry.
 	Time string `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
-	// query is the query result of the log entry.
-	QueryResult *SQLQueryResult `protobuf:"bytes,2,opt,name=query_result,json=queryResult,proto3" json:"query_result,omitempty"`
-	// exec is the exec result of the log entry.
-	ExecResult *SQLExecResult `protobuf:"bytes,3,opt,name=exec_result,json=execResult,proto3" json:"exec_result,omitempty"`
 	// error is an error that occurred during the apply.
-	Error string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (x *RaftApplyResponse) Reset() {
 	*x = RaftApplyResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_raft_proto_msgTypes[8]
+		mi := &file_v1_raft_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -716,7 +186,7 @@ func (x *RaftApplyResponse) String() string {
 func (*RaftApplyResponse) ProtoMessage() {}
 
 func (x *RaftApplyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_raft_proto_msgTypes[8]
+	mi := &file_v1_raft_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,7 +199,7 @@ func (x *RaftApplyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RaftApplyResponse.ProtoReflect.Descriptor instead.
 func (*RaftApplyResponse) Descriptor() ([]byte, []int) {
-	return file_v1_raft_proto_rawDescGZIP(), []int{8}
+	return file_v1_raft_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *RaftApplyResponse) GetTime() string {
@@ -737,20 +207,6 @@ func (x *RaftApplyResponse) GetTime() string {
 		return x.Time
 	}
 	return ""
-}
-
-func (x *RaftApplyResponse) GetQueryResult() *SQLQueryResult {
-	if x != nil {
-		return x.QueryResult
-	}
-	return nil
-}
-
-func (x *RaftApplyResponse) GetExecResult() *SQLExecResult {
-	if x != nil {
-		return x.ExecResult
-	}
-	return nil
 }
 
 func (x *RaftApplyResponse) GetError() string {
@@ -766,96 +222,27 @@ var file_v1_raft_proto_rawDesc = []byte{
 	0x0a, 0x0d, 0x76, 0x31, 0x2f, 0x72, 0x61, 0x66, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
 	0x02, 0x76, 0x31, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe6, 0x01, 0x0a, 0x0c, 0x53, 0x51, 0x4c, 0x50, 0x61, 0x72, 0x61,
-	0x6d, 0x65, 0x74, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x28, 0x0a, 0x04, 0x74, 0x79, 0x70,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c,
-	0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74,
-	0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x12, 0x52, 0x05, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x6f, 0x75,
-	0x62, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x64, 0x6f, 0x75, 0x62, 0x6c,
-	0x65, 0x12, 0x12, 0x0a, 0x04, 0x62, 0x6f, 0x6f, 0x6c, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x04, 0x62, 0x6f, 0x6f, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x62, 0x79, 0x74, 0x65, 0x73, 0x18, 0x06,
-	0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x62, 0x79, 0x74, 0x65, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x73,
-	0x74, 0x72, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x73, 0x74, 0x72, 0x12, 0x2e, 0x0a,
-	0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x22, 0x35, 0x0a,
-	0x09, 0x53, 0x51, 0x4c, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x12, 0x28, 0x0a, 0x06, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e,
-	0x53, 0x51, 0x4c, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x52, 0x06, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x73, 0x22, 0x52, 0x0a, 0x0c, 0x53, 0x51, 0x4c, 0x53, 0x74, 0x61, 0x74, 0x65,
-	0x6d, 0x65, 0x6e, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x71, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x03, 0x73, 0x71, 0x6c, 0x12, 0x30, 0x0a, 0x0a, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x65,
-	0x74, 0x65, 0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e,
-	0x53, 0x51, 0x4c, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x52, 0x0a, 0x70, 0x61,
-	0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x73, 0x22, 0x5c, 0x0a, 0x08, 0x53, 0x51, 0x4c, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73,
-	0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x74, 0x65, 0x6d,
-	0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x53,
-	0x51, 0x4c, 0x53, 0x74, 0x61, 0x74, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x09, 0x73, 0x74, 0x61,
-	0x74, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x5b, 0x0a, 0x07, 0x53, 0x51, 0x4c, 0x45, 0x78, 0x65,
-	0x63, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x74, 0x65, 0x6d, 0x65, 0x6e, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x09, 0x73, 0x74, 0x61, 0x74, 0x65, 0x6d,
-	0x65, 0x6e, 0x74, 0x22, 0x67, 0x0a, 0x0e, 0x53, 0x51, 0x4c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x73, 0x12,
-	0x14, 0x0a, 0x05, 0x74, 0x79, 0x70, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05,
-	0x74, 0x79, 0x70, 0x65, 0x73, 0x12, 0x25, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x18,
-	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c, 0x56, 0x61,
-	0x6c, 0x75, 0x65, 0x73, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x5a, 0x0a, 0x0d,
-	0x53, 0x51, 0x4c, 0x45, 0x78, 0x65, 0x63, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x24, 0x0a,
-	0x0e, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x6c, 0x61, 0x73, 0x74, 0x49, 0x6e, 0x73, 0x65, 0x72,
-	0x74, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x72, 0x6f, 0x77, 0x73, 0x5f, 0x61, 0x66, 0x66, 0x65,
-	0x63, 0x74, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x72, 0x6f, 0x77, 0x73,
-	0x41, 0x66, 0x66, 0x65, 0x63, 0x74, 0x65, 0x64, 0x22, 0x8a, 0x01, 0x0a, 0x0c, 0x52, 0x61, 0x66,
-	0x74, 0x4c, 0x6f, 0x67, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x27, 0x0a, 0x04, 0x74, 0x79, 0x70,
-	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x13, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x61, 0x66,
-	0x74, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79,
-	0x70, 0x65, 0x12, 0x29, 0x0a, 0x09, 0x73, 0x71, 0x6c, 0x5f, 0x71, 0x75, 0x65, 0x72, 0x79, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x52, 0x08, 0x73, 0x71, 0x6c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x26, 0x0a,
-	0x08, 0x73, 0x71, 0x6c, 0x5f, 0x65, 0x78, 0x65, 0x63, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x0b, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c, 0x45, 0x78, 0x65, 0x63, 0x52, 0x07, 0x73, 0x71,
-	0x6c, 0x45, 0x78, 0x65, 0x63, 0x22, 0xa8, 0x01, 0x0a, 0x11, 0x52, 0x61, 0x66, 0x74, 0x41, 0x70,
-	0x70, 0x6c, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74,
-	0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12,
-	0x35, 0x0a, 0x0c, 0x71, 0x75, 0x65, 0x72, 0x79, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x51, 0x4c, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x72, 0x79,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x32, 0x0a, 0x0b, 0x65, 0x78, 0x65, 0x63, 0x5f, 0x72,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x76, 0x31,
-	0x2e, 0x53, 0x51, 0x4c, 0x45, 0x78, 0x65, 0x63, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x0a,
-	0x65, 0x78, 0x65, 0x63, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72,
-	0x72, 0x6f, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72,
-	0x2a, 0x36, 0x0a, 0x0f, 0x52, 0x61, 0x66, 0x74, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x54,
-	0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00,
-	0x12, 0x09, 0x0a, 0x05, 0x51, 0x55, 0x45, 0x52, 0x59, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x45,
-	0x58, 0x45, 0x43, 0x55, 0x54, 0x45, 0x10, 0x02, 0x2a, 0xbb, 0x01, 0x0a, 0x10, 0x53, 0x51, 0x4c,
-	0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x15, 0x0a,
-	0x11, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f,
-	0x57, 0x4e, 0x10, 0x00, 0x12, 0x13, 0x0a, 0x0f, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41,
-	0x4d, 0x5f, 0x49, 0x4e, 0x54, 0x36, 0x34, 0x10, 0x01, 0x12, 0x14, 0x0a, 0x10, 0x53, 0x51, 0x4c,
-	0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f, 0x44, 0x4f, 0x55, 0x42, 0x4c, 0x45, 0x10, 0x02, 0x12,
-	0x12, 0x0a, 0x0e, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f, 0x42, 0x4f, 0x4f,
-	0x4c, 0x10, 0x03, 0x12, 0x13, 0x0a, 0x0f, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d,
-	0x5f, 0x42, 0x59, 0x54, 0x45, 0x53, 0x10, 0x04, 0x12, 0x14, 0x0a, 0x10, 0x53, 0x51, 0x4c, 0x5f,
-	0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f, 0x53, 0x54, 0x52, 0x49, 0x4e, 0x47, 0x10, 0x05, 0x12, 0x12,
-	0x0a, 0x0e, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f, 0x54, 0x49, 0x4d, 0x45,
-	0x10, 0x06, 0x12, 0x12, 0x0a, 0x0e, 0x53, 0x51, 0x4c, 0x5f, 0x50, 0x41, 0x52, 0x41, 0x4d, 0x5f,
-	0x4e, 0x55, 0x4c, 0x4c, 0x10, 0x07, 0x42, 0x65, 0x0a, 0x06, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x31,
-	0x42, 0x09, 0x52, 0x61, 0x66, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x28, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x65, 0x62, 0x6d, 0x65, 0x73,
-	0x68, 0x70, 0x72, 0x6f, 0x6a, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x77, 0x65, 0x62, 0x6d, 0x65, 0x73,
-	0x68, 0x2f, 0x76, 0x31, 0x2f, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x56, 0x58, 0x58, 0xaa, 0x02, 0x02,
-	0x56, 0x31, 0xca, 0x02, 0x02, 0x56, 0x31, 0xe2, 0x02, 0x0e, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x02, 0x56, 0x31, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x6f, 0x74, 0x6f, 0x22, 0x5f, 0x0a, 0x0c, 0x52, 0x61, 0x66, 0x74, 0x4c, 0x6f, 0x67, 0x45,
+	0x6e, 0x74, 0x72, 0x79, 0x12, 0x27, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x13, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x61, 0x66, 0x74, 0x43, 0x6f, 0x6d, 0x6d,
+	0x61, 0x6e, 0x64, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x10, 0x0a,
+	0x03, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
+	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x3d, 0x0a, 0x11, 0x52, 0x61, 0x66, 0x74, 0x41, 0x70, 0x70,
+	0x6c, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x69,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x12, 0x14,
+	0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65,
+	0x72, 0x72, 0x6f, 0x72, 0x2a, 0x33, 0x0a, 0x0f, 0x52, 0x61, 0x66, 0x74, 0x43, 0x6f, 0x6d, 0x6d,
+	0x61, 0x6e, 0x64, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f,
+	0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x50, 0x55, 0x54, 0x10, 0x01, 0x12, 0x0a, 0x0a,
+	0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x02, 0x42, 0x65, 0x0a, 0x06, 0x63, 0x6f, 0x6d,
+	0x2e, 0x76, 0x31, 0x42, 0x09, 0x52, 0x61, 0x66, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x65, 0x62,
+	0x6d, 0x65, 0x73, 0x68, 0x70, 0x72, 0x6f, 0x6a, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x77, 0x65, 0x62,
+	0x6d, 0x65, 0x73, 0x68, 0x2f, 0x76, 0x31, 0x2f, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x56, 0x58, 0x58,
+	0xaa, 0x02, 0x02, 0x56, 0x31, 0xca, 0x02, 0x02, 0x56, 0x31, 0xe2, 0x02, 0x0e, 0x56, 0x31, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x02, 0x56, 0x31,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -870,40 +257,20 @@ func file_v1_raft_proto_rawDescGZIP() []byte {
 	return file_v1_raft_proto_rawDescData
 }
 
-var file_v1_raft_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_v1_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_v1_raft_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_v1_raft_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_v1_raft_proto_goTypes = []interface{}{
-	(RaftCommandType)(0),          // 0: v1.RaftCommandType
-	(SQLParameterType)(0),         // 1: v1.SQLParameterType
-	(*SQLParameter)(nil),          // 2: v1.SQLParameter
-	(*SQLValues)(nil),             // 3: v1.SQLValues
-	(*SQLStatement)(nil),          // 4: v1.SQLStatement
-	(*SQLQuery)(nil),              // 5: v1.SQLQuery
-	(*SQLExec)(nil),               // 6: v1.SQLExec
-	(*SQLQueryResult)(nil),        // 7: v1.SQLQueryResult
-	(*SQLExecResult)(nil),         // 8: v1.SQLExecResult
-	(*RaftLogEntry)(nil),          // 9: v1.RaftLogEntry
-	(*RaftApplyResponse)(nil),     // 10: v1.RaftApplyResponse
-	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
+	(RaftCommandType)(0),      // 0: v1.RaftCommandType
+	(*RaftLogEntry)(nil),      // 1: v1.RaftLogEntry
+	(*RaftApplyResponse)(nil), // 2: v1.RaftApplyResponse
 }
 var file_v1_raft_proto_depIdxs = []int32{
-	1,  // 0: v1.SQLParameter.type:type_name -> v1.SQLParameterType
-	11, // 1: v1.SQLParameter.time:type_name -> google.protobuf.Timestamp
-	2,  // 2: v1.SQLValues.values:type_name -> v1.SQLParameter
-	2,  // 3: v1.SQLStatement.parameters:type_name -> v1.SQLParameter
-	4,  // 4: v1.SQLQuery.statement:type_name -> v1.SQLStatement
-	4,  // 5: v1.SQLExec.statement:type_name -> v1.SQLStatement
-	3,  // 6: v1.SQLQueryResult.values:type_name -> v1.SQLValues
-	0,  // 7: v1.RaftLogEntry.type:type_name -> v1.RaftCommandType
-	5,  // 8: v1.RaftLogEntry.sql_query:type_name -> v1.SQLQuery
-	6,  // 9: v1.RaftLogEntry.sql_exec:type_name -> v1.SQLExec
-	7,  // 10: v1.RaftApplyResponse.query_result:type_name -> v1.SQLQueryResult
-	8,  // 11: v1.RaftApplyResponse.exec_result:type_name -> v1.SQLExecResult
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	0, // 0: v1.RaftLogEntry.type:type_name -> v1.RaftCommandType
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_v1_raft_proto_init() }
@@ -913,90 +280,6 @@ func file_v1_raft_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_v1_raft_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLParameter); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLValues); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLStatement); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLQuery); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLExec); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLQueryResult); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SQLExecResult); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_raft_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RaftLogEntry); i {
 			case 0:
 				return &v.state
@@ -1008,7 +291,7 @@ func file_v1_raft_proto_init() {
 				return nil
 			}
 		}
-		file_v1_raft_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_raft_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RaftApplyResponse); i {
 			case 0:
 				return &v.state
@@ -1026,8 +309,8 @@ func file_v1_raft_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_raft_proto_rawDesc,
-			NumEnums:      2,
-			NumMessages:   9,
+			NumEnums:      1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
