@@ -80,6 +80,10 @@ message JoinRequest {
     int32 raft_port = 3;
     // grpc_port is the gRPC listen port of the node.
     int32 grpc_port = 4;
+    // meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
+    // a value of 0 indicates the node does not wish to offer DNS. ports are currently
+    // assumed to be UDP.
+    int32 meshdns_port = 5;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
     string primary_endpoint = 6;

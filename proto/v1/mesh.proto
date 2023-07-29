@@ -43,6 +43,10 @@ message MeshNode {
     int32 raft_port = 5;
     // grpc_port is the gRPC listen port of the node.
     int32 grpc_port = 6;
+    // meshdns_port is the port the node advertises to offer DNS to other peers.
+    // a value of 0 means the node does not offer DNS. ports are currently
+    // assumed to be UDP.
+    int32 meshdns_port = 7;
     // public_key is the public key of the node.
     string public_key = 8;
     // private_ipv4 is the private IPv4 address of the node.
