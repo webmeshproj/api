@@ -869,6 +869,13 @@ the joiner will link the caller to all other nodes with the same zone awareness 
 that also have a primary endpoint. </p></td>
                 </tr>
               
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -932,6 +939,13 @@ The bits are set to the network bits of the Mesh IPv4 network. </p></td>
 ICE connections if required. This may only be populated when one of
 the peers has the ICE flag set. This must be set if the requestor
 specifies direct_peers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dns_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
                 </tr>
               
                 <tr>

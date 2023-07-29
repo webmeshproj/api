@@ -106,6 +106,8 @@ message JoinRequest {
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
     repeated string direct_peers = 13;
+    // features is a list of features supported by the node that should be advertised to peers.
+    repeated Feature features = 14;
 }
 
 // JoinResponse is a response to a join request.
@@ -128,8 +130,10 @@ message JoinResponse {
     // the peers has the ICE flag set. This must be set if the requestor
     // specifies direct_peers.
     repeated string ice_servers = 6;
+    // dns_servers is a list of peers offering DNS services.
+    repeated string dns_servers = 7;
     // mesh_domain is the domain of the mesh.
-    string mesh_domain = 7;
+    string mesh_domain = 8;
 }
 
 // WireGuardPeer is a peer in the Wireguard network.
