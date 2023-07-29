@@ -49,12 +49,14 @@ message MeshNode {
     string private_ipv4 = 9;
     // private_ipv6 is the private IPv6 address of the node.
     string private_ipv6 = 10;
+    // features is a list of features supported by the node.
+    repeated Feature features = 11;
     // updated_at is the last time the node joined the cluster.
-    google.protobuf.Timestamp updated_at = 11;
+    google.protobuf.Timestamp updated_at = 12;
     // created_at is the creation time for the node.
-    google.protobuf.Timestamp created_at = 12;
+    google.protobuf.Timestamp created_at = 13;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 13;
+    ClusterStatus cluster_status = 14;
 }
 
 // NodeList is a list of nodes.
