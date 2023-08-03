@@ -219,6 +219,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.UpdateRequest"><span class="badge">M</span>UpdateRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.UpdateResponse"><span class="badge">M</span>UpdateResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.WireGuardPeer"><span class="badge">M</span>WireGuardPeer</a>
                 </li>
               
@@ -1207,6 +1215,112 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.UpdateRequest">UpdateRequest</h3>
+        <p>UpdateRequest contains most of the same fields as JoinRequest, but is</p><p>used to update the state of a node in the cluster.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public wireguard key of the node to broadcast to peers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>raft_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>raft_port is the Raft listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>grpc_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>meshdns_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
+a value of 0 indicates the node does not wish to offer DNS. ports are currently
+assumed to be UDP. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
+the node is assumed to be behind a NAT and not directly accessible. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>wireguard_endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>zone_awareness_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>as_voter</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+will be denied if the node is not allowed to vote. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>routes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+if the node is not allowed to put routes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.UpdateResponse">UpdateResponse</h3>
+        <p>UpdateResponse is a response to an update request. It is currently empty.</p>
+
+        
+
+        
+      
         <h3 id="v1.WireGuardPeer">WireGuardPeer</h3>
         <p>WireGuardPeer is a peer in the Wireguard network.</p>
 
@@ -1449,6 +1563,16 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
                 <td><p>Join is used to join a node to the mesh. The joining node will be added to the mesh 
 as an observer, and will be able to query the mesh state, but will not be able to vote 
 in elections. To join as a voter pass the as_voter flag.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Update</td>
+                <td><a href="#v1.UpdateRequest">UpdateRequest</a></td>
+                <td><a href="#v1.UpdateResponse">UpdateResponse</a></td>
+                <td><p>Update is used by a node to update its state in the mesh. The node will be updated
+in the mesh and will be able to query the mesh state or vote in elections. Only
+non-empty fields will be updated. It is almost semantically equivalent to a join request
+with the same ID, but redefined to avoid confusion and to allow for expansion.</p></td>
               </tr>
             
               <tr>

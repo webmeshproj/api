@@ -15,6 +15,8 @@
   - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
   - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
   - [<span class="badge">M</span>Status](#v1.Status)
+  - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
+  - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
   - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
   - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
@@ -233,6 +235,31 @@ Status represents the status of a node.
 | last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
 | interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
 
+### UpdateRequest
+
+UpdateRequest contains most of the same fields as JoinRequest, but is
+
+used to update the state of a node in the cluster.
+
+| Field               | Type                   | Label    | Description                                                                                                                                                                           |
+|---------------------|------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | [string](#string)      |          | id is the ID of the node.                                                                                                                                                             |
+| public_key          | [string](#string)      |          | public_key is the public wireguard key of the node to broadcast to peers.                                                                                                             |
+| raft_port           | [int32](#int32)        |          | raft_port is the Raft listen port of the node.                                                                                                                                        |
+| grpc_port           | [int32](#int32)        |          | grpc_port is the gRPC listen port of the node.                                                                                                                                        |
+| meshdns_port        | [int32](#int32)        |          | meshdns_port is the port the node wishes to advertise to offer DNS to other peers. a value of 0 indicates the node does not wish to offer DNS. ports are currently assumed to be UDP. |
+| primary_endpoint    | [string](#string)      |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                               |
+| wireguard_endpoints | [string](#string)      | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                    |
+| zone_awareness_id   | [string](#string)      |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                               |
+| as_voter            | [bool](#bool)          |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                       |
+| routes              | [string](#string)      | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                |
+| features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the node that should be advertised to peers.                                                                                              |
+
+### UpdateResponse
+
+UpdateResponse is a response to an update request. It is currently
+empty.
+
 ### WireGuardPeer
 
 WireGuardPeer is a peer in the Wireguard network.
@@ -312,6 +339,7 @@ handle the request when a non-leader can otherwise serve it, use the
 | Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                                                                                 |
+| Update               | [UpdateRequest](#v1.UpdateRequest)                          | [UpdateResponse](#v1.UpdateResponse)                        | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion.                                                                                                                                                                          |
 | Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Snapshot             | [SnapshotRequest](#v1.SnapshotRequest)                      | [SnapshotResponse](#v1.SnapshotResponse)                    | Snapshot is used to create a snapshot of the current state of the mesh. The snapshot can be used to restore the mesh state.                                                                                                                                                                                                                                                                                                                                                                                         |

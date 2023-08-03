@@ -140,6 +140,41 @@ message JoinResponse {
     string mesh_domain = 8;
 }
 
+// UpdateRequest contains most of the same fields as JoinRequest, but is
+// used to update the state of a node in the cluster.
+message UpdateRequest {
+    // id is the ID of the node.
+    string id = 1;
+    // public_key is the public wireguard key of the node to broadcast to peers.
+    string public_key = 2;
+    // raft_port is the Raft listen port of the node.
+    int32 raft_port = 3;
+    // grpc_port is the gRPC listen port of the node.
+    int32 grpc_port = 4;
+    // meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
+    // a value of 0 indicates the node does not wish to offer DNS. ports are currently
+    // assumed to be UDP.
+    int32 meshdns_port = 5;
+    // primary_endpoint is a routable address for the node. If left unset, 
+    // the node is assumed to be behind a NAT and not directly accessible.
+    string primary_endpoint = 6;
+    // wireguard_endpoints is a list of WireGuard endpoints for the node.
+    repeated string wireguard_endpoints = 7;
+    // zone_awareness_id is the zone awareness ID of the node.
+    string zone_awareness_id = 8;
+    // as_voter is whether the node should receive a vote in elections. The request
+    // will be denied if the node is not allowed to vote.
+    bool as_voter = 9;
+    // routes is a list of routes to advertise to peers. The request will be denied
+    // if the node is not allowed to put routes.
+    repeated string routes = 10;
+    // features is a list of features supported by the node that should be advertised to peers.
+    repeated Feature features = 11;
+}
+
+// UpdateResponse is a response to an update request. It is currently empty.
+message UpdateResponse {}
+
 // WireGuardPeer is a peer in the Wireguard network.
 message WireGuardPeer {
     // id is the ID of the peer.
@@ -295,6 +330,12 @@ service Node {
     // as an observer, and will be able to query the mesh state, but will not be able to vote 
     // in elections. To join as a voter pass the as_voter flag.
     rpc Join(JoinRequest) returns (JoinResponse) {}
+
+    // Update is used by a node to update its state in the mesh. The node will be updated
+    // in the mesh and will be able to query the mesh state or vote in elections. Only
+    // non-empty fields will be updated. It is almost semantically equivalent to a join request
+    // with the same ID, but redefined to avoid confusion and to allow for expansion.
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}
 
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.

@@ -36,6 +36,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Node_Join_FullMethodName                 = "/v1.Node/Join"
+	Node_Update_FullMethodName               = "/v1.Node/Update"
 	Node_Leave_FullMethodName                = "/v1.Node/Leave"
 	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
 	Node_Snapshot_FullMethodName             = "/v1.Node/Snapshot"
@@ -50,6 +51,11 @@ type NodeClient interface {
 	// as an observer, and will be able to query the mesh state, but will not be able to vote
 	// in elections. To join as a voter pass the as_voter flag.
 	Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
+	// Update is used by a node to update its state in the mesh. The node will be updated
+	// in the mesh and will be able to query the mesh state or vote in elections. Only
+	// non-empty fields will be updated. It is almost semantically equivalent to a join request
+	// with the same ID, but redefined to avoid confusion and to allow for expansion.
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -78,6 +84,15 @@ func NewNodeClient(cc grpc.ClientConnInterface) NodeClient {
 func (c *nodeClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error) {
 	out := new(JoinResponse)
 	err := c.cc.Invoke(ctx, Node_Join_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nodeClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, Node_Update_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -150,6 +165,11 @@ type NodeServer interface {
 	// as an observer, and will be able to query the mesh state, but will not be able to vote
 	// in elections. To join as a voter pass the as_voter flag.
 	Join(context.Context, *JoinRequest) (*JoinResponse, error)
+	// Update is used by a node to update its state in the mesh. The node will be updated
+	// in the mesh and will be able to query the mesh state or vote in elections. Only
+	// non-empty fields will be updated. It is almost semantically equivalent to a join request
+	// with the same ID, but redefined to avoid confusion and to allow for expansion.
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error)
@@ -174,6 +194,9 @@ type UnimplementedNodeServer struct {
 
 func (UnimplementedNodeServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
+}
+func (UnimplementedNodeServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedNodeServer) Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
@@ -214,6 +237,24 @@ func _Node_Join_Handler(srv interface{}, ctx context.Context, dec func(interface
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).Join(ctx, req.(*JoinRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Node_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodeServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Node_Update_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodeServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -308,6 +349,10 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Join",
 			Handler:    _Node_Join_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _Node_Update_Handler,
 		},
 		{
 			MethodName: "Leave",
