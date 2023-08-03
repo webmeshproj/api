@@ -569,13 +569,12 @@ RuleResource is the resource type for a rule.
 
 RuleVerb is the verb type for a rule.
 
-| Name         | Number | Description                                               |
-|--------------|--------|-----------------------------------------------------------|
-| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                          |
-| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource. |
-| VERB_GET     | 2      | VERB_GET is the verb for getting a resource.              |
-| VERB_DELETE  | 3      | VERB_DELETE is the verb for deleting a resource.          |
-| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.       |
+| Name         | Number | Description                                                                                                                                                                                                                  |
+|--------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                                                                                                                                                                                             |
+| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource.                                                                                                                                                                    |
+| VERB_DELETE  | 3      | VERB_GET is the verb for getting a resource. It is currently not used by the system since all nodes have read access to all resources. Commented out for now. VERB_GET = 2; VERB_DELETE is the verb for deleting a resource. |
+| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.                                                                                                                                                                          |
 
 ### SubjectType
 

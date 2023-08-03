@@ -52,8 +52,10 @@ enum RuleVerb {
 
     // VERB_PUT is the verb for creating or updating a resource.
     VERB_PUT = 1;
-    // VERB_GET is the verb for getting a resource.
-    VERB_GET = 2;
+    // VERB_GET is the verb for getting a resource. It is currently
+    // not used by the system since all nodes have read access to all
+    // resources. Commented out for now.
+    // VERB_GET = 2;
     // VERB_DELETE is the verb for deleting a resource.
     VERB_DELETE = 3;
 
