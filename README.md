@@ -211,9 +211,11 @@ empty for now as there are no options.
 
 SnapshotResponse is a response to a snapshot request.
 
-| Field    | Type            | Label | Description                    |
-|----------|-----------------|-------|--------------------------------|
-| snapshot | [bytes](#bytes) |       | snapshot is the snapshot data. |
+| Field          | Type              | Label | Description                                           |
+|----------------|-------------------|-------|-------------------------------------------------------|
+| last_log_index | [uint64](#uint64) |       | last_log_index is the last log index of the snapshot. |
+| current_term   | [uint64](#uint64) |       | current_term is the current term of the snapshot.     |
+| snapshot       | [bytes](#bytes)   |       | snapshot is the snapshot data.                        |
 
 ### Status
 
