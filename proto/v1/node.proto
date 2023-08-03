@@ -314,8 +314,12 @@ message SnapshotRequest {
 
 // SnapshotResponse is a response to a snapshot request.
 message SnapshotResponse {
+    // last_log_index is the last log index of the snapshot.
+    uint64 last_log_index = 1;
+    // current_term is the current term of the snapshot.
+    uint64 current_term = 2;
     // snapshot is the snapshot data.
-    bytes snapshot = 1;
+    bytes snapshot = 3;
 }
 
 // Node is the service exposed on every node in the mesh to communicate network
