@@ -305,18 +305,19 @@ with a node.
 
 Feature is a list of features supported by a node.
 
-| Name            | Number | Description                                               |
-|-----------------|--------|-----------------------------------------------------------|
-| FEATURE_NONE    | 0      | FEATURE_NONE is the default feature set.                  |
-| NODES           | 1      | NODES is the feature for nodes. This is always supported. |
-| LEADER_PROXY    | 2      | LEADER_PROXY is the feature for leader proxying.          |
-| MESH_API        | 3      | MESH_API is the feature for the mesh API.                 |
-| ADMIN_API       | 4      | ADMIN_API is the feature for the admin API.               |
-| PEER_DISCOVERY  | 5      | PEER_DISCOVERY is the feature for peer discovery.         |
-| METRICS         | 6      | METRICS is the feature for exposing metrics.              |
-| ICE_NEGOTIATION | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.       |
-| TURN_SERVER     | 8      | TURN_SERVER is the feature for TURN server.               |
-| MESH_DNS        | 9      | MESH_DNS is the feature for mesh DNS.                     |
+| Name             | Number | Description                                                                      |
+|------------------|--------|----------------------------------------------------------------------------------|
+| FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                         |
+| NODES            | 1      | NODES is the feature for nodes. This is always supported.                        |
+| LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                 |
+| MESH_API         | 3      | MESH_API is the feature for the mesh API.                                        |
+| ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                      |
+| PEER_DISCOVERY   | 5      | PEER_DISCOVERY is the feature for peer discovery.                                |
+| METRICS          | 6      | METRICS is the feature for exposing metrics.                                     |
+| ICE_NEGOTIATION  | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.                              |
+| TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                      |
+| MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                            |
+| FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes. |
 
 ### Node
 

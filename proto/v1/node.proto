@@ -55,6 +55,8 @@ enum Feature {
     TURN_SERVER = 8;
     // MESH_DNS is the feature for mesh DNS.
     MESH_DNS = 9;
+    // FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.
+    FORWARD_MESH_DNS = 10;
 }
 
 // DataChannel are the data channels used when communicating over ICE
