@@ -18,7 +18,7 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
 
 // RaftCommandType is the type of command being sent to the
 // Raft log.
@@ -39,6 +39,8 @@ message RaftLogEntry {
     string key = 2;
     // value is the value of the log entry.
     string value = 3;
+    // ttl is the time to live of the log entry.
+    google.protobuf.Duration ttl = 4;
 }
 
 // RaftApplyResponse is the response to an apply request. It

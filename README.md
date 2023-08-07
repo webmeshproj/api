@@ -116,11 +116,12 @@ contains the result of applying the log entry.
 
 RaftLogEntry is the data of an entry in the Raft log.
 
-| Field | Type                                   | Label | Description                          |
-|-------|----------------------------------------|-------|--------------------------------------|
-| type  | [RaftCommandType](#v1.RaftCommandType) |       | type is the type of the log entry.   |
-| key   | [string](#string)                      |       | key is the key of the log entry.     |
-| value | [string](#string)                      |       | value is the value of the log entry. |
+| Field | Type                                                  | Label | Description                               |
+|-------|-------------------------------------------------------|-------|-------------------------------------------|
+| type  | [RaftCommandType](#v1.RaftCommandType)                |       | type is the type of the log entry.        |
+| key   | [string](#string)                                     |       | key is the key of the log entry.          |
+| value | [string](#string)                                     |       | value is the value of the log entry.      |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the log entry. |
 
 ### RaftCommandType
 
