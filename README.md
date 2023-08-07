@@ -4,6 +4,10 @@
 
 <div id="toc-container">
 
+- [v1/raft.proto](#v1%2fraft.proto)
+  - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
+  - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
+  - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
   - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
@@ -58,10 +62,6 @@
   - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
   - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
   - [<span class="badge">S</span>PeerDiscovery](#v1.PeerDiscovery)
-- [v1/raft.proto](#v1%2fraft.proto)
-  - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
-  - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
-  - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
 - [v1/plugin.proto](#v1%2fplugin.proto)
   - [<span class="badge">M</span>AllocateIPRequest](#v1.AllocateIPRequest)
   - [<span class="badge">M</span>AllocatedIP](#v1.AllocatedIP)
@@ -92,6 +92,47 @@
 - [Scalar Value Types](#scalar-value-types)
 
 </div>
+
+<div class="file-heading">
+
+## v1/raft.proto
+
+[Top](#title)
+
+</div>
+
+### RaftApplyResponse
+
+RaftApplyResponse is the response to an apply request. It
+
+contains the result of applying the log entry.
+
+| Field | Type              | Label | Description                                            |
+|-------|-------------------|-------|--------------------------------------------------------|
+| time  | [string](#string) |       | time is the total time it took to apply the log entry. |
+| error | [string](#string) |       | error is an error that occurred during the apply.      |
+
+### RaftLogEntry
+
+RaftLogEntry is the data of an entry in the Raft log.
+
+| Field | Type                                   | Label | Description                          |
+|-------|----------------------------------------|-------|--------------------------------------|
+| type  | [RaftCommandType](#v1.RaftCommandType) |       | type is the type of the log entry.   |
+| key   | [string](#string)                      |       | key is the key of the log entry.     |
+| value | [string](#string)                      |       | value is the value of the log entry. |
+
+### RaftCommandType
+
+RaftCommandType is the type of command being sent to the
+
+Raft log.
+
+| Name    | Number | Description                                          |
+|---------|--------|------------------------------------------------------|
+| UNKNOWN | 0      | UNKNOWN is the unknown command type.                 |
+| PUT     | 1      | PUT is the command for putting a key/value pair.     |
+| DELETE  | 2      | DELETE is the command for deleting a key/value pair. |
 
 <div class="file-heading">
 
@@ -346,6 +387,7 @@ handle the request when a non-leader can otherwise serve it, use the
 | Leave                | [LeaveRequest](#v1.LeaveRequest)                            | [.google.protobuf.Empty](#google.protobuf.Empty)            | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                                                                                                                                                                                                       |
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Snapshot             | [SnapshotRequest](#v1.SnapshotRequest)                      | [SnapshotResponse](#v1.SnapshotResponse)                    | Snapshot is used to create a snapshot of the current state of the mesh. The snapshot can be used to restore the mesh state.                                                                                                                                                                                                                                                                                                                                                                                         |
+| Apply                | [RaftLogEntry](#v1.RaftLogEntry)                            | [RaftApplyResponse](#v1.RaftApplyResponse)                  | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                                                                                                                                                                                               |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
 
 <div class="file-heading">
@@ -760,47 +802,6 @@ in the mesh.
 | Method Name | Request Type                                     | Response Type                                      | Description                                                           |
 |-------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
 | ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of public peers currently known to the mesh. |
-
-<div class="file-heading">
-
-## v1/raft.proto
-
-[Top](#title)
-
-</div>
-
-### RaftApplyResponse
-
-RaftApplyResponse is the response to an apply request. It
-
-contains the result of applying the log entry.
-
-| Field | Type              | Label | Description                                            |
-|-------|-------------------|-------|--------------------------------------------------------|
-| time  | [string](#string) |       | time is the total time it took to apply the log entry. |
-| error | [string](#string) |       | error is an error that occurred during the apply.      |
-
-### RaftLogEntry
-
-RaftLogEntry is the data of an entry in the Raft log.
-
-| Field | Type                                   | Label | Description                          |
-|-------|----------------------------------------|-------|--------------------------------------|
-| type  | [RaftCommandType](#v1.RaftCommandType) |       | type is the type of the log entry.   |
-| key   | [string](#string)                      |       | key is the key of the log entry.     |
-| value | [string](#string)                      |       | value is the value of the log entry. |
-
-### RaftCommandType
-
-RaftCommandType is the type of command being sent to the
-
-Raft log.
-
-| Name    | Number | Description                                          |
-|---------|--------|------------------------------------------------------|
-| UNKNOWN | 0      | UNKNOWN is the unknown command type.                 |
-| PUT     | 1      | PUT is the command for putting a key/value pair.     |
-| DELETE  | 2      | DELETE is the command for deleting a key/value pair. |
 
 <div class="file-heading">
 

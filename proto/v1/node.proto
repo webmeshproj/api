@@ -21,6 +21,8 @@ package v1;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
+import "v1/raft.proto";
+
 // ClusterStatus is the status of the node in the cluster.
 enum ClusterStatus {
     // CLUSTER_STATUS_UNKNOWN is the default status.
@@ -353,6 +355,11 @@ service Node {
     // Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
     // can be used to restore the mesh state.
     rpc Snapshot(SnapshotRequest) returns (SnapshotResponse) {}
+
+    // Apply is used by voting nodes to request a log entry be applied to the state machine.
+    // This is only available on the leader, and can only be called by nodes that are allowed
+    // to vote.
+    rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
 
     // NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
     // and a node in the cluster. The handling server will send the target node the source address, 

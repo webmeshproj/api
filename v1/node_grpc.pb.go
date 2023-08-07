@@ -40,6 +40,7 @@ const (
 	Node_Leave_FullMethodName                = "/v1.Node/Leave"
 	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
 	Node_Snapshot_FullMethodName             = "/v1.Node/Snapshot"
+	Node_Apply_FullMethodName                = "/v1.Node/Apply"
 	Node_NegotiateDataChannel_FullMethodName = "/v1.Node/NegotiateDataChannel"
 )
 
@@ -64,6 +65,10 @@ type NodeClient interface {
 	// Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
 	// can be used to restore the mesh state.
 	Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (*SnapshotResponse, error)
+	// Apply is used by voting nodes to request a log entry be applied to the state machine.
+	// This is only available on the leader, and can only be called by nodes that are allowed
+	// to vote.
+	Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
 	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
@@ -126,6 +131,15 @@ func (c *nodeClient) Snapshot(ctx context.Context, in *SnapshotRequest, opts ...
 	return out, nil
 }
 
+func (c *nodeClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
+	out := new(RaftApplyResponse)
+	err := c.cc.Invoke(ctx, Node_Apply_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *nodeClient) NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error) {
 	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[0], Node_NegotiateDataChannel_FullMethodName, opts...)
 	if err != nil {
@@ -178,6 +192,10 @@ type NodeServer interface {
 	// Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
 	// can be used to restore the mesh state.
 	Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error)
+	// Apply is used by voting nodes to request a log entry be applied to the state machine.
+	// This is only available on the leader, and can only be called by nodes that are allowed
+	// to vote.
+	Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
 	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
@@ -206,6 +224,9 @@ func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*S
 }
 func (UnimplementedNodeServer) Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Snapshot not implemented")
+}
+func (UnimplementedNodeServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
 }
 func (UnimplementedNodeServer) NegotiateDataChannel(Node_NegotiateDataChannelServer) error {
 	return status.Errorf(codes.Unimplemented, "method NegotiateDataChannel not implemented")
@@ -313,6 +334,24 @@ func _Node_Snapshot_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Node_Apply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RaftLogEntry)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodeServer).Apply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Node_Apply_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodeServer).Apply(ctx, req.(*RaftLogEntry))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Node_NegotiateDataChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(NodeServer).NegotiateDataChannel(&nodeNegotiateDataChannelServer{stream})
 }
@@ -365,6 +404,10 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Snapshot",
 			Handler:    _Node_Snapshot_Handler,
+		},
+		{
+			MethodName: "Apply",
+			Handler:    _Node_Apply_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

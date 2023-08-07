@@ -175,6 +175,29 @@
         
           
           <li>
+            <a href="#v1%2fraft.proto">v1/raft.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.RaftApplyResponse"><span class="badge">M</span>RaftApplyResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fnode.proto">v1/node.proto</a>
             <ul>
               
@@ -433,29 +456,6 @@
         
           
           <li>
-            <a href="#v1%2fraft.proto">v1/raft.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.RaftApplyResponse"><span class="badge">M</span>RaftApplyResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
-                </li>
-              
-              
-              
-            </ul>
-          </li>
-        
-          
-          <li>
             <a href="#v1%2fplugin.proto">v1/plugin.proto</a>
             <ul>
               
@@ -580,6 +580,118 @@
       </ul>
     </div>
 
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/raft.proto">v1/raft.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.RaftApplyResponse">RaftApplyResponse</h3>
+        <p>RaftApplyResponse is the response to an apply request. It</p><p>contains the result of applying the log entry.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>time</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>time is the total time it took to apply the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>error is an error that occurred during the apply. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RaftLogEntry">RaftLogEntry</h3>
+        <p>RaftLogEntry is the data of an entry in the Raft log.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#v1.RaftCommandType">RaftCommandType</a></td>
+                  <td></td>
+                  <td><p>type is the type of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the log entry. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.RaftCommandType">RaftCommandType</h3>
+        <p>RaftCommandType is the type of command being sent to the</p><p>Raft log.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UNKNOWN</td>
+                <td>0</td>
+                <td><p>UNKNOWN is the unknown command type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PUT</td>
+                <td>1</td>
+                <td><p>PUT is the command for putting a key/value pair.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DELETE</td>
+                <td>2</td>
+                <td><p>DELETE is the command for deleting a key/value pair.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
     
       
       <div class="file-heading">
@@ -1616,6 +1728,15 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
                 <td><a href="#v1.SnapshotResponse">SnapshotResponse</a></td>
                 <td><p>Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
 can be used to restore the mesh state.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Apply</td>
+                <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
+                <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
+                <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
+This is only available on the leader, and can only be called by nodes that are allowed
+to vote.</p></td>
               </tr>
             
               <tr>
@@ -3028,118 +3149,6 @@ Protocols can be specified by name or number. </p></td>
         </table>
 
         
-    
-      
-      <div class="file-heading">
-        <h2 id="v1/raft.proto">v1/raft.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.RaftApplyResponse">RaftApplyResponse</h3>
-        <p>RaftApplyResponse is the response to an apply request. It</p><p>contains the result of applying the log entry.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>time</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>time is the total time it took to apply the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the apply. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.RaftLogEntry">RaftLogEntry</h3>
-        <p>RaftLogEntry is the data of an entry in the Raft log.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#v1.RaftCommandType">RaftCommandType</a></td>
-                  <td></td>
-                  <td><p>type is the type of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the log entry. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-        <h3 id="v1.RaftCommandType">RaftCommandType</h3>
-        <p>RaftCommandType is the type of command being sent to the</p><p>Raft log.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the unknown command type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>PUT</td>
-                <td>1</td>
-                <td><p>PUT is the command for putting a key/value pair.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETE</td>
-                <td>2</td>
-                <td><p>DELETE is the command for deleting a key/value pair.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-
-      
-
-      
     
       
       <div class="file-heading">
