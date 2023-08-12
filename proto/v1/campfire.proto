@@ -40,17 +40,21 @@ message CampfireMessage {
     }
     // The type of the message.
     MessageType type = 1;
+    // id is a unique identifier for the client. It is used to demultiplex
+    // messages from multiple clients. It should remain constant for the 
+    // lifecycle of a WebRTC negotiation.
+    string id = 2;
     // The sending ufrag of the message.
-    string lufrag = 2;
+    string lufrag = 3;
     // The sending password of the message.
-    string lpwd = 3;
+    string lpwd = 4;
     // The receiving ufrag of the message.
-    string rufrag = 4;
+    string rufrag = 5;
     // The receiving password of the message.
-    string rpwd = 5;
+    string rpwd = 6;
     // The data of the message. It is recommended to be encrypted
     // with a pre-shared key before sending.
-    bytes data = 6;
+    bytes data = 7;
 }
 
 // Campfire is the service definition for Campfire traffic. The protocol

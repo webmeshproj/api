@@ -767,14 +767,15 @@ require the leader to be contacted.
 
 CampfireMessage is used to send messages between peers.
 
-| Field  | Type                                                           | Label | Description                                                                                      |
-|--------|----------------------------------------------------------------|-------|--------------------------------------------------------------------------------------------------|
-| type   | [CampfireMessage.MessageType](#v1.CampfireMessage.MessageType) |       | The type of the message.                                                                         |
-| lufrag | [string](#string)                                              |       | The sending ufrag of the message.                                                                |
-| lpwd   | [string](#string)                                              |       | The sending password of the message.                                                             |
-| rufrag | [string](#string)                                              |       | The receiving ufrag of the message.                                                              |
-| rpwd   | [string](#string)                                              |       | The receiving password of the message.                                                           |
-| data   | [bytes](#bytes)                                                |       | The data of the message. It is recommended to be encrypted with a pre-shared key before sending. |
+| Field  | Type                                                           | Label | Description                                                                                                                                                              |
+|--------|----------------------------------------------------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type   | [CampfireMessage.MessageType](#v1.CampfireMessage.MessageType) |       | The type of the message.                                                                                                                                                 |
+| id     | [string](#string)                                              |       | id is a unique identifier for the client. It is used to demultiplex messages from multiple clients. It should remain constant for the lifecycle of a WebRTC negotiation. |
+| lufrag | [string](#string)                                              |       | The sending ufrag of the message.                                                                                                                                        |
+| lpwd   | [string](#string)                                              |       | The sending password of the message.                                                                                                                                     |
+| rufrag | [string](#string)                                              |       | The receiving ufrag of the message.                                                                                                                                      |
+| rpwd   | [string](#string)                                              |       | The receiving password of the message.                                                                                                                                   |
+| data   | [bytes](#bytes)                                                |       | The data of the message. It is recommended to be encrypted with a pre-shared key before sending.                                                                         |
 
 ### CampfireMessage.MessageType
 
