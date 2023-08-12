@@ -58,6 +58,10 @@
   - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
+- [v1/campfire.proto](#v1%2fcampfire.proto)
+  - [<span class="badge">M</span>CampfireMessage](#v1.CampfireMessage)
+  - [<span class="badge">E</span>CampfireMessage.MessageType](#v1.CampfireMessage.MessageType)
+  - [<span class="badge">S</span>Campfire](#v1.Campfire)
 - [v1/peer_discovery.proto](#v1%2fpeer_discovery.proto)
   - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
   - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
@@ -750,6 +754,55 @@ require the leader to be contacted.
 | DeleteEdge        | [MeshEdge](#v1.MeshEdge)                         | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteEdge deletes an edge between two nodes.         |
 | GetEdge           | [MeshEdge](#v1.MeshEdge)                         | [MeshEdge](#v1.MeshEdge)                         | GetEdge gets an edge between two nodes.               |
 | ListEdges         | [.google.protobuf.Empty](#google.protobuf.Empty) | [MeshEdges](#v1.MeshEdges)                       | ListEdges gets all current edges.                     |
+
+<div class="file-heading">
+
+## v1/campfire.proto
+
+[Top](#title)
+
+</div>
+
+### CampfireMessage
+
+CampfireMessage is used to send messages between peers.
+
+| Field  | Type                                                           | Label | Description                                                                                      |
+|--------|----------------------------------------------------------------|-------|--------------------------------------------------------------------------------------------------|
+| type   | [CampfireMessage.MessageType](#v1.CampfireMessage.MessageType) |       | The type of the message.                                                                         |
+| lufrag | [string](#string)                                              |       | The sending ufrag of the message.                                                                |
+| lpwd   | [string](#string)                                              |       | The sending password of the message.                                                             |
+| rufrag | [string](#string)                                              |       | The receiving ufrag of the message.                                                              |
+| rpwd   | [string](#string)                                              |       | The receiving password of the message.                                                           |
+| data   | [bytes](#bytes)                                                |       | The data of the message. It is recommended to be encrypted with a pre-shared key before sending. |
+
+### CampfireMessage.MessageType
+
+MessageType is used to indicate the type of a CampfireMessage.
+
+| Name      | Number | Description                                                                                                 |
+|-----------|--------|-------------------------------------------------------------------------------------------------------------|
+| UNKNOWN   | 0      | UNKNOWN is the default value and should not be used.                                                        |
+| ANNOUNCE  | 1      | ANNOUNCE is used to announce presence at a campfire. This is only required when waiting for others to join. |
+| OFFER     | 2      | OFFER is used to offer a WebRTC connection to another peer.                                                 |
+| ANSWER    | 3      | ANSWER is used to answer a WebRTC connection from another peer.                                             |
+| CANDIDATE | 4      | CANDIDATE is used to send a WebRTC candidate to another peer.                                               |
+
+### Campfire
+
+Campfire is the service definition for Campfire traffic. The protocol
+
+is intended to be served over UDP alongside regular STUN and/or TURN
+
+traffic, but can be used over any reliable transport.
+
+| Method Name     | Request Type                                     | Response Type                                    | Description                                                                                                 |
+|-----------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Announce        | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | Announce is used to announce presence at a campfire. This is only required when waiting for others to join. |
+| SendOffer       | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendOffer is used to send a WebRTC offer to another peer.                                                   |
+| SendAnswer      | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendAnswer is used to send a WebRTC answer to another peer.                                                 |
+| SendCandidate   | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendCandidate is used to send a WebRTC candidate to another peer.                                           |
+| ReceiveMessages | [.google.protobuf.Empty](#google.protobuf.Empty) | [CampfireMessage](#v1.CampfireMessage) stream    | ReceiveMessages is used to receive messages from other peers.                                               |
 
 <div class="file-heading">
 

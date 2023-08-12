@@ -1,0 +1,71 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/empty.proto";
+
+
+
+// CampfireMessage is used to send messages between peers.
+message CampfireMessage {
+    // MessageType is used to indicate the type of a CampfireMessage.
+    enum MessageType {
+        // UNKNOWN is the default value and should not be used.
+        UNKNOWN = 0;
+        // ANNOUNCE is used to announce presence at a campfire. This is
+        // only required when waiting for others to join.
+        ANNOUNCE = 1;
+        // OFFER is used to offer a WebRTC connection to another peer.
+        OFFER = 2;
+        // ANSWER is used to answer a WebRTC connection from another peer.
+        ANSWER = 3;
+        // CANDIDATE is used to send a WebRTC candidate to another peer.
+        CANDIDATE = 4;
+    }
+    // The type of the message.
+    MessageType type = 1;
+    // The sending ufrag of the message.
+    string lufrag = 2;
+    // The sending password of the message.
+    string lpwd = 3;
+    // The receiving ufrag of the message.
+    string rufrag = 4;
+    // The receiving password of the message.
+    string rpwd = 5;
+    // The data of the message. It is recommended to be encrypted
+    // with a pre-shared key before sending.
+    bytes data = 6;
+}
+
+// Campfire is the service definition for Campfire traffic. The protocol
+// is intended to be served over UDP alongside regular STUN and/or TURN 
+// traffic, but can be used over any reliable transport.
+service Campfire {
+    // Announce is used to announce presence at a campfire. This is
+    // only required when waiting for others to join.
+    rpc Announce(CampfireMessage) returns (google.protobuf.Empty) {}
+    // SendOffer is used to send a WebRTC offer to another peer.
+    rpc SendOffer(CampfireMessage) returns (google.protobuf.Empty) {}
+    // SendAnswer is used to send a WebRTC answer to another peer.
+    rpc SendAnswer(CampfireMessage) returns (google.protobuf.Empty) {}
+    // SendCandidate is used to send a WebRTC candidate to another peer.
+    rpc SendCandidate(CampfireMessage) returns (google.protobuf.Empty) {}
+    // ReceiveMessages is used to receive messages from other peers.
+    rpc ReceiveMessages(google.protobuf.Empty) returns (stream CampfireMessage) {}
+}

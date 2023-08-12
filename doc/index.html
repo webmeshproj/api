@@ -433,6 +433,29 @@
         
           
           <li>
+            <a href="#v1%2fcampfire.proto">v1/campfire.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.CampfireMessage"><span class="badge">M</span>CampfireMessage</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.CampfireMessage.MessageType"><span class="badge">E</span>CampfireMessage.MessageType</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#v1.Campfire"><span class="badge">S</span>Campfire</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fpeer_discovery.proto">v1/peer_discovery.proto</a>
             <ul>
               
@@ -3048,6 +3071,170 @@ Protocols can be specified by name or number. </p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.MeshEdges">MeshEdges</a></td>
                 <td><p>ListEdges gets all current edges.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/campfire.proto">v1/campfire.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.CampfireMessage">CampfireMessage</h3>
+        <p>CampfireMessage is used to send messages between peers.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#v1.CampfireMessage.MessageType">CampfireMessage.MessageType</a></td>
+                  <td></td>
+                  <td><p>The type of the message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lufrag</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The sending ufrag of the message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>lpwd</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The sending password of the message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rufrag</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The receiving ufrag of the message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rpwd</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The receiving password of the message. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>The data of the message. It is recommended to be encrypted
+with a pre-shared key before sending. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.CampfireMessage.MessageType">CampfireMessage.MessageType</h3>
+        <p>MessageType is used to indicate the type of a CampfireMessage.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UNKNOWN</td>
+                <td>0</td>
+                <td><p>UNKNOWN is the default value and should not be used.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ANNOUNCE</td>
+                <td>1</td>
+                <td><p>ANNOUNCE is used to announce presence at a campfire. This is
+only required when waiting for others to join.</p></td>
+              </tr>
+            
+              <tr>
+                <td>OFFER</td>
+                <td>2</td>
+                <td><p>OFFER is used to offer a WebRTC connection to another peer.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ANSWER</td>
+                <td>3</td>
+                <td><p>ANSWER is used to answer a WebRTC connection from another peer.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CANDIDATE</td>
+                <td>4</td>
+                <td><p>CANDIDATE is used to send a WebRTC candidate to another peer.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="v1.Campfire">Campfire</h3>
+        <p>Campfire is the service definition for Campfire traffic. The protocol</p><p>is intended to be served over UDP alongside regular STUN and/or TURN </p><p>traffic, but can be used over any reliable transport.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Announce</td>
+                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Announce is used to announce presence at a campfire. This is
+only required when waiting for others to join.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SendOffer</td>
+                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>SendOffer is used to send a WebRTC offer to another peer.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SendAnswer</td>
+                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>SendAnswer is used to send a WebRTC answer to another peer.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SendCandidate</td>
+                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>SendCandidate is used to send a WebRTC candidate to another peer.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ReceiveMessages</td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.CampfireMessage">CampfireMessage</a> stream</td>
+                <td><p>ReceiveMessages is used to receive messages from other peers.</p></td>
               </tr>
             
           </tbody>
