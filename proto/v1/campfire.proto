@@ -20,8 +20,6 @@ package v1;
 
 import "google/protobuf/empty.proto";
 
-
-
 // CampfireMessage is used to send messages between peers.
 message CampfireMessage {
     // MessageType is used to indicate the type of a CampfireMessage.

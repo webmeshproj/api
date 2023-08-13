@@ -1,0 +1,114 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/struct.proto";
+
+// ConnectRequest is sent by the application to the node to establish a
+// connection to a mesh. This message will eventually contain unique
+// identifiers to allow creating connections to multiple meshes.
+message ConnectRequest {
+    // Config is used to override any defaults configured on the node.
+    google.protobuf.Struct config = 1;
+}
+
+// ConnectResponse is returned by the Connect RPC.
+message ConnectResponse {}
+
+// DisconnectRequest is sent by the application to the node to disconnect
+// from a mesh. This message will eventually contain unique identifiers
+// for allowing the application to disconnect from a specific mesh.
+message DisconnectRequest {}
+
+// DisconnectResponse is returned by the Disconnect RPC.
+message DisconnectResponse {}
+
+// StartCampfire is sent by the application to the node to start a campfire.
+// If psk is empty, one will be generated and returned in the response.
+message StartCampfireRequest {
+    // Psk is the pre-shared key used to invite other nodes to the campfire.
+    string psk = 1;
+    // TURN Servers are a list of campfire-enabled TURN servers to use for
+    // relaying traffic. At least one server must be provided.
+    repeated string turn_servers = 2;
+}
+
+// StartCampfireResponse is returned by the StartCampfire RPC. This should
+// eventually return a camp:// URL that can be used to invite other nodes
+// to the campfire.
+message StartCampfireResponse {
+    // Psk is the pre-shared key used to invite other nodes to the campfire.
+    string psk = 1;
+    // TURN Servers are a list of campfire-enabled TURN servers to use for
+    // relaying traffic. All servers provided in the request will be returned
+    // in the response.
+    repeated string turn_servers = 2;
+}
+
+// QueryRequest is sent by the application to the node to query the mesh for
+// information.
+message QueryRequest {
+    // QueryCommand is the type of the query.
+    enum QueryCommand {
+        // GET is the command to get a value.
+        GET = 0;
+        // LIST is the command to list keys with an optional prefix.
+        LIST = 1;
+        // ITER is the command to iterate over keys with an optional prefix.
+        ITER = 2;
+    };
+    // command is the command of the query.
+    QueryCommand command = 2;
+    // query is the key or prefix of the query.
+    string query = 3;
+}
+
+// QueryResponse is the message containing a storage query result. It contains
+// a request ID that is used to correlate the query with the result.
+message QueryResponse {
+    // key is the key of the query. For GET and ITER queries it will be the current key.
+    // For LIST queries it will be the prefix.
+    string key = 2;
+    // value is the value of the query. For GET and ITER queries it will be the value of the current key.
+    // For LIST queries it will be the list of keys that match the prefix.
+    repeated string value = 3;
+    // error is an error that occurred during the query. At the end of an ITER query it will be set to
+    // "EOF" to indicate that the iteration is complete.
+    string error = 4;
+}
+
+// AppDaemon is exposed by nodes running in the app-daemon mode. This mode
+// allows the node to run in an idle state and be controlled by the
+// application. The application can send commands to the node to execute
+// tasks and receive responses.
+service AppDaemon {
+    // Connect is used to establish a connection between the node and a
+    // mesh. The provided struct is used to override any defaults configured
+    // on the node.
+    rpc Connect(ConnectRequest) returns (ConnectResponse) {}
+
+    // Disconnect is used to disconnect the node from the mesh.
+    rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
+
+    // StartCampfire is used to start a campfire.
+    rpc StartCampfire(StartCampfireRequest) returns (StartCampfireResponse) {}
+
+    // Query is used to query the mesh for information.
+    rpc Query(QueryRequest) returns (stream QueryResponse) {}
+}

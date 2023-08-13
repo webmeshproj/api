@@ -58,6 +58,17 @@
   - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
+- [v1/app.proto](#v1%2fapp.proto)
+  - [<span class="badge">M</span>ConnectRequest](#v1.ConnectRequest)
+  - [<span class="badge">M</span>ConnectResponse](#v1.ConnectResponse)
+  - [<span class="badge">M</span>DisconnectRequest](#v1.DisconnectRequest)
+  - [<span class="badge">M</span>DisconnectResponse](#v1.DisconnectResponse)
+  - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
+  - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
+  - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
+  - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
+  - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
+  - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/campfire.proto](#v1%2fcampfire.proto)
   - [<span class="badge">M</span>CampfireMessage](#v1.CampfireMessage)
   - [<span class="badge">E</span>CampfireMessage.MessageType](#v1.CampfireMessage.MessageType)
@@ -754,6 +765,119 @@ require the leader to be contacted.
 | DeleteEdge        | [MeshEdge](#v1.MeshEdge)                         | [.google.protobuf.Empty](#google.protobuf.Empty) | DeleteEdge deletes an edge between two nodes.         |
 | GetEdge           | [MeshEdge](#v1.MeshEdge)                         | [MeshEdge](#v1.MeshEdge)                         | GetEdge gets an edge between two nodes.               |
 | ListEdges         | [.google.protobuf.Empty](#google.protobuf.Empty) | [MeshEdges](#v1.MeshEdges)                       | ListEdges gets all current edges.                     |
+
+<div class="file-heading">
+
+## v1/app.proto
+
+[Top](#title)
+
+</div>
+
+### ConnectRequest
+
+ConnectRequest is sent by the application to the node to establish a
+
+connection to a mesh. This message will eventually contain unique
+
+identifiers to allow creating connections to multiple meshes.
+
+| Field  | Type                                              | Label | Description                                                     |
+|--------|---------------------------------------------------|-------|-----------------------------------------------------------------|
+| config | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node. |
+
+### ConnectResponse
+
+ConnectResponse is returned by the Connect RPC.
+
+### DisconnectRequest
+
+DisconnectRequest is sent by the application to the node to disconnect
+
+from a mesh. This message will eventually contain unique identifiers
+
+for allowing the application to disconnect from a specific mesh.
+
+### DisconnectResponse
+
+DisconnectResponse is returned by the Disconnect RPC.
+
+### QueryRequest
+
+QueryRequest is sent by the application to the node to query the mesh
+for
+
+information.
+
+| Field   | Type                                                       | Label | Description                              |
+|---------|------------------------------------------------------------|-------|------------------------------------------|
+| command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.     |
+| query   | [string](#string)                                          |       | query is the key or prefix of the query. |
+
+### QueryResponse
+
+QueryResponse is the message containing a storage query result. It
+contains
+
+a request ID that is used to correlate the query with the result.
+
+| Field | Type              | Label    | Description                                                                                                                                                            |
+|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
+| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
+| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
+
+### StartCampfireRequest
+
+StartCampfire is sent by the application to the node to start a
+campfire.
+
+If psk is empty, one will be generated and returned in the response.
+
+| Field        | Type              | Label    | Description                                                                                                                 |
+|--------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| psk          | [string](#string) |          | Psk is the pre-shared key used to invite other nodes to the campfire.                                                       |
+| turn_servers | [string](#string) | repeated | TURN Servers are a list of campfire-enabled TURN servers to use for relaying traffic. At least one server must be provided. |
+
+### StartCampfireResponse
+
+StartCampfireResponse is returned by the StartCampfire RPC. This should
+
+eventually return a camp:// URL that can be used to invite other nodes
+
+to the campfire.
+
+| Field        | Type              | Label    | Description                                                                                                                                                 |
+|--------------|-------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| psk          | [string](#string) |          | Psk is the pre-shared key used to invite other nodes to the campfire.                                                                                       |
+| turn_servers | [string](#string) | repeated | TURN Servers are a list of campfire-enabled TURN servers to use for relaying traffic. All servers provided in the request will be returned in the response. |
+
+### QueryRequest.QueryCommand
+
+QueryCommand is the type of the query.
+
+| Name | Number | Description                                                       |
+|------|--------|-------------------------------------------------------------------|
+| GET  | 0      | GET is the command to get a value.                                |
+| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
+| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
+
+### AppDaemon
+
+AppDaemon is exposed by nodes running in the app-daemon mode. This mode
+
+allows the node to run in an idle state and be controlled by the
+
+application. The application can send commands to the node to execute
+
+tasks and receive responses.
+
+| Method Name   | Request Type                                     | Response Type                                      | Description                                                                                                                                         |
+|---------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Connect       | [ConnectRequest](#v1.ConnectRequest)             | [ConnectResponse](#v1.ConnectResponse)             | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
+| Disconnect    | [DisconnectRequest](#v1.DisconnectRequest)       | [DisconnectResponse](#v1.DisconnectResponse)       | Disconnect is used to disconnect the node from the mesh.                                                                                            |
+| StartCampfire | [StartCampfireRequest](#v1.StartCampfireRequest) | [StartCampfireResponse](#v1.StartCampfireResponse) | StartCampfire is used to start a campfire.                                                                                                          |
+| Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
 
 <div class="file-heading">
 

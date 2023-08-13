@@ -433,6 +433,57 @@
         
           
           <li>
+            <a href="#v1%2fapp.proto">v1/app.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.ConnectRequest"><span class="badge">M</span>ConnectRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ConnectResponse"><span class="badge">M</span>ConnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DisconnectRequest"><span class="badge">M</span>DisconnectRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DisconnectResponse"><span class="badge">M</span>DisconnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryResponse"><span class="badge">M</span>QueryResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StartCampfireRequest"><span class="badge">M</span>StartCampfireRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StartCampfireResponse"><span class="badge">M</span>StartCampfireResponse</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#v1.AppDaemon"><span class="badge">S</span>AppDaemon</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fcampfire.proto">v1/campfire.proto</a>
             <ul>
               
@@ -3071,6 +3122,273 @@ Protocols can be specified by name or number. </p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.MeshEdges">MeshEdges</a></td>
                 <td><p>ListEdges gets all current edges.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/app.proto">v1/app.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.ConnectRequest">ConnectRequest</h3>
+        <p>ConnectRequest is sent by the application to the node to establish a</p><p>connection to a mesh. This message will eventually contain unique</p><p>identifiers to allow creating connections to multiple meshes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>config</td>
+                  <td><a href="#google.protobuf.Struct">google.protobuf.Struct</a></td>
+                  <td></td>
+                  <td><p>Config is used to override any defaults configured on the node. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ConnectResponse">ConnectResponse</h3>
+        <p>ConnectResponse is returned by the Connect RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.DisconnectRequest">DisconnectRequest</h3>
+        <p>DisconnectRequest is sent by the application to the node to disconnect</p><p>from a mesh. This message will eventually contain unique identifiers</p><p>for allowing the application to disconnect from a specific mesh.</p>
+
+        
+
+        
+      
+        <h3 id="v1.DisconnectResponse">DisconnectResponse</h3>
+        <p>DisconnectResponse is returned by the Disconnect RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.QueryRequest">QueryRequest</h3>
+        <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>command</td>
+                  <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
+                  <td></td>
+                  <td><p>command is the command of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>query is the key or prefix of the query. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.QueryResponse">QueryResponse</h3>
+        <p>QueryResponse is the message containing a storage query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
+For LIST queries it will be the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
+For LIST queries it will be the list of keys that match the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
+&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StartCampfireRequest">StartCampfireRequest</h3>
+        <p>StartCampfire is sent by the application to the node to start a campfire.</p><p>If psk is empty, one will be generated and returned in the response.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Psk is the pre-shared key used to invite other nodes to the campfire. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>turn_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>TURN Servers are a list of campfire-enabled TURN servers to use for
+relaying traffic. At least one server must be provided. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StartCampfireResponse">StartCampfireResponse</h3>
+        <p>StartCampfireResponse is returned by the StartCampfire RPC. This should</p><p>eventually return a camp:// URL that can be used to invite other nodes</p><p>to the campfire.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Psk is the pre-shared key used to invite other nodes to the campfire. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>turn_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>TURN Servers are a list of campfire-enabled TURN servers to use for
+relaying traffic. All servers provided in the request will be returned
+in the response. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
+        <p>QueryCommand is the type of the query.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GET</td>
+                <td>0</td>
+                <td><p>GET is the command to get a value.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LIST</td>
+                <td>1</td>
+                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ITER</td>
+                <td>2</td>
+                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="v1.AppDaemon">AppDaemon</h3>
+        <p>AppDaemon is exposed by nodes running in the app-daemon mode. This mode</p><p>allows the node to run in an idle state and be controlled by the</p><p>application. The application can send commands to the node to execute</p><p>tasks and receive responses.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Connect</td>
+                <td><a href="#v1.ConnectRequest">ConnectRequest</a></td>
+                <td><a href="#v1.ConnectResponse">ConnectResponse</a></td>
+                <td><p>Connect is used to establish a connection between the node and a
+mesh. The provided struct is used to override any defaults configured
+on the node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Disconnect</td>
+                <td><a href="#v1.DisconnectRequest">DisconnectRequest</a></td>
+                <td><a href="#v1.DisconnectResponse">DisconnectResponse</a></td>
+                <td><p>Disconnect is used to disconnect the node from the mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>StartCampfire</td>
+                <td><a href="#v1.StartCampfireRequest">StartCampfireRequest</a></td>
+                <td><a href="#v1.StartCampfireResponse">StartCampfireResponse</a></td>
+                <td><p>StartCampfire is used to start a campfire.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Query</td>
+                <td><a href="#v1.QueryRequest">QueryRequest</a></td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
+                <td><p>Query is used to query the mesh for information.</p></td>
               </tr>
             
           </tbody>
