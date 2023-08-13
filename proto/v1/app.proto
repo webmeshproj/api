@@ -81,8 +81,7 @@ message QueryRequest {
     string query = 3;
 }
 
-// QueryResponse is the message containing a storage query result. It contains
-// a request ID that is used to correlate the query with the result.
+// QueryResponse is the message containing a mesh query result.
 message QueryResponse {
     // key is the key of the query. For GET and ITER queries it will be the current key.
     // For LIST queries it will be the prefix.
