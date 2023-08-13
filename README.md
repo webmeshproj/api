@@ -63,6 +63,9 @@
   - [<span class="badge">M</span>ConnectResponse](#v1.ConnectResponse)
   - [<span class="badge">M</span>DisconnectRequest](#v1.DisconnectRequest)
   - [<span class="badge">M</span>DisconnectResponse](#v1.DisconnectResponse)
+  - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
+  - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
+  - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
   - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
@@ -802,6 +805,31 @@ for allowing the application to disconnect from a specific mesh.
 
 DisconnectResponse is returned by the Disconnect RPC.
 
+### MetricsRequest
+
+MetricsRequest is sent by the application to the node to retrieve
+interface
+
+metrics. It is intentionally empty for now, but can eventually be used
+to
+
+query specific interfaces/metrics.
+
+### MetricsResponse
+
+MetricsResponse is a message containing interface metrics.
+
+| Field      | Type                                                                   | Label    | Description                                        |
+|------------|------------------------------------------------------------------------|----------|----------------------------------------------------|
+| interfaces | [MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry) | repeated | interfaces is a map of interface names to metrics. |
+
+### MetricsResponse.InterfacesEntry
+
+| Field | Type                                     | Label | Description |
+|-------|------------------------------------------|-------|-------------|
+| key   | [string](#string)                        |       |             |
+| value | [InterfaceMetrics](#v1.InterfaceMetrics) |       |             |
+
 ### QueryRequest
 
 QueryRequest is sent by the application to the node to query the mesh
@@ -878,6 +906,7 @@ tasks and receive responses.
 | Disconnect    | [DisconnectRequest](#v1.DisconnectRequest)       | [DisconnectResponse](#v1.DisconnectResponse)       | Disconnect is used to disconnect the node from the mesh.                                                                                            |
 | StartCampfire | [StartCampfireRequest](#v1.StartCampfireRequest) | [StartCampfireResponse](#v1.StartCampfireResponse) | StartCampfire is used to start a campfire.                                                                                                          |
 | Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
+| Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
 
 <div class="file-heading">
 

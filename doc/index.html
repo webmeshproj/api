@@ -453,6 +453,18 @@
                 </li>
               
                 <li>
+                  <a href="#v1.MetricsRequest"><span class="badge">M</span>MetricsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MetricsResponse"><span class="badge">M</span>MetricsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MetricsResponse.InterfacesEntry"><span class="badge">M</span>MetricsResponse.InterfacesEntry</a>
+                </li>
+              
+                <li>
                   <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
                 </li>
               
@@ -3181,6 +3193,68 @@ Protocols can be specified by name or number. </p></td>
 
         
       
+        <h3 id="v1.MetricsRequest">MetricsRequest</h3>
+        <p>MetricsRequest is sent by the application to the node to retrieve interface</p><p>metrics. It is intentionally empty for now, but can eventually be used to </p><p>query specific interfaces/metrics.</p>
+
+        
+
+        
+      
+        <h3 id="v1.MetricsResponse">MetricsResponse</h3>
+        <p>MetricsResponse is a message containing interface metrics.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>interfaces</td>
+                  <td><a href="#v1.MetricsResponse.InterfacesEntry">MetricsResponse.InterfacesEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>interfaces is a map of interface names to metrics. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MetricsResponse.InterfacesEntry">MetricsResponse.InterfacesEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.QueryRequest">QueryRequest</h3>
         <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
 
@@ -3389,6 +3463,13 @@ on the node.</p></td>
                 <td><a href="#v1.QueryRequest">QueryRequest</a></td>
                 <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
                 <td><p>Query is used to query the mesh for information.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Metrics</td>
+                <td><a href="#v1.MetricsRequest">MetricsRequest</a></td>
+                <td><a href="#v1.MetricsResponse">MetricsResponse</a></td>
+                <td><p>Metrics is used to retrieve interface metrics from the node.</p></td>
               </tr>
             
           </tbody>

@@ -38,6 +38,7 @@ const (
 	AppDaemon_Disconnect_FullMethodName    = "/v1.AppDaemon/Disconnect"
 	AppDaemon_StartCampfire_FullMethodName = "/v1.AppDaemon/StartCampfire"
 	AppDaemon_Query_FullMethodName         = "/v1.AppDaemon/Query"
+	AppDaemon_Metrics_FullMethodName       = "/v1.AppDaemon/Metrics"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -54,6 +55,8 @@ type AppDaemonClient interface {
 	StartCampfire(ctx context.Context, in *StartCampfireRequest, opts ...grpc.CallOption) (*StartCampfireResponse, error)
 	// Query is used to query the mesh for information.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (AppDaemon_QueryClient, error)
+	// Metrics is used to retrieve interface metrics from the node.
+	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
 }
 
 type appDaemonClient struct {
@@ -123,6 +126,15 @@ func (x *appDaemonQueryClient) Recv() (*QueryResponse, error) {
 	return m, nil
 }
 
+func (c *appDaemonClient) Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error) {
+	out := new(MetricsResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_Metrics_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -137,6 +149,8 @@ type AppDaemonServer interface {
 	StartCampfire(context.Context, *StartCampfireRequest) (*StartCampfireResponse, error)
 	// Query is used to query the mesh for information.
 	Query(*QueryRequest, AppDaemon_QueryServer) error
+	// Metrics is used to retrieve interface metrics from the node.
+	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -155,6 +169,9 @@ func (UnimplementedAppDaemonServer) StartCampfire(context.Context, *StartCampfir
 }
 func (UnimplementedAppDaemonServer) Query(*QueryRequest, AppDaemon_QueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -244,6 +261,24 @@ func (x *appDaemonQueryServer) Send(m *QueryResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _AppDaemon_Metrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Metrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Metrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Metrics(ctx, req.(*MetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -262,6 +297,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StartCampfire",
 			Handler:    _AppDaemon_StartCampfire_Handler,
+		},
+		{
+			MethodName: "Metrics",
+			Handler:    _AppDaemon_Metrics_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

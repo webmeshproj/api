@@ -20,6 +20,8 @@ package v1;
 
 import "google/protobuf/struct.proto";
 
+import "v1/node.proto";
+
 // ConnectRequest is sent by the application to the node to establish a
 // connection to a mesh. This message will eventually contain unique
 // identifiers to allow creating connections to multiple meshes.
@@ -93,6 +95,17 @@ message QueryResponse {
     string error = 4;
 }
 
+// MetricsRequest is sent by the application to the node to retrieve interface
+// metrics. It is intentionally empty for now, but can eventually be used to 
+// query specific interfaces/metrics.
+message MetricsRequest {}
+
+// MetricsResponse is a message containing interface metrics.
+message MetricsResponse {
+    // interfaces is a map of interface names to metrics.
+    map<string, InterfaceMetrics> interfaces = 1;
+}
+
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
 // allows the node to run in an idle state and be controlled by the
 // application. The application can send commands to the node to execute
@@ -111,4 +124,7 @@ service AppDaemon {
 
     // Query is used to query the mesh for information.
     rpc Query(QueryRequest) returns (stream QueryResponse) {}
+
+    // Metrics is used to retrieve interface metrics from the node.
+    rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
 }
