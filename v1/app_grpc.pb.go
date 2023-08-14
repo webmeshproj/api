@@ -26,6 +26,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -42,6 +43,7 @@ const (
 	AppDaemon_Metrics_FullMethodName       = "/v1.AppDaemon/Metrics"
 	AppDaemon_Status_FullMethodName        = "/v1.AppDaemon/Status"
 	AppDaemon_Subscribe_FullMethodName     = "/v1.AppDaemon/Subscribe"
+	AppDaemon_Publish_FullMethodName       = "/v1.AppDaemon/Publish"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -66,6 +68,9 @@ type AppDaemonClient interface {
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	// Subscribe is used to subscribe to events in the mesh database.
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
+	// Publish is used to publish events to the mesh database. A restricted set
+	// of keys are allowed to be published to.
+	Publish(ctx context.Context, in *SubscriptionEvent, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type appDaemonClient struct {
@@ -194,6 +199,15 @@ func (x *appDaemonSubscribeClient) Recv() (*SubscriptionEvent, error) {
 	return m, nil
 }
 
+func (c *appDaemonClient) Publish(ctx context.Context, in *SubscriptionEvent, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, AppDaemon_Publish_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -216,6 +230,9 @@ type AppDaemonServer interface {
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
 	// Subscribe is used to subscribe to events in the mesh database.
 	Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error
+	// Publish is used to publish events to the mesh database. A restricted set
+	// of keys are allowed to be published to.
+	Publish(context.Context, *SubscriptionEvent) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -246,6 +263,9 @@ func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*St
 }
 func (UnimplementedAppDaemonServer) Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
+}
+func (UnimplementedAppDaemonServer) Publish(context.Context, *SubscriptionEvent) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -410,6 +430,24 @@ func (x *appDaemonSubscribeServer) Send(m *SubscriptionEvent) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _AppDaemon_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscriptionEvent)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Publish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Publish_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Publish(ctx, req.(*SubscriptionEvent))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -440,6 +478,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Status",
 			Handler:    _AppDaemon_Status_Handler,
+		},
+		{
+			MethodName: "Publish",
+			Handler:    _AppDaemon_Publish_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

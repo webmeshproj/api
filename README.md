@@ -979,6 +979,7 @@ tasks and receive responses.
 | Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
 | Status        | [StatusRequest](#v1.StatusRequest)               | [StatusResponse](#v1.StatusResponse)               | Status is used to retrieve the status of the node.                                                                                                  |
 | Subscribe     | [SubscribeRequest](#v1.SubscribeRequest)         | [SubscriptionEvent](#v1.SubscriptionEvent) stream  | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
+| Publish       | [SubscriptionEvent](#v1.SubscriptionEvent)       | [.google.protobuf.Empty](#google.protobuf.Empty)   | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
 
 <div class="file-heading">
 
