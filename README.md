@@ -870,7 +870,7 @@ This currently only supports database events.
 |-------|-------------------------------------------------------|-------|-------------------------------------------------------------------------|
 | key   | [string](#string)                                     |       | key is the key of the event.                                            |
 | value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
-| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the event. This is currently unused.         |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
 
 ### QueryRequest
 

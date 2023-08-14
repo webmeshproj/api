@@ -168,7 +168,7 @@ message PublishRequest {
     string key = 1;
     // value is the value of the event. This will be the raw value of the key.
     string value = 2;
-    // ttl is the time to live of the event. This is currently unused.
+    // ttl is the time for the event to live in the database.
     google.protobuf.Duration ttl = 3;
 }
 

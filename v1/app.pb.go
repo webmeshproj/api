@@ -996,7 +996,7 @@ type PublishRequest struct {
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	// value is the value of the event. This will be the raw value of the key.
 	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	// ttl is the time to live of the event. This is currently unused.
+	// ttl is the time for the event to live in the database.
 	Ttl *durationpb.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 
