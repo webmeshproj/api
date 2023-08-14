@@ -3212,11 +3212,10 @@ Protocols can be specified by name or number. </p></td>
             <tbody>
               
                 <tr>
-                  <td>psk</td>
+                  <td>camp_url</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Psk is the pre-shared key of the campfire to leave.
-This should later be replaced with a camp:// URL. </p></td>
+                  <td><p>CampURL is the camp:// URL of the campfire to leave. </p></td>
                 </tr>
               
             </tbody>
@@ -3368,7 +3367,7 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
         
       
         <h3 id="v1.StartCampfireRequest">StartCampfireRequest</h3>
-        <p>StartCampfire is sent by the application to the node to start a campfire.</p><p>If psk is empty, one will be generated and returned in the response.</p>
+        <p>StartCampfire is sent by the application to the node to start a campfire.</p><p>If the URL is empty, the node will start a new campfire using it's own</p><p>TURN server.</p>
 
         
           <table class="field-table">
@@ -3378,18 +3377,10 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
             <tbody>
               
                 <tr>
-                  <td>psk</td>
+                  <td>camp_url</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Psk is the pre-shared key used to invite other nodes to the campfire. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>turn_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>TURN Servers are a list of campfire-enabled TURN servers to use for
-relaying traffic. At least one server must be provided. </p></td>
+                  <td><p>CampURL is the camp:// URL of the campfire. </p></td>
                 </tr>
               
             </tbody>
@@ -3410,19 +3401,10 @@ relaying traffic. At least one server must be provided. </p></td>
             <tbody>
               
                 <tr>
-                  <td>psk</td>
+                  <td>camp_url</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Psk is the pre-shared key used to invite other nodes to the campfire. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>turn_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>TURN Servers are a list of campfire-enabled TURN servers to use for
-relaying traffic. All servers provided in the request will be returned
-in the response. </p></td>
+                  <td><p>CampURL is the camp:// URL of the campfire. </p></td>
                 </tr>
               
             </tbody>

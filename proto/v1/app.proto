@@ -42,32 +42,25 @@ message DisconnectRequest {}
 message DisconnectResponse {}
 
 // StartCampfire is sent by the application to the node to start a campfire.
-// If psk is empty, one will be generated and returned in the response.
+// If the URL is empty, the node will start a new campfire using it's own
+// TURN server.
 message StartCampfireRequest {
-    // Psk is the pre-shared key used to invite other nodes to the campfire.
-    string psk = 1;
-    // TURN Servers are a list of campfire-enabled TURN servers to use for
-    // relaying traffic. At least one server must be provided.
-    repeated string turn_servers = 2;
+    // CampURL is the camp:// URL of the campfire.
+    string camp_url = 1;
 }
 
 // StartCampfireResponse is returned by the StartCampfire RPC. This should
 // eventually return a camp:// URL that can be used to invite other nodes
 // to the campfire.
 message StartCampfireResponse {
-    // Psk is the pre-shared key used to invite other nodes to the campfire.
-    string psk = 1;
-    // TURN Servers are a list of campfire-enabled TURN servers to use for
-    // relaying traffic. All servers provided in the request will be returned
-    // in the response.
-    repeated string turn_servers = 2;
+    // CampURL is the camp:// URL of the campfire.
+    string camp_url = 1;
 }
 
 // LeaveCampfire is sent by the application to the node to leave a campfire.
 message LeaveCampfireRequest {
-    // Psk is the pre-shared key of the campfire to leave.
-    // This should later be replaced with a camp:// URL.
-    string psk = 1;
+    // CampURL is the camp:// URL of the campfire to leave.
+    string camp_url = 1;
 }
 
 // LeaveCampfireResponse is returned by the LeaveCampfire RPC.

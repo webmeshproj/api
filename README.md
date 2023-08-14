@@ -812,9 +812,9 @@ DisconnectResponse is returned by the Disconnect RPC.
 LeaveCampfire is sent by the application to the node to leave a
 campfire.
 
-| Field | Type              | Label | Description                                                                                           |
-|-------|-------------------|-------|-------------------------------------------------------------------------------------------------------|
-| psk   | [string](#string) |       | Psk is the pre-shared key of the campfire to leave. This should later be replaced with a camp:// URL. |
+| Field    | Type              | Label | Description                                          |
+|----------|-------------------|-------|------------------------------------------------------|
+| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire to leave. |
 
 ### LeaveCampfireResponse
 
@@ -872,12 +872,13 @@ QueryResponse is the message containing a mesh query result.
 StartCampfire is sent by the application to the node to start a
 campfire.
 
-If psk is empty, one will be generated and returned in the response.
+If the URL is empty, the node will start a new campfire using it's own
 
-| Field        | Type              | Label    | Description                                                                                                                 |
-|--------------|-------------------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| psk          | [string](#string) |          | Psk is the pre-shared key used to invite other nodes to the campfire.                                                       |
-| turn_servers | [string](#string) | repeated | TURN Servers are a list of campfire-enabled TURN servers to use for relaying traffic. At least one server must be provided. |
+TURN server.
+
+| Field    | Type              | Label | Description                                 |
+|----------|-------------------|-------|---------------------------------------------|
+| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire. |
 
 ### StartCampfireResponse
 
@@ -887,10 +888,9 @@ eventually return a camp:// URL that can be used to invite other nodes
 
 to the campfire.
 
-| Field        | Type              | Label    | Description                                                                                                                                                 |
-|--------------|-------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| psk          | [string](#string) |          | Psk is the pre-shared key used to invite other nodes to the campfire.                                                                                       |
-| turn_servers | [string](#string) | repeated | TURN Servers are a list of campfire-enabled TURN servers to use for relaying traffic. All servers provided in the request will be returned in the response. |
+| Field    | Type              | Label | Description                                 |
+|----------|-------------------|-------|---------------------------------------------|
+| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire. |
 
 ### QueryRequest.QueryCommand
 
