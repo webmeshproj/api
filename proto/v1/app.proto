@@ -63,6 +63,16 @@ message StartCampfireResponse {
     repeated string turn_servers = 2;
 }
 
+// LeaveCampfire is sent by the application to the node to leave a campfire.
+message LeaveCampfireRequest {
+    // Psk is the pre-shared key of the campfire to leave.
+    // This should later be replaced with a camp:// URL.
+    string psk = 1;
+}
+
+// LeaveCampfireResponse is returned by the LeaveCampfire RPC.
+message LeaveCampfireResponse {}
+
 // QueryRequest is sent by the application to the node to query the mesh for
 // information.
 message QueryRequest {
@@ -120,6 +130,9 @@ service AppDaemon {
 
     // StartCampfire is used to start a campfire.
     rpc StartCampfire(StartCampfireRequest) returns (StartCampfireResponse) {}
+
+    // LeaveCampfire is used to leave a campfire.
+    rpc LeaveCampfire(LeaveCampfireRequest) returns (LeaveCampfireResponse) {}
 
     // Query is used to query the mesh for information.
     rpc Query(QueryRequest) returns (stream QueryResponse) {}

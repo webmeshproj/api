@@ -63,6 +63,8 @@
   - [<span class="badge">M</span>ConnectResponse](#v1.ConnectResponse)
   - [<span class="badge">M</span>DisconnectRequest](#v1.DisconnectRequest)
   - [<span class="badge">M</span>DisconnectResponse](#v1.DisconnectResponse)
+  - [<span class="badge">M</span>LeaveCampfireRequest](#v1.LeaveCampfireRequest)
+  - [<span class="badge">M</span>LeaveCampfireResponse](#v1.LeaveCampfireResponse)
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
@@ -805,6 +807,19 @@ for allowing the application to disconnect from a specific mesh.
 
 DisconnectResponse is returned by the Disconnect RPC.
 
+### LeaveCampfireRequest
+
+LeaveCampfire is sent by the application to the node to leave a
+campfire.
+
+| Field | Type              | Label | Description                                                                                           |
+|-------|-------------------|-------|-------------------------------------------------------------------------------------------------------|
+| psk   | [string](#string) |       | Psk is the pre-shared key of the campfire to leave. This should later be replaced with a camp:// URL. |
+
+### LeaveCampfireResponse
+
+LeaveCampfireResponse is returned by the LeaveCampfire RPC.
+
 ### MetricsRequest
 
 MetricsRequest is sent by the application to the node to retrieve
@@ -844,10 +859,7 @@ information.
 
 ### QueryResponse
 
-QueryResponse is the message containing a storage query result. It
-contains
-
-a request ID that is used to correlate the query with the result.
+QueryResponse is the message containing a mesh query result.
 
 | Field | Type              | Label    | Description                                                                                                                                                            |
 |-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -905,6 +917,7 @@ tasks and receive responses.
 | Connect       | [ConnectRequest](#v1.ConnectRequest)             | [ConnectResponse](#v1.ConnectResponse)             | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
 | Disconnect    | [DisconnectRequest](#v1.DisconnectRequest)       | [DisconnectResponse](#v1.DisconnectResponse)       | Disconnect is used to disconnect the node from the mesh.                                                                                            |
 | StartCampfire | [StartCampfireRequest](#v1.StartCampfireRequest) | [StartCampfireResponse](#v1.StartCampfireResponse) | StartCampfire is used to start a campfire.                                                                                                          |
+| LeaveCampfire | [LeaveCampfireRequest](#v1.LeaveCampfireRequest) | [LeaveCampfireResponse](#v1.LeaveCampfireResponse) | LeaveCampfire is used to leave a campfire.                                                                                                          |
 | Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
 | Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
 

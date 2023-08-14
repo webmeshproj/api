@@ -453,6 +453,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.LeaveCampfireRequest"><span class="badge">M</span>LeaveCampfireRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LeaveCampfireResponse"><span class="badge">M</span>LeaveCampfireResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.MetricsRequest"><span class="badge">M</span>MetricsRequest</a>
                 </li>
               
@@ -3193,6 +3201,38 @@ Protocols can be specified by name or number. </p></td>
 
         
       
+        <h3 id="v1.LeaveCampfireRequest">LeaveCampfireRequest</h3>
+        <p>LeaveCampfire is sent by the application to the node to leave a campfire.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Psk is the pre-shared key of the campfire to leave.
+This should later be replaced with a camp:// URL. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.LeaveCampfireResponse">LeaveCampfireResponse</h3>
+        <p>LeaveCampfireResponse is returned by the LeaveCampfire RPC.</p>
+
+        
+
+        
+      
         <h3 id="v1.MetricsRequest">MetricsRequest</h3>
         <p>MetricsRequest is sent by the application to the node to retrieve interface</p><p>metrics. It is intentionally empty for now, but can eventually be used to </p><p>query specific interfaces/metrics.</p>
 
@@ -3287,7 +3327,7 @@ Protocols can be specified by name or number. </p></td>
         
       
         <h3 id="v1.QueryResponse">QueryResponse</h3>
-        <p>QueryResponse is the message containing a storage query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
+        <p>QueryResponse is the message containing a mesh query result.</p>
 
         
           <table class="field-table">
@@ -3456,6 +3496,13 @@ on the node.</p></td>
                 <td><a href="#v1.StartCampfireRequest">StartCampfireRequest</a></td>
                 <td><a href="#v1.StartCampfireResponse">StartCampfireResponse</a></td>
                 <td><p>StartCampfire is used to start a campfire.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LeaveCampfire</td>
+                <td><a href="#v1.LeaveCampfireRequest">LeaveCampfireRequest</a></td>
+                <td><a href="#v1.LeaveCampfireResponse">LeaveCampfireResponse</a></td>
+                <td><p>LeaveCampfire is used to leave a campfire.</p></td>
               </tr>
             
               <tr>

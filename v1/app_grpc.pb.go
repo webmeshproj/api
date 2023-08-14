@@ -37,6 +37,7 @@ const (
 	AppDaemon_Connect_FullMethodName       = "/v1.AppDaemon/Connect"
 	AppDaemon_Disconnect_FullMethodName    = "/v1.AppDaemon/Disconnect"
 	AppDaemon_StartCampfire_FullMethodName = "/v1.AppDaemon/StartCampfire"
+	AppDaemon_LeaveCampfire_FullMethodName = "/v1.AppDaemon/LeaveCampfire"
 	AppDaemon_Query_FullMethodName         = "/v1.AppDaemon/Query"
 	AppDaemon_Metrics_FullMethodName       = "/v1.AppDaemon/Metrics"
 )
@@ -53,6 +54,8 @@ type AppDaemonClient interface {
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
 	// StartCampfire is used to start a campfire.
 	StartCampfire(ctx context.Context, in *StartCampfireRequest, opts ...grpc.CallOption) (*StartCampfireResponse, error)
+	// LeaveCampfire is used to leave a campfire.
+	LeaveCampfire(ctx context.Context, in *LeaveCampfireRequest, opts ...grpc.CallOption) (*LeaveCampfireResponse, error)
 	// Query is used to query the mesh for information.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (AppDaemon_QueryClient, error)
 	// Metrics is used to retrieve interface metrics from the node.
@@ -88,6 +91,15 @@ func (c *appDaemonClient) Disconnect(ctx context.Context, in *DisconnectRequest,
 func (c *appDaemonClient) StartCampfire(ctx context.Context, in *StartCampfireRequest, opts ...grpc.CallOption) (*StartCampfireResponse, error) {
 	out := new(StartCampfireResponse)
 	err := c.cc.Invoke(ctx, AppDaemon_StartCampfire_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appDaemonClient) LeaveCampfire(ctx context.Context, in *LeaveCampfireRequest, opts ...grpc.CallOption) (*LeaveCampfireResponse, error) {
+	out := new(LeaveCampfireResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_LeaveCampfire_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,6 +159,8 @@ type AppDaemonServer interface {
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
 	// StartCampfire is used to start a campfire.
 	StartCampfire(context.Context, *StartCampfireRequest) (*StartCampfireResponse, error)
+	// LeaveCampfire is used to leave a campfire.
+	LeaveCampfire(context.Context, *LeaveCampfireRequest) (*LeaveCampfireResponse, error)
 	// Query is used to query the mesh for information.
 	Query(*QueryRequest, AppDaemon_QueryServer) error
 	// Metrics is used to retrieve interface metrics from the node.
@@ -166,6 +180,9 @@ func (UnimplementedAppDaemonServer) Disconnect(context.Context, *DisconnectReque
 }
 func (UnimplementedAppDaemonServer) StartCampfire(context.Context, *StartCampfireRequest) (*StartCampfireResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartCampfire not implemented")
+}
+func (UnimplementedAppDaemonServer) LeaveCampfire(context.Context, *LeaveCampfireRequest) (*LeaveCampfireResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveCampfire not implemented")
 }
 func (UnimplementedAppDaemonServer) Query(*QueryRequest, AppDaemon_QueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method Query not implemented")
@@ -240,6 +257,24 @@ func _AppDaemon_StartCampfire_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_LeaveCampfire_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveCampfireRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).LeaveCampfire(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_LeaveCampfire_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).LeaveCampfire(ctx, req.(*LeaveCampfireRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AppDaemon_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(QueryRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -297,6 +332,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StartCampfire",
 			Handler:    _AppDaemon_StartCampfire_Handler,
+		},
+		{
+			MethodName: "LeaveCampfire",
+			Handler:    _AppDaemon_LeaveCampfire_Handler,
 		},
 		{
 			MethodName: "Metrics",
