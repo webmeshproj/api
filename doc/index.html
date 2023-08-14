@@ -3185,6 +3185,22 @@ Protocols can be specified by name or number. </p></td>
                   <td><p>Config is used to override any defaults configured on the node. </p></td>
                 </tr>
               
+                <tr>
+                  <td>disable_bootstrap</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Disable bootstrap tells a node that is otherwise configured to 
+bootstrap to not bootstrap for this connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>campfire_uri</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Campfire URI is the campfire URI to join. This implies that the node
+should join the mesh that the campfire is in and not bootstrap. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 

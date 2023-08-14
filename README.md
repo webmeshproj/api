@@ -790,9 +790,11 @@ connection to a mesh. This message will eventually contain unique
 
 identifiers to allow creating connections to multiple meshes.
 
-| Field  | Type                                              | Label | Description                                                     |
-|--------|---------------------------------------------------|-------|-----------------------------------------------------------------|
-| config | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node. |
+| Field             | Type                                              | Label | Description                                                                                                                          |
+|-------------------|---------------------------------------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------|
+| config            | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                                      |
+| disable_bootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection.                       |
+| campfire_uri      | [string](#string)                                 |       | Campfire URI is the campfire URI to join. This implies that the node should join the mesh that the campfire is in and not bootstrap. |
 
 ### ConnectResponse
 

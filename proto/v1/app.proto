@@ -29,6 +29,12 @@ import "v1/mesh.proto";
 message ConnectRequest {
     // Config is used to override any defaults configured on the node.
     google.protobuf.Struct config = 1;
+    // Disable bootstrap tells a node that is otherwise configured to 
+    // bootstrap to not bootstrap for this connection.
+    bool disable_bootstrap = 2;
+    // Campfire URI is the campfire URI to join. This implies that the node
+    // should join the mesh that the campfire is in and not bootstrap.
+    string campfire_uri = 3;
 }
 
 // ConnectResponse is returned by the Connect RPC.
