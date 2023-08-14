@@ -68,6 +68,7 @@
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
+  - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
   - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
@@ -859,6 +860,18 @@ MetricsResponse is a message containing interface metrics.
 | key   | [string](#string)                        |       |             |
 | value | [InterfaceMetrics](#v1.InterfaceMetrics) |       |             |
 
+### PublishRequest
+
+PublishRequest is sent by the application to the node to publish events.
+
+This currently only supports database events.
+
+| Field | Type                                                  | Label | Description                                                             |
+|-------|-------------------------------------------------------|-------|-------------------------------------------------------------------------|
+| key   | [string](#string)                                     |       | key is the key of the event.                                            |
+| value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the event. This is currently unused.         |
+
 ### QueryRequest
 
 QueryRequest is sent by the application to the node to query the mesh
@@ -979,7 +992,7 @@ tasks and receive responses.
 | Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
 | Status        | [StatusRequest](#v1.StatusRequest)               | [StatusResponse](#v1.StatusResponse)               | Status is used to retrieve the status of the node.                                                                                                  |
 | Subscribe     | [SubscribeRequest](#v1.SubscribeRequest)         | [SubscriptionEvent](#v1.SubscriptionEvent) stream  | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
-| Publish       | [SubscriptionEvent](#v1.SubscriptionEvent)       | [.google.protobuf.Empty](#google.protobuf.Empty)   | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
+| Publish       | [PublishRequest](#v1.PublishRequest)             | [.google.protobuf.Empty](#google.protobuf.Empty)   | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
 
 <div class="file-heading">
 
