@@ -501,6 +501,10 @@
                   <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
                 </li>
               
+                <li>
+                  <a href="#v1.StatusResponse.ConnectionStatus"><span class="badge">E</span>StatusResponse.ConnectionStatus</a>
+                </li>
+              
               
               
                 <li>
@@ -3212,6 +3216,20 @@ Protocols can be specified by name or number. </p></td>
                   <td><p>mesh domain is the domain of the mesh. </p></td>
                 </tr>
               
+                <tr>
+                  <td>ipv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ipv4 is the IPv4 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ipv6 is the IPv6 address of the node. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3464,10 +3482,10 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
             <tbody>
               
                 <tr>
-                  <td>connected</td>
-                  <td><a href="#bool">bool</a></td>
+                  <td>connection_status</td>
+                  <td><a href="#v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</a></td>
                   <td></td>
-                  <td><p>connected is true if the node is connected to a mesh. </p></td>
+                  <td><p>connection status is the status of the connection. </p></td>
                 </tr>
               
                 <tr>
@@ -3510,6 +3528,35 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                 <td>ITER</td>
                 <td>2</td>
                 <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>DISCONNECTED</td>
+                <td>0</td>
+                <td><p>DISCONNECTED indicates that the node is not connected to a mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTING</td>
+                <td>1</td>
+                <td><p>CONNECTING indicates that the node is in the process of connecting to a mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTED</td>
+                <td>2</td>
+                <td><p>CONNECTED indicates that the node is connected to a mesh.</p></td>
               </tr>
             
           </tbody>

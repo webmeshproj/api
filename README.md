@@ -75,6 +75,7 @@
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
+  - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/campfire.proto](#v1%2fcampfire.proto)
   - [<span class="badge">M</span>CampfireMessage](#v1.CampfireMessage)
@@ -801,6 +802,8 @@ ConnectResponse is returned by the Connect RPC.
 |-------------|-------------------|-------|-----------------------------------------------|
 | node_id     | [string](#string) |       | node id is the unique identifier of the node. |
 | mesh_domain | [string](#string) |       | mesh domain is the domain of the mesh.        |
+| ipv4        | [string](#string) |       | ipv4 is the IPv4 address of the node.         |
+| ipv6        | [string](#string) |       | ipv6 is the IPv6 address of the node.         |
 
 ### DisconnectRequest
 
@@ -910,10 +913,10 @@ of the node.
 
 StatusResponse is a message containing the status of the node.
 
-| Field     | Type                     | Label | Description                                                               |
-|-----------|--------------------------|-------|---------------------------------------------------------------------------|
-| connected | [bool](#bool)            |       | connected is true if the node is connected to a mesh.                     |
-| node      | [MeshNode](#v1.MeshNode) |       | node is the node status. This is only populated if the node is connected. |
+| Field             | Type                                                                   | Label | Description                                                               |
+|-------------------|------------------------------------------------------------------------|-------|---------------------------------------------------------------------------|
+| connection_status | [StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus) |       | connection status is the status of the connection.                        |
+| node              | [MeshNode](#v1.MeshNode)                                               |       | node is the node status. This is only populated if the node is connected. |
 
 ### QueryRequest.QueryCommand
 
@@ -924,6 +927,14 @@ QueryCommand is the type of the query.
 | GET  | 0      | GET is the command to get a value.                                |
 | LIST | 1      | LIST is the command to list keys with an optional prefix.         |
 | ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
+
+### StatusResponse.ConnectionStatus
+
+| Name         | Number | Description                                                                   |
+|--------------|--------|-------------------------------------------------------------------------------|
+| DISCONNECTED | 0      | DISCONNECTED indicates that the node is not connected to a mesh.              |
+| CONNECTING   | 1      | CONNECTING indicates that the node is in the process of connecting to a mesh. |
+| CONNECTED    | 2      | CONNECTED indicates that the node is connected to a mesh.                     |
 
 ### AppDaemon
 

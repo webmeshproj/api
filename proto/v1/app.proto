@@ -37,6 +37,10 @@ message ConnectResponse {
     string node_id = 1;
     // mesh domain is the domain of the mesh.
     string mesh_domain = 2;
+    // ipv4 is the IPv4 address of the node.
+    string ipv4 = 3;
+    // ipv6 is the IPv6 address of the node.
+    string ipv6 = 4;
 }
 
 // DisconnectRequest is sent by the application to the node to disconnect
@@ -120,8 +124,16 @@ message StatusRequest {}
 
 // StatusResponse is a message containing the status of the node.
 message StatusResponse {
-    // connected is true if the node is connected to a mesh.
-    bool connected = 1;
+    enum ConnectionStatus {
+        // DISCONNECTED indicates that the node is not connected to a mesh.
+        DISCONNECTED = 0;
+        // CONNECTING indicates that the node is in the process of connecting to a mesh.
+        CONNECTING = 1;
+        // CONNECTED indicates that the node is connected to a mesh.
+        CONNECTED = 2;
+    }
+    // connection status is the status of the connection.
+    ConnectionStatus connection_status = 1;
     // node is the node status. This is only populated if the node is connected.
     MeshNode node = 2;
 }
