@@ -74,6 +74,8 @@
   - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
+  - [<span class="badge">M</span>SubscribeRequest](#v1.SubscribeRequest)
+  - [<span class="badge">M</span>SubscriptionEvent](#v1.SubscriptionEvent)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
   - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
@@ -920,6 +922,25 @@ StatusResponse is a message containing the status of the node.
 | connection_status | [StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus) |       | connection status is the status of the connection.                        |
 | node              | [MeshNode](#v1.MeshNode)                                               |       | node is the node status. This is only populated if the node is connected. |
 
+### SubscribeRequest
+
+SubscribeRequest is sent by the application to the node to subscribe to
+
+events. This currently only supports database events.
+
+| Field  | Type              | Label | Description                                         |
+|--------|-------------------|-------|-----------------------------------------------------|
+| prefix | [string](#string) |       | prefix is the prefix of the events to subscribe to. |
+
+### SubscriptionEvent
+
+SubscriptionEvent is a message containing a subscription event.
+
+| Field | Type              | Label | Description                                                             |
+|-------|-------------------|-------|-------------------------------------------------------------------------|
+| key   | [string](#string) |       | key is the key of the event.                                            |
+| value | [string](#string) |       | value is the value of the event. This will be the raw value of the key. |
+
 ### QueryRequest.QueryCommand
 
 QueryCommand is the type of the query.
@@ -957,6 +978,7 @@ tasks and receive responses.
 | Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
 | Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
 | Status        | [StatusRequest](#v1.StatusRequest)               | [StatusResponse](#v1.StatusResponse)               | Status is used to retrieve the status of the node.                                                                                                  |
+| Subscribe     | [SubscribeRequest](#v1.SubscribeRequest)         | [SubscriptionEvent](#v1.SubscriptionEvent) stream  | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
 
 <div class="file-heading">
 

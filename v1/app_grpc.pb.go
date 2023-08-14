@@ -41,6 +41,7 @@ const (
 	AppDaemon_Query_FullMethodName         = "/v1.AppDaemon/Query"
 	AppDaemon_Metrics_FullMethodName       = "/v1.AppDaemon/Metrics"
 	AppDaemon_Status_FullMethodName        = "/v1.AppDaemon/Status"
+	AppDaemon_Subscribe_FullMethodName     = "/v1.AppDaemon/Subscribe"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -63,6 +64,8 @@ type AppDaemonClient interface {
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
 	// Status is used to retrieve the status of the node.
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// Subscribe is used to subscribe to events in the mesh database.
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
 }
 
 type appDaemonClient struct {
@@ -159,6 +162,38 @@ func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ..
 	return out, nil
 }
 
+func (c *appDaemonClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[1], AppDaemon_Subscribe_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &appDaemonSubscribeClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type AppDaemon_SubscribeClient interface {
+	Recv() (*SubscriptionEvent, error)
+	grpc.ClientStream
+}
+
+type appDaemonSubscribeClient struct {
+	grpc.ClientStream
+}
+
+func (x *appDaemonSubscribeClient) Recv() (*SubscriptionEvent, error) {
+	m := new(SubscriptionEvent)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -179,6 +214,8 @@ type AppDaemonServer interface {
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
 	// Status is used to retrieve the status of the node.
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
+	// Subscribe is used to subscribe to events in the mesh database.
+	Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -206,6 +243,9 @@ func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*
 }
 func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*StatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
+}
+func (UnimplementedAppDaemonServer) Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error {
+	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -349,6 +389,27 @@ func _AppDaemon_Status_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(AppDaemonServer).Subscribe(m, &appDaemonSubscribeServer{stream})
+}
+
+type AppDaemon_SubscribeServer interface {
+	Send(*SubscriptionEvent) error
+	grpc.ServerStream
+}
+
+type appDaemonSubscribeServer struct {
+	grpc.ServerStream
+}
+
+func (x *appDaemonSubscribeServer) Send(m *SubscriptionEvent) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -385,6 +446,11 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Query",
 			Handler:       _AppDaemon_Query_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "Subscribe",
+			Handler:       _AppDaemon_Subscribe_Handler,
 			ServerStreams: true,
 		},
 	},

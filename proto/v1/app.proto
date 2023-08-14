@@ -144,6 +144,21 @@ message StatusResponse {
     MeshNode node = 2;
 }
 
+// SubscribeRequest is sent by the application to the node to subscribe to
+// events. This currently only supports database events.
+message SubscribeRequest{
+    // prefix is the prefix of the events to subscribe to.
+    string prefix = 1;
+}
+
+// SubscriptionEvent is a message containing a subscription event.
+message SubscriptionEvent {
+    // key is the key of the event.
+    string key = 1;
+    // value is the value of the event. This will be the raw value of the key.
+    string value = 2;
+}
+
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
 // allows the node to run in an idle state and be controlled by the
 // application. The application can send commands to the node to execute
@@ -171,4 +186,7 @@ service AppDaemon {
 
     // Status is used to retrieve the status of the node.
     rpc Status(StatusRequest) returns (StatusResponse) {}
+
+    // Subscribe is used to subscribe to events in the mesh database.
+    rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
 }

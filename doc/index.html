@@ -496,6 +496,14 @@
                   <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
                 </li>
               
+                <li>
+                  <a href="#v1.SubscribeRequest"><span class="badge">M</span>SubscribeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
@@ -3518,6 +3526,61 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
 
         
       
+        <h3 id="v1.SubscribeRequest">SubscribeRequest</h3>
+        <p>SubscribeRequest is sent by the application to the node to subscribe to</p><p>events. This currently only supports database events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscriptionEvent">SubscriptionEvent</h3>
+        <p>SubscriptionEvent is a message containing a subscription event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
@@ -3639,6 +3702,13 @@ on the node.</p></td>
                 <td><a href="#v1.StatusRequest">StatusRequest</a></td>
                 <td><a href="#v1.StatusResponse">StatusResponse</a></td>
                 <td><p>Status is used to retrieve the status of the node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Subscribe</td>
+                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
+                <td><p>Subscribe is used to subscribe to events in the mesh database.</p></td>
               </tr>
             
           </tbody>
