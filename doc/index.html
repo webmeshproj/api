@@ -488,6 +488,14 @@
                   <a href="#v1.StartCampfireResponse"><span class="badge">M</span>StartCampfireResponse</a>
                 </li>
               
+                <li>
+                  <a href="#v1.StatusRequest"><span class="badge">M</span>StatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
@@ -3184,6 +3192,30 @@ Protocols can be specified by name or number. </p></td>
         <p>ConnectResponse is returned by the Connect RPC.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node id is the unique identifier of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mesh_domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>mesh domain is the domain of the mesh. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -3414,6 +3446,44 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
 
         
       
+        <h3 id="v1.StatusRequest">StatusRequest</h3>
+        <p>StatusRequest is sent by the application to the node to retrieve the status</p><p>of the node.</p>
+
+        
+
+        
+      
+        <h3 id="v1.StatusResponse">StatusResponse</h3>
+        <p>StatusResponse is a message containing the status of the node.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connected</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>connected is true if the node is connected to a mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td></td>
+                  <td><p>node is the node status. This is only populated if the node is connected. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
@@ -3499,6 +3569,13 @@ on the node.</p></td>
                 <td><a href="#v1.MetricsRequest">MetricsRequest</a></td>
                 <td><a href="#v1.MetricsResponse">MetricsResponse</a></td>
                 <td><p>Metrics is used to retrieve interface metrics from the node.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Status</td>
+                <td><a href="#v1.StatusRequest">StatusRequest</a></td>
+                <td><a href="#v1.StatusResponse">StatusResponse</a></td>
+                <td><p>Status is used to retrieve the status of the node.</p></td>
               </tr>
             
           </tbody>

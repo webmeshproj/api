@@ -40,6 +40,7 @@ const (
 	AppDaemon_LeaveCampfire_FullMethodName = "/v1.AppDaemon/LeaveCampfire"
 	AppDaemon_Query_FullMethodName         = "/v1.AppDaemon/Query"
 	AppDaemon_Metrics_FullMethodName       = "/v1.AppDaemon/Metrics"
+	AppDaemon_Status_FullMethodName        = "/v1.AppDaemon/Status"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -60,6 +61,8 @@ type AppDaemonClient interface {
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (AppDaemon_QueryClient, error)
 	// Metrics is used to retrieve interface metrics from the node.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
+	// Status is used to retrieve the status of the node.
+	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 }
 
 type appDaemonClient struct {
@@ -147,6 +150,15 @@ func (c *appDaemonClient) Metrics(ctx context.Context, in *MetricsRequest, opts 
 	return out, nil
 }
 
+func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+	out := new(StatusResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_Status_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -165,6 +177,8 @@ type AppDaemonServer interface {
 	Query(*QueryRequest, AppDaemon_QueryServer) error
 	// Metrics is used to retrieve interface metrics from the node.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
+	// Status is used to retrieve the status of the node.
+	Status(context.Context, *StatusRequest) (*StatusResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -189,6 +203,9 @@ func (UnimplementedAppDaemonServer) Query(*QueryRequest, AppDaemon_QueryServer) 
 }
 func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
+}
+func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -314,6 +331,24 @@ func _AppDaemon_Metrics_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Status(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Status_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Status(ctx, req.(*StatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -340,6 +375,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Metrics",
 			Handler:    _AppDaemon_Metrics_Handler,
+		},
+		{
+			MethodName: "Status",
+			Handler:    _AppDaemon_Status_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

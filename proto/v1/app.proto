@@ -21,6 +21,7 @@ package v1;
 import "google/protobuf/struct.proto";
 
 import "v1/node.proto";
+import "v1/mesh.proto";
 
 // ConnectRequest is sent by the application to the node to establish a
 // connection to a mesh. This message will eventually contain unique
@@ -31,7 +32,12 @@ message ConnectRequest {
 }
 
 // ConnectResponse is returned by the Connect RPC.
-message ConnectResponse {}
+message ConnectResponse {
+    // node id is the unique identifier of the node.
+    string node_id = 1;
+    // mesh domain is the domain of the mesh.
+    string mesh_domain = 2;
+}
 
 // DisconnectRequest is sent by the application to the node to disconnect
 // from a mesh. This message will eventually contain unique identifiers
@@ -108,6 +114,18 @@ message MetricsResponse {
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
+// StatusRequest is sent by the application to the node to retrieve the status
+// of the node.
+message StatusRequest {}
+
+// StatusResponse is a message containing the status of the node.
+message StatusResponse {
+    // connected is true if the node is connected to a mesh.
+    bool connected = 1;
+    // node is the node status. This is only populated if the node is connected.
+    MeshNode node = 2;
+}
+
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
 // allows the node to run in an idle state and be controlled by the
 // application. The application can send commands to the node to execute
@@ -132,4 +150,7 @@ service AppDaemon {
 
     // Metrics is used to retrieve interface metrics from the node.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
+
+    // Status is used to retrieve the status of the node.
+    rpc Status(StatusRequest) returns (StatusResponse) {}
 }

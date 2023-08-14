@@ -72,6 +72,8 @@
   - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
   - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
+  - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
+  - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/campfire.proto](#v1%2fcampfire.proto)
@@ -795,6 +797,11 @@ identifiers to allow creating connections to multiple meshes.
 
 ConnectResponse is returned by the Connect RPC.
 
+| Field       | Type              | Label | Description                                   |
+|-------------|-------------------|-------|-----------------------------------------------|
+| node_id     | [string](#string) |       | node id is the unique identifier of the node. |
+| mesh_domain | [string](#string) |       | mesh domain is the domain of the mesh.        |
+
 ### DisconnectRequest
 
 DisconnectRequest is sent by the application to the node to disconnect
@@ -892,6 +899,22 @@ to the campfire.
 |----------|-------------------|-------|---------------------------------------------|
 | camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire. |
 
+### StatusRequest
+
+StatusRequest is sent by the application to the node to retrieve the
+status
+
+of the node.
+
+### StatusResponse
+
+StatusResponse is a message containing the status of the node.
+
+| Field     | Type                     | Label | Description                                                               |
+|-----------|--------------------------|-------|---------------------------------------------------------------------------|
+| connected | [bool](#bool)            |       | connected is true if the node is connected to a mesh.                     |
+| node      | [MeshNode](#v1.MeshNode) |       | node is the node status. This is only populated if the node is connected. |
+
 ### QueryRequest.QueryCommand
 
 QueryCommand is the type of the query.
@@ -920,6 +943,7 @@ tasks and receive responses.
 | LeaveCampfire | [LeaveCampfireRequest](#v1.LeaveCampfireRequest) | [LeaveCampfireResponse](#v1.LeaveCampfireResponse) | LeaveCampfire is used to leave a campfire.                                                                                                          |
 | Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
 | Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
+| Status        | [StatusRequest](#v1.StatusRequest)               | [StatusResponse](#v1.StatusResponse)               | Status is used to retrieve the status of the node.                                                                                                  |
 
 <div class="file-heading">
 
