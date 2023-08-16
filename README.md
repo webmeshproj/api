@@ -708,6 +708,7 @@ RuleResource is the resource type for a rule.
 | RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
 | RESOURCE_EDGES         | 8      | RESOURCE_EDGES is the resource for managing edges between nodes.                                               |
 | RESOURCE_OBSERVERS     | 9      | RESOURCE_OBSERVERS is the resource for managing observers. The only verb evaluated for this resource is PUT.   |
+| RESOURCE_PUBSUB        | 10     | RESOURCE_PUBSUB is the resource for managing pubsub topics.                                                    |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerb
