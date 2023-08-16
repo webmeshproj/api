@@ -43,6 +43,8 @@ enum RuleResource {
     // RESOURCE_OBSERVERS is the resource for managing observers. The only
     // verb evaluated for this resource is PUT.
     RESOURCE_OBSERVERS = 9;
+    // RESOURCE_PUBSUB is the resource for managing pubsub topics.
+    RESOURCE_PUBSUB = 10;
 
     // RESOURCE_ALL is a wildcard resource that matches all resources.
     RESOURCE_ALL = 999;
