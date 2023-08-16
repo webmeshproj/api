@@ -1059,6 +1059,7 @@ WireGuardPeer is a peer in the Wireguard network.
 | allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
 | allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                        |
 | ice                 | [bool](#bool)     |          | ice indicates whether the connection to this peer should be established over ICE. |
+| grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC port of the peer.                                           |
 
 ### Membership
 

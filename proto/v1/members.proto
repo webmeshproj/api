@@ -152,6 +152,8 @@ message WireGuardPeer {
     // ice indicates whether the connection to this peer should be
     // established over ICE.
     bool ice = 10;
+    // grpc_port is the gRPC port of the peer.
+    int32 grpc_port = 11;
 }
 
 // LeaveRequest is a request to leave the cluster.
