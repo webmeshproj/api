@@ -107,8 +107,7 @@ message MeshGraph {
 }
 
 // Mesh is a service that can optionally be exposed by a node. It provides methods for 
-// interfacing with the webmesh from the outside. Some methods are only available on the
-// leader. Nodes can enable the leader proxy to expose the leader's Mesh service.
+// interfacing with the webmesh from the outside.
 service Mesh {
     // GetNode gets a node by ID.
     rpc GetNode(GetNodeRequest) returns (MeshNode) {}

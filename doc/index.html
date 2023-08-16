@@ -175,29 +175,6 @@
         
           
           <li>
-            <a href="#v1%2fraft.proto">v1/raft.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.RaftApplyResponse"><span class="badge">M</span>RaftApplyResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
-                </li>
-              
-              
-              
-            </ul>
-          </li>
-        
-          
-          <li>
             <a href="#v1%2fnode.proto">v1/node.proto</a>
             <ul>
               
@@ -211,18 +188,6 @@
               
                 <li>
                   <a href="#v1.InterfaceMetrics"><span class="badge">M</span>InterfaceMetrics</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.JoinRequest"><span class="badge">M</span>JoinRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.JoinResponse"><span class="badge">M</span>JoinResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.LeaveRequest"><span class="badge">M</span>LeaveRequest</a>
                 </li>
               
                 <li>
@@ -242,14 +207,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.SnapshotRequest"><span class="badge">M</span>SnapshotRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SnapshotResponse"><span class="badge">M</span>SnapshotResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
@@ -259,18 +216,6 @@
               
                 <li>
                   <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.UpdateRequest"><span class="badge">M</span>UpdateRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.UpdateResponse"><span class="badge">M</span>UpdateResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.WireGuardPeer"><span class="badge">M</span>WireGuardPeer</a>
                 </li>
               
               
@@ -551,6 +496,76 @@
         
           
           <li>
+            <a href="#v1%2fraft.proto">v1/raft.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.RaftApplyResponse"><span class="badge">M</span>RaftApplyResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.RaftCommandType"><span class="badge">E</span>RaftCommandType</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#v1%2fmembers.proto">v1/members.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.JoinRequest"><span class="badge">M</span>JoinRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.JoinResponse"><span class="badge">M</span>JoinResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LeaveRequest"><span class="badge">M</span>LeaveRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SnapshotRequest"><span class="badge">M</span>SnapshotRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SnapshotResponse"><span class="badge">M</span>SnapshotResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.UpdateRequest"><span class="badge">M</span>UpdateRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.UpdateResponse"><span class="badge">M</span>UpdateResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.WireGuardPeer"><span class="badge">M</span>WireGuardPeer</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.Membership"><span class="badge">S</span>Membership</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fpeer_discovery.proto">v1/peer_discovery.proto</a>
             <ul>
               
@@ -698,125 +713,6 @@
       </ul>
     </div>
 
-    
-      
-      <div class="file-heading">
-        <h2 id="v1/raft.proto">v1/raft.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.RaftApplyResponse">RaftApplyResponse</h3>
-        <p>RaftApplyResponse is the response to an apply request. It</p><p>contains the result of applying the log entry.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>time</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>time is the total time it took to apply the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the apply. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.RaftLogEntry">RaftLogEntry</h3>
-        <p>RaftLogEntry is the data of an entry in the Raft log.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#v1.RaftCommandType">RaftCommandType</a></td>
-                  <td></td>
-                  <td><p>type is the type of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ttl</td>
-                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
-                  <td></td>
-                  <td><p>ttl is the time to live of the log entry. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-        <h3 id="v1.RaftCommandType">RaftCommandType</h3>
-        <p>RaftCommandType is the type of command being sent to the</p><p>Raft log.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the unknown command type.</p></td>
-              </tr>
-            
-              <tr>
-                <td>PUT</td>
-                <td>1</td>
-                <td><p>PUT is the command for putting a key/value pair.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETE</td>
-                <td>2</td>
-                <td><p>DELETE is the command for deleting a key/value pair.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-
-      
-
-      
     
       
       <div class="file-heading">
@@ -1010,244 +906,6 @@ local node is returned. </p></td>
 
         
       
-        <h3 id="v1.JoinRequest">JoinRequest</h3>
-        <p>JoinRequest is a request to join the cluster.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public wireguard key of the node to broadcast to peers. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>raft_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>raft_port is the Raft listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>grpc_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>meshdns_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
-a value of 0 indicates the node does not wish to offer DNS. ports are currently
-assumed to be UDP. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>primary_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
-the node is assumed to be behind a NAT and not directly accessible. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>wireguard_endpoints</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>zone_awareness_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>assign_ipv4</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>assign_ipv4 is whether an IPv4 address should be assigned to the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>prefer_raft_ipv6</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
-This is only used if assign_ipv4 is true. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>as_voter</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>as_voter is whether the node should receive a vote in elections. The request
-will be denied if the node is not allowed to vote. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>as_observer</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>as_observer is whether the node should be added as an observer. They will receive
-updates to the raft log, but not be able to vote in elections. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>routes</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
-if the node is not allowed to put routes. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>direct_peers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>direct_peers is a list of extra peers that should be connected to directly over ICE. 
-The request will be denied if the node is not allowed to put data channels or edges.
-The default joining behavior creates non-ICE links between the caller and the joiner.
-If the caller has a primary endpoint, the joiner will link the caller to all
-other nodes with a primary endpoint. If the caller has a zone awareness ID,
-the joiner will link the caller to all other nodes with the same zone awareness ID
-that also have a primary endpoint. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>features</td>
-                  <td><a href="#v1.Feature">Feature</a></td>
-                  <td>repeated</td>
-                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.JoinResponse">JoinResponse</h3>
-        <p>JoinResponse is a response to a join request.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>address_ipv4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv4 is the private IPv4 wireguard address of the node
-in CIDR format representing the network. This is only set if
-assign_ipv4 was set in the request or no network_ipv6 was provided.
-The bits are set to the network bits of the Mesh IPv4 network. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_ipv6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv6 is the IPv6 network assigned to the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>network_ipv4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>network_ipv4 is the IPv4 network of the Mesh. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>network_ipv6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>network_ipv6 is the IPv6 network of the Mesh. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>peers</td>
-                  <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
-                  <td>repeated</td>
-                  <td><p>peers is a list of wireguard peers to connect to. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ice_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
-ICE connections if required. This may only be populated when one of
-the peers has the ICE flag set. This must be set if the requestor
-specifies direct_peers. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dns_servers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>mesh_domain</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>mesh_domain is the domain of the mesh. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.LeaveRequest">LeaveRequest</h3>
-        <p>LeaveRequest is a request to leave the cluster.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the node. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.PeerMetrics">PeerMetrics</h3>
         <p>PeerMetrics are the metrics for a node's peer.</p>
 
@@ -1431,51 +1089,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
 
         
       
-        <h3 id="v1.SnapshotRequest">SnapshotRequest</h3>
-        <p>SnapshotRequest is a request to create a snapshot. It is intentionally</p><p>empty for now as there are no options.</p>
-
-        
-
-        
-      
-        <h3 id="v1.SnapshotResponse">SnapshotResponse</h3>
-        <p>SnapshotResponse is a response to a snapshot request.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>last_log_index</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>last_log_index is the last log index of the snapshot. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>current_term</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>current_term is the current term of the snapshot. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>snapshot</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>snapshot is the snapshot data. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.Status">Status</h3>
         <p>Status represents the status of a node.</p>
 
@@ -1630,200 +1243,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.UpdateRequest">UpdateRequest</h3>
-        <p>UpdateRequest contains most of the same fields as JoinRequest, but is</p><p>used to update the state of a node in the cluster.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public wireguard key of the node to broadcast to peers. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>raft_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>raft_port is the Raft listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>grpc_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>meshdns_port</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
-a value of 0 indicates the node does not wish to offer DNS. ports are currently
-assumed to be UDP. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>primary_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
-the node is assumed to be behind a NAT and not directly accessible. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>wireguard_endpoints</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>zone_awareness_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>as_voter</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>as_voter is whether the node should receive a vote in elections. The request
-will be denied if the node is not allowed to vote. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>routes</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
-if the node is not allowed to put routes. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>features</td>
-                  <td><a href="#v1.Feature">Feature</a></td>
-                  <td>repeated</td>
-                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.UpdateResponse">UpdateResponse</h3>
-        <p>UpdateResponse is a response to an update request. It is currently empty.</p>
-
-        
-
-        
-      
-        <h3 id="v1.WireGuardPeer">WireGuardPeer</h3>
-        <p>WireGuardPeer is a peer in the Wireguard network.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>primary_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>primary_endpoint is the primary endpoint of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>wireguard_endpoints</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>zone_awareness_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_ipv4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv4 is the private IPv4 wireguard address of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_ipv6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv6 is the private IPv6 wireguard address of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>allowed_ips</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>allowed_routes</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>allowed_routes is the list of allowed routes for the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ice</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>ice indicates whether the connection to this peer should be
-established over ICE. </p></td>
                 </tr>
               
             </tbody>
@@ -2015,7 +1434,7 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
 
       
         <h3 id="v1.Node">Node</h3>
-        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves. Some methods are only available on the currently</p><p>elected leader. This service can optionally be exposed on public interfaces to allow</p><p>external users to query the mesh state, join as an observer, or proxy/inspect traffic.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p><p>TODO: This API should be split into generic node functions and those specific to mutating</p><p>mesh state. Join/Update/Leave/Snapshot RPCs should be moved to a separate service.</p>
+        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves and provide a mesh API to applications.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -2023,54 +1442,10 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
           <tbody>
             
               <tr>
-                <td>Join</td>
-                <td><a href="#v1.JoinRequest">JoinRequest</a></td>
-                <td><a href="#v1.JoinResponse">JoinResponse</a></td>
-                <td><p>Join is used to join a node to the mesh. The joining node will be added to the mesh 
-as an observer, and will be able to query the mesh state, but will not be able to vote 
-in elections. To join as a voter pass the as_voter flag.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Update</td>
-                <td><a href="#v1.UpdateRequest">UpdateRequest</a></td>
-                <td><a href="#v1.UpdateResponse">UpdateResponse</a></td>
-                <td><p>Update is used by a node to update its state in the mesh. The node will be updated
-in the mesh and will be able to query the mesh state or vote in elections. Only
-non-empty fields will be updated. It is almost semantically equivalent to a join request
-with the same ID, but redefined to avoid confusion and to allow for expansion.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Leave</td>
-                <td><a href="#v1.LeaveRequest">LeaveRequest</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>Leave is used to remove a node from the mesh. The node will be removed from the mesh
-and will no longer be able to query the mesh state or vote in elections.</p></td>
-              </tr>
-            
-              <tr>
                 <td>GetStatus</td>
                 <td><a href="#v1.GetStatusRequest">GetStatusRequest</a></td>
                 <td><a href="#v1.Status">Status</a></td>
                 <td><p>GetStatus gets the status of a node in the cluster.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Snapshot</td>
-                <td><a href="#v1.SnapshotRequest">SnapshotRequest</a></td>
-                <td><a href="#v1.SnapshotResponse">SnapshotResponse</a></td>
-                <td><p>Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
-can be used to restore the mesh state.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Apply</td>
-                <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
-                <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
-                <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
-This is only available on the leader, and can only be called by nodes that are allowed
-to vote.</p></td>
               </tr>
             
               <tr>
@@ -2453,7 +1828,7 @@ assumed to be UDP. </p></td>
 
       
         <h3 id="v1.Mesh">Mesh</h3>
-        <p>Mesh is a service that can optionally be exposed by a node. It provides methods for </p><p>interfacing with the webmesh from the outside. Some methods are only available on the</p><p>leader. Nodes can enable the leader proxy to expose the leader's Mesh service.</p>
+        <p>Mesh is a service that can optionally be exposed by a node. It provides methods for </p><p>interfacing with the webmesh from the outside.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -3985,6 +3360,669 @@ only required when waiting for others to join.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#v1.CampfireMessage">CampfireMessage</a> stream</td>
                 <td><p>ReceiveMessages is used to receive messages from other peers.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/raft.proto">v1/raft.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.RaftApplyResponse">RaftApplyResponse</h3>
+        <p>RaftApplyResponse is the response to an apply request. It</p><p>contains the result of applying the log entry.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>time</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>time is the total time it took to apply the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>error is an error that occurred during the apply. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RaftLogEntry">RaftLogEntry</h3>
+        <p>RaftLogEntry is the data of an entry in the Raft log.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>type</td>
+                  <td><a href="#v1.RaftCommandType">RaftCommandType</a></td>
+                  <td></td>
+                  <td><p>type is the type of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the log entry. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ttl</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>ttl is the time to live of the log entry. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.RaftCommandType">RaftCommandType</h3>
+        <p>RaftCommandType is the type of command being sent to the</p><p>Raft log.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UNKNOWN</td>
+                <td>0</td>
+                <td><p>UNKNOWN is the unknown command type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PUT</td>
+                <td>1</td>
+                <td><p>PUT is the command for putting a key/value pair.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DELETE</td>
+                <td>2</td>
+                <td><p>DELETE is the command for deleting a key/value pair.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/members.proto">v1/members.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.JoinRequest">JoinRequest</h3>
+        <p>JoinRequest is a request to join the cluster.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public wireguard key of the node to broadcast to peers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>raft_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>raft_port is the Raft listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>grpc_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>meshdns_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
+a value of 0 indicates the node does not wish to offer DNS. ports are currently
+assumed to be UDP. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
+the node is assumed to be behind a NAT and not directly accessible. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>wireguard_endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>zone_awareness_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>assign_ipv4</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>assign_ipv4 is whether an IPv4 address should be assigned to the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>prefer_raft_ipv6</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
+This is only used if assign_ipv4 is true. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>as_voter</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+will be denied if the node is not allowed to vote. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>as_observer</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>as_observer is whether the node should be added as an observer. They will receive
+updates to the raft log, but not be able to vote in elections. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>routes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+if the node is not allowed to put routes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>direct_peers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>direct_peers is a list of extra peers that should be connected to directly over ICE. 
+The request will be denied if the node is not allowed to put data channels or edges.
+The default joining behavior creates non-ICE links between the caller and the joiner.
+If the caller has a primary endpoint, the joiner will link the caller to all
+other nodes with a primary endpoint. If the caller has a zone awareness ID,
+the joiner will link the caller to all other nodes with the same zone awareness ID
+that also have a primary endpoint. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.JoinResponse">JoinResponse</h3>
+        <p>JoinResponse is a response to a join request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>address_ipv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_ipv4 is the private IPv4 wireguard address of the node
+in CIDR format representing the network. This is only set if
+assign_ipv4 was set in the request or no network_ipv6 was provided.
+The bits are set to the network bits of the Mesh IPv4 network. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_ipv6 is the IPv6 network assigned to the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>network_ipv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>network_ipv4 is the IPv4 network of the Mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>network_ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>network_ipv6 is the IPv6 network of the Mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>peers</td>
+                  <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
+                  <td>repeated</td>
+                  <td><p>peers is a list of wireguard peers to connect to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ice_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
+ICE connections if required. This may only be populated when one of
+the peers has the ICE flag set. This must be set if the requestor
+specifies direct_peers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dns_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>mesh_domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>mesh_domain is the domain of the mesh. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.LeaveRequest">LeaveRequest</h3>
+        <p>LeaveRequest is a request to leave the cluster.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SnapshotRequest">SnapshotRequest</h3>
+        <p>SnapshotRequest is a request to create a snapshot. It is intentionally</p><p>empty for now as there are no options.</p>
+
+        
+
+        
+      
+        <h3 id="v1.SnapshotResponse">SnapshotResponse</h3>
+        <p>SnapshotResponse is a response to a snapshot request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>last_log_index</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>last_log_index is the last log index of the snapshot. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>current_term</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p>current_term is the current term of the snapshot. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>snapshot</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>snapshot is the snapshot data. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.UpdateRequest">UpdateRequest</h3>
+        <p>UpdateRequest contains most of the same fields as JoinRequest, but is</p><p>used to update the state of a node in the cluster.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public wireguard key of the node to broadcast to peers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>raft_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>raft_port is the Raft listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>grpc_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>grpc_port is the gRPC listen port of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>meshdns_port</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
+a value of 0 indicates the node does not wish to offer DNS. ports are currently
+assumed to be UDP. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
+the node is assumed to be behind a NAT and not directly accessible. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>wireguard_endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>zone_awareness_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>as_voter</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+will be denied if the node is not allowed to vote. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>routes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+if the node is not allowed to put routes. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>features is a list of features supported by the node that should be advertised to peers. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.UpdateResponse">UpdateResponse</h3>
+        <p>UpdateResponse is a response to an update request. It is currently empty.</p>
+
+        
+
+        
+      
+        <h3 id="v1.WireGuardPeer">WireGuardPeer</h3>
+        <p>WireGuardPeer is a peer in the Wireguard network.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public key of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>primary_endpoint</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>primary_endpoint is the primary endpoint of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>wireguard_endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>zone_awareness_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>zone_awareness_id is the zone awareness ID of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_ipv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_ipv4 is the private IPv4 wireguard address of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address_ipv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>address_ipv6 is the private IPv6 wireguard address of the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>allowed_ips</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>allowed_routes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>allowed_routes is the list of allowed routes for the peer. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ice</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>ice indicates whether the connection to this peer should be
+established over ICE. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.Membership">Membership</h3>
+        <p>The membership service is exposed on raft-nodes to allow nodes to join</p><p>and leave the cluster. This service is meant to be made available publicly</p><p>to allow people in from the outside.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Join</td>
+                <td><a href="#v1.JoinRequest">JoinRequest</a></td>
+                <td><a href="#v1.JoinResponse">JoinResponse</a></td>
+                <td><p>Join is used to join a node to the mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Update</td>
+                <td><a href="#v1.UpdateRequest">UpdateRequest</a></td>
+                <td><a href="#v1.UpdateResponse">UpdateResponse</a></td>
+                <td><p>Update is used by a node to update its state in the mesh. The node will be updated
+in the mesh and will be able to query the mesh state or vote in elections. Only
+non-empty fields will be updated. It is almost semantically equivalent to a join request
+with the same ID, but redefined to avoid confusion and to allow for expansion.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Leave</td>
+                <td><a href="#v1.LeaveRequest">LeaveRequest</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Leave is used to remove a node from the mesh. The node will be removed from the mesh
+and will no longer be able to query the mesh state or vote in elections.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Apply</td>
+                <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
+                <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
+                <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
+This is only available on the leader, and can only be called by nodes that are allowed
+to vote.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Snapshot</td>
+                <td><a href="#v1.SnapshotRequest">SnapshotRequest</a></td>
+                <td><a href="#v1.SnapshotResponse">SnapshotResponse</a></td>
+                <td><p>Snapshot is used to create a snapshot of the current state of the mesh.</p></td>
               </tr>
             
           </tbody>

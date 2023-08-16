@@ -35,12 +35,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Node_Join_FullMethodName                 = "/v1.Node/Join"
-	Node_Update_FullMethodName               = "/v1.Node/Update"
-	Node_Leave_FullMethodName                = "/v1.Node/Leave"
 	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
-	Node_Snapshot_FullMethodName             = "/v1.Node/Snapshot"
-	Node_Apply_FullMethodName                = "/v1.Node/Apply"
 	Node_Query_FullMethodName                = "/v1.Node/Query"
 	Node_Publish_FullMethodName              = "/v1.Node/Publish"
 	Node_Subscribe_FullMethodName            = "/v1.Node/Subscribe"
@@ -51,27 +46,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NodeClient interface {
-	// Join is used to join a node to the mesh. The joining node will be added to the mesh
-	// as an observer, and will be able to query the mesh state, but will not be able to vote
-	// in elections. To join as a voter pass the as_voter flag.
-	Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
-	// Update is used by a node to update its state in the mesh. The node will be updated
-	// in the mesh and will be able to query the mesh state or vote in elections. Only
-	// non-empty fields will be updated. It is almost semantically equivalent to a join request
-	// with the same ID, but redefined to avoid confusion and to allow for expansion.
-	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
-	// and will no longer be able to query the mesh state or vote in elections.
-	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// GetStatus gets the status of a node in the cluster.
 	GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error)
-	// Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
-	// can be used to restore the mesh state.
-	Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (*SnapshotResponse, error)
-	// Apply is used by voting nodes to request a log entry be applied to the state machine.
-	// This is only available on the leader, and can only be called by nodes that are allowed
-	// to vote.
-	Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// Query is used to query the mesh for information.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Node_QueryClient, error)
 	// Publish is used to publish events to the mesh database. A restricted set
@@ -97,54 +73,9 @@ func NewNodeClient(cc grpc.ClientConnInterface) NodeClient {
 	return &nodeClient{cc}
 }
 
-func (c *nodeClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error) {
-	out := new(JoinResponse)
-	err := c.cc.Invoke(ctx, Node_Join_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
-	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, Node_Update_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Node_Leave_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *nodeClient) GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, Node_GetStatus_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (*SnapshotResponse, error) {
-	out := new(SnapshotResponse)
-	err := c.cc.Invoke(ctx, Node_Snapshot_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
-	out := new(RaftApplyResponse)
-	err := c.cc.Invoke(ctx, Node_Apply_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -259,27 +190,8 @@ func (x *nodeNegotiateDataChannelClient) Recv() (*DataChannelNegotiation, error)
 // All implementations must embed UnimplementedNodeServer
 // for forward compatibility
 type NodeServer interface {
-	// Join is used to join a node to the mesh. The joining node will be added to the mesh
-	// as an observer, and will be able to query the mesh state, but will not be able to vote
-	// in elections. To join as a voter pass the as_voter flag.
-	Join(context.Context, *JoinRequest) (*JoinResponse, error)
-	// Update is used by a node to update its state in the mesh. The node will be updated
-	// in the mesh and will be able to query the mesh state or vote in elections. Only
-	// non-empty fields will be updated. It is almost semantically equivalent to a join request
-	// with the same ID, but redefined to avoid confusion and to allow for expansion.
-	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
-	// and will no longer be able to query the mesh state or vote in elections.
-	Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error)
 	// GetStatus gets the status of a node in the cluster.
 	GetStatus(context.Context, *GetStatusRequest) (*Status, error)
-	// Snapshot is used to create a snapshot of the current state of the mesh. The snapshot
-	// can be used to restore the mesh state.
-	Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error)
-	// Apply is used by voting nodes to request a log entry be applied to the state machine.
-	// This is only available on the leader, and can only be called by nodes that are allowed
-	// to vote.
-	Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
 	// Query is used to query the mesh for information.
 	Query(*QueryRequest, Node_QueryServer) error
 	// Publish is used to publish events to the mesh database. A restricted set
@@ -302,23 +214,8 @@ type NodeServer interface {
 type UnimplementedNodeServer struct {
 }
 
-func (UnimplementedNodeServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
-}
-func (UnimplementedNodeServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
-}
-func (UnimplementedNodeServer) Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
-}
 func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
-}
-func (UnimplementedNodeServer) Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Snapshot not implemented")
-}
-func (UnimplementedNodeServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
 }
 func (UnimplementedNodeServer) Query(*QueryRequest, Node_QueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method Query not implemented")
@@ -345,60 +242,6 @@ func RegisterNodeServer(s grpc.ServiceRegistrar, srv NodeServer) {
 	s.RegisterService(&Node_ServiceDesc, srv)
 }
 
-func _Node_Join_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JoinRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Join(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Join_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Join(ctx, req.(*JoinRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Update(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Update_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Update(ctx, req.(*UpdateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Leave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Leave(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Leave_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Leave(ctx, req.(*LeaveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetStatusRequest)
 	if err := dec(in); err != nil {
@@ -413,42 +256,6 @@ func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NodeServer).GetStatus(ctx, req.(*GetStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Snapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SnapshotRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Snapshot(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Snapshot_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Snapshot(ctx, req.(*SnapshotRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Apply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RaftLogEntry)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Apply(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Apply_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Apply(ctx, req.(*RaftLogEntry))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -547,28 +354,8 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NodeServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Join",
-			Handler:    _Node_Join_Handler,
-		},
-		{
-			MethodName: "Update",
-			Handler:    _Node_Update_Handler,
-		},
-		{
-			MethodName: "Leave",
-			Handler:    _Node_Leave_Handler,
-		},
-		{
 			MethodName: "GetStatus",
 			Handler:    _Node_GetStatus_Handler,
-		},
-		{
-			MethodName: "Snapshot",
-			Handler:    _Node_Snapshot_Handler,
-		},
-		{
-			MethodName: "Apply",
-			Handler:    _Node_Apply_Handler,
 		},
 		{
 			MethodName: "Publish",
