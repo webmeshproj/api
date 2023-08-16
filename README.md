@@ -1060,6 +1060,7 @@ WireGuardPeer is a peer in the Wireguard network.
 | allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                        |
 | ice                 | [bool](#bool)     |          | ice indicates whether the connection to this peer should be established over ICE. |
 | grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC port of the peer.                                           |
+| raft_member         | [bool](#bool)     |          | raft_member indicates that this peer is able to serve raft requests.              |
 
 ### Membership
 

@@ -154,6 +154,8 @@ message WireGuardPeer {
     bool ice = 10;
     // grpc_port is the gRPC port of the peer.
     int32 grpc_port = 11;
+    // raft_member indicates that this peer is able to serve raft requests.
+    bool raft_member = 12;
 }
 
 // LeaveRequest is a request to leave the cluster.
