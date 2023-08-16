@@ -43,7 +43,7 @@ enum ClusterStatus {
 enum Feature {
     // FEATURE_NONE is the default feature set.
     FEATURE_NONE = 0;
-    // NODES is the feature for nodes. This is always supported.
+    // NODES is the feature for nodes. This is always supported on raft members.
     NODES = 1;
     // LEADER_PROXY is the feature for leader proxying.
     LEADER_PROXY = 2;
