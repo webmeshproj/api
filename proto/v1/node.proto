@@ -333,6 +333,37 @@ message SnapshotResponse {
     bytes snapshot = 3;
 }
 
+// QueryRequest is sent by the application to the node to query the mesh for
+// information.
+message QueryRequest {
+    // QueryCommand is the type of the query.
+    enum QueryCommand {
+        // GET is the command to get a value.
+        GET = 0;
+        // LIST is the command to list keys with an optional prefix.
+        LIST = 1;
+        // ITER is the command to iterate over keys with an optional prefix.
+        ITER = 2;
+    };
+    // command is the command of the query.
+    QueryCommand command = 2;
+    // query is the key or prefix of the query.
+    string query = 3;
+}
+
+// QueryResponse is the message containing a mesh query result.
+message QueryResponse {
+    // key is the key of the query. For GET and ITER queries it will be the current key.
+    // For LIST queries it will be the prefix.
+    string key = 2;
+    // value is the value of the query. For GET and ITER queries it will be the value of the current key.
+    // For LIST queries it will be the list of keys that match the prefix.
+    repeated string value = 3;
+    // error is an error that occurred during the query. At the end of an ITER query it will be set to
+    // "EOF" to indicate that the iteration is complete.
+    string error = 4;
+}
+
 // SubscribeRequest is sent by the application to the node to subscribe to
 // events. This currently only supports database events.
 message SubscribeRequest{
@@ -366,6 +397,9 @@ message PublishRequest {
 // 
 // Nodes can optionally be configured to proxy requests to the leader. To prefer the leader 
 // handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.
+//
+// TODO: This API should be split into generic node functions and those specific to mutating
+// mesh state. Join/Update/Leave/Snapshot RPCs should be moved to a separate service.
 service Node {
     // Join is used to join a node to the mesh. The joining node will be added to the mesh 
     // as an observer, and will be able to query the mesh state, but will not be able to vote 
@@ -394,13 +428,16 @@ service Node {
     // to vote.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
 
-    // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-    // available on nodes that are members of the raft cluster.
-    rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
+    // Query is used to query the mesh for information.
+    rpc Query(QueryRequest) returns (stream QueryResponse) {}
 
     // Publish is used to publish events to the mesh database. A restricted set
     // of keys are allowed to be published to.
     rpc Publish(PublishRequest) returns (google.protobuf.Empty) {}
+
+    // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+    // available on nodes that are members of the raft cluster.
+    rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
 
     // NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
     // and a node in the cluster. The handling server will send the target node the source address, 

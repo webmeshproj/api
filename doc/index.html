@@ -234,6 +234,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryResponse"><span class="badge">M</span>QueryResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.SnapshotRequest"><span class="badge">M</span>SnapshotRequest</a>
                 </li>
               
@@ -276,6 +284,10 @@
               
                 <li>
                   <a href="#v1.Feature"><span class="badge">E</span>Feature</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
                 </li>
               
               
@@ -485,14 +497,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.QueryResponse"><span class="badge">M</span>QueryResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.StartCampfireRequest"><span class="badge">M</span>StartCampfireRequest</a>
                 </li>
               
@@ -508,10 +512,6 @@
                   <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
                 </li>
               
-              
-                <li>
-                  <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
-                </li>
               
                 <li>
                   <a href="#v1.StatusResponse.ConnectionStatus"><span class="badge">E</span>StatusResponse.ConnectionStatus</a>
@@ -1359,6 +1359,78 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.QueryRequest">QueryRequest</h3>
+        <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>command</td>
+                  <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
+                  <td></td>
+                  <td><p>command is the command of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>query is the key or prefix of the query. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.QueryResponse">QueryResponse</h3>
+        <p>QueryResponse is the message containing a mesh query result.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
+For LIST queries it will be the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
+For LIST queries it will be the list of keys that match the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
+&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.SnapshotRequest">SnapshotRequest</h3>
         <p>SnapshotRequest is a request to create a snapshot. It is intentionally</p><p>empty for now as there are no options.</p>
 
@@ -1849,7 +1921,7 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
               <tr>
                 <td>NODES</td>
                 <td>1</td>
-                <td><p>NODES is the feature for nodes. This is always supported.</p></td>
+                <td><p>NODES is the feature for nodes. This is always supported on raft members.</p></td>
               </tr>
             
               <tr>
@@ -1909,12 +1981,41 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
           </tbody>
         </table>
       
+        <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
+        <p>QueryCommand is the type of the query.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GET</td>
+                <td>0</td>
+                <td><p>GET is the command to get a value.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LIST</td>
+                <td>1</td>
+                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ITER</td>
+                <td>2</td>
+                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
 
       
 
       
         <h3 id="v1.Node">Node</h3>
-        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves. Some methods are only available on the currently</p><p>elected leader. This service can optionally be exposed on public interfaces to allow</p><p>external users to query the mesh state, join as an observer, or proxy/inspect traffic.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p>
+        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves. Some methods are only available on the currently</p><p>elected leader. This service can optionally be exposed on public interfaces to allow</p><p>external users to query the mesh state, join as an observer, or proxy/inspect traffic.</p><p>Nodes can optionally be configured to proxy requests to the leader. To prefer the leader </p><p>handle the request when a non-leader can otherwise serve it, use the "prefer-leader" header.</p><p>TODO: This API should be split into generic node functions and those specific to mutating</p><p>mesh state. Join/Update/Leave/Snapshot RPCs should be moved to a separate service.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -1973,11 +2074,10 @@ to vote.</p></td>
               </tr>
             
               <tr>
-                <td>Subscribe</td>
-                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
-                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
-                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-available on nodes that are members of the raft cluster.</p></td>
+                <td>Query</td>
+                <td><a href="#v1.QueryRequest">QueryRequest</a></td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
+                <td><p>Query is used to query the mesh for information.</p></td>
               </tr>
             
               <tr>
@@ -1986,6 +2086,14 @@ available on nodes that are members of the raft cluster.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Publish is used to publish events to the mesh database. A restricted set
 of keys are allowed to be published to.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Subscribe</td>
+                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
+                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+available on nodes that are members of the raft cluster.</p></td>
               </tr>
             
               <tr>
@@ -3505,78 +3613,6 @@ should join the mesh that the campfire is in and not bootstrap. </p></td>
 
         
       
-        <h3 id="v1.QueryRequest">QueryRequest</h3>
-        <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>command</td>
-                  <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
-                  <td></td>
-                  <td><p>command is the command of the query. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>query</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>query is the key or prefix of the query. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.QueryResponse">QueryResponse</h3>
-        <p>QueryResponse is the message containing a mesh query result.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
-For LIST queries it will be the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
-For LIST queries it will be the list of keys that match the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
-&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.StartCampfireRequest">StartCampfireRequest</h3>
         <p>StartCampfire is sent by the application to the node to start a campfire.</p><p>If the URL is empty, the node will start a new campfire using it's own</p><p>TURN server.</p>
 
@@ -3664,35 +3700,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
         
       
 
-      
-        <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
-        <p>QueryCommand is the type of the query.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>GET</td>
-                <td>0</td>
-                <td><p>GET is the command to get a value.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LIST</td>
-                <td>1</td>
-                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ITER</td>
-                <td>2</td>
-                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
       
         <h3 id="v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</h3>
         <p></p>

@@ -17,6 +17,8 @@
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
   - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
+  - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
+  - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
   - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
   - [<span class="badge">M</span>Status](#v1.Status)
@@ -28,6 +30,7 @@
   - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
   - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
   - [<span class="badge">E</span>Feature](#v1.Feature)
+  - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
   - [<span class="badge">S</span>Node](#v1.Node)
 - [v1/mesh.proto](#v1%2fmesh.proto)
   - [<span class="badge">M</span>GetNodeRequest](#v1.GetNodeRequest)
@@ -71,13 +74,10 @@
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
-  - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
-  - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
   - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
-  - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
   - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/campfire.proto](#v1%2fcampfire.proto)
@@ -282,6 +282,28 @@ This currently only supports database events.
 | value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
 
+### QueryRequest
+
+QueryRequest is sent by the application to the node to query the mesh
+for
+
+information.
+
+| Field   | Type                                                       | Label | Description                              |
+|---------|------------------------------------------------------------|-------|------------------------------------------|
+| command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.     |
+| query   | [string](#string)                                          |       | query is the key or prefix of the query. |
+
+### QueryResponse
+
+QueryResponse is the message containing a mesh query result.
+
+| Field | Type              | Label    | Description                                                                                                                                                            |
+|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
+| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
+| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
+
 ### SnapshotRequest
 
 SnapshotRequest is a request to create a snapshot. It is intentionally
@@ -409,7 +431,7 @@ Feature is a list of features supported by a node.
 | Name             | Number | Description                                                                      |
 |------------------|--------|----------------------------------------------------------------------------------|
 | FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                         |
-| NODES            | 1      | NODES is the feature for nodes. This is always supported.                        |
+| NODES            | 1      | NODES is the feature for nodes. This is always supported on raft members.        |
 | LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                 |
 | MESH_API         | 3      | MESH_API is the feature for the mesh API.                                        |
 | ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                      |
@@ -419,6 +441,16 @@ Feature is a list of features supported by a node.
 | TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                      |
 | MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                            |
 | FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes. |
+
+### QueryRequest.QueryCommand
+
+QueryCommand is the type of the query.
+
+| Name | Number | Description                                                       |
+|------|--------|-------------------------------------------------------------------|
+| GET  | 0      | GET is the command to get a value.                                |
+| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
+| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
 
 ### Node
 
@@ -440,6 +472,12 @@ prefer the leader
 handle the request when a non-leader can otherwise serve it, use the
 "prefer-leader" header.
 
+TODO: This API should be split into generic node functions and those
+specific to mutating
+
+mesh state. Join/Update/Leave/Snapshot RPCs should be moved to a
+separate service.
+
 | Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Join                 | [JoinRequest](#v1.JoinRequest)                              | [JoinResponse](#v1.JoinResponse)                            | Join is used to join a node to the mesh. The joining node will be added to the mesh as an observer, and will be able to query the mesh state, but will not be able to vote in elections. To join as a voter pass the as_voter flag.                                                                                                                                                                                                                                                                                 |
@@ -448,8 +486,9 @@ handle the request when a non-leader can otherwise serve it, use the
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Snapshot             | [SnapshotRequest](#v1.SnapshotRequest)                      | [SnapshotResponse](#v1.SnapshotResponse)                    | Snapshot is used to create a snapshot of the current state of the mesh. The snapshot can be used to restore the mesh state.                                                                                                                                                                                                                                                                                                                                                                                         |
 | Apply                | [RaftLogEntry](#v1.RaftLogEntry)                            | [RaftApplyResponse](#v1.RaftApplyResponse)                  | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                                                                                                                                                                                               |
-| Subscribe            | [SubscribeRequest](#v1.SubscribeRequest)                    | [SubscriptionEvent](#v1.SubscriptionEvent) stream           | Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only available on nodes that are members of the raft cluster.                                                                                                                                                                                                                                                                                                                                                                     |
+| Query                | [QueryRequest](#v1.QueryRequest)                            | [QueryResponse](#v1.QueryResponse) stream                   | Query is used to query the mesh for information.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | Publish              | [PublishRequest](#v1.PublishRequest)                        | [.google.protobuf.Empty](#google.protobuf.Empty)            | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Subscribe            | [SubscribeRequest](#v1.SubscribeRequest)                    | [SubscriptionEvent](#v1.SubscriptionEvent) stream           | Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only available on nodes that are members of the raft cluster.                                                                                                                                                                                                                                                                                                                                                                     |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
 
 <div class="file-heading">
@@ -897,28 +936,6 @@ MetricsResponse is a message containing interface metrics.
 | key   | [string](#string)                        |       |             |
 | value | [InterfaceMetrics](#v1.InterfaceMetrics) |       |             |
 
-### QueryRequest
-
-QueryRequest is sent by the application to the node to query the mesh
-for
-
-information.
-
-| Field   | Type                                                       | Label | Description                              |
-|---------|------------------------------------------------------------|-------|------------------------------------------|
-| command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.     |
-| query   | [string](#string)                                          |       | query is the key or prefix of the query. |
-
-### QueryResponse
-
-QueryResponse is the message containing a mesh query result.
-
-| Field | Type              | Label    | Description                                                                                                                                                            |
-|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
-| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
-| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
-
 ### StartCampfireRequest
 
 StartCampfire is sent by the application to the node to start a
@@ -959,16 +976,6 @@ StatusResponse is a message containing the status of the node.
 |-------------------|------------------------------------------------------------------------|-------|---------------------------------------------------------------------------|
 | connection_status | [StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus) |       | connection status is the status of the connection.                        |
 | node              | [MeshNode](#v1.MeshNode)                                               |       | node is the node status. This is only populated if the node is connected. |
-
-### QueryRequest.QueryCommand
-
-QueryCommand is the type of the query.
-
-| Name | Number | Description                                                       |
-|------|--------|-------------------------------------------------------------------|
-| GET  | 0      | GET is the command to get a value.                                |
-| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
-| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
 
 ### StatusResponse.ConnectionStatus
 
