@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 
@@ -144,32 +143,6 @@ message StatusResponse {
     ConnectionStatus connection_status = 1;
     // node is the node status. This is only populated if the node is connected.
     MeshNode node = 2;
-}
-
-// SubscribeRequest is sent by the application to the node to subscribe to
-// events. This currently only supports database events.
-message SubscribeRequest{
-    // prefix is the prefix of the events to subscribe to.
-    string prefix = 1;
-}
-
-// SubscriptionEvent is a message containing a subscription event.
-message SubscriptionEvent {
-    // key is the key of the event.
-    string key = 1;
-    // value is the value of the event. This will be the raw value of the key.
-    string value = 2;
-}
-
-// PublishRequest is sent by the application to the node to publish events.
-// This currently only supports database events.
-message PublishRequest {
-    // key is the key of the event.
-    string key = 1;
-    // value is the value of the event. This will be the raw value of the key.
-    string value = 2;
-    // ttl is the time for the event to live in the database.
-    google.protobuf.Duration ttl = 3;
 }
 
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode

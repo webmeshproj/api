@@ -16,9 +16,12 @@
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
+  - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
   - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
   - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
   - [<span class="badge">M</span>Status](#v1.Status)
+  - [<span class="badge">M</span>SubscribeRequest](#v1.SubscribeRequest)
+  - [<span class="badge">M</span>SubscriptionEvent](#v1.SubscriptionEvent)
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
@@ -68,15 +71,12 @@
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
-  - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
   - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
   - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
-  - [<span class="badge">M</span>SubscribeRequest](#v1.SubscribeRequest)
-  - [<span class="badge">M</span>SubscriptionEvent](#v1.SubscriptionEvent)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
   - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
@@ -227,6 +227,7 @@ JoinRequest is a request to join the cluster.
 | assign_ipv4         | [bool](#bool)          |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | prefer_raft_ipv6    | [bool](#bool)          |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.                                                                                                                                                                                                                                                                                                                                                                                                               |
 | as_voter            | [bool](#bool)          |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                                                                                                                                                                                                                                                                                                                                                                                |
+| as_observer         | [bool](#bool)          |          | as_observer is whether the node should be added as an observer. They will receive updates to the raft log, but not be able to vote in elections.                                                                                                                                                                                                                                                                                                                                                                                               |
 | routes              | [string](#string)      | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | direct_peers        | [string](#string)      | repeated | direct_peers is a list of extra peers that should be connected to directly over ICE. The request will be denied if the node is not allowed to put data channels or edges. The default joining behavior creates non-ICE links between the caller and the joiner. If the caller has a primary endpoint, the joiner will link the caller to all other nodes with a primary endpoint. If the caller has a zone awareness ID, the joiner will link the caller to all other nodes with the same zone awareness ID that also have a primary endpoint. |
 | features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the node that should be advertised to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -269,6 +270,18 @@ PeerMetrics are the metrics for a node's peer.
 | receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
 | transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
 
+### PublishRequest
+
+PublishRequest is sent by the application to the node to publish events.
+
+This currently only supports database events.
+
+| Field | Type                                                  | Label | Description                                                             |
+|-------|-------------------------------------------------------|-------|-------------------------------------------------------------------------|
+| key   | [string](#string)                                     |       | key is the key of the event.                                            |
+| value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
+
 ### SnapshotRequest
 
 SnapshotRequest is a request to create a snapshot. It is intentionally
@@ -304,6 +317,25 @@ Status represents the status of a node.
 | last_log_index    | [uint64](#uint64)                                       |          | last_log_index is the last log index of the cluster.         |
 | last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
 | interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
+
+### SubscribeRequest
+
+SubscribeRequest is sent by the application to the node to subscribe to
+
+events. This currently only supports database events.
+
+| Field  | Type              | Label | Description                                         |
+|--------|-------------------|-------|-----------------------------------------------------|
+| prefix | [string](#string) |       | prefix is the prefix of the events to subscribe to. |
+
+### SubscriptionEvent
+
+SubscriptionEvent is a message containing a subscription event.
+
+| Field | Type              | Label | Description                                                             |
+|-------|-------------------|-------|-------------------------------------------------------------------------|
+| key   | [string](#string) |       | key is the key of the event.                                            |
+| value | [string](#string) |       | value is the value of the event. This will be the raw value of the key. |
 
 ### UpdateRequest
 
@@ -351,12 +383,13 @@ WireGuardPeer is a peer in the Wireguard network.
 
 ClusterStatus is the status of the node in the cluster.
 
-| Name                   | Number | Description                                           |
-|------------------------|--------|-------------------------------------------------------|
-| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.         |
-| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.     |
-| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.         |
-| CLUSTER_NON_VOTER      | 3      | CLUSTER_NON_VOTER is the status for a non-voter node. |
+| Name                   | Number | Description                                                                  |
+|------------------------|--------|------------------------------------------------------------------------------|
+| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.                                |
+| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.                            |
+| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.                                |
+| CLUSTER_NON_VOTER      | 3      | CLUSTER_NON_VOTER is the status for a non-voter node.                        |
+| CLUSTER_NODE           | 4      | CLUSTER_NODE is the status of a node that is not a part of the raft cluster. |
 
 ### DataChannel
 
@@ -415,6 +448,8 @@ handle the request when a non-leader can otherwise serve it, use the
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Snapshot             | [SnapshotRequest](#v1.SnapshotRequest)                      | [SnapshotResponse](#v1.SnapshotResponse)                    | Snapshot is used to create a snapshot of the current state of the mesh. The snapshot can be used to restore the mesh state.                                                                                                                                                                                                                                                                                                                                                                                         |
 | Apply                | [RaftLogEntry](#v1.RaftLogEntry)                            | [RaftApplyResponse](#v1.RaftApplyResponse)                  | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                                                                                                                                                                                               |
+| Subscribe            | [SubscribeRequest](#v1.SubscribeRequest)                    | [SubscriptionEvent](#v1.SubscriptionEvent) stream           | Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only available on nodes that are members of the raft cluster.                                                                                                                                                                                                                                                                                                                                                                     |
+| Publish              | [PublishRequest](#v1.PublishRequest)                        | [.google.protobuf.Empty](#google.protobuf.Empty)            | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                                                                                                                                                                                                                                                                                                                                                                                    |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
 
 <div class="file-heading">
@@ -632,19 +667,21 @@ RuleResource is the resource type for a rule.
 | RESOURCE_NETWORK_ACLS  | 5      | RESOURCE_NETWORK_ACLS is the resource for managing network ACLs.                                               |
 | RESOURCE_ROUTES        | 6      | RESOURCE_ROUTES is the resource for managing routes.                                                           |
 | RESOURCE_DATA_CHANNELS | 7      | RESOURCE_DATA_CHANNELS is the resource for creating data channels.                                             |
-| RESOURCE_EDGES         | 8      | RESOURCE_EDGES is the resource for managing edges.                                                             |
+| RESOURCE_EDGES         | 8      | RESOURCE_EDGES is the resource for managing edges between nodes.                                               |
+| RESOURCE_OBSERVERS     | 9      | RESOURCE_OBSERVERS is the resource for managing observers. The only verb evaluated for this resource is PUT.   |
 | RESOURCE_ALL           | 999    | RESOURCE_ALL is a wildcard resource that matches all resources.                                                |
 
 ### RuleVerb
 
 RuleVerb is the verb type for a rule.
 
-| Name         | Number | Description                                                                                                                                                                                                                  |
-|--------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                                                                                                                                                                                             |
-| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource.                                                                                                                                                                    |
-| VERB_DELETE  | 3      | VERB_GET is the verb for getting a resource. It is currently not used by the system since all nodes have read access to all resources. Commented out for now. VERB_GET = 2; VERB_DELETE is the verb for deleting a resource. |
-| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.                                                                                                                                                                          |
+| Name         | Number | Description                                               |
+|--------------|--------|-----------------------------------------------------------|
+| VERB_UNKNOWN | 0      | VERB_UNKNOWN is an unknown verb.                          |
+| VERB_PUT     | 1      | VERB_PUT is the verb for creating or updating a resource. |
+| VERB_GET     | 2      | VERB_GET is the verb for getting a resource.              |
+| VERB_DELETE  | 3      | VERB_DELETE is the verb for deleting a resource.          |
+| VERB_ALL     | 999    | VERB_ALL is a wildcard verb that matches all verbs.       |
 
 ### SubjectType
 
@@ -860,18 +897,6 @@ MetricsResponse is a message containing interface metrics.
 | key   | [string](#string)                        |       |             |
 | value | [InterfaceMetrics](#v1.InterfaceMetrics) |       |             |
 
-### PublishRequest
-
-PublishRequest is sent by the application to the node to publish events.
-
-This currently only supports database events.
-
-| Field | Type                                                  | Label | Description                                                             |
-|-------|-------------------------------------------------------|-------|-------------------------------------------------------------------------|
-| key   | [string](#string)                                     |       | key is the key of the event.                                            |
-| value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
-| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
-
 ### QueryRequest
 
 QueryRequest is sent by the application to the node to query the mesh
@@ -934,25 +959,6 @@ StatusResponse is a message containing the status of the node.
 |-------------------|------------------------------------------------------------------------|-------|---------------------------------------------------------------------------|
 | connection_status | [StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus) |       | connection status is the status of the connection.                        |
 | node              | [MeshNode](#v1.MeshNode)                                               |       | node is the node status. This is only populated if the node is connected. |
-
-### SubscribeRequest
-
-SubscribeRequest is sent by the application to the node to subscribe to
-
-events. This currently only supports database events.
-
-| Field  | Type              | Label | Description                                         |
-|--------|-------------------|-------|-----------------------------------------------------|
-| prefix | [string](#string) |       | prefix is the prefix of the events to subscribe to. |
-
-### SubscriptionEvent
-
-SubscriptionEvent is a message containing a subscription event.
-
-| Field | Type              | Label | Description                                                             |
-|-------|-------------------|-------|-------------------------------------------------------------------------|
-| key   | [string](#string) |       | key is the key of the event.                                            |
-| value | [string](#string) |       | value is the value of the event. This will be the raw value of the key. |
 
 ### QueryRequest.QueryCommand
 

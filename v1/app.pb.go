@@ -24,7 +24,6 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
@@ -877,189 +876,11 @@ func (x *StatusResponse) GetNode() *MeshNode {
 	return nil
 }
 
-// SubscribeRequest is sent by the application to the node to subscribe to
-// events. This currently only supports database events.
-type SubscribeRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// prefix is the prefix of the events to subscribe to.
-	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
-}
-
-func (x *SubscribeRequest) Reset() {
-	*x = SubscribeRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_app_proto_msgTypes[14]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SubscribeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscribeRequest) ProtoMessage() {}
-
-func (x *SubscribeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_app_proto_msgTypes[14]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscribeRequest.ProtoReflect.Descriptor instead.
-func (*SubscribeRequest) Descriptor() ([]byte, []int) {
-	return file_v1_app_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *SubscribeRequest) GetPrefix() string {
-	if x != nil {
-		return x.Prefix
-	}
-	return ""
-}
-
-// SubscriptionEvent is a message containing a subscription event.
-type SubscriptionEvent struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// key is the key of the event.
-	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the event. This will be the raw value of the key.
-	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-}
-
-func (x *SubscriptionEvent) Reset() {
-	*x = SubscriptionEvent{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_app_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SubscriptionEvent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscriptionEvent) ProtoMessage() {}
-
-func (x *SubscriptionEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_app_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscriptionEvent.ProtoReflect.Descriptor instead.
-func (*SubscriptionEvent) Descriptor() ([]byte, []int) {
-	return file_v1_app_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *SubscriptionEvent) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *SubscriptionEvent) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-// PublishRequest is sent by the application to the node to publish events.
-// This currently only supports database events.
-type PublishRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// key is the key of the event.
-	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the event. This will be the raw value of the key.
-	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	// ttl is the time for the event to live in the database.
-	Ttl *durationpb.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
-}
-
-func (x *PublishRequest) Reset() {
-	*x = PublishRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_app_proto_msgTypes[16]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PublishRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PublishRequest) ProtoMessage() {}
-
-func (x *PublishRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_app_proto_msgTypes[16]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PublishRequest.ProtoReflect.Descriptor instead.
-func (*PublishRequest) Descriptor() ([]byte, []int) {
-	return file_v1_app_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *PublishRequest) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *PublishRequest) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-func (x *PublishRequest) GetTtl() *durationpb.Duration {
-	if x != nil {
-		return x.Ttl
-	}
-	return nil
-}
-
 var File_v1_app_proto protoreflect.FileDescriptor
 
 var file_v1_app_proto_rawDesc = []byte{
 	0x0a, 0x0c, 0x76, 0x31, 0x2f, 0x61, 0x70, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x02,
-	0x76, 0x31, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x76, 0x31, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
 	0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
 	0x2f, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x0d, 0x76,
@@ -1134,20 +955,7 @@ var file_v1_app_proto_rawDesc = []byte{
 	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x10, 0x0a, 0x0c, 0x44, 0x49,
 	0x53, 0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0e, 0x0a, 0x0a,
 	0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09,
-	0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x45, 0x44, 0x10, 0x02, 0x22, 0x2a, 0x0a, 0x10, 0x53,
-	0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x22, 0x3b, 0x0a, 0x11, 0x53, 0x75, 0x62, 0x73, 0x63,
-	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x10, 0x0a, 0x03,
-	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14,
-	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x22, 0x65, 0x0a, 0x0e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x2b,
-	0x0a, 0x03, 0x74, 0x74, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x67, 0x6f,
-	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x75,
-	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x03, 0x74, 0x74, 0x6c, 0x32, 0xa2, 0x04, 0x0a, 0x09,
+	0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x45, 0x44, 0x10, 0x02, 0x32, 0xa2, 0x04, 0x0a, 0x09,
 	0x41, 0x70, 0x70, 0x44, 0x61, 0x65, 0x6d, 0x6f, 0x6e, 0x12, 0x34, 0x0a, 0x07, 0x43, 0x6f, 0x6e,
 	0x6e, 0x65, 0x63, 0x74, 0x12, 0x12, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
 	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x13, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f,
@@ -1204,7 +1012,7 @@ func file_v1_app_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_app_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_v1_app_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_v1_app_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_v1_app_proto_goTypes = []interface{}{
 	(QueryRequest_QueryCommand)(0),       // 0: v1.QueryRequest.QueryCommand
 	(StatusResponse_ConnectionStatus)(0), // 1: v1.StatusResponse.ConnectionStatus
@@ -1222,47 +1030,45 @@ var file_v1_app_proto_goTypes = []interface{}{
 	(*MetricsResponse)(nil),              // 13: v1.MetricsResponse
 	(*StatusRequest)(nil),                // 14: v1.StatusRequest
 	(*StatusResponse)(nil),               // 15: v1.StatusResponse
-	(*SubscribeRequest)(nil),             // 16: v1.SubscribeRequest
-	(*SubscriptionEvent)(nil),            // 17: v1.SubscriptionEvent
-	(*PublishRequest)(nil),               // 18: v1.PublishRequest
-	nil,                                  // 19: v1.MetricsResponse.InterfacesEntry
-	(*structpb.Struct)(nil),              // 20: google.protobuf.Struct
-	(*MeshNode)(nil),                     // 21: v1.MeshNode
-	(*durationpb.Duration)(nil),          // 22: google.protobuf.Duration
-	(*InterfaceMetrics)(nil),             // 23: v1.InterfaceMetrics
-	(*emptypb.Empty)(nil),                // 24: google.protobuf.Empty
+	nil,                                  // 16: v1.MetricsResponse.InterfacesEntry
+	(*structpb.Struct)(nil),              // 17: google.protobuf.Struct
+	(*MeshNode)(nil),                     // 18: v1.MeshNode
+	(*InterfaceMetrics)(nil),             // 19: v1.InterfaceMetrics
+	(*SubscribeRequest)(nil),             // 20: v1.SubscribeRequest
+	(*PublishRequest)(nil),               // 21: v1.PublishRequest
+	(*SubscriptionEvent)(nil),            // 22: v1.SubscriptionEvent
+	(*emptypb.Empty)(nil),                // 23: google.protobuf.Empty
 }
 var file_v1_app_proto_depIdxs = []int32{
-	20, // 0: v1.ConnectRequest.config:type_name -> google.protobuf.Struct
+	17, // 0: v1.ConnectRequest.config:type_name -> google.protobuf.Struct
 	0,  // 1: v1.QueryRequest.command:type_name -> v1.QueryRequest.QueryCommand
-	19, // 2: v1.MetricsResponse.interfaces:type_name -> v1.MetricsResponse.InterfacesEntry
+	16, // 2: v1.MetricsResponse.interfaces:type_name -> v1.MetricsResponse.InterfacesEntry
 	1,  // 3: v1.StatusResponse.connection_status:type_name -> v1.StatusResponse.ConnectionStatus
-	21, // 4: v1.StatusResponse.node:type_name -> v1.MeshNode
-	22, // 5: v1.PublishRequest.ttl:type_name -> google.protobuf.Duration
-	23, // 6: v1.MetricsResponse.InterfacesEntry.value:type_name -> v1.InterfaceMetrics
-	2,  // 7: v1.AppDaemon.Connect:input_type -> v1.ConnectRequest
-	4,  // 8: v1.AppDaemon.Disconnect:input_type -> v1.DisconnectRequest
-	6,  // 9: v1.AppDaemon.StartCampfire:input_type -> v1.StartCampfireRequest
-	8,  // 10: v1.AppDaemon.LeaveCampfire:input_type -> v1.LeaveCampfireRequest
-	10, // 11: v1.AppDaemon.Query:input_type -> v1.QueryRequest
-	12, // 12: v1.AppDaemon.Metrics:input_type -> v1.MetricsRequest
-	14, // 13: v1.AppDaemon.Status:input_type -> v1.StatusRequest
-	16, // 14: v1.AppDaemon.Subscribe:input_type -> v1.SubscribeRequest
-	18, // 15: v1.AppDaemon.Publish:input_type -> v1.PublishRequest
-	3,  // 16: v1.AppDaemon.Connect:output_type -> v1.ConnectResponse
-	5,  // 17: v1.AppDaemon.Disconnect:output_type -> v1.DisconnectResponse
-	7,  // 18: v1.AppDaemon.StartCampfire:output_type -> v1.StartCampfireResponse
-	9,  // 19: v1.AppDaemon.LeaveCampfire:output_type -> v1.LeaveCampfireResponse
-	11, // 20: v1.AppDaemon.Query:output_type -> v1.QueryResponse
-	13, // 21: v1.AppDaemon.Metrics:output_type -> v1.MetricsResponse
-	15, // 22: v1.AppDaemon.Status:output_type -> v1.StatusResponse
-	17, // 23: v1.AppDaemon.Subscribe:output_type -> v1.SubscriptionEvent
-	24, // 24: v1.AppDaemon.Publish:output_type -> google.protobuf.Empty
-	16, // [16:25] is the sub-list for method output_type
-	7,  // [7:16] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	18, // 4: v1.StatusResponse.node:type_name -> v1.MeshNode
+	19, // 5: v1.MetricsResponse.InterfacesEntry.value:type_name -> v1.InterfaceMetrics
+	2,  // 6: v1.AppDaemon.Connect:input_type -> v1.ConnectRequest
+	4,  // 7: v1.AppDaemon.Disconnect:input_type -> v1.DisconnectRequest
+	6,  // 8: v1.AppDaemon.StartCampfire:input_type -> v1.StartCampfireRequest
+	8,  // 9: v1.AppDaemon.LeaveCampfire:input_type -> v1.LeaveCampfireRequest
+	10, // 10: v1.AppDaemon.Query:input_type -> v1.QueryRequest
+	12, // 11: v1.AppDaemon.Metrics:input_type -> v1.MetricsRequest
+	14, // 12: v1.AppDaemon.Status:input_type -> v1.StatusRequest
+	20, // 13: v1.AppDaemon.Subscribe:input_type -> v1.SubscribeRequest
+	21, // 14: v1.AppDaemon.Publish:input_type -> v1.PublishRequest
+	3,  // 15: v1.AppDaemon.Connect:output_type -> v1.ConnectResponse
+	5,  // 16: v1.AppDaemon.Disconnect:output_type -> v1.DisconnectResponse
+	7,  // 17: v1.AppDaemon.StartCampfire:output_type -> v1.StartCampfireResponse
+	9,  // 18: v1.AppDaemon.LeaveCampfire:output_type -> v1.LeaveCampfireResponse
+	11, // 19: v1.AppDaemon.Query:output_type -> v1.QueryResponse
+	13, // 20: v1.AppDaemon.Metrics:output_type -> v1.MetricsResponse
+	15, // 21: v1.AppDaemon.Status:output_type -> v1.StatusResponse
+	22, // 22: v1.AppDaemon.Subscribe:output_type -> v1.SubscriptionEvent
+	23, // 23: v1.AppDaemon.Publish:output_type -> google.protobuf.Empty
+	15, // [15:24] is the sub-list for method output_type
+	6,  // [6:15] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_v1_app_proto_init() }
@@ -1441,42 +1247,6 @@ func file_v1_app_proto_init() {
 				return nil
 			}
 		}
-		file_v1_app_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SubscribeRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_app_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SubscriptionEvent); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_app_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PublishRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1484,7 +1254,7 @@ func file_v1_app_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_app_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   18,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

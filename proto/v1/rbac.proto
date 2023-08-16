@@ -38,8 +38,11 @@ enum RuleResource {
     RESOURCE_ROUTES = 6;
     // RESOURCE_DATA_CHANNELS is the resource for creating data channels.
     RESOURCE_DATA_CHANNELS = 7;
-    // RESOURCE_EDGES is the resource for managing edges.
+    // RESOURCE_EDGES is the resource for managing edges between nodes.
     RESOURCE_EDGES = 8;
+    // RESOURCE_OBSERVERS is the resource for managing observers. The only
+    // verb evaluated for this resource is PUT.
+    RESOURCE_OBSERVERS = 9;
 
     // RESOURCE_ALL is a wildcard resource that matches all resources.
     RESOURCE_ALL = 999;
@@ -52,10 +55,8 @@ enum RuleVerb {
 
     // VERB_PUT is the verb for creating or updating a resource.
     VERB_PUT = 1;
-    // VERB_GET is the verb for getting a resource. It is currently
-    // not used by the system since all nodes have read access to all
-    // resources. Commented out for now.
-    // VERB_GET = 2;
+    // VERB_GET is the verb for getting a resource.
+    VERB_GET = 2;
     // VERB_DELETE is the verb for deleting a resource.
     VERB_DELETE = 3;
 

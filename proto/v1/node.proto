@@ -18,6 +18,7 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -33,6 +34,9 @@ enum ClusterStatus {
     CLUSTER_VOTER = 2;
     // CLUSTER_NON_VOTER is the status for a non-voter node.
     CLUSTER_NON_VOTER = 3;
+    // CLUSTER_NODE is the status of a node that is not a part
+    // of the raft cluster.
+    CLUSTER_NODE = 4;
 }
 
 // Feature is a list of features supported by a node.
@@ -103,9 +107,12 @@ message JoinRequest {
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
     bool as_voter = 11;
+    // as_observer is whether the node should be added as an observer. They will receive
+    // updates to the raft log, but not be able to vote in elections.
+    bool as_observer = 12;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
-    repeated string routes = 12;
+    repeated string routes = 13;
     // direct_peers is a list of extra peers that should be connected to directly over ICE. 
     // The request will be denied if the node is not allowed to put data channels or edges.
     // The default joining behavior creates non-ICE links between the caller and the joiner.
@@ -113,9 +120,9 @@ message JoinRequest {
     // other nodes with a primary endpoint. If the caller has a zone awareness ID,
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
-    repeated string direct_peers = 13;
+    repeated string direct_peers = 14;
     // features is a list of features supported by the node that should be advertised to peers.
-    repeated Feature features = 14;
+    repeated Feature features = 15;
 }
 
 // JoinResponse is a response to a join request.
@@ -326,6 +333,32 @@ message SnapshotResponse {
     bytes snapshot = 3;
 }
 
+// SubscribeRequest is sent by the application to the node to subscribe to
+// events. This currently only supports database events.
+message SubscribeRequest{
+    // prefix is the prefix of the events to subscribe to.
+    string prefix = 1;
+}
+
+// SubscriptionEvent is a message containing a subscription event.
+message SubscriptionEvent {
+    // key is the key of the event.
+    string key = 1;
+    // value is the value of the event. This will be the raw value of the key.
+    string value = 2;
+}
+
+// PublishRequest is sent by the application to the node to publish events.
+// This currently only supports database events.
+message PublishRequest {
+    // key is the key of the event.
+    string key = 1;
+    // value is the value of the event. This will be the raw value of the key.
+    string value = 2;
+    // ttl is the time for the event to live in the database.
+    google.protobuf.Duration ttl = 3;
+}
+
 // Node is the service exposed on every node in the mesh to communicate network
 // information amongst themselves. Some methods are only available on the currently
 // elected leader. This service can optionally be exposed on public interfaces to allow
@@ -360,6 +393,14 @@ service Node {
     // This is only available on the leader, and can only be called by nodes that are allowed
     // to vote.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
+
+    // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+    // available on nodes that are members of the raft cluster.
+    rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
+
+    // Publish is used to publish events to the mesh database. A restricted set
+    // of keys are allowed to be published to.
+    rpc Publish(PublishRequest) returns (google.protobuf.Empty) {}
 
     // NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
     // and a node in the cluster. The handling server will send the target node the source address, 

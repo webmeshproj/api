@@ -230,6 +230,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PublishRequest"><span class="badge">M</span>PublishRequest</a>
+                </li>
+              
+                <li>
                   <a href="#v1.SnapshotRequest"><span class="badge">M</span>SnapshotRequest</a>
                 </li>
               
@@ -239,6 +243,14 @@
               
                 <li>
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscribeRequest"><span class="badge">M</span>SubscribeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
                 </li>
               
                 <li>
@@ -473,10 +485,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.PublishRequest"><span class="badge">M</span>PublishRequest</a>
-                </li>
-              
-                <li>
                   <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
                 </li>
               
@@ -498,14 +506,6 @@
               
                 <li>
                   <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SubscribeRequest"><span class="badge">M</span>SubscribeRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
                 </li>
               
               
@@ -1103,6 +1103,14 @@ will be denied if the node is not allowed to vote. </p></td>
                 </tr>
               
                 <tr>
+                  <td>as_observer</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>as_observer is whether the node should be added as an observer. They will receive
+updates to the raft log, but not be able to vote in elections. </p></td>
+                </tr>
+              
+                <tr>
                   <td>routes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
@@ -1313,6 +1321,44 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.PublishRequest">PublishRequest</h3>
+        <p>PublishRequest is sent by the application to the node to publish events.</p><p>This currently only supports database events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ttl</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>ttl is the time for the event to live in the database. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.SnapshotRequest">SnapshotRequest</h3>
         <p>SnapshotRequest is a request to create a snapshot. It is intentionally</p><p>empty for now as there are no options.</p>
 
@@ -1457,6 +1503,61 @@ specifies direct_peers. </p></td>
                   <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
                   <td></td>
                   <td><p>interface_metrics are the metrics for the node&#39;s interfaces. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscribeRequest">SubscribeRequest</h3>
+        <p>SubscribeRequest is sent by the application to the node to subscribe to</p><p>events. This currently only supports database events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscriptionEvent">SubscriptionEvent</h3>
+        <p>SubscriptionEvent is a message containing a subscription event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
               
             </tbody>
@@ -1694,6 +1795,13 @@ established over ICE. </p></td>
                 <td><p>CLUSTER_NON_VOTER is the status for a non-voter node.</p></td>
               </tr>
             
+              <tr>
+                <td>CLUSTER_NODE</td>
+                <td>4</td>
+                <td><p>CLUSTER_NODE is the status of a node that is not a part
+of the raft cluster.</p></td>
+              </tr>
+            
           </tbody>
         </table>
       
@@ -1862,6 +1970,22 @@ can be used to restore the mesh state.</p></td>
                 <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
 This is only available on the leader, and can only be called by nodes that are allowed
 to vote.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Subscribe</td>
+                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
+                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+available on nodes that are members of the raft cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Publish</td>
+                <td><a href="#v1.PublishRequest">PublishRequest</a></td>
+                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><p>Publish is used to publish events to the mesh database. A restricted set
+of keys are allowed to be published to.</p></td>
               </tr>
             
               <tr>
@@ -2604,7 +2728,14 @@ verb evaluated for this resource is PUT.</p></td>
               <tr>
                 <td>RESOURCE_EDGES</td>
                 <td>8</td>
-                <td><p>RESOURCE_EDGES is the resource for managing edges.</p></td>
+                <td><p>RESOURCE_EDGES is the resource for managing edges between nodes.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RESOURCE_OBSERVERS</td>
+                <td>9</td>
+                <td><p>RESOURCE_OBSERVERS is the resource for managing observers. The only
+verb evaluated for this resource is PUT.</p></td>
               </tr>
             
               <tr>
@@ -2637,13 +2768,15 @@ verb evaluated for this resource is PUT.</p></td>
               </tr>
             
               <tr>
+                <td>VERB_GET</td>
+                <td>2</td>
+                <td><p>VERB_GET is the verb for getting a resource.</p></td>
+              </tr>
+            
+              <tr>
                 <td>VERB_DELETE</td>
                 <td>3</td>
-                <td><p>VERB_GET is the verb for getting a resource. It is currently
-not used by the system since all nodes have read access to all
-resources. Commented out for now.
-VERB_GET = 2;
-VERB_DELETE is the verb for deleting a resource.</p></td>
+                <td><p>VERB_DELETE is the verb for deleting a resource.</p></td>
               </tr>
             
               <tr>
@@ -3372,44 +3505,6 @@ should join the mesh that the campfire is in and not bootstrap. </p></td>
 
         
       
-        <h3 id="v1.PublishRequest">PublishRequest</h3>
-        <p>PublishRequest is sent by the application to the node to publish events.</p><p>This currently only supports database events.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the event. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ttl</td>
-                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
-                  <td></td>
-                  <td><p>ttl is the time for the event to live in the database. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.QueryRequest">QueryRequest</h3>
         <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
 
@@ -3559,61 +3654,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
                   <td><p>node is the node status. This is only populated if the node is connected. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SubscribeRequest">SubscribeRequest</h3>
-        <p>SubscribeRequest is sent by the application to the node to subscribe to</p><p>events. This currently only supports database events.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>prefix</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SubscriptionEvent">SubscriptionEvent</h3>
-        <p>SubscriptionEvent is a message containing a subscription event.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the event. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
               
             </tbody>
