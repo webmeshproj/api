@@ -18,7 +18,6 @@ syntax = "proto3";
 
 package v1;
 
-import "google/protobuf/empty.proto";
 import "v1/node.proto";
 import "v1/raft.proto";
 
@@ -161,6 +160,9 @@ message LeaveRequest {
     string id = 1;
 }
 
+// LeaveResponse is a response to a leave request. It is currently empty.
+message LeaveResponse {}
+
 // The membership service is exposed on raft-nodes to allow nodes to join
 // and leave the cluster. This service is meant to be made available publicly
 // to allow people in from the outside. 
@@ -176,7 +178,7 @@ service Membership {
 
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.
-    rpc Leave(LeaveRequest) returns (google.protobuf.Empty) {}
+    rpc Leave(LeaveRequest) returns (LeaveResponse) {}
 
     // Apply is used by voting nodes to request a log entry be applied to the state machine.
     // This is only available on the leader, and can only be called by nodes that are allowed

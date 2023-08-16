@@ -19,7 +19,6 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/duration.proto";
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 // ClusterStatus is the status of the node in the cluster.
@@ -234,6 +233,11 @@ message PublishRequest {
     google.protobuf.Duration ttl = 3;
 }
 
+// PublishResponse is the response to a publish request. This is currently
+// empty.
+message PublishResponse {
+}
+
 // Node is the service exposed on every node in the mesh to communicate network
 // information amongst themselves and provide a mesh API to applications.
 service Node {
@@ -245,7 +249,7 @@ service Node {
 
     // Publish is used to publish events to the mesh database. A restricted set
     // of keys are allowed to be published to.
-    rpc Publish(PublishRequest) returns (google.protobuf.Empty) {}
+    rpc Publish(PublishRequest) returns (PublishResponse) {}
 
     // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
     // available on nodes that are members of the raft cluster.

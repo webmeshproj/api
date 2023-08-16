@@ -26,7 +26,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -52,7 +51,7 @@ type NodeClient interface {
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Node_QueryClient, error)
 	// Publish is used to publish events to the mesh database. A restricted set
 	// of keys are allowed to be published to.
-	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
 	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
 	// available on nodes that are members of the raft cluster.
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Node_SubscribeClient, error)
@@ -114,8 +113,8 @@ func (x *nodeQueryClient) Recv() (*QueryResponse, error) {
 	return m, nil
 }
 
-func (c *nodeClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *nodeClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
+	out := new(PublishResponse)
 	err := c.cc.Invoke(ctx, Node_Publish_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -196,7 +195,7 @@ type NodeServer interface {
 	Query(*QueryRequest, Node_QueryServer) error
 	// Publish is used to publish events to the mesh database. A restricted set
 	// of keys are allowed to be published to.
-	Publish(context.Context, *PublishRequest) (*emptypb.Empty, error)
+	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
 	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
 	// available on nodes that are members of the raft cluster.
 	Subscribe(*SubscribeRequest, Node_SubscribeServer) error
@@ -220,7 +219,7 @@ func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*S
 func (UnimplementedNodeServer) Query(*QueryRequest, Node_QueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
-func (UnimplementedNodeServer) Publish(context.Context, *PublishRequest) (*emptypb.Empty, error) {
+func (UnimplementedNodeServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
 func (UnimplementedNodeServer) Subscribe(*SubscribeRequest, Node_SubscribeServer) error {

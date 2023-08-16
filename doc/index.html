@@ -199,6 +199,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PublishResponse"><span class="badge">M</span>PublishResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
                 </li>
               
@@ -532,6 +536,10 @@
               
                 <li>
                   <a href="#v1.LeaveRequest"><span class="badge">M</span>LeaveRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LeaveResponse"><span class="badge">M</span>LeaveResponse</a>
                 </li>
               
                 <li>
@@ -1009,6 +1017,13 @@ local node is returned. </p></td>
 
         
       
+        <h3 id="v1.PublishResponse">PublishResponse</h3>
+        <p>PublishResponse is the response to a publish request. This is currently</p><p>empty.</p>
+
+        
+
+        
+      
         <h3 id="v1.QueryRequest">QueryRequest</h3>
         <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
 
@@ -1450,7 +1465,7 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
               <tr>
                 <td>Publish</td>
                 <td><a href="#v1.PublishRequest">PublishRequest</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.PublishResponse">PublishResponse</a></td>
                 <td><p>Publish is used to publish events to the mesh database. A restricted set
 of keys are allowed to be published to.</p></td>
               </tr>
@@ -3723,6 +3738,13 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.LeaveResponse">LeaveResponse</h3>
+        <p>LeaveResponse is a response to a leave request. It is currently empty.</p>
+
+        
+
+        
+      
         <h3 id="v1.UpdateRequest">UpdateRequest</h3>
         <p>UpdateRequest contains most of the same fields as JoinRequest, but is</p><p>used to update the state of a node in the cluster.</p>
 
@@ -3951,7 +3973,7 @@ with the same ID, but redefined to avoid confusion and to allow for expansion.</
               <tr>
                 <td>Leave</td>
                 <td><a href="#v1.LeaveRequest">LeaveRequest</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.LeaveResponse">LeaveResponse</a></td>
                 <td><p>Leave is used to remove a node from the mesh. The node will be removed from the mesh
 and will no longer be able to query the mesh state or vote in elections.</p></td>
               </tr>

@@ -10,6 +10,7 @@
   - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
   - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
+  - [<span class="badge">M</span>PublishResponse](#v1.PublishResponse)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
   - [<span class="badge">M</span>QueryResponse](#v1.QueryResponse)
   - [<span class="badge">M</span>Status](#v1.Status)
@@ -80,6 +81,7 @@
   - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
+  - [<span class="badge">M</span>LeaveResponse](#v1.LeaveResponse)
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
@@ -194,6 +196,12 @@ This currently only supports database events.
 | key   | [string](#string)                                     |       | key is the key of the event.                                            |
 | value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
+
+### PublishResponse
+
+PublishResponse is the response to a publish request. This is currently
+
+empty.
 
 ### QueryRequest
 
@@ -318,7 +326,7 @@ information amongst themselves and provide a mesh API to applications.
 |----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Query                | [QueryRequest](#v1.QueryRequest)                            | [QueryResponse](#v1.QueryResponse) stream                   | Query is used to query the mesh for information.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| Publish              | [PublishRequest](#v1.PublishRequest)                        | [.google.protobuf.Empty](#google.protobuf.Empty)            | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Publish              | [PublishRequest](#v1.PublishRequest)                        | [PublishResponse](#v1.PublishResponse)                      | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                                                                                                                                                                                                                                                                                                                                                                                    |
 | Subscribe            | [SubscribeRequest](#v1.SubscribeRequest)                    | [SubscriptionEvent](#v1.SubscriptionEvent) stream           | Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only available on nodes that are members of the raft cluster.                                                                                                                                                                                                                                                                                                                                                                     |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
 
@@ -980,6 +988,10 @@ LeaveRequest is a request to leave the cluster.
 |-------|-------------------|-------|---------------------------|
 | id    | [string](#string) |       | id is the ID of the node. |
 
+### LeaveResponse
+
+LeaveResponse is a response to a leave request. It is currently empty.
+
 ### UpdateRequest
 
 UpdateRequest contains most of the same fields as JoinRequest, but is
@@ -1031,12 +1043,12 @@ publicly
 
 to allow people in from the outside.
 
-| Method Name | Request Type                       | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                |
-|-------------|------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Join        | [JoinRequest](#v1.JoinRequest)     | [JoinResponse](#v1.JoinResponse)                 | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
-| Update      | [UpdateRequest](#v1.UpdateRequest) | [UpdateResponse](#v1.UpdateResponse)             | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
-| Leave       | [LeaveRequest](#v1.LeaveRequest)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
-| Apply       | [RaftLogEntry](#v1.RaftLogEntry)   | [RaftApplyResponse](#v1.RaftApplyResponse)       | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
+| Method Name | Request Type                       | Response Type                              | Description                                                                                                                                                                                                                                                                                                                                |
+|-------------|------------------------------------|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join        | [JoinRequest](#v1.JoinRequest)     | [JoinResponse](#v1.JoinResponse)           | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
+| Update      | [UpdateRequest](#v1.UpdateRequest) | [UpdateResponse](#v1.UpdateResponse)       | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
+| Leave       | [LeaveRequest](#v1.LeaveRequest)   | [LeaveResponse](#v1.LeaveResponse)         | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
+| Apply       | [RaftLogEntry](#v1.RaftLogEntry)   | [RaftApplyResponse](#v1.RaftApplyResponse) | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
 
 <div class="file-heading">
 

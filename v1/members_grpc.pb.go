@@ -26,7 +26,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -54,7 +53,7 @@ type MembershipClient interface {
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
-	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error)
 	// Apply is used by voting nodes to request a log entry be applied to the state machine.
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
@@ -87,8 +86,8 @@ func (c *membershipClient) Update(ctx context.Context, in *UpdateRequest, opts .
 	return out, nil
 }
 
-func (c *membershipClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *membershipClient) Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error) {
+	out := new(LeaveResponse)
 	err := c.cc.Invoke(ctx, Membership_Leave_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -118,7 +117,7 @@ type MembershipServer interface {
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
-	Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error)
+	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
 	// Apply is used by voting nodes to request a log entry be applied to the state machine.
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
@@ -136,7 +135,7 @@ func (UnimplementedMembershipServer) Join(context.Context, *JoinRequest) (*JoinR
 func (UnimplementedMembershipServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedMembershipServer) Leave(context.Context, *LeaveRequest) (*emptypb.Empty, error) {
+func (UnimplementedMembershipServer) Leave(context.Context, *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
 }
 func (UnimplementedMembershipServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
