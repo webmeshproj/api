@@ -35,11 +35,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Membership_Join_FullMethodName     = "/v1.Membership/Join"
-	Membership_Update_FullMethodName   = "/v1.Membership/Update"
-	Membership_Leave_FullMethodName    = "/v1.Membership/Leave"
-	Membership_Apply_FullMethodName    = "/v1.Membership/Apply"
-	Membership_Snapshot_FullMethodName = "/v1.Membership/Snapshot"
+	Membership_Join_FullMethodName   = "/v1.Membership/Join"
+	Membership_Update_FullMethodName = "/v1.Membership/Update"
+	Membership_Leave_FullMethodName  = "/v1.Membership/Leave"
+	Membership_Apply_FullMethodName  = "/v1.Membership/Apply"
 )
 
 // MembershipClient is the client API for Membership service.
@@ -60,8 +59,6 @@ type MembershipClient interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
 	Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
-	// Snapshot is used to create a snapshot of the current state of the mesh.
-	Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (*SnapshotResponse, error)
 }
 
 type membershipClient struct {
@@ -108,15 +105,6 @@ func (c *membershipClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...
 	return out, nil
 }
 
-func (c *membershipClient) Snapshot(ctx context.Context, in *SnapshotRequest, opts ...grpc.CallOption) (*SnapshotResponse, error) {
-	out := new(SnapshotResponse)
-	err := c.cc.Invoke(ctx, Membership_Snapshot_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // MembershipServer is the server API for Membership service.
 // All implementations must embed UnimplementedMembershipServer
 // for forward compatibility
@@ -135,8 +123,6 @@ type MembershipServer interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
 	Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
-	// Snapshot is used to create a snapshot of the current state of the mesh.
-	Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error)
 	mustEmbedUnimplementedMembershipServer()
 }
 
@@ -155,9 +141,6 @@ func (UnimplementedMembershipServer) Leave(context.Context, *LeaveRequest) (*emp
 }
 func (UnimplementedMembershipServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
-}
-func (UnimplementedMembershipServer) Snapshot(context.Context, *SnapshotRequest) (*SnapshotResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Snapshot not implemented")
 }
 func (UnimplementedMembershipServer) mustEmbedUnimplementedMembershipServer() {}
 
@@ -244,24 +227,6 @@ func _Membership_Apply_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Membership_Snapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SnapshotRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MembershipServer).Snapshot(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Membership_Snapshot_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MembershipServer).Snapshot(ctx, req.(*SnapshotRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Membership_ServiceDesc is the grpc.ServiceDesc for Membership service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -284,10 +249,6 @@ var Membership_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Apply",
 			Handler:    _Membership_Apply_Handler,
-		},
-		{
-			MethodName: "Snapshot",
-			Handler:    _Membership_Snapshot_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

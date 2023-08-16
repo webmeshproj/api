@@ -80,8 +80,6 @@
   - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
-  - [<span class="badge">M</span>SnapshotRequest](#v1.SnapshotRequest)
-  - [<span class="badge">M</span>SnapshotResponse](#v1.SnapshotResponse)
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
@@ -982,22 +980,6 @@ LeaveRequest is a request to leave the cluster.
 |-------|-------------------|-------|---------------------------|
 | id    | [string](#string) |       | id is the ID of the node. |
 
-### SnapshotRequest
-
-SnapshotRequest is a request to create a snapshot. It is intentionally
-
-empty for now as there are no options.
-
-### SnapshotResponse
-
-SnapshotResponse is a response to a snapshot request.
-
-| Field          | Type              | Label | Description                                           |
-|----------------|-------------------|-------|-------------------------------------------------------|
-| last_log_index | [uint64](#uint64) |       | last_log_index is the last log index of the snapshot. |
-| current_term   | [uint64](#uint64) |       | current_term is the current term of the snapshot.     |
-| snapshot       | [bytes](#bytes)   |       | snapshot is the snapshot data.                        |
-
 ### UpdateRequest
 
 UpdateRequest contains most of the same fields as JoinRequest, but is
@@ -1049,13 +1031,12 @@ publicly
 
 to allow people in from the outside.
 
-| Method Name | Request Type                           | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                |
-|-------------|----------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Join        | [JoinRequest](#v1.JoinRequest)         | [JoinResponse](#v1.JoinResponse)                 | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
-| Update      | [UpdateRequest](#v1.UpdateRequest)     | [UpdateResponse](#v1.UpdateResponse)             | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
-| Leave       | [LeaveRequest](#v1.LeaveRequest)       | [.google.protobuf.Empty](#google.protobuf.Empty) | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
-| Apply       | [RaftLogEntry](#v1.RaftLogEntry)       | [RaftApplyResponse](#v1.RaftApplyResponse)       | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
-| Snapshot    | [SnapshotRequest](#v1.SnapshotRequest) | [SnapshotResponse](#v1.SnapshotResponse)         | Snapshot is used to create a snapshot of the current state of the mesh.                                                                                                                                                                                                                                                                    |
+| Method Name | Request Type                       | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                |
+|-------------|------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join        | [JoinRequest](#v1.JoinRequest)     | [JoinResponse](#v1.JoinResponse)                 | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
+| Update      | [UpdateRequest](#v1.UpdateRequest) | [UpdateResponse](#v1.UpdateResponse)             | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
+| Leave       | [LeaveRequest](#v1.LeaveRequest)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
+| Apply       | [RaftLogEntry](#v1.RaftLogEntry)   | [RaftApplyResponse](#v1.RaftApplyResponse)       | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
 
 <div class="file-heading">
 

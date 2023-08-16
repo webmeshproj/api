@@ -161,25 +161,10 @@ message LeaveRequest {
     string id = 1;
 }
 
-// SnapshotRequest is a request to create a snapshot. It is intentionally
-// empty for now as there are no options.
-message SnapshotRequest {
-}
-
-// SnapshotResponse is a response to a snapshot request.
-message SnapshotResponse {
-    // last_log_index is the last log index of the snapshot.
-    uint64 last_log_index = 1;
-    // current_term is the current term of the snapshot.
-    uint64 current_term = 2;
-    // snapshot is the snapshot data.
-    bytes snapshot = 3;
-}
-
 // The membership service is exposed on raft-nodes to allow nodes to join
 // and leave the cluster. This service is meant to be made available publicly
 // to allow people in from the outside. 
-service Membership{
+service Membership {
     // Join is used to join a node to the mesh.
     rpc Join(JoinRequest) returns (JoinResponse) {}
 
@@ -197,7 +182,4 @@ service Membership{
     // This is only available on the leader, and can only be called by nodes that are allowed
     // to vote.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
-
-    // Snapshot is used to create a snapshot of the current state of the mesh.
-    rpc Snapshot(SnapshotRequest) returns (SnapshotResponse) {}
 }
