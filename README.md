@@ -82,6 +82,9 @@
   - [<span class="badge">M</span>JoinResponse](#v1.JoinResponse)
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>LeaveResponse](#v1.LeaveResponse)
+  - [<span class="badge">M</span>RaftConfigurationRequest](#v1.RaftConfigurationRequest)
+  - [<span class="badge">M</span>RaftConfigurationResponse](#v1.RaftConfigurationResponse)
+  - [<span class="badge">M</span>RaftServer](#v1.RaftServer)
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
@@ -992,6 +995,29 @@ LeaveRequest is a request to leave the cluster.
 
 LeaveResponse is a response to a leave request. It is currently empty.
 
+### RaftConfigurationRequest
+
+RaftConfigurationRequest is a request to get the current Raft
+configuration.
+
+### RaftConfigurationResponse
+
+RaftConfigurationResponse is a response to a Raft configuration request.
+
+| Field   | Type                         | Label    | Description                                               |
+|---------|------------------------------|----------|-----------------------------------------------------------|
+| servers | [RaftServer](#v1.RaftServer) | repeated | servers is the list of servers in the Raft configuration. |
+
+### RaftServer
+
+RaftServer is a server in the Raft configuration.
+
+| Field    | Type                               | Label | Description                                |
+|----------|------------------------------------|-------|--------------------------------------------|
+| id       | [string](#string)                  |       | ID is the ID of the server.                |
+| suffrage | [ClusterStatus](#v1.ClusterStatus) |       | Suffrage is the suffrage of the server.    |
+| address  | [string](#string)                  |       | Address is the mesh address of the server. |
+
 ### UpdateRequest
 
 UpdateRequest contains most of the same fields as JoinRequest, but is
@@ -1043,12 +1069,13 @@ publicly
 
 to allow people in from the outside.
 
-| Method Name | Request Type                       | Response Type                              | Description                                                                                                                                                                                                                                                                                                                                |
-|-------------|------------------------------------|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Join        | [JoinRequest](#v1.JoinRequest)     | [JoinResponse](#v1.JoinResponse)           | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
-| Update      | [UpdateRequest](#v1.UpdateRequest) | [UpdateResponse](#v1.UpdateResponse)       | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
-| Leave       | [LeaveRequest](#v1.LeaveRequest)   | [LeaveResponse](#v1.LeaveResponse)         | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
-| Apply       | [RaftLogEntry](#v1.RaftLogEntry)   | [RaftApplyResponse](#v1.RaftApplyResponse) | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
+| Method Name          | Request Type                                             | Response Type                                              | Description                                                                                                                                                                                                                                                                                                                                |
+|----------------------|----------------------------------------------------------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join                 | [JoinRequest](#v1.JoinRequest)                           | [JoinResponse](#v1.JoinResponse)                           | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
+| Update               | [UpdateRequest](#v1.UpdateRequest)                       | [UpdateResponse](#v1.UpdateResponse)                       | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
+| Leave                | [LeaveRequest](#v1.LeaveRequest)                         | [LeaveResponse](#v1.LeaveResponse)                         | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
+| Apply                | [RaftLogEntry](#v1.RaftLogEntry)                         | [RaftApplyResponse](#v1.RaftApplyResponse)                 | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
+| GetRaftConfiguration | [RaftConfigurationRequest](#v1.RaftConfigurationRequest) | [RaftConfigurationResponse](#v1.RaftConfigurationResponse) | GetRaftConfiguration returns the current Raft configuration.                                                                                                                                                                                                                                                                               |
 
 <div class="file-heading">
 

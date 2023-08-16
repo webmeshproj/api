@@ -34,10 +34,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Membership_Join_FullMethodName   = "/v1.Membership/Join"
-	Membership_Update_FullMethodName = "/v1.Membership/Update"
-	Membership_Leave_FullMethodName  = "/v1.Membership/Leave"
-	Membership_Apply_FullMethodName  = "/v1.Membership/Apply"
+	Membership_Join_FullMethodName                 = "/v1.Membership/Join"
+	Membership_Update_FullMethodName               = "/v1.Membership/Update"
+	Membership_Leave_FullMethodName                = "/v1.Membership/Leave"
+	Membership_Apply_FullMethodName                = "/v1.Membership/Apply"
+	Membership_GetRaftConfiguration_FullMethodName = "/v1.Membership/GetRaftConfiguration"
 )
 
 // MembershipClient is the client API for Membership service.
@@ -58,6 +59,8 @@ type MembershipClient interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
 	Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
+	// GetRaftConfiguration returns the current Raft configuration.
+	GetRaftConfiguration(ctx context.Context, in *RaftConfigurationRequest, opts ...grpc.CallOption) (*RaftConfigurationResponse, error)
 }
 
 type membershipClient struct {
@@ -104,6 +107,15 @@ func (c *membershipClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...
 	return out, nil
 }
 
+func (c *membershipClient) GetRaftConfiguration(ctx context.Context, in *RaftConfigurationRequest, opts ...grpc.CallOption) (*RaftConfigurationResponse, error) {
+	out := new(RaftConfigurationResponse)
+	err := c.cc.Invoke(ctx, Membership_GetRaftConfiguration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MembershipServer is the server API for Membership service.
 // All implementations must embed UnimplementedMembershipServer
 // for forward compatibility
@@ -122,6 +134,8 @@ type MembershipServer interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
 	Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
+	// GetRaftConfiguration returns the current Raft configuration.
+	GetRaftConfiguration(context.Context, *RaftConfigurationRequest) (*RaftConfigurationResponse, error)
 	mustEmbedUnimplementedMembershipServer()
 }
 
@@ -140,6 +154,9 @@ func (UnimplementedMembershipServer) Leave(context.Context, *LeaveRequest) (*Lea
 }
 func (UnimplementedMembershipServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
+}
+func (UnimplementedMembershipServer) GetRaftConfiguration(context.Context, *RaftConfigurationRequest) (*RaftConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRaftConfiguration not implemented")
 }
 func (UnimplementedMembershipServer) mustEmbedUnimplementedMembershipServer() {}
 
@@ -226,6 +243,24 @@ func _Membership_Apply_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Membership_GetRaftConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RaftConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServer).GetRaftConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Membership_GetRaftConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServer).GetRaftConfiguration(ctx, req.(*RaftConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Membership_ServiceDesc is the grpc.ServiceDesc for Membership service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -248,6 +283,10 @@ var Membership_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Apply",
 			Handler:    _Membership_Apply_Handler,
+		},
+		{
+			MethodName: "GetRaftConfiguration",
+			Handler:    _Membership_GetRaftConfiguration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

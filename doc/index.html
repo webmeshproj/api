@@ -543,6 +543,18 @@
                 </li>
               
                 <li>
+                  <a href="#v1.RaftConfigurationRequest"><span class="badge">M</span>RaftConfigurationRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RaftConfigurationResponse"><span class="badge">M</span>RaftConfigurationResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RaftServer"><span class="badge">M</span>RaftServer</a>
+                </li>
+              
+                <li>
                   <a href="#v1.UpdateRequest"><span class="badge">M</span>UpdateRequest</a>
                 </li>
               
@@ -3745,6 +3757,75 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.RaftConfigurationRequest">RaftConfigurationRequest</h3>
+        <p>RaftConfigurationRequest is a request to get the current Raft configuration.</p>
+
+        
+
+        
+      
+        <h3 id="v1.RaftConfigurationResponse">RaftConfigurationResponse</h3>
+        <p>RaftConfigurationResponse is a response to a Raft configuration request.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>servers</td>
+                  <td><a href="#v1.RaftServer">RaftServer</a></td>
+                  <td>repeated</td>
+                  <td><p>servers is the list of servers in the Raft configuration. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RaftServer">RaftServer</h3>
+        <p>RaftServer is a server in the Raft configuration.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the ID of the server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>suffrage</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
+                  <td></td>
+                  <td><p>Suffrage is the suffrage of the server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Address is the mesh address of the server. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.UpdateRequest">UpdateRequest</h3>
         <p>UpdateRequest contains most of the same fields as JoinRequest, but is</p><p>used to update the state of a node in the cluster.</p>
 
@@ -3985,6 +4066,13 @@ and will no longer be able to query the mesh state or vote in elections.</p></td
                 <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
 This is only available on the leader, and can only be called by nodes that are allowed
 to vote.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetRaftConfiguration</td>
+                <td><a href="#v1.RaftConfigurationRequest">RaftConfigurationRequest</a></td>
+                <td><a href="#v1.RaftConfigurationResponse">RaftConfigurationResponse</a></td>
+                <td><p>GetRaftConfiguration returns the current Raft configuration.</p></td>
               </tr>
             
           </tbody>

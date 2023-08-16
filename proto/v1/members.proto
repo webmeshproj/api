@@ -163,6 +163,25 @@ message LeaveRequest {
 // LeaveResponse is a response to a leave request. It is currently empty.
 message LeaveResponse {}
 
+// RaftConfigurationRequest is a request to get the current Raft configuration.
+message RaftConfigurationRequest {}
+
+// RaftConfigurationResponse is a response to a Raft configuration request.
+message RaftConfigurationResponse {
+    // servers is the list of servers in the Raft configuration.
+    repeated RaftServer servers = 1;
+}
+
+// RaftServer is a server in the Raft configuration.
+message RaftServer {
+    // ID is the ID of the server.
+    string id = 1;
+    // Suffrage is the suffrage of the server.
+    ClusterStatus suffrage = 2;
+    // Address is the mesh address of the server.
+    string address = 3;
+}
+
 // The membership service is exposed on raft-nodes to allow nodes to join
 // and leave the cluster. This service is meant to be made available publicly
 // to allow people in from the outside. 
@@ -184,4 +203,7 @@ service Membership {
     // This is only available on the leader, and can only be called by nodes that are allowed
     // to vote.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
+
+    // GetRaftConfiguration returns the current Raft configuration.
+    rpc GetRaftConfiguration(RaftConfigurationRequest) returns (RaftConfigurationResponse) {}
 }
