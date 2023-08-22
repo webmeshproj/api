@@ -77,12 +77,14 @@ message PluginQuery {
     string id = 1;
     // QueryCommand is the type of the query.
     enum QueryCommand {
+        // UNKNOWN is the default value of QueryCommand.
+        UNKNOWN = 0;
         // GET is the command to get a value.
-        GET = 0;
+        GET = 1;
         // LIST is the command to list keys with an optional prefix.
-        LIST = 1;
+        LIST = 2;
         // ITER is the command to iterate over keys with an optional prefix.
-        ITER = 2;
+        ITER = 3;
     };
     // command is the command of the query.
     QueryCommand command = 2;

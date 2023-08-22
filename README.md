@@ -58,21 +58,13 @@
   - [<span class="badge">M</span>ConnectResponse](#v1.ConnectResponse)
   - [<span class="badge">M</span>DisconnectRequest](#v1.DisconnectRequest)
   - [<span class="badge">M</span>DisconnectResponse](#v1.DisconnectResponse)
-  - [<span class="badge">M</span>LeaveCampfireRequest](#v1.LeaveCampfireRequest)
-  - [<span class="badge">M</span>LeaveCampfireResponse](#v1.LeaveCampfireResponse)
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
-  - [<span class="badge">M</span>StartCampfireRequest](#v1.StartCampfireRequest)
-  - [<span class="badge">M</span>StartCampfireResponse](#v1.StartCampfireResponse)
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
   - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
-- [v1/campfire.proto](#v1%2fcampfire.proto)
-  - [<span class="badge">M</span>CampfireMessage](#v1.CampfireMessage)
-  - [<span class="badge">E</span>CampfireMessage.MessageType](#v1.CampfireMessage.MessageType)
-  - [<span class="badge">S</span>Campfire](#v1.Campfire)
 - [v1/raft.proto](#v1%2fraft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
@@ -312,11 +304,12 @@ Feature is a list of features supported by a node.
 
 QueryCommand is the type of the query.
 
-| Name | Number | Description                                                       |
-|------|--------|-------------------------------------------------------------------|
-| GET  | 0      | GET is the command to get a value.                                |
-| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
-| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
+| Name    | Number | Description                                                       |
+|---------|--------|-------------------------------------------------------------------|
+| UNKNOWN | 0      | UNKNOWN is the default command.                                   |
+| GET     | 1      | GET is the command to get a value.                                |
+| LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
+| ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
 
 ### Node
 
@@ -708,11 +701,10 @@ connection to a mesh. This message will eventually contain unique
 
 identifiers to allow creating connections to multiple meshes.
 
-| Field             | Type                                              | Label | Description                                                                                                                          |
-|-------------------|---------------------------------------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------|
-| config            | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                                      |
-| disable_bootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection.                       |
-| campfire_uri      | [string](#string)                                 |       | Campfire URI is the campfire URI to join. This implies that the node should join the mesh that the campfire is in and not bootstrap. |
+| Field             | Type                                              | Label | Description                                                                                                    |
+|-------------------|---------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
+| config            | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                |
+| disable_bootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection. |
 
 ### ConnectResponse
 
@@ -736,19 +728,6 @@ for allowing the application to disconnect from a specific mesh.
 ### DisconnectResponse
 
 DisconnectResponse is returned by the Disconnect RPC.
-
-### LeaveCampfireRequest
-
-LeaveCampfire is sent by the application to the node to leave a
-campfire.
-
-| Field    | Type              | Label | Description                                          |
-|----------|-------------------|-------|------------------------------------------------------|
-| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire to leave. |
-
-### LeaveCampfireResponse
-
-LeaveCampfireResponse is returned by the LeaveCampfire RPC.
 
 ### MetricsRequest
 
@@ -774,31 +753,6 @@ MetricsResponse is a message containing interface metrics.
 |-------|------------------------------------------|-------|-------------|
 | key   | [string](#string)                        |       |             |
 | value | [InterfaceMetrics](#v1.InterfaceMetrics) |       |             |
-
-### StartCampfireRequest
-
-StartCampfire is sent by the application to the node to start a
-campfire.
-
-If the URL is empty, the node will start a new campfire using it's own
-
-TURN server.
-
-| Field    | Type              | Label | Description                                 |
-|----------|-------------------|-------|---------------------------------------------|
-| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire. |
-
-### StartCampfireResponse
-
-StartCampfireResponse is returned by the StartCampfire RPC. This should
-
-eventually return a camp:// URL that can be used to invite other nodes
-
-to the campfire.
-
-| Field    | Type              | Label | Description                                 |
-|----------|-------------------|-------|---------------------------------------------|
-| camp_url | [string](#string) |       | CampURL is the camp:// URL of the campfire. |
 
 ### StatusRequest
 
@@ -834,67 +788,15 @@ application. The application can send commands to the node to execute
 
 tasks and receive responses.
 
-| Method Name   | Request Type                                     | Response Type                                      | Description                                                                                                                                         |
-|---------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Connect       | [ConnectRequest](#v1.ConnectRequest)             | [ConnectResponse](#v1.ConnectResponse)             | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
-| Disconnect    | [DisconnectRequest](#v1.DisconnectRequest)       | [DisconnectResponse](#v1.DisconnectResponse)       | Disconnect is used to disconnect the node from the mesh.                                                                                            |
-| StartCampfire | [StartCampfireRequest](#v1.StartCampfireRequest) | [StartCampfireResponse](#v1.StartCampfireResponse) | StartCampfire is used to start a campfire.                                                                                                          |
-| LeaveCampfire | [LeaveCampfireRequest](#v1.LeaveCampfireRequest) | [LeaveCampfireResponse](#v1.LeaveCampfireResponse) | LeaveCampfire is used to leave a campfire.                                                                                                          |
-| Query         | [QueryRequest](#v1.QueryRequest)                 | [QueryResponse](#v1.QueryResponse) stream          | Query is used to query the mesh for information.                                                                                                    |
-| Metrics       | [MetricsRequest](#v1.MetricsRequest)             | [MetricsResponse](#v1.MetricsResponse)             | Metrics is used to retrieve interface metrics from the node.                                                                                        |
-| Status        | [StatusRequest](#v1.StatusRequest)               | [StatusResponse](#v1.StatusResponse)               | Status is used to retrieve the status of the node.                                                                                                  |
-| Subscribe     | [SubscribeRequest](#v1.SubscribeRequest)         | [SubscriptionEvent](#v1.SubscriptionEvent) stream  | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
-| Publish       | [PublishRequest](#v1.PublishRequest)             | [.google.protobuf.Empty](#google.protobuf.Empty)   | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
-
-<div class="file-heading">
-
-## v1/campfire.proto
-
-[Top](#title)
-
-</div>
-
-### CampfireMessage
-
-CampfireMessage is used to send messages between peers.
-
-| Field  | Type                                                           | Label | Description                                                                                                                                                              |
-|--------|----------------------------------------------------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| type   | [CampfireMessage.MessageType](#v1.CampfireMessage.MessageType) |       | The type of the message.                                                                                                                                                 |
-| id     | [string](#string)                                              |       | id is a unique identifier for the client. It is used to demultiplex messages from multiple clients. It should remain constant for the lifecycle of a WebRTC negotiation. |
-| lufrag | [string](#string)                                              |       | The sending ufrag of the message.                                                                                                                                        |
-| lpwd   | [string](#string)                                              |       | The sending password of the message.                                                                                                                                     |
-| rufrag | [string](#string)                                              |       | The receiving ufrag of the message.                                                                                                                                      |
-| rpwd   | [string](#string)                                              |       | The receiving password of the message.                                                                                                                                   |
-| data   | [bytes](#bytes)                                                |       | The data of the message. It is recommended to be encrypted with a pre-shared key before sending.                                                                         |
-
-### CampfireMessage.MessageType
-
-MessageType is used to indicate the type of a CampfireMessage.
-
-| Name      | Number | Description                                                                                                 |
-|-----------|--------|-------------------------------------------------------------------------------------------------------------|
-| UNKNOWN   | 0      | UNKNOWN is the default value and should not be used.                                                        |
-| ANNOUNCE  | 1      | ANNOUNCE is used to announce presence at a campfire. This is only required when waiting for others to join. |
-| OFFER     | 2      | OFFER is used to offer a WebRTC connection to another peer.                                                 |
-| ANSWER    | 3      | ANSWER is used to answer a WebRTC connection from another peer.                                             |
-| CANDIDATE | 4      | CANDIDATE is used to send a WebRTC candidate to another peer.                                               |
-
-### Campfire
-
-Campfire is the service definition for Campfire traffic. The protocol
-
-is intended to be served over UDP alongside regular STUN and/or TURN
-
-traffic, but can be used over any reliable transport.
-
-| Method Name     | Request Type                                     | Response Type                                    | Description                                                                                                 |
-|-----------------|--------------------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| Announce        | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | Announce is used to announce presence at a campfire. This is only required when waiting for others to join. |
-| SendOffer       | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendOffer is used to send a WebRTC offer to another peer.                                                   |
-| SendAnswer      | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendAnswer is used to send a WebRTC answer to another peer.                                                 |
-| SendCandidate   | [CampfireMessage](#v1.CampfireMessage)           | [.google.protobuf.Empty](#google.protobuf.Empty) | SendCandidate is used to send a WebRTC candidate to another peer.                                           |
-| ReceiveMessages | [.google.protobuf.Empty](#google.protobuf.Empty) | [CampfireMessage](#v1.CampfireMessage) stream    | ReceiveMessages is used to receive messages from other peers.                                               |
+| Method Name | Request Type                               | Response Type                                     | Description                                                                                                                                         |
+|-------------|--------------------------------------------|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Connect     | [ConnectRequest](#v1.ConnectRequest)       | [ConnectResponse](#v1.ConnectResponse)            | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
+| Disconnect  | [DisconnectRequest](#v1.DisconnectRequest) | [DisconnectResponse](#v1.DisconnectResponse)      | Disconnect is used to disconnect the node from the mesh.                                                                                            |
+| Query       | [QueryRequest](#v1.QueryRequest)           | [QueryResponse](#v1.QueryResponse) stream         | Query is used to query the mesh for information.                                                                                                    |
+| Metrics     | [MetricsRequest](#v1.MetricsRequest)       | [MetricsResponse](#v1.MetricsResponse)            | Metrics is used to retrieve interface metrics from the node.                                                                                        |
+| Status      | [StatusRequest](#v1.StatusRequest)         | [StatusResponse](#v1.StatusResponse)              | Status is used to retrieve the status of the node.                                                                                                  |
+| Subscribe   | [SubscribeRequest](#v1.SubscribeRequest)   | [SubscriptionEvent](#v1.SubscriptionEvent) stream | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
+| Publish     | [PublishRequest](#v1.PublishRequest)       | [.google.protobuf.Empty](#google.protobuf.Empty)  | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
 
 <div class="file-heading">
 
@@ -1293,11 +1195,12 @@ PluginCapability is the capabilities of a plugin.
 
 QueryCommand is the type of the query.
 
-| Name | Number | Description                                                       |
-|------|--------|-------------------------------------------------------------------|
-| GET  | 0      | GET is the command to get a value.                                |
-| LIST | 1      | LIST is the command to list keys with an optional prefix.         |
-| ITER | 2      | ITER is the command to iterate over keys with an optional prefix. |
+| Name    | Number | Description                                                       |
+|---------|--------|-------------------------------------------------------------------|
+| UNKNOWN | 0      | UNKNOWN is the default value of QueryCommand.                     |
+| GET     | 1      | GET is the command to get a value.                                |
+| LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
+| ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
 
 ### WatchEvent
 

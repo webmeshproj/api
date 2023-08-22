@@ -33,9 +33,6 @@ message ConnectRequest {
     // Disable bootstrap tells a node that is otherwise configured to 
     // bootstrap to not bootstrap for this connection.
     bool disable_bootstrap = 2;
-    // Campfire URI is the campfire URI to join. This implies that the node
-    // should join the mesh that the campfire is in and not bootstrap.
-    string campfire_uri = 3;
 }
 
 // ConnectResponse is returned by the Connect RPC.
@@ -57,31 +54,6 @@ message DisconnectRequest {}
 
 // DisconnectResponse is returned by the Disconnect RPC.
 message DisconnectResponse {}
-
-// StartCampfire is sent by the application to the node to start a campfire.
-// If the URL is empty, the node will start a new campfire using it's own
-// TURN server.
-message StartCampfireRequest {
-    // CampURL is the camp:// URL of the campfire.
-    string camp_url = 1;
-}
-
-// StartCampfireResponse is returned by the StartCampfire RPC. This should
-// eventually return a camp:// URL that can be used to invite other nodes
-// to the campfire.
-message StartCampfireResponse {
-    // CampURL is the camp:// URL of the campfire.
-    string camp_url = 1;
-}
-
-// LeaveCampfire is sent by the application to the node to leave a campfire.
-message LeaveCampfireRequest {
-    // CampURL is the camp:// URL of the campfire to leave.
-    string camp_url = 1;
-}
-
-// LeaveCampfireResponse is returned by the LeaveCampfire RPC.
-message LeaveCampfireResponse {}
 
 // MetricsRequest is sent by the application to the node to retrieve interface
 // metrics. It is intentionally empty for now, but can eventually be used to 
@@ -126,12 +98,6 @@ service AppDaemon {
 
     // Disconnect is used to disconnect the node from the mesh.
     rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
-
-    // StartCampfire is used to start a campfire.
-    rpc StartCampfire(StartCampfireRequest) returns (StartCampfireResponse) {}
-
-    // LeaveCampfire is used to leave a campfire.
-    rpc LeaveCampfire(LeaveCampfireRequest) returns (LeaveCampfireResponse) {}
 
     // Query is used to query the mesh for information.
     rpc Query(QueryRequest) returns (stream QueryResponse) {}

@@ -426,14 +426,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.LeaveCampfireRequest"><span class="badge">M</span>LeaveCampfireRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.LeaveCampfireResponse"><span class="badge">M</span>LeaveCampfireResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.MetricsRequest"><span class="badge">M</span>MetricsRequest</a>
                 </li>
               
@@ -443,14 +435,6 @@
               
                 <li>
                   <a href="#v1.MetricsResponse.InterfacesEntry"><span class="badge">M</span>MetricsResponse.InterfacesEntry</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StartCampfireRequest"><span class="badge">M</span>StartCampfireRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StartCampfireResponse"><span class="badge">M</span>StartCampfireResponse</a>
                 </li>
               
                 <li>
@@ -470,29 +454,6 @@
               
                 <li>
                   <a href="#v1.AppDaemon"><span class="badge">S</span>AppDaemon</a>
-                </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
-            <a href="#v1%2fcampfire.proto">v1/campfire.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.CampfireMessage"><span class="badge">M</span>CampfireMessage</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#v1.CampfireMessage.MessageType"><span class="badge">E</span>CampfireMessage.MessageType</a>
-                </li>
-              
-              
-              
-                <li>
-                  <a href="#v1.Campfire"><span class="badge">S</span>Campfire</a>
                 </li>
               
             </ul>
@@ -1428,20 +1389,26 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
           <tbody>
             
               <tr>
-                <td>GET</td>
+                <td>UNKNOWN</td>
                 <td>0</td>
+                <td><p>UNKNOWN is the default command.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GET</td>
+                <td>1</td>
                 <td><p>GET is the command to get a value.</p></td>
               </tr>
             
               <tr>
                 <td>LIST</td>
-                <td>1</td>
+                <td>2</td>
                 <td><p>LIST is the command to list keys with an optional prefix.</p></td>
               </tr>
             
               <tr>
                 <td>ITER</td>
-                <td>2</td>
+                <td>3</td>
                 <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
               </tr>
             
@@ -2846,14 +2813,6 @@ Protocols can be specified by name or number. </p></td>
 bootstrap to not bootstrap for this connection. </p></td>
                 </tr>
               
-                <tr>
-                  <td>campfire_uri</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Campfire URI is the campfire URI to join. This implies that the node
-should join the mesh that the campfire is in and not bootstrap. </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -2920,37 +2879,6 @@ should join the mesh that the campfire is in and not bootstrap. </p></td>
 
         
       
-        <h3 id="v1.LeaveCampfireRequest">LeaveCampfireRequest</h3>
-        <p>LeaveCampfire is sent by the application to the node to leave a campfire.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>camp_url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>CampURL is the camp:// URL of the campfire to leave. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.LeaveCampfireResponse">LeaveCampfireResponse</h3>
-        <p>LeaveCampfireResponse is returned by the LeaveCampfire RPC.</p>
-
-        
-
-        
-      
         <h3 id="v1.MetricsRequest">MetricsRequest</h3>
         <p>MetricsRequest is sent by the application to the node to retrieve interface</p><p>metrics. It is intentionally empty for now, but can eventually be used to </p><p>query specific interfaces/metrics.</p>
 
@@ -3004,54 +2932,6 @@ should join the mesh that the campfire is in and not bootstrap. </p></td>
                   <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
                   <td></td>
                   <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StartCampfireRequest">StartCampfireRequest</h3>
-        <p>StartCampfire is sent by the application to the node to start a campfire.</p><p>If the URL is empty, the node will start a new campfire using it's own</p><p>TURN server.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>camp_url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>CampURL is the camp:// URL of the campfire. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StartCampfireResponse">StartCampfireResponse</h3>
-        <p>StartCampfireResponse is returned by the StartCampfire RPC. This should</p><p>eventually return a camp:// URL that can be used to invite other nodes</p><p>to the campfire.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>camp_url</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>CampURL is the camp:// URL of the campfire. </p></td>
                 </tr>
               
             </tbody>
@@ -3159,20 +3039,6 @@ on the node.</p></td>
               </tr>
             
               <tr>
-                <td>StartCampfire</td>
-                <td><a href="#v1.StartCampfireRequest">StartCampfireRequest</a></td>
-                <td><a href="#v1.StartCampfireResponse">StartCampfireResponse</a></td>
-                <td><p>StartCampfire is used to start a campfire.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LeaveCampfire</td>
-                <td><a href="#v1.LeaveCampfireRequest">LeaveCampfireRequest</a></td>
-                <td><a href="#v1.LeaveCampfireResponse">LeaveCampfireResponse</a></td>
-                <td><p>LeaveCampfire is used to leave a campfire.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Query</td>
                 <td><a href="#v1.QueryRequest">QueryRequest</a></td>
                 <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
@@ -3206,179 +3072,6 @@ on the node.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Publish is used to publish events to the mesh database. A restricted set
 of keys are allowed to be published to.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-    
-      
-      <div class="file-heading">
-        <h2 id="v1/campfire.proto">v1/campfire.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.CampfireMessage">CampfireMessage</h3>
-        <p>CampfireMessage is used to send messages between peers.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>type</td>
-                  <td><a href="#v1.CampfireMessage.MessageType">CampfireMessage.MessageType</a></td>
-                  <td></td>
-                  <td><p>The type of the message. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is a unique identifier for the client. It is used to demultiplex
-messages from multiple clients. It should remain constant for the 
-lifecycle of a WebRTC negotiation. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>lufrag</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>The sending ufrag of the message. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>lpwd</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>The sending password of the message. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>rufrag</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>The receiving ufrag of the message. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>rpwd</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>The receiving password of the message. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>data</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>The data of the message. It is recommended to be encrypted
-with a pre-shared key before sending. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-        <h3 id="v1.CampfireMessage.MessageType">CampfireMessage.MessageType</h3>
-        <p>MessageType is used to indicate the type of a CampfireMessage.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the default value and should not be used.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ANNOUNCE</td>
-                <td>1</td>
-                <td><p>ANNOUNCE is used to announce presence at a campfire. This is
-only required when waiting for others to join.</p></td>
-              </tr>
-            
-              <tr>
-                <td>OFFER</td>
-                <td>2</td>
-                <td><p>OFFER is used to offer a WebRTC connection to another peer.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ANSWER</td>
-                <td>3</td>
-                <td><p>ANSWER is used to answer a WebRTC connection from another peer.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CANDIDATE</td>
-                <td>4</td>
-                <td><p>CANDIDATE is used to send a WebRTC candidate to another peer.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-
-      
-
-      
-        <h3 id="v1.Campfire">Campfire</h3>
-        <p>Campfire is the service definition for Campfire traffic. The protocol</p><p>is intended to be served over UDP alongside regular STUN and/or TURN </p><p>traffic, but can be used over any reliable transport.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>Announce</td>
-                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>Announce is used to announce presence at a campfire. This is
-only required when waiting for others to join.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SendOffer</td>
-                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>SendOffer is used to send a WebRTC offer to another peer.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SendAnswer</td>
-                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>SendAnswer is used to send a WebRTC answer to another peer.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SendCandidate</td>
-                <td><a href="#v1.CampfireMessage">CampfireMessage</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>SendCandidate is used to send a WebRTC candidate to another peer.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ReceiveMessages</td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><a href="#v1.CampfireMessage">CampfireMessage</a> stream</td>
-                <td><p>ReceiveMessages is used to receive messages from other peers.</p></td>
               </tr>
             
           </tbody>
@@ -4731,20 +4424,26 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
           <tbody>
             
               <tr>
-                <td>GET</td>
+                <td>UNKNOWN</td>
                 <td>0</td>
+                <td><p>UNKNOWN is the default value of QueryCommand.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GET</td>
+                <td>1</td>
                 <td><p>GET is the command to get a value.</p></td>
               </tr>
             
               <tr>
                 <td>LIST</td>
-                <td>1</td>
+                <td>2</td>
                 <td><p>LIST is the command to list keys with an optional prefix.</p></td>
               </tr>
             
               <tr>
                 <td>ITER</td>
-                <td>2</td>
+                <td>3</td>
                 <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
               </tr>
             
