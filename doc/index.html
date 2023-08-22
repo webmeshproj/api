@@ -539,29 +539,6 @@
         
           
           <li>
-            <a href="#v1%2fpeer_discovery.proto">v1/peer_discovery.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.ListRaftPeersResponse"><span class="badge">M</span>ListRaftPeersResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.RaftPeer"><span class="badge">M</span>RaftPeer</a>
-                </li>
-              
-              
-              
-              
-                <li>
-                  <a href="#v1.PeerDiscovery"><span class="badge">S</span>PeerDiscovery</a>
-                </li>
-              
-            </ul>
-          </li>
-        
-          
-          <li>
             <a href="#v1%2fplugin.proto">v1/plugin.proto</a>
             <ul>
               
@@ -3780,108 +3757,6 @@ to vote.</p></td>
                 <td><a href="#v1.RaftConfigurationRequest">RaftConfigurationRequest</a></td>
                 <td><a href="#v1.RaftConfigurationResponse">RaftConfigurationResponse</a></td>
                 <td><p>GetRaftConfiguration returns the current Raft configuration.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
-    
-      
-      <div class="file-heading">
-        <h2 id="v1/peer_discovery.proto">v1/peer_discovery.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.ListRaftPeersResponse">ListRaftPeersResponse</h3>
-        <p>ListRaftPeersResponse is the response to ListPeers.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>peers</td>
-                  <td><a href="#v1.RaftPeer">RaftPeer</a></td>
-                  <td>repeated</td>
-                  <td><p>Peers is the list of peers. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.RaftPeer">RaftPeer</h3>
-        <p>RaftPeer is a peer in the Raft cluster.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID is the ID of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Address is the public gRPC address of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>voter</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Voter is whether the peer is a voter. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>leader</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Leader is whether the peer is the leader. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-
-      
-
-      
-        <h3 id="v1.PeerDiscovery">PeerDiscovery</h3>
-        <p>PeerDiscovery is the service that provides peer discovery. This is a service</p><p>that can optionally be exposed by nodes in the mesh to provide peer discovery</p><p>to other nodes. Alternative methods of peer discovery can be used, such as</p><p>static files or DNS, but running one or more publicly accessible nodes with this</p><p>service registered is the simplest method.</p><p>It only makes sense to expose this service on a public address on a member of the</p><p>Raft cluster. It is not necessary to expose this service on every node in the mesh.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>ListPeers</td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><a href="#v1.ListRaftPeersResponse">ListRaftPeersResponse</a></td>
-                <td><p>ListPeers returns a list of public peers currently known to the mesh.</p></td>
               </tr>
             
           </tbody>

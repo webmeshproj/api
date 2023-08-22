@@ -81,10 +81,6 @@
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
   - [<span class="badge">S</span>Membership](#v1.Membership)
-- [v1/peer_discovery.proto](#v1%2fpeer_discovery.proto)
-  - [<span class="badge">M</span>ListRaftPeersResponse](#v1.ListRaftPeersResponse)
-  - [<span class="badge">M</span>RaftPeer](#v1.RaftPeer)
-  - [<span class="badge">S</span>PeerDiscovery](#v1.PeerDiscovery)
 - [v1/plugin.proto](#v1%2fplugin.proto)
   - [<span class="badge">M</span>AllocateIPRequest](#v1.AllocateIPRequest)
   - [<span class="badge">M</span>AllocatedIP](#v1.AllocatedIP)
@@ -980,59 +976,6 @@ to allow people in from the outside.
 | Leave                | [LeaveRequest](#v1.LeaveRequest)                         | [LeaveResponse](#v1.LeaveResponse)                         | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
 | Apply                | [RaftLogEntry](#v1.RaftLogEntry)                         | [RaftApplyResponse](#v1.RaftApplyResponse)                 | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote.                                                                                                                                                      |
 | GetRaftConfiguration | [RaftConfigurationRequest](#v1.RaftConfigurationRequest) | [RaftConfigurationResponse](#v1.RaftConfigurationResponse) | GetRaftConfiguration returns the current Raft configuration.                                                                                                                                                                                                                                                                               |
-
-<div class="file-heading">
-
-## v1/peer_discovery.proto
-
-[Top](#title)
-
-</div>
-
-### ListRaftPeersResponse
-
-ListRaftPeersResponse is the response to ListPeers.
-
-| Field | Type                     | Label    | Description                 |
-|-------|--------------------------|----------|-----------------------------|
-| peers | [RaftPeer](#v1.RaftPeer) | repeated | Peers is the list of peers. |
-
-### RaftPeer
-
-RaftPeer is a peer in the Raft cluster.
-
-| Field   | Type              | Label | Description                                     |
-|---------|-------------------|-------|-------------------------------------------------|
-| id      | [string](#string) |       | ID is the ID of the peer.                       |
-| address | [string](#string) |       | Address is the public gRPC address of the peer. |
-| voter   | [bool](#bool)     |       | Voter is whether the peer is a voter.           |
-| leader  | [bool](#bool)     |       | Leader is whether the peer is the leader.       |
-
-### PeerDiscovery
-
-PeerDiscovery is the service that provides peer discovery. This is a
-service
-
-that can optionally be exposed by nodes in the mesh to provide peer
-discovery
-
-to other nodes. Alternative methods of peer discovery can be used, such
-as
-
-static files or DNS, but running one or more publicly accessible nodes
-with this
-
-service registered is the simplest method.
-
-It only makes sense to expose this service on a public address on a
-member of the
-
-Raft cluster. It is not necessary to expose this service on every node
-in the mesh.
-
-| Method Name | Request Type                                     | Response Type                                      | Description                                                           |
-|-------------|--------------------------------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
-| ListPeers   | [.google.protobuf.Empty](#google.protobuf.Empty) | [ListRaftPeersResponse](#v1.ListRaftPeersResponse) | ListPeers returns a list of public peers currently known to the mesh. |
 
 <div class="file-heading">
 
