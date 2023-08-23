@@ -410,6 +410,14 @@
             <ul>
               
                 <li>
+                  <a href="#v1.AnnounceDHTRequest"><span class="badge">M</span>AnnounceDHTRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AnnounceDHTResponse"><span class="badge">M</span>AnnounceDHTResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.ConnectRequest"><span class="badge">M</span>ConnectRequest</a>
                 </li>
               
@@ -423,6 +431,14 @@
               
                 <li>
                   <a href="#v1.DisconnectResponse"><span class="badge">M</span>DisconnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LeaveDHTRequest"><span class="badge">M</span>LeaveDHTRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LeaveDHTResponse"><span class="badge">M</span>LeaveDHTResponse</a>
                 </li>
               
                 <li>
@@ -1319,9 +1335,9 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
               </tr>
             
               <tr>
-                <td>PEER_DISCOVERY</td>
+                <td>MEMBERSHIP</td>
                 <td>5</td>
-                <td><p>PEER_DISCOVERY is the feature for peer discovery.</p></td>
+                <td><p>MEMBERSHIP is the feature for membership. This is always supported on raft members.</p></td>
               </tr>
             
               <tr>
@@ -2765,6 +2781,45 @@ Protocols can be specified by name or number. </p></td>
       <p></p>
 
       
+        <h3 id="v1.AnnounceDHTRequest">AnnounceDHTRequest</h3>
+        <p>AnnounceDHTRequest is sent by the application to the node to announce the</p><p>node's presence on the Kademlia DHT for other nodes to discover.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>bootstrap_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Bootstrap servers are optional bootstrap servers to use for bootstrapping
+the DHT. If not provided, the node will use the default bootstrap servers. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>PSK is the pre-shared key to use for the DHT. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AnnounceDHTResponse">AnnounceDHTResponse</h3>
+        <p>AnnounceDHTResponse is returned by the AnnounceDHT RPC.</p>
+
+        
+
+        
+      
         <h3 id="v1.ConnectRequest">ConnectRequest</h3>
         <p>ConnectRequest is sent by the application to the node to establish a</p><p>connection to a mesh. This message will eventually contain unique</p><p>identifiers to allow creating connections to multiple meshes.</p>
 
@@ -2851,6 +2906,37 @@ bootstrap to not bootstrap for this connection. </p></td>
       
         <h3 id="v1.DisconnectResponse">DisconnectResponse</h3>
         <p>DisconnectResponse is returned by the Disconnect RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.LeaveDHTRequest">LeaveDHTRequest</h3>
+        <p>LeaveDHTRequest is sent by the application to the node to leave the Kademlia</p><p>DHT.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>PSK is the pre-shared key that was used to join the DHT. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.LeaveDHTResponse">LeaveDHTResponse</h3>
+        <p>LeaveDHTResponse is returned by the LeaveDHT RPC.</p>
 
         
 
@@ -3046,9 +3132,24 @@ on the node.</p></td>
               <tr>
                 <td>Publish</td>
                 <td><a href="#v1.PublishRequest">PublishRequest</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
+                <td><a href="#v1.PublishResponse">PublishResponse</a></td>
                 <td><p>Publish is used to publish events to the mesh database. A restricted set
 of keys are allowed to be published to.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AnnounceDHT</td>
+                <td><a href="#v1.AnnounceDHTRequest">AnnounceDHTRequest</a></td>
+                <td><a href="#v1.AnnounceDHTResponse">AnnounceDHTResponse</a></td>
+                <td><p>AnnounceDHT is used to announce the node&#39;s presence on the Kademlia DHT
+for other nodes to discover.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LeaveDHT</td>
+                <td><a href="#v1.LeaveDHTRequest">LeaveDHTRequest</a></td>
+                <td><a href="#v1.LeaveDHTResponse">LeaveDHTResponse</a></td>
+                <td><p>LeaveDHT is used to leave the Kademlia DHT.</p></td>
               </tr>
             
           </tbody>

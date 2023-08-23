@@ -86,6 +86,29 @@ message StatusResponse {
     MeshNode node = 2;
 }
 
+// AnnounceDHTRequest is sent by the application to the node to announce the
+// node's presence on the Kademlia DHT for other nodes to discover.
+message AnnounceDHTRequest {
+    // Bootstrap servers are optional bootstrap servers to use for bootstrapping
+    // the DHT. If not provided, the node will use the default bootstrap servers.
+    repeated string bootstrap_servers = 1;
+    // PSK is the pre-shared key to use for the DHT.
+    string psk = 2;
+}
+
+// AnnounceDHTResponse is returned by the AnnounceDHT RPC.
+message AnnounceDHTResponse {}
+
+// LeaveDHTRequest is sent by the application to the node to leave the Kademlia
+// DHT.
+message LeaveDHTRequest {
+    // PSK is the pre-shared key that was used to join the DHT.
+    string psk = 1;
+}
+
+// LeaveDHTResponse is returned by the LeaveDHT RPC.
+message LeaveDHTResponse {}
+
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
 // allows the node to run in an idle state and be controlled by the
 // application. The application can send commands to the node to execute
@@ -113,5 +136,12 @@ service AppDaemon {
 
     // Publish is used to publish events to the mesh database. A restricted set
     // of keys are allowed to be published to.
-    rpc Publish(PublishRequest) returns (google.protobuf.Empty) {}
+    rpc Publish(PublishRequest) returns (PublishResponse) {}
+
+    // AnnounceDHT is used to announce the node's presence on the Kademlia DHT
+    // for other nodes to discover.
+    rpc AnnounceDHT(AnnounceDHTRequest) returns (AnnounceDHTResponse) {}
+
+    // LeaveDHT is used to leave the Kademlia DHT.
+    rpc LeaveDHT(LeaveDHTRequest) returns (LeaveDHTResponse) {}
 }

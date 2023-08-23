@@ -48,8 +48,8 @@ enum Feature {
     MESH_API = 3;
     // ADMIN_API is the feature for the admin API.
     ADMIN_API = 4;
-    // PEER_DISCOVERY is the feature for peer discovery.
-    PEER_DISCOVERY = 5;
+    // MEMBERSHIP is the feature for membership. This is always supported on raft members.
+    MEMBERSHIP = 5;
     // METRICS is the feature for exposing metrics.
     METRICS = 6;
     // ICE_NEGOTIATION is the feature for ICE negotiation.

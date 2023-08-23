@@ -54,10 +54,14 @@
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
 - [v1/app.proto](#v1%2fapp.proto)
+  - [<span class="badge">M</span>AnnounceDHTRequest](#v1.AnnounceDHTRequest)
+  - [<span class="badge">M</span>AnnounceDHTResponse](#v1.AnnounceDHTResponse)
   - [<span class="badge">M</span>ConnectRequest](#v1.ConnectRequest)
   - [<span class="badge">M</span>ConnectResponse](#v1.ConnectResponse)
   - [<span class="badge">M</span>DisconnectRequest](#v1.DisconnectRequest)
   - [<span class="badge">M</span>DisconnectResponse](#v1.DisconnectResponse)
+  - [<span class="badge">M</span>LeaveDHTRequest](#v1.LeaveDHTRequest)
+  - [<span class="badge">M</span>LeaveDHTResponse](#v1.LeaveDHTResponse)
   - [<span class="badge">M</span>MetricsRequest](#v1.MetricsRequest)
   - [<span class="badge">M</span>MetricsResponse](#v1.MetricsResponse)
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
@@ -282,19 +286,19 @@ with a node.
 
 Feature is a list of features supported by a node.
 
-| Name             | Number | Description                                                                      |
-|------------------|--------|----------------------------------------------------------------------------------|
-| FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                         |
-| NODES            | 1      | NODES is the feature for nodes. This is always supported on raft members.        |
-| LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                 |
-| MESH_API         | 3      | MESH_API is the feature for the mesh API.                                        |
-| ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                      |
-| PEER_DISCOVERY   | 5      | PEER_DISCOVERY is the feature for peer discovery.                                |
-| METRICS          | 6      | METRICS is the feature for exposing metrics.                                     |
-| ICE_NEGOTIATION  | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.                              |
-| TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                      |
-| MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                            |
-| FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes. |
+| Name             | Number | Description                                                                         |
+|------------------|--------|-------------------------------------------------------------------------------------|
+| FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                            |
+| NODES            | 1      | NODES is the feature for nodes. This is always supported on raft members.           |
+| LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                    |
+| MESH_API         | 3      | MESH_API is the feature for the mesh API.                                           |
+| ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                         |
+| MEMBERSHIP       | 5      | MEMBERSHIP is the feature for membership. This is always supported on raft members. |
+| METRICS          | 6      | METRICS is the feature for exposing metrics.                                        |
+| ICE_NEGOTIATION  | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.                                 |
+| TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                         |
+| MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                               |
+| FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.    |
 
 ### QueryRequest.QueryCommand
 
@@ -689,6 +693,22 @@ require the leader to be contacted.
 
 </div>
 
+### AnnounceDHTRequest
+
+AnnounceDHTRequest is sent by the application to the node to announce
+the
+
+node's presence on the Kademlia DHT for other nodes to discover.
+
+| Field             | Type              | Label    | Description                                                                                                                                          |
+|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| bootstrap_servers | [string](#string) | repeated | Bootstrap servers are optional bootstrap servers to use for bootstrapping the DHT. If not provided, the node will use the default bootstrap servers. |
+| psk               | [string](#string) |          | PSK is the pre-shared key to use for the DHT.                                                                                                        |
+
+### AnnounceDHTResponse
+
+AnnounceDHTResponse is returned by the AnnounceDHT RPC.
+
 ### ConnectRequest
 
 ConnectRequest is sent by the application to the node to establish a
@@ -724,6 +744,21 @@ for allowing the application to disconnect from a specific mesh.
 ### DisconnectResponse
 
 DisconnectResponse is returned by the Disconnect RPC.
+
+### LeaveDHTRequest
+
+LeaveDHTRequest is sent by the application to the node to leave the
+Kademlia
+
+DHT.
+
+| Field | Type              | Label | Description                                              |
+|-------|-------------------|-------|----------------------------------------------------------|
+| psk   | [string](#string) |       | PSK is the pre-shared key that was used to join the DHT. |
+
+### LeaveDHTResponse
+
+LeaveDHTResponse is returned by the LeaveDHT RPC.
 
 ### MetricsRequest
 
@@ -784,15 +819,17 @@ application. The application can send commands to the node to execute
 
 tasks and receive responses.
 
-| Method Name | Request Type                               | Response Type                                     | Description                                                                                                                                         |
-|-------------|--------------------------------------------|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Connect     | [ConnectRequest](#v1.ConnectRequest)       | [ConnectResponse](#v1.ConnectResponse)            | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
-| Disconnect  | [DisconnectRequest](#v1.DisconnectRequest) | [DisconnectResponse](#v1.DisconnectResponse)      | Disconnect is used to disconnect the node from the mesh.                                                                                            |
-| Query       | [QueryRequest](#v1.QueryRequest)           | [QueryResponse](#v1.QueryResponse) stream         | Query is used to query the mesh for information.                                                                                                    |
-| Metrics     | [MetricsRequest](#v1.MetricsRequest)       | [MetricsResponse](#v1.MetricsResponse)            | Metrics is used to retrieve interface metrics from the node.                                                                                        |
-| Status      | [StatusRequest](#v1.StatusRequest)         | [StatusResponse](#v1.StatusResponse)              | Status is used to retrieve the status of the node.                                                                                                  |
-| Subscribe   | [SubscribeRequest](#v1.SubscribeRequest)   | [SubscriptionEvent](#v1.SubscriptionEvent) stream | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
-| Publish     | [PublishRequest](#v1.PublishRequest)       | [.google.protobuf.Empty](#google.protobuf.Empty)  | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
+| Method Name | Request Type                                 | Response Type                                     | Description                                                                                                                                         |
+|-------------|----------------------------------------------|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Connect     | [ConnectRequest](#v1.ConnectRequest)         | [ConnectResponse](#v1.ConnectResponse)            | Connect is used to establish a connection between the node and a mesh. The provided struct is used to override any defaults configured on the node. |
+| Disconnect  | [DisconnectRequest](#v1.DisconnectRequest)   | [DisconnectResponse](#v1.DisconnectResponse)      | Disconnect is used to disconnect the node from the mesh.                                                                                            |
+| Query       | [QueryRequest](#v1.QueryRequest)             | [QueryResponse](#v1.QueryResponse) stream         | Query is used to query the mesh for information.                                                                                                    |
+| Metrics     | [MetricsRequest](#v1.MetricsRequest)         | [MetricsResponse](#v1.MetricsResponse)            | Metrics is used to retrieve interface metrics from the node.                                                                                        |
+| Status      | [StatusRequest](#v1.StatusRequest)           | [StatusResponse](#v1.StatusResponse)              | Status is used to retrieve the status of the node.                                                                                                  |
+| Subscribe   | [SubscribeRequest](#v1.SubscribeRequest)     | [SubscriptionEvent](#v1.SubscriptionEvent) stream | Subscribe is used to subscribe to events in the mesh database.                                                                                      |
+| Publish     | [PublishRequest](#v1.PublishRequest)         | [PublishResponse](#v1.PublishResponse)            | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to.                                    |
+| AnnounceDHT | [AnnounceDHTRequest](#v1.AnnounceDHTRequest) | [AnnounceDHTResponse](#v1.AnnounceDHTResponse)    | AnnounceDHT is used to announce the node's presence on the Kademlia DHT for other nodes to discover.                                                |
+| LeaveDHT    | [LeaveDHTRequest](#v1.LeaveDHTRequest)       | [LeaveDHTResponse](#v1.LeaveDHTResponse)          | LeaveDHT is used to leave the Kademlia DHT.                                                                                                         |
 
 <div class="file-heading">
 
