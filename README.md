@@ -289,7 +289,7 @@ Feature is a list of features supported by a node.
 | Name             | Number | Description                                                                         |
 |------------------|--------|-------------------------------------------------------------------------------------|
 | FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                            |
-| NODES            | 1      | NODES is the feature for nodes. This is always supported on raft members.           |
+| NODES            | 1      | NODES is the feature for nodes. This is always supported.                           |
 | LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                    |
 | MESH_API         | 3      | MESH_API is the feature for the mesh API.                                           |
 | ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                         |
@@ -721,6 +721,7 @@ identifiers to allow creating connections to multiple meshes.
 |-------------------|---------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
 | config            | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                |
 | disable_bootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection. |
+| join_psk          | [string](#string)                                 |       | Join PSK is the pre-shared key to use for joining the mesh.                                                    |
 
 ### ConnectResponse
 

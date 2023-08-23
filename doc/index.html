@@ -1313,7 +1313,7 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
               <tr>
                 <td>NODES</td>
                 <td>1</td>
-                <td><p>NODES is the feature for nodes. This is always supported on raft members.</p></td>
+                <td><p>NODES is the feature for nodes. This is always supported.</p></td>
               </tr>
             
               <tr>
@@ -2843,6 +2843,13 @@ the DHT. If not provided, the node will use the default bootstrap servers. </p><
                   <td></td>
                   <td><p>Disable bootstrap tells a node that is otherwise configured to 
 bootstrap to not bootstrap for this connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>join_psk</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Join PSK is the pre-shared key to use for joining the mesh. </p></td>
                 </tr>
               
             </tbody>

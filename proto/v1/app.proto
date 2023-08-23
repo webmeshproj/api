@@ -33,6 +33,8 @@ message ConnectRequest {
     // Disable bootstrap tells a node that is otherwise configured to 
     // bootstrap to not bootstrap for this connection.
     bool disable_bootstrap = 2;
+    // Join PSK is the pre-shared key to use for joining the mesh.
+    string join_psk = 3;
 }
 
 // ConnectResponse is returned by the Connect RPC.

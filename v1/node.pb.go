@@ -105,7 +105,7 @@ type Feature int32
 const (
 	// FEATURE_NONE is the default feature set.
 	Feature_FEATURE_NONE Feature = 0
-	// NODES is the feature for nodes. This is always supported on raft members.
+	// NODES is the feature for nodes. This is always supported.
 	Feature_NODES Feature = 1
 	// LEADER_PROXY is the feature for leader proxying.
 	Feature_LEADER_PROXY Feature = 2
