@@ -44,6 +44,7 @@ enum Feature {
     // LEADER_PROXY is the feature for leader proxying.
     LEADER_PROXY = 2;
     // MESH_API is the feature for the mesh API.
+    // This will be deprecated in favor of the MEMBERSHIP feature.
     MESH_API = 3;
     // ADMIN_API is the feature for the admin API.
     ADMIN_API = 4;
@@ -59,6 +60,8 @@ enum Feature {
     MESH_DNS = 9;
     // FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.
     FORWARD_MESH_DNS = 10;
+    // STORAGE is the feature for querying, publishing, and subscribing to mesh state.
+    STORAGE = 11;
 }
 
 // DataChannel are the data channels used when communicating over ICE

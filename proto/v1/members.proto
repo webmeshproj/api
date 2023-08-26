@@ -156,6 +156,8 @@ message WireGuardPeer {
     int32 grpc_port = 11;
     // raft_member indicates that this peer is able to serve raft requests.
     bool raft_member = 12;
+    // features is a list of features supported by the peer.
+    repeated Feature features = 13;
 }
 
 // LeaveRequest is a request to leave the cluster.
