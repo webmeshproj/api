@@ -74,6 +74,8 @@
 - [v1/raft.proto](#v1%2fraft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
+  - [<span class="badge">M</span>RaftSnapshot](#v1.RaftSnapshot)
+  - [<span class="badge">M</span>RaftSnapshot.KvEntry](#v1.RaftSnapshot.KvEntry)
   - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
 - [v1/members.proto](#v1%2fmembers.proto)
   - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
@@ -881,6 +883,21 @@ RaftLogEntry is the data of an entry in the Raft log.
 | key   | [string](#string)                                     |       | key is the key of the log entry.          |
 | value | [string](#string)                                     |       | value is the value of the log entry.      |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the log entry. |
+
+### RaftSnapshot
+
+RaftSnapshot is the data of a snapshot.
+
+| Field | Type                                             | Label    | Description |
+|-------|--------------------------------------------------|----------|-------------|
+| kv    | [RaftSnapshot.KvEntry](#v1.RaftSnapshot.KvEntry) | repeated |             |
+
+### RaftSnapshot.KvEntry
+
+| Field | Type              | Label | Description |
+|-------|-------------------|-------|-------------|
+| key   | [string](#string) |       |             |
+| value | [string](#string) |       |             |
 
 ### RaftCommandType
 

@@ -51,3 +51,8 @@ message RaftApplyResponse {
     // error is an error that occurred during the apply.
     string error = 2;
 }
+
+// RaftSnapshot is the data of a snapshot.
+message RaftSnapshot {
+    map<string, string> kv = 1;
+}
