@@ -37,6 +37,7 @@ const (
 	Membership_Join_FullMethodName                 = "/v1.Membership/Join"
 	Membership_Update_FullMethodName               = "/v1.Membership/Update"
 	Membership_Leave_FullMethodName                = "/v1.Membership/Leave"
+	Membership_SubscribePeers_FullMethodName       = "/v1.Membership/SubscribePeers"
 	Membership_Apply_FullMethodName                = "/v1.Membership/Apply"
 	Membership_GetRaftConfiguration_FullMethodName = "/v1.Membership/GetRaftConfiguration"
 )
@@ -55,6 +56,9 @@ type MembershipClient interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(ctx context.Context, in *LeaveRequest, opts ...grpc.CallOption) (*LeaveResponse, error)
+	// SubscribePeers subscribes to the peer configuration for the given node. The node
+	// will receive updates to the peer configuration as it changes.
+	SubscribePeers(ctx context.Context, in *SubscribePeersRequest, opts ...grpc.CallOption) (Membership_SubscribePeersClient, error)
 	// Apply is used by voting nodes to request a log entry be applied to the state machine.
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
@@ -98,6 +102,38 @@ func (c *membershipClient) Leave(ctx context.Context, in *LeaveRequest, opts ...
 	return out, nil
 }
 
+func (c *membershipClient) SubscribePeers(ctx context.Context, in *SubscribePeersRequest, opts ...grpc.CallOption) (Membership_SubscribePeersClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Membership_ServiceDesc.Streams[0], Membership_SubscribePeers_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &membershipSubscribePeersClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Membership_SubscribePeersClient interface {
+	Recv() (*PeerConfigurations, error)
+	grpc.ClientStream
+}
+
+type membershipSubscribePeersClient struct {
+	grpc.ClientStream
+}
+
+func (x *membershipSubscribePeersClient) Recv() (*PeerConfigurations, error) {
+	m := new(PeerConfigurations)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *membershipClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
 	out := new(RaftApplyResponse)
 	err := c.cc.Invoke(ctx, Membership_Apply_FullMethodName, in, out, opts...)
@@ -130,6 +166,9 @@ type MembershipServer interface {
 	// Leave is used to remove a node from the mesh. The node will be removed from the mesh
 	// and will no longer be able to query the mesh state or vote in elections.
 	Leave(context.Context, *LeaveRequest) (*LeaveResponse, error)
+	// SubscribePeers subscribes to the peer configuration for the given node. The node
+	// will receive updates to the peer configuration as it changes.
+	SubscribePeers(*SubscribePeersRequest, Membership_SubscribePeersServer) error
 	// Apply is used by voting nodes to request a log entry be applied to the state machine.
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote.
@@ -151,6 +190,9 @@ func (UnimplementedMembershipServer) Update(context.Context, *UpdateRequest) (*U
 }
 func (UnimplementedMembershipServer) Leave(context.Context, *LeaveRequest) (*LeaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Leave not implemented")
+}
+func (UnimplementedMembershipServer) SubscribePeers(*SubscribePeersRequest, Membership_SubscribePeersServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribePeers not implemented")
 }
 func (UnimplementedMembershipServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
@@ -225,6 +267,27 @@ func _Membership_Leave_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Membership_SubscribePeers_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribePeersRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MembershipServer).SubscribePeers(m, &membershipSubscribePeersServer{stream})
+}
+
+type Membership_SubscribePeersServer interface {
+	Send(*PeerConfigurations) error
+	grpc.ServerStream
+}
+
+type membershipSubscribePeersServer struct {
+	grpc.ServerStream
+}
+
+func (x *membershipSubscribePeersServer) Send(m *PeerConfigurations) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _Membership_Apply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RaftLogEntry)
 	if err := dec(in); err != nil {
@@ -289,6 +352,12 @@ var Membership_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Membership_GetRaftConfiguration_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SubscribePeers",
+			Handler:       _Membership_SubscribePeers_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "v1/members.proto",
 }

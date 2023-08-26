@@ -186,6 +186,24 @@ message RaftServer {
     string address = 3;
 }
 
+// SubscribePeersRequest is a request to subscribe to peer updates.
+message SubscribePeersRequest {
+    // id is the ID of the node.
+    string id = 1;
+}
+
+// PeerConfigurations is a stream of peer configurations.
+message PeerConfigurations {
+    // peers is a list of wireguard peers to connect to.
+    repeated WireGuardPeer peers = 5;
+    // ice_servers is a list of public nodes that can be used to negotiate
+    // ICE connections if required. This may only be populated when one of
+    // the peers has the ICE flag set.
+    repeated string ice_servers = 6;
+    // dns_servers is a list of peers offering DNS services.
+    repeated string dns_servers = 7;
+}
+
 // The membership service is exposed on raft-nodes to allow nodes to join
 // and leave the cluster. This service is meant to be made available publicly
 // to allow people in from the outside. 
@@ -202,6 +220,10 @@ service Membership {
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.
     rpc Leave(LeaveRequest) returns (LeaveResponse) {}
+
+    // SubscribePeers subscribes to the peer configuration for the given node. The node
+    // will receive updates to the peer configuration as it changes.
+    rpc SubscribePeers(SubscribePeersRequest) returns (stream PeerConfigurations) {}
 
     // Apply is used by voting nodes to request a log entry be applied to the state machine.
     // This is only available on the leader, and can only be called by nodes that are allowed

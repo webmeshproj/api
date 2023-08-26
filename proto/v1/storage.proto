@@ -1,0 +1,99 @@
+/*
+Copyright 2023.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/duration.proto";
+
+// QueryRequest is sent by the application to the node to query the mesh for
+// information.
+message QueryRequest {
+    // QueryCommand is the type of the query.
+    enum QueryCommand {
+        // UNKNOWN is the default command.
+        UNKNOWN = 0;
+        // GET is the command to get a value.
+        GET = 1;
+        // LIST is the command to list keys with an optional prefix.
+        LIST = 2;
+        // ITER is the command to iterate over keys with an optional prefix.
+        ITER = 3;
+    };
+    // command is the command of the query.
+    QueryCommand command = 2;
+    // query is the key or prefix of the query.
+    string query = 3;
+}
+
+// QueryResponse is the message containing a mesh query result.
+message QueryResponse {
+    // key is the key of the query. For GET and ITER queries it will be the current key.
+    // For LIST queries it will be the prefix.
+    string key = 2;
+    // value is the value of the query. For GET and ITER queries it will be the value of the current key.
+    // For LIST queries it will be the list of keys that match the prefix.
+    repeated string value = 3;
+    // error is an error that occurred during the query. At the end of an ITER query it will be set to
+    // "EOF" to indicate that the iteration is complete.
+    string error = 4;
+}
+
+// SubscribeRequest is sent by the application to the node to subscribe to
+// events. This currently only supports database events.
+message SubscribeRequest{
+    // prefix is the prefix of the events to subscribe to.
+    string prefix = 1;
+}
+
+// SubscriptionEvent is a message containing a subscription event.
+message SubscriptionEvent {
+    // key is the key of the event.
+    string key = 1;
+    // value is the value of the event. This will be the raw value of the key.
+    string value = 2;
+}
+
+// PublishRequest is sent by the application to the node to publish events.
+// This currently only supports database events.
+message PublishRequest {
+    // key is the key of the event.
+    string key = 1;
+    // value is the value of the event. This will be the raw value of the key.
+    string value = 2;
+    // ttl is the time for the event to live in the database.
+    google.protobuf.Duration ttl = 3;
+}
+
+// PublishResponse is the response to a publish request. This is currently
+// empty.
+message PublishResponse {
+}
+
+// Storage is the service for querying information about the mesh state.
+service Storage {
+    // Query is used to query the mesh for information.
+    rpc Query(QueryRequest) returns (stream QueryResponse) {}
+
+    // Publish is used to publish events to the mesh database. A restricted set
+    // of keys are allowed to be published to.
+    rpc Publish(PublishRequest) returns (PublishResponse) {}
+
+    // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+    // available on nodes that are members of the raft cluster.
+    rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
+}

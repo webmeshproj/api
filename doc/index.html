@@ -195,31 +195,7 @@
                 </li>
               
                 <li>
-                  <a href="#v1.PublishRequest"><span class="badge">M</span>PublishRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.PublishResponse"><span class="badge">M</span>PublishResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.QueryResponse"><span class="badge">M</span>QueryResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SubscribeRequest"><span class="badge">M</span>SubscribeRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
                 </li>
               
               
@@ -233,10 +209,6 @@
               
                 <li>
                   <a href="#v1.Feature"><span class="badge">E</span>Feature</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
                 </li>
               
               
@@ -406,6 +378,49 @@
         
           
           <li>
+            <a href="#v1%2fstorage.proto">v1/storage.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.PublishRequest"><span class="badge">M</span>PublishRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PublishResponse"><span class="badge">M</span>PublishResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryRequest"><span class="badge">M</span>QueryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.QueryResponse"><span class="badge">M</span>QueryResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscribeRequest"><span class="badge">M</span>SubscribeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscriptionEvent"><span class="badge">M</span>SubscriptionEvent</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#v1.Storage"><span class="badge">S</span>Storage</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fapp.proto">v1/app.proto</a>
             <ul>
               
@@ -520,6 +535,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PeerConfigurations"><span class="badge">M</span>PeerConfigurations</a>
+                </li>
+              
+                <li>
                   <a href="#v1.RaftConfigurationRequest"><span class="badge">M</span>RaftConfigurationRequest</a>
                 </li>
               
@@ -529,6 +548,10 @@
               
                 <li>
                   <a href="#v1.RaftServer"><span class="badge">M</span>RaftServer</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscribePeersRequest"><span class="badge">M</span>SubscribePeersRequest</a>
                 </li>
               
                 <li>
@@ -945,123 +968,6 @@ local node is returned. </p></td>
 
         
       
-        <h3 id="v1.PublishRequest">PublishRequest</h3>
-        <p>PublishRequest is sent by the application to the node to publish events.</p><p>This currently only supports database events.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the event. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ttl</td>
-                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
-                  <td></td>
-                  <td><p>ttl is the time for the event to live in the database. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.PublishResponse">PublishResponse</h3>
-        <p>PublishResponse is the response to a publish request. This is currently</p><p>empty.</p>
-
-        
-
-        
-      
-        <h3 id="v1.QueryRequest">QueryRequest</h3>
-        <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>command</td>
-                  <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
-                  <td></td>
-                  <td><p>command is the command of the query. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>query</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>query is the key or prefix of the query. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.QueryResponse">QueryResponse</h3>
-        <p>QueryResponse is the message containing a mesh query result.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
-For LIST queries it will be the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
-For LIST queries it will be the list of keys that match the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
-&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.Status">Status</h3>
         <p>Status represents the status of a node.</p>
 
@@ -1161,61 +1067,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                   <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
                   <td></td>
                   <td><p>interface_metrics are the metrics for the node&#39;s interfaces. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SubscribeRequest">SubscribeRequest</h3>
-        <p>SubscribeRequest is sent by the application to the node to subscribe to</p><p>events. This currently only supports database events.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>prefix</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.SubscriptionEvent">SubscriptionEvent</h3>
-        <p>SubscriptionEvent is a message containing a subscription event.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>key is the key of the event. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
               
             </tbody>
@@ -1373,41 +1224,6 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
           </tbody>
         </table>
       
-        <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
-        <p>QueryCommand is the type of the query.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the default command.</p></td>
-              </tr>
-            
-              <tr>
-                <td>GET</td>
-                <td>1</td>
-                <td><p>GET is the command to get a value.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LIST</td>
-                <td>2</td>
-                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ITER</td>
-                <td>3</td>
-                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
@@ -1424,30 +1240,8 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
                 <td>GetStatus</td>
                 <td><a href="#v1.GetStatusRequest">GetStatusRequest</a></td>
                 <td><a href="#v1.Status">Status</a></td>
-                <td><p>GetStatus gets the status of a node in the cluster.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Query</td>
-                <td><a href="#v1.QueryRequest">QueryRequest</a></td>
-                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
-                <td><p>Query is used to query the mesh for information.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Publish</td>
-                <td><a href="#v1.PublishRequest">PublishRequest</a></td>
-                <td><a href="#v1.PublishResponse">PublishResponse</a></td>
-                <td><p>Publish is used to publish events to the mesh database. A restricted set
-of keys are allowed to be published to.</p></td>
-              </tr>
-            
-              <tr>
-                <td>Subscribe</td>
-                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
-                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
-                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-available on nodes that are members of the raft cluster.</p></td>
+                <td><p>GetStatus gets the status of a node in the cluster. If the node is not able
+to return the status of the ID requested, it should return an error.</p></td>
               </tr>
             
               <tr>
@@ -2776,6 +2570,262 @@ Protocols can be specified by name or number. </p></td>
     
       
       <div class="file-heading">
+        <h2 id="v1/storage.proto">v1/storage.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.PublishRequest">PublishRequest</h3>
+        <p>PublishRequest is sent by the application to the node to publish events.</p><p>This currently only supports database events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ttl</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>ttl is the time for the event to live in the database. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PublishResponse">PublishResponse</h3>
+        <p>PublishResponse is the response to a publish request. This is currently</p><p>empty.</p>
+
+        
+
+        
+      
+        <h3 id="v1.QueryRequest">QueryRequest</h3>
+        <p>QueryRequest is sent by the application to the node to query the mesh for</p><p>information.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>command</td>
+                  <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
+                  <td></td>
+                  <td><p>command is the command of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>query is the key or prefix of the query. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.QueryResponse">QueryResponse</h3>
+        <p>QueryResponse is the message containing a mesh query result.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
+For LIST queries it will be the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
+For LIST queries it will be the list of keys that match the prefix. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
+&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscribeRequest">SubscribeRequest</h3>
+        <p>SubscribeRequest is sent by the application to the node to subscribe to</p><p>events. This currently only supports database events.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscriptionEvent">SubscriptionEvent</h3>
+        <p>SubscriptionEvent is a message containing a subscription event.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the event. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</h3>
+        <p>QueryCommand is the type of the query.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>UNKNOWN</td>
+                <td>0</td>
+                <td><p>UNKNOWN is the default command.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GET</td>
+                <td>1</td>
+                <td><p>GET is the command to get a value.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LIST</td>
+                <td>2</td>
+                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ITER</td>
+                <td>3</td>
+                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="v1.Storage">Storage</h3>
+        <p>Storage is the service for querying information about the mesh state.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Query</td>
+                <td><a href="#v1.QueryRequest">QueryRequest</a></td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
+                <td><p>Query is used to query the mesh for information.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Publish</td>
+                <td><a href="#v1.PublishRequest">PublishRequest</a></td>
+                <td><a href="#v1.PublishResponse">PublishResponse</a></td>
+                <td><p>Publish is used to publish events to the mesh database. A restricted set
+of keys are allowed to be published to.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Subscribe</td>
+                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
+                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
+available on nodes that are members of the raft cluster.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
         <h2 id="v1/app.proto">v1/app.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -3535,6 +3585,46 @@ specifies direct_peers. </p></td>
 
         
       
+        <h3 id="v1.PeerConfigurations">PeerConfigurations</h3>
+        <p>PeerConfigurations is a stream of peer configurations.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>peers</td>
+                  <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
+                  <td>repeated</td>
+                  <td><p>peers is a list of wireguard peers to connect to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ice_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
+ICE connections if required. This may only be populated when one of
+the peers has the ICE flag set. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dns_servers</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.RaftConfigurationRequest">RaftConfigurationRequest</h3>
         <p>RaftConfigurationRequest is a request to get the current Raft configuration.</p>
 
@@ -3595,6 +3685,30 @@ specifies direct_peers. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>Address is the mesh address of the server. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscribePeersRequest">SubscribePeersRequest</h3>
+        <p>SubscribePeersRequest is a request to subscribe to peer updates.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the ID of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -3849,6 +3963,14 @@ with the same ID, but redefined to avoid confusion and to allow for expansion.</
                 <td><a href="#v1.LeaveResponse">LeaveResponse</a></td>
                 <td><p>Leave is used to remove a node from the mesh. The node will be removed from the mesh
 and will no longer be able to query the mesh state or vote in elections.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SubscribePeers</td>
+                <td><a href="#v1.SubscribePeersRequest">SubscribePeersRequest</a></td>
+                <td><a href="#v1.PeerConfigurations">PeerConfigurations</a> stream</td>
+                <td><p>SubscribePeers subscribes to the peer configuration for the given node. The node
+will receive updates to the peer configuration as it changes.</p></td>
               </tr>
             
               <tr>

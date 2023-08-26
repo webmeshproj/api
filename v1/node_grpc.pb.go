@@ -35,9 +35,6 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
-	Node_Query_FullMethodName                = "/v1.Node/Query"
-	Node_Publish_FullMethodName              = "/v1.Node/Publish"
-	Node_Subscribe_FullMethodName            = "/v1.Node/Subscribe"
 	Node_NegotiateDataChannel_FullMethodName = "/v1.Node/NegotiateDataChannel"
 )
 
@@ -45,16 +42,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NodeClient interface {
-	// GetStatus gets the status of a node in the cluster.
+	// GetStatus gets the status of a node in the cluster. If the node is not able
+	// to return the status of the ID requested, it should return an error.
 	GetStatus(ctx context.Context, in *GetStatusRequest, opts ...grpc.CallOption) (*Status, error)
-	// Query is used to query the mesh for information.
-	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Node_QueryClient, error)
-	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
-	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
-	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-	// available on nodes that are members of the raft cluster.
-	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Node_SubscribeClient, error)
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
 	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
@@ -81,81 +71,8 @@ func (c *nodeClient) GetStatus(ctx context.Context, in *GetStatusRequest, opts .
 	return out, nil
 }
 
-func (c *nodeClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Node_QueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[0], Node_Query_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &nodeQueryClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type Node_QueryClient interface {
-	Recv() (*QueryResponse, error)
-	grpc.ClientStream
-}
-
-type nodeQueryClient struct {
-	grpc.ClientStream
-}
-
-func (x *nodeQueryClient) Recv() (*QueryResponse, error) {
-	m := new(QueryResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *nodeClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
-	out := new(PublishResponse)
-	err := c.cc.Invoke(ctx, Node_Publish_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *nodeClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Node_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[1], Node_Subscribe_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &nodeSubscribeClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type Node_SubscribeClient interface {
-	Recv() (*SubscriptionEvent, error)
-	grpc.ClientStream
-}
-
-type nodeSubscribeClient struct {
-	grpc.ClientStream
-}
-
-func (x *nodeSubscribeClient) Recv() (*SubscriptionEvent, error) {
-	m := new(SubscriptionEvent)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *nodeClient) NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[2], Node_NegotiateDataChannel_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[0], Node_NegotiateDataChannel_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -189,16 +106,9 @@ func (x *nodeNegotiateDataChannelClient) Recv() (*DataChannelNegotiation, error)
 // All implementations must embed UnimplementedNodeServer
 // for forward compatibility
 type NodeServer interface {
-	// GetStatus gets the status of a node in the cluster.
+	// GetStatus gets the status of a node in the cluster. If the node is not able
+	// to return the status of the ID requested, it should return an error.
 	GetStatus(context.Context, *GetStatusRequest) (*Status, error)
-	// Query is used to query the mesh for information.
-	Query(*QueryRequest, Node_QueryServer) error
-	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
-	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
-	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-	// available on nodes that are members of the raft cluster.
-	Subscribe(*SubscribeRequest, Node_SubscribeServer) error
 	// NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client
 	// and a node in the cluster. The handling server will send the target node the source address,
 	// the destination for traffic, and STUN/TURN servers to use for the negotiation. The node
@@ -215,15 +125,6 @@ type UnimplementedNodeServer struct {
 
 func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
-}
-func (UnimplementedNodeServer) Query(*QueryRequest, Node_QueryServer) error {
-	return status.Errorf(codes.Unimplemented, "method Query not implemented")
-}
-func (UnimplementedNodeServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
-}
-func (UnimplementedNodeServer) Subscribe(*SubscribeRequest, Node_SubscribeServer) error {
-	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
 func (UnimplementedNodeServer) NegotiateDataChannel(Node_NegotiateDataChannelServer) error {
 	return status.Errorf(codes.Unimplemented, "method NegotiateDataChannel not implemented")
@@ -257,66 +158,6 @@ func _Node_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(inte
 		return srv.(NodeServer).GetStatus(ctx, req.(*GetStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(QueryRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(NodeServer).Query(m, &nodeQueryServer{stream})
-}
-
-type Node_QueryServer interface {
-	Send(*QueryResponse) error
-	grpc.ServerStream
-}
-
-type nodeQueryServer struct {
-	grpc.ServerStream
-}
-
-func (x *nodeQueryServer) Send(m *QueryResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _Node_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PublishRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NodeServer).Publish(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Node_Publish_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).Publish(ctx, req.(*PublishRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Node_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(NodeServer).Subscribe(m, &nodeSubscribeServer{stream})
-}
-
-type Node_SubscribeServer interface {
-	Send(*SubscriptionEvent) error
-	grpc.ServerStream
-}
-
-type nodeSubscribeServer struct {
-	grpc.ServerStream
-}
-
-func (x *nodeSubscribeServer) Send(m *SubscriptionEvent) error {
-	return x.ServerStream.SendMsg(m)
 }
 
 func _Node_NegotiateDataChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -356,22 +197,8 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetStatus",
 			Handler:    _Node_GetStatus_Handler,
 		},
-		{
-			MethodName: "Publish",
-			Handler:    _Node_Publish_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Query",
-			Handler:       _Node_Query_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "Subscribe",
-			Handler:       _Node_Subscribe_Handler,
-			ServerStreams: true,
-		},
 		{
 			StreamName:    "NegotiateDataChannel",
 			Handler:       _Node_NegotiateDataChannel_Handler,
