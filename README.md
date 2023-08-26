@@ -231,19 +231,20 @@ with a node.
 
 Feature is a list of features supported by a node.
 
-| Name             | Number | Description                                                                         |
-|------------------|--------|-------------------------------------------------------------------------------------|
-| FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                            |
-| NODES            | 1      | NODES is the feature for nodes. This is always supported.                           |
-| LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                    |
-| MESH_API         | 3      | MESH_API is the feature for the mesh API.                                           |
-| ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                         |
-| MEMBERSHIP       | 5      | MEMBERSHIP is the feature for membership. This is always supported on raft members. |
-| METRICS          | 6      | METRICS is the feature for exposing metrics.                                        |
-| ICE_NEGOTIATION  | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.                                 |
-| TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                         |
-| MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                               |
-| FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.    |
+| Name             | Number | Description                                                                                           |
+|------------------|--------|-------------------------------------------------------------------------------------------------------|
+| FEATURE_NONE     | 0      | FEATURE_NONE is the default feature set.                                                              |
+| NODES            | 1      | NODES is the feature for nodes. This is always supported.                                             |
+| LEADER_PROXY     | 2      | LEADER_PROXY is the feature for leader proxying.                                                      |
+| MESH_API         | 3      | MESH_API is the feature for the mesh API. This will be deprecated in favor of the MEMBERSHIP feature. |
+| ADMIN_API        | 4      | ADMIN_API is the feature for the admin API.                                                           |
+| MEMBERSHIP       | 5      | MEMBERSHIP is the feature for membership. This is always supported on raft members.                   |
+| METRICS          | 6      | METRICS is the feature for exposing metrics.                                                          |
+| ICE_NEGOTIATION  | 7      | ICE_NEGOTIATION is the feature for ICE negotiation.                                                   |
+| TURN_SERVER      | 8      | TURN_SERVER is the feature for TURN server.                                                           |
+| MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                                                 |
+| FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.                      |
+| STORAGE          | 11     | STORAGE is the feature for querying, publishing, and subscribing to mesh state.                       |
 
 ### Node
 
@@ -1020,20 +1021,21 @@ empty.
 
 WireGuardPeer is a peer in the Wireguard network.
 
-| Field               | Type              | Label    | Description                                                                       |
-|---------------------|-------------------|----------|-----------------------------------------------------------------------------------|
-| id                  | [string](#string) |          | id is the ID of the peer.                                                         |
-| public_key          | [string](#string) |          | public_key is the public key of the peer.                                         |
-| primary_endpoint    | [string](#string) |          | primary_endpoint is the primary endpoint of the peer.                             |
-| wireguard_endpoints | [string](#string) | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.      |
-| zone_awareness_id   | [string](#string) |          | zone_awareness_id is the zone awareness ID of the peer.                           |
-| address_ipv4        | [string](#string) |          | address_ipv4 is the private IPv4 wireguard address of the peer.                   |
-| address_ipv6        | [string](#string) |          | address_ipv6 is the private IPv6 wireguard address of the peer.                   |
-| allowed_ips         | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
-| allowed_routes      | [string](#string) | repeated | allowed_routes is the list of allowed routes for the peer.                        |
-| ice                 | [bool](#bool)     |          | ice indicates whether the connection to this peer should be established over ICE. |
-| grpc_port           | [int32](#int32)   |          | grpc_port is the gRPC port of the peer.                                           |
-| raft_member         | [bool](#bool)     |          | raft_member indicates that this peer is able to serve raft requests.              |
+| Field               | Type                   | Label    | Description                                                                       |
+|---------------------|------------------------|----------|-----------------------------------------------------------------------------------|
+| id                  | [string](#string)      |          | id is the ID of the peer.                                                         |
+| public_key          | [string](#string)      |          | public_key is the public key of the peer.                                         |
+| primary_endpoint    | [string](#string)      |          | primary_endpoint is the primary endpoint of the peer.                             |
+| wireguard_endpoints | [string](#string)      | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.      |
+| zone_awareness_id   | [string](#string)      |          | zone_awareness_id is the zone awareness ID of the peer.                           |
+| address_ipv4        | [string](#string)      |          | address_ipv4 is the private IPv4 wireguard address of the peer.                   |
+| address_ipv6        | [string](#string)      |          | address_ipv6 is the private IPv6 wireguard address of the peer.                   |
+| allowed_ips         | [string](#string)      | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
+| allowed_routes      | [string](#string)      | repeated | allowed_routes is the list of allowed routes for the peer.                        |
+| ice                 | [bool](#bool)          |          | ice indicates whether the connection to this peer should be established over ICE. |
+| grpc_port           | [int32](#int32)        |          | grpc_port is the gRPC port of the peer.                                           |
+| raft_member         | [bool](#bool)          |          | raft_member indicates that this peer is able to serve raft requests.              |
+| features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the peer.                             |
 
 ### Membership
 

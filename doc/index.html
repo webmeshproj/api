@@ -1176,7 +1176,8 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
               <tr>
                 <td>MESH_API</td>
                 <td>3</td>
-                <td><p>MESH_API is the feature for the mesh API.</p></td>
+                <td><p>MESH_API is the feature for the mesh API.
+This will be deprecated in favor of the MEMBERSHIP feature.</p></td>
               </tr>
             
               <tr>
@@ -1219,6 +1220,12 @@ client. The ID should start at 0 and be incremented for each new connection.</p>
                 <td>FORWARD_MESH_DNS</td>
                 <td>10</td>
                 <td><p>FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.</p></td>
+              </tr>
+            
+              <tr>
+                <td>STORAGE</td>
+                <td>11</td>
+                <td><p>STORAGE is the feature for querying, publishing, and subscribing to mesh state.</p></td>
               </tr>
             
           </tbody>
@@ -3917,6 +3924,13 @@ established over ICE. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>raft_member indicates that this peer is able to serve raft requests. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>features is a list of features supported by the peer. </p></td>
                 </tr>
               
             </tbody>
