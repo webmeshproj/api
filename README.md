@@ -73,6 +73,7 @@
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/raft.proto](#v1%2fraft.proto)
   - [<span class="badge">M</span>RaftApplyResponse](#v1.RaftApplyResponse)
+  - [<span class="badge">M</span>RaftDataItem](#v1.RaftDataItem)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
   - [<span class="badge">M</span>RaftSnapshot](#v1.RaftSnapshot)
   - [<span class="badge">M</span>RaftSnapshot.KvEntry](#v1.RaftSnapshot.KvEntry)
@@ -873,6 +874,16 @@ contains the result of applying the log entry.
 | time  | [string](#string) |       | time is the total time it took to apply the log entry. |
 | error | [string](#string) |       | error is an error that occurred during the apply.      |
 
+### RaftDataItem
+
+RaftDataItem represents a value in the Raft data store.
+
+| Field | Type                                                  | Label | Description                               |
+|-------|-------------------------------------------------------|-------|-------------------------------------------|
+| key   | [string](#string)                                     |       | key is the key of the data item.          |
+| value | [string](#string)                                     |       | value is the value of the data item.      |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the data item. |
+
 ### RaftLogEntry
 
 RaftLogEntry is the data of an entry in the Raft log.
@@ -894,10 +905,10 @@ RaftSnapshot is the data of a snapshot.
 
 ### RaftSnapshot.KvEntry
 
-| Field | Type              | Label | Description |
-|-------|-------------------|-------|-------------|
-| key   | [string](#string) |       |             |
-| value | [string](#string) |       |             |
+| Field | Type                             | Label | Description |
+|-------|----------------------------------|-------|-------------|
+| key   | [string](#string)                |       |             |
+| value | [RaftDataItem](#v1.RaftDataItem) |       |             |
 
 ### RaftCommandType
 

@@ -500,6 +500,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.RaftDataItem"><span class="badge">M</span>RaftDataItem</a>
+                </li>
+              
+                <li>
                   <a href="#v1.RaftLogEntry"><span class="badge">M</span>RaftLogEntry</a>
                 </li>
               
@@ -3267,6 +3271,44 @@ for other nodes to discover.</p></td>
 
         
       
+        <h3 id="v1.RaftDataItem">RaftDataItem</h3>
+        <p>RaftDataItem represents a value in the Raft data store.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>key is the key of the data item. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>value is the value of the data item. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ttl</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>ttl is the time to live of the data item. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.RaftLogEntry">RaftLogEntry</h3>
         <p>RaftLogEntry is the data of an entry in the Raft log.</p>
 
@@ -3355,7 +3397,7 @@ for other nodes to discover.</p></td>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#v1.RaftDataItem">RaftDataItem</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>

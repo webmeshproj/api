@@ -54,5 +54,15 @@ message RaftApplyResponse {
 
 // RaftSnapshot is the data of a snapshot.
 message RaftSnapshot {
-    map<string, string> kv = 1;
+    map<string, RaftDataItem> kv = 1;
+}
+
+// RaftDataItem represents a value in the Raft data store.
+message RaftDataItem {
+    // key is the key of the data item.
+    string key = 1;
+    // value is the value of the data item.
+    string value = 2;
+    // ttl is the time to live of the data item.
+    google.protobuf.Duration ttl = 3;
 }
