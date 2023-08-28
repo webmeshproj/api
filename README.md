@@ -1246,12 +1246,15 @@ PluginCapability is the capabilities of a plugin.
 
 QueryCommand is the type of the query.
 
-| Name    | Number | Description                                                       |
-|---------|--------|-------------------------------------------------------------------|
-| UNKNOWN | 0      | UNKNOWN is the default value of QueryCommand.                     |
-| GET     | 1      | GET is the command to get a value.                                |
-| LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
-| ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
+| Name      | Number | Description                                                       |
+|-----------|--------|-------------------------------------------------------------------|
+| UNKNOWN   | 0      | UNKNOWN is the default value of QueryCommand.                     |
+| GET       | 1      | GET is the command to get a value.                                |
+| LIST      | 2      | LIST is the command to list keys with an optional prefix.         |
+| ITER      | 3      | ITER is the command to iterate over keys with an optional prefix. |
+| PUT       | 4      | PUT is the command to put a value.                                |
+| DELETE    | 5      | DELETE is the command to delete a value.                          |
+| SUBSCRIBE | 6      | SUBSCRIBE is the command to subscribe to a prefix.                |
 
 ### AuthPlugin
 
