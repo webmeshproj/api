@@ -35,10 +35,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Plugin_GetInfo_FullMethodName       = "/v1.Plugin/GetInfo"
-	Plugin_Configure_FullMethodName     = "/v1.Plugin/Configure"
-	Plugin_InjectQuerier_FullMethodName = "/v1.Plugin/InjectQuerier"
-	Plugin_Close_FullMethodName         = "/v1.Plugin/Close"
+	Plugin_GetInfo_FullMethodName   = "/v1.Plugin/GetInfo"
+	Plugin_Configure_FullMethodName = "/v1.Plugin/Configure"
+	Plugin_Close_FullMethodName     = "/v1.Plugin/Close"
 )
 
 // PluginClient is the client API for Plugin service.
@@ -49,14 +48,6 @@ type PluginClient interface {
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// InjectQuerier is a stream opened by the node to faciliate read-only queries
-	// against the mesh state. The signature is misleading, but it is required
-	// to be able to stream the query results back to the node. The node will
-	// open a stream to the plugin and send a PluginSQLQueryResult message
-	// for every query that is received. The plugin can return an Unimplemented
-	// error or simply close the stream with no error it it does not wish to
-	// keep the stream open.
-	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (Plugin_InjectQuerierClient, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -87,37 +78,6 @@ func (c *pluginClient) Configure(ctx context.Context, in *PluginConfiguration, o
 	return out, nil
 }
 
-func (c *pluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (Plugin_InjectQuerierClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Plugin_ServiceDesc.Streams[0], Plugin_InjectQuerier_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &pluginInjectQuerierClient{stream}
-	return x, nil
-}
-
-type Plugin_InjectQuerierClient interface {
-	Send(*PluginQueryResult) error
-	Recv() (*PluginQuery, error)
-	grpc.ClientStream
-}
-
-type pluginInjectQuerierClient struct {
-	grpc.ClientStream
-}
-
-func (x *pluginInjectQuerierClient) Send(m *PluginQueryResult) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *pluginInjectQuerierClient) Recv() (*PluginQuery, error) {
-	m := new(PluginQuery)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *pluginClient) Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Plugin_Close_FullMethodName, in, out, opts...)
@@ -135,14 +95,6 @@ type PluginServer interface {
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
 	// Configure configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
-	// InjectQuerier is a stream opened by the node to faciliate read-only queries
-	// against the mesh state. The signature is misleading, but it is required
-	// to be able to stream the query results back to the node. The node will
-	// open a stream to the plugin and send a PluginSQLQueryResult message
-	// for every query that is received. The plugin can return an Unimplemented
-	// error or simply close the stream with no error it it does not wish to
-	// keep the stream open.
-	InjectQuerier(Plugin_InjectQuerierServer) error
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPluginServer()
@@ -157,9 +109,6 @@ func (UnimplementedPluginServer) GetInfo(context.Context, *emptypb.Empty) (*Plug
 }
 func (UnimplementedPluginServer) Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Configure not implemented")
-}
-func (UnimplementedPluginServer) InjectQuerier(Plugin_InjectQuerierServer) error {
-	return status.Errorf(codes.Unimplemented, "method InjectQuerier not implemented")
 }
 func (UnimplementedPluginServer) Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Close not implemented")
@@ -213,32 +162,6 @@ func _Plugin_Configure_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Plugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PluginServer).InjectQuerier(&pluginInjectQuerierServer{stream})
-}
-
-type Plugin_InjectQuerierServer interface {
-	Send(*PluginQuery) error
-	Recv() (*PluginQueryResult, error)
-	grpc.ServerStream
-}
-
-type pluginInjectQuerierServer struct {
-	grpc.ServerStream
-}
-
-func (x *pluginInjectQuerierServer) Send(m *PluginQuery) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *pluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
-	m := new(PluginQueryResult)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func _Plugin_Close_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -277,142 +200,135 @@ var Plugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Plugin_Close_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "InjectQuerier",
-			Handler:       _Plugin_InjectQuerier_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/plugin.proto",
 }
 
 const (
-	StoragePlugin_Store_FullMethodName           = "/v1.StoragePlugin/Store"
-	StoragePlugin_RestoreSnapshot_FullMethodName = "/v1.StoragePlugin/RestoreSnapshot"
+	RaftPlugin_Store_FullMethodName           = "/v1.RaftPlugin/Store"
+	RaftPlugin_RestoreSnapshot_FullMethodName = "/v1.RaftPlugin/RestoreSnapshot"
 )
 
-// StoragePluginClient is the client API for StoragePlugin service.
+// RaftPluginClient is the client API for RaftPlugin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type StoragePluginClient interface {
+type RaftPluginClient interface {
 	// Store dispatches a Raft log entry for storage.
 	Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error)
 	// RestoreSnapshot should drop any existing state and restore from the snapshot.
 	RestoreSnapshot(ctx context.Context, in *DataSnapshot, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type storagePluginClient struct {
+type raftPluginClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStoragePluginClient(cc grpc.ClientConnInterface) StoragePluginClient {
-	return &storagePluginClient{cc}
+func NewRaftPluginClient(cc grpc.ClientConnInterface) RaftPluginClient {
+	return &raftPluginClient{cc}
 }
 
-func (c *storagePluginClient) Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
+func (c *raftPluginClient) Store(ctx context.Context, in *StoreLogRequest, opts ...grpc.CallOption) (*RaftApplyResponse, error) {
 	out := new(RaftApplyResponse)
-	err := c.cc.Invoke(ctx, StoragePlugin_Store_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, RaftPlugin_Store_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storagePluginClient) RestoreSnapshot(ctx context.Context, in *DataSnapshot, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *raftPluginClient) RestoreSnapshot(ctx context.Context, in *DataSnapshot, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, StoragePlugin_RestoreSnapshot_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, RaftPlugin_RestoreSnapshot_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// StoragePluginServer is the server API for StoragePlugin service.
-// All implementations must embed UnimplementedStoragePluginServer
+// RaftPluginServer is the server API for RaftPlugin service.
+// All implementations must embed UnimplementedRaftPluginServer
 // for forward compatibility
-type StoragePluginServer interface {
+type RaftPluginServer interface {
 	// Store dispatches a Raft log entry for storage.
 	Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error)
 	// RestoreSnapshot should drop any existing state and restore from the snapshot.
 	RestoreSnapshot(context.Context, *DataSnapshot) (*emptypb.Empty, error)
-	mustEmbedUnimplementedStoragePluginServer()
+	mustEmbedUnimplementedRaftPluginServer()
 }
 
-// UnimplementedStoragePluginServer must be embedded to have forward compatible implementations.
-type UnimplementedStoragePluginServer struct {
+// UnimplementedRaftPluginServer must be embedded to have forward compatible implementations.
+type UnimplementedRaftPluginServer struct {
 }
 
-func (UnimplementedStoragePluginServer) Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error) {
+func (UnimplementedRaftPluginServer) Store(context.Context, *StoreLogRequest) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Store not implemented")
 }
-func (UnimplementedStoragePluginServer) RestoreSnapshot(context.Context, *DataSnapshot) (*emptypb.Empty, error) {
+func (UnimplementedRaftPluginServer) RestoreSnapshot(context.Context, *DataSnapshot) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreSnapshot not implemented")
 }
-func (UnimplementedStoragePluginServer) mustEmbedUnimplementedStoragePluginServer() {}
+func (UnimplementedRaftPluginServer) mustEmbedUnimplementedRaftPluginServer() {}
 
-// UnsafeStoragePluginServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StoragePluginServer will
+// UnsafeRaftPluginServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RaftPluginServer will
 // result in compilation errors.
-type UnsafeStoragePluginServer interface {
-	mustEmbedUnimplementedStoragePluginServer()
+type UnsafeRaftPluginServer interface {
+	mustEmbedUnimplementedRaftPluginServer()
 }
 
-func RegisterStoragePluginServer(s grpc.ServiceRegistrar, srv StoragePluginServer) {
-	s.RegisterService(&StoragePlugin_ServiceDesc, srv)
+func RegisterRaftPluginServer(s grpc.ServiceRegistrar, srv RaftPluginServer) {
+	s.RegisterService(&RaftPlugin_ServiceDesc, srv)
 }
 
-func _StoragePlugin_Store_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaftPlugin_Store_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StoreLogRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StoragePluginServer).Store(ctx, in)
+		return srv.(RaftPluginServer).Store(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StoragePlugin_Store_FullMethodName,
+		FullMethod: RaftPlugin_Store_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StoragePluginServer).Store(ctx, req.(*StoreLogRequest))
+		return srv.(RaftPluginServer).Store(ctx, req.(*StoreLogRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StoragePlugin_RestoreSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaftPlugin_RestoreSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DataSnapshot)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StoragePluginServer).RestoreSnapshot(ctx, in)
+		return srv.(RaftPluginServer).RestoreSnapshot(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StoragePlugin_RestoreSnapshot_FullMethodName,
+		FullMethod: RaftPlugin_RestoreSnapshot_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StoragePluginServer).RestoreSnapshot(ctx, req.(*DataSnapshot))
+		return srv.(RaftPluginServer).RestoreSnapshot(ctx, req.(*DataSnapshot))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// StoragePlugin_ServiceDesc is the grpc.ServiceDesc for StoragePlugin service.
+// RaftPlugin_ServiceDesc is the grpc.ServiceDesc for RaftPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var StoragePlugin_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.StoragePlugin",
-	HandlerType: (*StoragePluginServer)(nil),
+var RaftPlugin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.RaftPlugin",
+	HandlerType: (*RaftPluginServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Store",
-			Handler:    _StoragePlugin_Store_Handler,
+			Handler:    _RaftPlugin_Store_Handler,
 		},
 		{
 			MethodName: "RestoreSnapshot",
-			Handler:    _StoragePlugin_RestoreSnapshot_Handler,
+			Handler:    _RaftPlugin_RestoreSnapshot_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -731,5 +647,137 @@ var IPAMPlugin_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/plugin.proto",
+}
+
+const (
+	StoragePlugin_InjectQuerier_FullMethodName = "/v1.StoragePlugin/InjectQuerier"
+)
+
+// StoragePluginClient is the client API for StoragePlugin service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type StoragePluginClient interface {
+	// InjectQuerier is a stream opened by the node to faciliate read-write operations
+	// against the mesh state. The signature is misleading, but it is required to be
+	// able to stream the query results back to the node. The node will open a stream
+	// to the plugin and send a PluginSQLQueryResult message for every query that is
+	// received.
+	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StoragePlugin_InjectQuerierClient, error)
+}
+
+type storagePluginClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewStoragePluginClient(cc grpc.ClientConnInterface) StoragePluginClient {
+	return &storagePluginClient{cc}
+}
+
+func (c *storagePluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StoragePlugin_InjectQuerierClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StoragePlugin_ServiceDesc.Streams[0], StoragePlugin_InjectQuerier_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &storagePluginInjectQuerierClient{stream}
+	return x, nil
+}
+
+type StoragePlugin_InjectQuerierClient interface {
+	Send(*PluginQueryResult) error
+	Recv() (*PluginQuery, error)
+	grpc.ClientStream
+}
+
+type storagePluginInjectQuerierClient struct {
+	grpc.ClientStream
+}
+
+func (x *storagePluginInjectQuerierClient) Send(m *PluginQueryResult) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *storagePluginInjectQuerierClient) Recv() (*PluginQuery, error) {
+	m := new(PluginQuery)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// StoragePluginServer is the server API for StoragePlugin service.
+// All implementations must embed UnimplementedStoragePluginServer
+// for forward compatibility
+type StoragePluginServer interface {
+	// InjectQuerier is a stream opened by the node to faciliate read-write operations
+	// against the mesh state. The signature is misleading, but it is required to be
+	// able to stream the query results back to the node. The node will open a stream
+	// to the plugin and send a PluginSQLQueryResult message for every query that is
+	// received.
+	InjectQuerier(StoragePlugin_InjectQuerierServer) error
+	mustEmbedUnimplementedStoragePluginServer()
+}
+
+// UnimplementedStoragePluginServer must be embedded to have forward compatible implementations.
+type UnimplementedStoragePluginServer struct {
+}
+
+func (UnimplementedStoragePluginServer) InjectQuerier(StoragePlugin_InjectQuerierServer) error {
+	return status.Errorf(codes.Unimplemented, "method InjectQuerier not implemented")
+}
+func (UnimplementedStoragePluginServer) mustEmbedUnimplementedStoragePluginServer() {}
+
+// UnsafeStoragePluginServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StoragePluginServer will
+// result in compilation errors.
+type UnsafeStoragePluginServer interface {
+	mustEmbedUnimplementedStoragePluginServer()
+}
+
+func RegisterStoragePluginServer(s grpc.ServiceRegistrar, srv StoragePluginServer) {
+	s.RegisterService(&StoragePlugin_ServiceDesc, srv)
+}
+
+func _StoragePlugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(StoragePluginServer).InjectQuerier(&storagePluginInjectQuerierServer{stream})
+}
+
+type StoragePlugin_InjectQuerierServer interface {
+	Send(*PluginQuery) error
+	Recv() (*PluginQueryResult, error)
+	grpc.ServerStream
+}
+
+type storagePluginInjectQuerierServer struct {
+	grpc.ServerStream
+}
+
+func (x *storagePluginInjectQuerierServer) Send(m *PluginQuery) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *storagePluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
+	m := new(PluginQueryResult)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// StoragePlugin_ServiceDesc is the grpc.ServiceDesc for StoragePlugin service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var StoragePlugin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.StoragePlugin",
+	HandlerType: (*StoragePluginServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "InjectQuerier",
+			Handler:       _StoragePlugin_InjectQuerier_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "v1/plugin.proto",
 }

@@ -106,13 +106,13 @@
   - [<span class="badge">M</span>PluginQueryResult](#v1.PluginQueryResult)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
   - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
-  - [<span class="badge">E</span>AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion)
-  - [<span class="badge">E</span>PluginCapability](#v1.PluginCapability)
+  - [<span class="badge">E</span>Event.WatchEvent](#v1.Event.WatchEvent)
+  - [<span class="badge">E</span>PluginInfo.PluginCapability](#v1.PluginInfo.PluginCapability)
   - [<span class="badge">E</span>PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand)
-  - [<span class="badge">E</span>WatchEvent](#v1.WatchEvent)
   - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
   - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
+  - [<span class="badge">S</span>RaftPlugin](#v1.RaftPlugin)
   - [<span class="badge">S</span>StoragePlugin](#v1.StoragePlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
@@ -1095,11 +1095,10 @@ to allow people in from the outside.
 
 AllocateIPRequest is the message containing an IP allocation request.
 
-| Field   | Type                                                           | Label | Description                                                |
-|---------|----------------------------------------------------------------|-------|------------------------------------------------------------|
-| node_id | [string](#string)                                              |       | node_id is the node that the IP should be allocated for.   |
-| subnet  | [string](#string)                                              |       | subnet is the subnet that the IP should be allocated from. |
-| version | [AllocateIPRequest.IPVersion](#v1.AllocateIPRequest.IPVersion) |       | version is the IP version that should be allocated.        |
+| Field   | Type              | Label | Description                                                |
+|---------|-------------------|-------|------------------------------------------------------------|
+| node_id | [string](#string) |       | node_id is the node that the IP should be allocated for.   |
+| subnet  | [string](#string) |       | subnet is the subnet that the IP should be allocated from. |
 
 ### AllocatedIP
 
@@ -1149,10 +1148,10 @@ DataSnapshot is the message containing a snapshot of the data.
 
 Event is the message containing a watch event.
 
-| Field | Type                         | Label | Description                               |
-|-------|------------------------------|-------|-------------------------------------------|
-| type  | [WatchEvent](#v1.WatchEvent) |       | type is the type of the watch event.      |
-| node  | [MeshNode](#v1.MeshNode)     |       | node is the node that the event is about. |
+| Field | Type                                     | Label | Description                               |
+|-------|------------------------------------------|-------|-------------------------------------------|
+| type  | [Event.WatchEvent](#v1.Event.WatchEvent) |       | type is the type of the watch event.      |
+| node  | [MeshNode](#v1.MeshNode)                 |       | node is the node that the event is about. |
 
 ### PluginConfiguration
 
@@ -1167,12 +1166,12 @@ plugin.
 
 PluginInfo is the information of a plugin.
 
-| Field        | Type                                     | Label    | Description                                     |
-|--------------|------------------------------------------|----------|-------------------------------------------------|
-| name         | [string](#string)                        |          | Name is the name of the plugin.                 |
-| version      | [string](#string)                        |          | Version is the version of the plugin.           |
-| description  | [string](#string)                        |          | Description is the description of the plugin.   |
-| capabilities | [PluginCapability](#v1.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
+| Field        | Type                                                           | Label    | Description                                     |
+|--------------|----------------------------------------------------------------|----------|-------------------------------------------------|
+| name         | [string](#string)                                              |          | Name is the name of the plugin.                 |
+| version      | [string](#string)                                              |          | Version is the version of the plugin.           |
+| description  | [string](#string)                                              |          | Description is the description of the plugin.   |
+| capabilities | [PluginInfo.PluginCapability](#v1.PluginInfo.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
 ### PluginQuery
 
@@ -1219,26 +1218,29 @@ StoreLogRequest is the message containing a raft log entry.
 | index | [uint64](#uint64)                |       | index is the index of the log entry. |
 | log   | [RaftLogEntry](#v1.RaftLogEntry) |       | log is the log entry.                |
 
-### AllocateIPRequest.IPVersion
+### Event.WatchEvent
 
-| Name               | Number | Description                                                      |
-|--------------------|--------|------------------------------------------------------------------|
-| IP_VERSION_UNKNOWN | 0      | IP_VERSION_UNKNOWN is the default value of IPVersion.            |
-| IP_VERSION_4       | 4      | IP_VERSION_4 indicates that an IPv4 address should be allocated. |
-| IP_VERSION_6       | 6      | IP_VERSION_6 indicates that an IPv6 address should be allocated. |
+WatchEvent is the type of a watch event.
 
-### PluginCapability
+| Name          | Number | Description                                                         |
+|---------------|--------|---------------------------------------------------------------------|
+| UNKNOWN       | 0      | UNKNOWN is the default value of WatchEvent.                         |
+| NODE_JOIN     | 1      | NODE_JOIN indicates that a node has joined the cluster.             |
+| NODE_LEAVE    | 2      | NODE_LEAVE indicates that a node has left the cluster.              |
+| LEADER_CHANGE | 3      | LEADER_CHANGE indicates that the leader of the cluster has changed. |
+
+### PluginInfo.PluginCapability
 
 PluginCapability is the capabilities of a plugin.
 
-| Name                      | Number | Description                                                                      |
-|---------------------------|--------|----------------------------------------------------------------------------------|
-| PLUGIN_CAPABILITY_UNKNOWN | 0      | PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.              |
-| PLUGIN_CAPABILITY_STORE   | 1      | PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.        |
-| PLUGIN_CAPABILITY_AUTH    | 2      | PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.              |
-| PLUGIN_CAPABILITY_WATCH   | 3      | PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events. |
-| PLUGIN_CAPABILITY_IPAMV4  | 4      | PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.       |
-| PLUGIN_CAPABILITY_IPAMV6  | 5      | PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.       |
+| Name    | Number | Description                                                     |
+|---------|--------|-----------------------------------------------------------------|
+| UNKNOWN | 0      | UNKNOWN is the default value of PluginCapability.               |
+| RAFT    | 1      | RAFT indicates that the plugin is a raft store plugin.          |
+| AUTH    | 2      | AUTH indicates that the plugin is an auth plugin.               |
+| WATCH   | 3      | WATCH indicates that the plugin wants to receive watch events.  |
+| IPAMV4  | 4      | IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.        |
+| STORAGE | 5      | STORAGE indicates a plugin that wants to interact with storage. |
 
 ### PluginQuery.QueryCommand
 
@@ -1250,17 +1252,6 @@ QueryCommand is the type of the query.
 | GET     | 1      | GET is the command to get a value.                                |
 | LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
 | ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
-
-### WatchEvent
-
-WatchEvent is the type of a watch event.
-
-| Name                      | Number | Description                                                                     |
-|---------------------------|--------|---------------------------------------------------------------------------------|
-| WATCH_EVENT_UNKNOWN       | 0      | WATCH_EVENT_UNKNOWN is the default value of WatchEvent.                         |
-| WATCH_EVENT_NODE_JOIN     | 1      | WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.             |
-| WATCH_EVENT_NODE_LEAVE    | 2      | WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.              |
-| WATCH_EVENT_LEADER_CHANGE | 3      | WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed. |
 
 ### AuthPlugin
 
@@ -1285,21 +1276,28 @@ Plugin is the general service definition for a Webmesh plugin.
 
 It must be implemented by all plugins.
 
-| Method Name   | Request Type                                      | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|---------------|---------------------------------------------------|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GetInfo       | [.google.protobuf.Empty](#google.protobuf.Empty)  | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Configure     | [PluginConfiguration](#v1.PluginConfiguration)    | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| InjectQuerier | [PluginQueryResult](#v1.PluginQueryResult) stream | [PluginQuery](#v1.PluginQuery) stream            | InjectQuerier is a stream opened by the node to faciliate read-only queries against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginSQLQueryResult message for every query that is received. The plugin can return an Unimplemented error or simply close the stream with no error it it does not wish to keep the stream open. |
-| Close         | [.google.protobuf.Empty](#google.protobuf.Empty)  | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down.                                                                                                                                                                                                                                                                                                                                                                                               |
+| Method Name | Request Type                                     | Response Type                                    | Description                                                           |
+|-------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------------------|
+| GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                       |
+| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                      |
+| Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down. |
 
-### StoragePlugin
+### RaftPlugin
 
-StoragePlugin is the service definition for a Webmesh storage plugin.
+RaftPlugin is the service definition for a Webmesh raft plugin.
 
 | Method Name     | Request Type                           | Response Type                                    | Description                                                                   |
 |-----------------|----------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------|
 | Store           | [StoreLogRequest](#v1.StoreLogRequest) | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store dispatches a Raft log entry for storage.                                |
 | RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)       | [.google.protobuf.Empty](#google.protobuf.Empty) | RestoreSnapshot should drop any existing state and restore from the snapshot. |
+
+### StoragePlugin
+
+StoragePlugin is the service definition for a Webmesh storage plugin.
+
+| Method Name   | Request Type                                      | Response Type                         | Description                                                                                                                                                                                                                                                                                                                          |
+|---------------|---------------------------------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| InjectQuerier | [PluginQueryResult](#v1.PluginQueryResult) stream | [PluginQuery](#v1.PluginQuery) stream | InjectQuerier is a stream opened by the node to faciliate read-write operations against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginSQLQueryResult message for every query that is received. |
 
 ### WatchPlugin
 

@@ -647,19 +647,15 @@
               
               
                 <li>
-                  <a href="#v1.AllocateIPRequest.IPVersion"><span class="badge">E</span>AllocateIPRequest.IPVersion</a>
+                  <a href="#v1.Event.WatchEvent"><span class="badge">E</span>Event.WatchEvent</a>
                 </li>
               
                 <li>
-                  <a href="#v1.PluginCapability"><span class="badge">E</span>PluginCapability</a>
+                  <a href="#v1.PluginInfo.PluginCapability"><span class="badge">E</span>PluginInfo.PluginCapability</a>
                 </li>
               
                 <li>
                   <a href="#v1.PluginQuery.QueryCommand"><span class="badge">E</span>PluginQuery.QueryCommand</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.WatchEvent"><span class="badge">E</span>WatchEvent</a>
                 </li>
               
               
@@ -674,6 +670,10 @@
               
                 <li>
                   <a href="#v1.Plugin"><span class="badge">S</span>Plugin</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RaftPlugin"><span class="badge">S</span>RaftPlugin</a>
                 </li>
               
                 <li>
@@ -4144,13 +4144,6 @@ to vote.</p></td>
                   <td><p>subnet is the subnet that the IP should be allocated from. </p></td>
                 </tr>
               
-                <tr>
-                  <td>version</td>
-                  <td><a href="#v1.AllocateIPRequest.IPVersion">AllocateIPRequest.IPVersion</a></td>
-                  <td></td>
-                  <td><p>version is the IP version that should be allocated. </p></td>
-                </tr>
-              
             </tbody>
           </table>
 
@@ -4318,7 +4311,7 @@ to vote.</p></td>
               
                 <tr>
                   <td>type</td>
-                  <td><a href="#v1.WatchEvent">WatchEvent</a></td>
+                  <td><a href="#v1.Event.WatchEvent">Event.WatchEvent</a></td>
                   <td></td>
                   <td><p>type is the type of the watch event. </p></td>
                 </tr>
@@ -4394,7 +4387,7 @@ to vote.</p></td>
               
                 <tr>
                   <td>capabilities</td>
-                  <td><a href="#v1.PluginCapability">PluginCapability</a></td>
+                  <td><a href="#v1.PluginInfo.PluginCapability">PluginInfo.PluginCapability</a></td>
                   <td>repeated</td>
                   <td><p>Capabilities is the capabilities of the plugin. </p></td>
                 </tr>
@@ -4563,8 +4556,8 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
       
 
       
-        <h3 id="v1.AllocateIPRequest.IPVersion">AllocateIPRequest.IPVersion</h3>
-        <p></p>
+        <h3 id="v1.Event.WatchEvent">Event.WatchEvent</h3>
+        <p>WatchEvent is the type of a watch event.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -4572,27 +4565,33 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
           <tbody>
             
               <tr>
-                <td>IP_VERSION_UNKNOWN</td>
+                <td>UNKNOWN</td>
                 <td>0</td>
-                <td><p>IP_VERSION_UNKNOWN is the default value of IPVersion.</p></td>
+                <td><p>UNKNOWN is the default value of WatchEvent.</p></td>
               </tr>
             
               <tr>
-                <td>IP_VERSION_4</td>
-                <td>4</td>
-                <td><p>IP_VERSION_4 indicates that an IPv4 address should be allocated.</p></td>
+                <td>NODE_JOIN</td>
+                <td>1</td>
+                <td><p>NODE_JOIN indicates that a node has joined the cluster.</p></td>
               </tr>
             
               <tr>
-                <td>IP_VERSION_6</td>
-                <td>6</td>
-                <td><p>IP_VERSION_6 indicates that an IPv6 address should be allocated.</p></td>
+                <td>NODE_LEAVE</td>
+                <td>2</td>
+                <td><p>NODE_LEAVE indicates that a node has left the cluster.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LEADER_CHANGE</td>
+                <td>3</td>
+                <td><p>LEADER_CHANGE indicates that the leader of the cluster has changed.</p></td>
               </tr>
             
           </tbody>
         </table>
       
-        <h3 id="v1.PluginCapability">PluginCapability</h3>
+        <h3 id="v1.PluginInfo.PluginCapability">PluginInfo.PluginCapability</h3>
         <p>PluginCapability is the capabilities of a plugin.</p>
         <table class="enum-table">
           <thead>
@@ -4601,39 +4600,39 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
           <tbody>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_UNKNOWN</td>
+                <td>UNKNOWN</td>
                 <td>0</td>
-                <td><p>PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.</p></td>
+                <td><p>UNKNOWN is the default value of PluginCapability.</p></td>
               </tr>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_STORE</td>
+                <td>RAFT</td>
                 <td>1</td>
-                <td><p>PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.</p></td>
+                <td><p>RAFT indicates that the plugin is a raft store plugin.</p></td>
               </tr>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_AUTH</td>
+                <td>AUTH</td>
                 <td>2</td>
-                <td><p>PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.</p></td>
+                <td><p>AUTH indicates that the plugin is an auth plugin.</p></td>
               </tr>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_WATCH</td>
+                <td>WATCH</td>
                 <td>3</td>
-                <td><p>PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.</p></td>
+                <td><p>WATCH indicates that the plugin wants to receive watch events.</p></td>
               </tr>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_IPAMV4</td>
+                <td>IPAMV4</td>
                 <td>4</td>
-                <td><p>PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.</p></td>
+                <td><p>IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.</p></td>
               </tr>
             
               <tr>
-                <td>PLUGIN_CAPABILITY_IPAMV6</td>
+                <td>STORAGE</td>
                 <td>5</td>
-                <td><p>PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.</p></td>
+                <td><p>STORAGE indicates a plugin that wants to interact with storage.</p></td>
               </tr>
             
           </tbody>
@@ -4669,41 +4668,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                 <td>ITER</td>
                 <td>3</td>
                 <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.WatchEvent">WatchEvent</h3>
-        <p>WatchEvent is the type of a watch event.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>WATCH_EVENT_UNKNOWN</td>
-                <td>0</td>
-                <td><p>WATCH_EVENT_UNKNOWN is the default value of WatchEvent.</p></td>
-              </tr>
-            
-              <tr>
-                <td>WATCH_EVENT_NODE_JOIN</td>
-                <td>1</td>
-                <td><p>WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.</p></td>
-              </tr>
-            
-              <tr>
-                <td>WATCH_EVENT_NODE_LEAVE</td>
-                <td>2</td>
-                <td><p>WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.</p></td>
-              </tr>
-            
-              <tr>
-                <td>WATCH_EVENT_LEADER_CHANGE</td>
-                <td>3</td>
-                <td><p>WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed.</p></td>
               </tr>
             
           </tbody>
@@ -4781,19 +4745,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               </tr>
             
               <tr>
-                <td>InjectQuerier</td>
-                <td><a href="#v1.PluginQueryResult">PluginQueryResult</a> stream</td>
-                <td><a href="#v1.PluginQuery">PluginQuery</a> stream</td>
-                <td><p>InjectQuerier is a stream opened by the node to faciliate read-only queries
-against the mesh state. The signature is misleading, but it is required
-to be able to stream the query results back to the node. The node will
-open a stream to the plugin and send a PluginSQLQueryResult message
-for every query that is received. The plugin can return an Unimplemented
-error or simply close the stream with no error it it does not wish to 
-keep the stream open.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Close</td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
@@ -4804,8 +4755,8 @@ keep the stream open.</p></td>
         </table>
 
         
-        <h3 id="v1.StoragePlugin">StoragePlugin</h3>
-        <p>StoragePlugin is the service definition for a Webmesh storage plugin.</p>
+        <h3 id="v1.RaftPlugin">RaftPlugin</h3>
+        <p>RaftPlugin is the service definition for a Webmesh raft plugin.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -4824,6 +4775,29 @@ keep the stream open.</p></td>
                 <td><a href="#v1.DataSnapshot">DataSnapshot</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>RestoreSnapshot should drop any existing state and restore from the snapshot.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+        <h3 id="v1.StoragePlugin">StoragePlugin</h3>
+        <p>StoragePlugin is the service definition for a Webmesh storage plugin.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>InjectQuerier</td>
+                <td><a href="#v1.PluginQueryResult">PluginQueryResult</a> stream</td>
+                <td><a href="#v1.PluginQuery">PluginQuery</a> stream</td>
+                <td><p>InjectQuerier is a stream opened by the node to faciliate read-write operations
+against the mesh state. The signature is misleading, but it is required to be 
+able to stream the query results back to the node. The node will open a stream 
+to the plugin and send a PluginSQLQueryResult message for every query that is 
+received.</p></td>
               </tr>
             
           </tbody>

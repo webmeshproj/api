@@ -24,32 +24,10 @@ import "google/protobuf/struct.proto";
 import "v1/raft.proto";
 import "v1/mesh.proto";
 
-// PluginCapability is the capabilities of a plugin.
-enum PluginCapability {
-    // PLUGIN_CAPABILITY_UNKNOWN is the default value of PluginCapability.
-    PLUGIN_CAPABILITY_UNKNOWN = 0;
-    // PLUGIN_CAPABILITY_STORE indicates that the plugin is a raft store plugin.
-    PLUGIN_CAPABILITY_STORE = 1;
-    // PLUGIN_CAPABILITY_AUTH indicates that the plugin is an auth plugin.
-    PLUGIN_CAPABILITY_AUTH = 2;
-    // PLUGIN_CAPABILITY_WATCH indicates that the plugin wants to receive watch events.
-    PLUGIN_CAPABILITY_WATCH = 3;
-    // PLUGIN_CAPABILITY_IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.
-    PLUGIN_CAPABILITY_IPAMV4 = 4;
-    // PLUGIN_CAPABILITY_IPAMV6 indicates that the plugin is an IPv6 IPAM plugin.
-    PLUGIN_CAPABILITY_IPAMV6 = 5;
-}
-
-// WatchEvent is the type of a watch event.
-enum WatchEvent {
-    // WATCH_EVENT_UNKNOWN is the default value of WatchEvent.
-    WATCH_EVENT_UNKNOWN = 0;
-    // WATCH_EVENT_NODE_JOIN indicates that a node has joined the cluster.
-    WATCH_EVENT_NODE_JOIN = 1;
-    // WATCH_EVENT_NODE_LEAVE indicates that a node has left the cluster.
-    WATCH_EVENT_NODE_LEAVE = 2;
-    // WATCH_EVENT_LEADER_CHANGE indicates that the leader of the cluster has changed.
-    WATCH_EVENT_LEADER_CHANGE = 3;
+// PluginConfiguration is the message containing the configuration of a plugin.
+message PluginConfiguration {
+    // Config is the configuration of the plugin.
+    google.protobuf.Struct config = 1;
 }
 
 // PluginInfo is the information of a plugin.
@@ -60,14 +38,25 @@ message PluginInfo {
     string version = 2;
     // Description is the description of the plugin.
     string description = 3;
+
+    // PluginCapability is the capabilities of a plugin.
+    enum PluginCapability {
+        // UNKNOWN is the default value of PluginCapability.
+        UNKNOWN = 0;
+        // RAFT indicates that the plugin is a raft store plugin.
+        RAFT = 1;
+        // AUTH indicates that the plugin is an auth plugin.
+        AUTH = 2;
+        // WATCH indicates that the plugin wants to receive watch events.
+        WATCH = 3;
+        // IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.
+        IPAMV4 = 4;
+        // STORAGE indicates a plugin that wants to interact with storage.
+        STORAGE = 5;
+    }
+
     // Capabilities is the capabilities of the plugin.
     repeated PluginCapability capabilities = 5;
-}
-
-// PluginConfiguration is the message containing the configuration of a plugin.
-message PluginConfiguration {
-    // Config is the configuration of the plugin.
-    google.protobuf.Struct config = 1;
 }
 
 // PluginQuery is the message containing a storage query. It contains
@@ -115,14 +104,6 @@ service Plugin {
     rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
     // Configure configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
-    // InjectQuerier is a stream opened by the node to faciliate read-only queries
-    // against the mesh state. The signature is misleading, but it is required
-    // to be able to stream the query results back to the node. The node will
-    // open a stream to the plugin and send a PluginSQLQueryResult message
-    // for every query that is received. The plugin can return an Unimplemented
-    // error or simply close the stream with no error it it does not wish to 
-    // keep the stream open.
-    rpc InjectQuerier (stream PluginQueryResult) returns (stream PluginQuery) {}
     // Close closes the plugin. It is called when the node is shutting down.
     rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
@@ -147,8 +128,8 @@ message DataSnapshot {
     bytes data = 3;
 }
 
-// StoragePlugin is the service definition for a Webmesh storage plugin.
-service StoragePlugin {
+// RaftPlugin is the service definition for a Webmesh raft plugin.
+service RaftPlugin {
     // Store dispatches a Raft log entry for storage.
     rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
     // RestoreSnapshot should drop any existing state and restore from the snapshot.
@@ -177,6 +158,17 @@ service AuthPlugin {
 
 // Event is the message containing a watch event.
 message Event {
+    // WatchEvent is the type of a watch event.
+    enum WatchEvent {
+        // UNKNOWN is the default value of WatchEvent.
+        UNKNOWN = 0;
+        // NODE_JOIN indicates that a node has joined the cluster.
+        NODE_JOIN = 1;
+        // NODE_LEAVE indicates that a node has left the cluster.
+        NODE_LEAVE = 2;
+        // LEADER_CHANGE indicates that the leader of the cluster has changed.
+        LEADER_CHANGE = 3;
+    }
     // type is the type of the watch event.
     WatchEvent type = 1;
     // event is the data of the watch event.
@@ -198,18 +190,6 @@ message AllocateIPRequest {
     string node_id = 1;
     // subnet is the subnet that the IP should be allocated from.
     string subnet = 2;
-
-    enum IPVersion {
-        // IP_VERSION_UNKNOWN is the default value of IPVersion.
-        IP_VERSION_UNKNOWN = 0;
-        // IP_VERSION_4 indicates that an IPv4 address should be allocated.
-        IP_VERSION_4 = 4;
-        // IP_VERSION_6 indicates that an IPv6 address should be allocated.
-        IP_VERSION_6 = 6;
-    };
-
-    // version is the IP version that should be allocated.
-    IPVersion version = 3;
 }
 
 // AllocatedIP is the message containing an allocated IP.
@@ -232,4 +212,14 @@ service IPAMPlugin {
     rpc Allocate (AllocateIPRequest) returns (AllocatedIP) {}
     // Release releases an IP for a node.
     rpc Release (ReleaseIPRequest) returns (google.protobuf.Empty) {}
+}
+
+// StoragePlugin is the service definition for a Webmesh storage plugin.
+service StoragePlugin {
+    // InjectQuerier is a stream opened by the node to faciliate read-write operations
+    // against the mesh state. The signature is misleading, but it is required to be 
+    // able to stream the query results back to the node. The node will open a stream 
+    // to the plugin and send a PluginSQLQueryResult message for every query that is 
+    // received.
+    rpc InjectQuerier (stream PluginQueryResult) returns (stream PluginQuery) {}
 }
