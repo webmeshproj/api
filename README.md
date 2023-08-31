@@ -10,6 +10,7 @@
   - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
   - [<span class="badge">M</span>Status](#v1.Status)
+  - [<span class="badge">M</span>WebRTCSignal](#v1.WebRTCSignal)
   - [<span class="badge">E</span>ClusterStatus](#v1.ClusterStatus)
   - [<span class="badge">E</span>DataChannel](#v1.DataChannel)
   - [<span class="badge">E</span>Feature](#v1.Feature)
@@ -207,6 +208,16 @@ Status represents the status of a node.
 | last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
 | interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
 
+### WebRTCSignal
+
+WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
+
+| Field       | Type              | Label | Description                                                                                                                                                                                                        |
+|-------------|-------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| node_id     | [string](#string) |       | node_id is the ID of the node to send the signal to. This is set by the original sender. On the node that receives the ReceiveSignalChannel request, this will be set to the ID of the node that sent the request. |
+| candidate   | [string](#string) |       | candidate is an ICE candidate.                                                                                                                                                                                     |
+| description | [string](#string) |       | description is a session description.                                                                                                                                                                              |
+
 ### ClusterStatus
 
 ClusterStatus is the status of the node in the cluster.
@@ -254,12 +265,14 @@ Feature is a list of features supported by a node.
 Node is the service exposed on every node in the mesh to communicate
 network
 
-information amongst themselves and provide a mesh API to applications.
+information amongst themselves and facilitate inbound/outbound
+connections.
 
 | Method Name          | Request Type                                                | Response Type                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |----------------------|-------------------------------------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | GetStatus            | [GetStatusRequest](#v1.GetStatusRequest)                    | [Status](#v1.Status)                                        | GetStatus gets the status of a node in the cluster. If the node is not able to return the status of the ID requested, it should return an error.                                                                                                                                                                                                                                                                                                                                                                    |
 | NegotiateDataChannel | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | [DataChannelNegotiation](#v1.DataChannelNegotiation) stream | NegotiateDataChannel is used to negotiate a WebRTC connection between a webmesh client and a node in the cluster. The handling server will send the target node the source address, the destination for traffic, and STUN/TURN servers to use for the negotiation. The node responds with an offer to be forwarded to the client. When the handler receives an answer from the client, it forwards it to the node. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates. |
+| ReceiveSignalChannel | [WebRTCSignal](#v1.WebRTCSignal) stream                     | [WebRTCSignal](#v1.WebRTCSignal) stream                     | ReceiveSignalChannel is used to receive a request to start a WebRTC connection between a remote node and this node. The node should wait for the client to send an offer, and then respond with an answer. Once the node receives the answer, the stream can optionally be used to exchange ICE candidates.                                                                                                                                                                                                         |
 
 <div class="file-heading">
 
@@ -1357,9 +1370,10 @@ configured
 
 to use public STUN servers instead.
 
-| Method Name      | Request Type                                                  | Response Type                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|------------------|---------------------------------------------------------------|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| StartDataChannel | [StartDataChannelRequest](#v1.StartDataChannelRequest) stream | [DataChannelOffer](#v1.DataChannelOffer) stream | StartDataChannel requests a new WebRTC connection to a node. The client speaks first with the request containing the node ID and where forwarded packets should be sent. The server responds with an offer and STUN servers to be used to establish a WebRTC connection. The client should then respond with an answer to the offer that matches the spec of the DataChannel.CHANNELS enum value. After the offer is accepted, the stream can be used to exchange ICE candidates to speed up the connection process. |
+| Method Name        | Request Type                                                  | Response Type                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|--------------------|---------------------------------------------------------------|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| StartDataChannel   | [StartDataChannelRequest](#v1.StartDataChannelRequest) stream | [DataChannelOffer](#v1.DataChannelOffer) stream | StartDataChannel requests a new WebRTC connection to a node. The client speaks first with the request containing the node ID and where forwarded packets should be sent. The server responds with an offer and STUN servers to be used to establish a WebRTC connection. The client should then respond with an answer to the offer that matches the spec of the DataChannel.CHANNELS enum value. After the offer is accepted, the stream can be used to exchange ICE candidates to speed up the connection process. |
+| StartSignalChannel | [WebRTCSignal](#v1.WebRTCSignal) stream                       | [WebRTCSignal](#v1.WebRTCSignal) stream         | StartSignalChannel starts a signaling channel to a remote node. This can be used to negotiate WebRTC connections both inside and outside of the mesh. Messages on the wire are proxied to the remote node.                                                                                                                                                                                                                                                                                                           |
 
 ## Scalar Value Types
 

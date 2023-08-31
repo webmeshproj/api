@@ -178,8 +178,21 @@ message PeerMetrics {
   uint64 transmit_bytes = 8;
 }
 
+// WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
+message WebRTCSignal {
+  // node_id is the ID of the node to send the signal to.
+  // This is set by the original sender. On the node that
+  // receives the ReceiveSignalChannel request, this will
+  // be set to the ID of the node that sent the request.
+  string node_id = 1;
+  // candidate is an ICE candidate.
+  string candidate = 2;
+  // description is a session description.
+  string description = 3;
+}
+
 // Node is the service exposed on every node in the mesh to communicate network
-// information amongst themselves and provide a mesh API to applications.
+// information amongst themselves and facilitate inbound/outbound connections.
 service Node {
     // GetStatus gets the status of a node in the cluster. If the node is not able
     // to return the status of the ID requested, it should return an error.
@@ -192,4 +205,10 @@ service Node {
     // from the client, it forwards it to the node. Once the node receives the answer, the stream
     // can optionally be used to exchange ICE candidates.
     rpc NegotiateDataChannel(stream DataChannelNegotiation) returns (stream DataChannelNegotiation) {}
+
+    // ReceiveSignalChannel is used to receive a request to start a WebRTC connection between a remote
+    // node and this node. The node should wait for the client to send an offer, and then respond with
+    // an answer. Once the node receives the answer, the stream can optionally be used to exchange ICE
+    // candidates.
+    rpc ReceiveSignalChannel(stream WebRTCSignal) returns (stream WebRTCSignal) {}
 }

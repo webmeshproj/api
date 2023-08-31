@@ -34,7 +34,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	WebRTC_StartDataChannel_FullMethodName = "/v1.WebRTC/StartDataChannel"
+	WebRTC_StartDataChannel_FullMethodName   = "/v1.WebRTC/StartDataChannel"
+	WebRTC_StartSignalChannel_FullMethodName = "/v1.WebRTC/StartSignalChannel"
 )
 
 // WebRTCClient is the client API for WebRTC service.
@@ -51,6 +52,10 @@ type WebRTCClient interface {
 	// After the offer is accepted, the stream can be used to exchange ICE candidates
 	// to speed up the connection process.
 	StartDataChannel(ctx context.Context, opts ...grpc.CallOption) (WebRTC_StartDataChannelClient, error)
+	// StartSignalChannel starts a signaling channel to a remote node. This can be used to
+	// negotiate WebRTC connections both inside and outside of the mesh. Messages on the wire
+	// are proxied to the remote node.
+	StartSignalChannel(ctx context.Context, opts ...grpc.CallOption) (WebRTC_StartSignalChannelClient, error)
 }
 
 type webRTCClient struct {
@@ -92,6 +97,37 @@ func (x *webRTCStartDataChannelClient) Recv() (*DataChannelOffer, error) {
 	return m, nil
 }
 
+func (c *webRTCClient) StartSignalChannel(ctx context.Context, opts ...grpc.CallOption) (WebRTC_StartSignalChannelClient, error) {
+	stream, err := c.cc.NewStream(ctx, &WebRTC_ServiceDesc.Streams[1], WebRTC_StartSignalChannel_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &webRTCStartSignalChannelClient{stream}
+	return x, nil
+}
+
+type WebRTC_StartSignalChannelClient interface {
+	Send(*WebRTCSignal) error
+	Recv() (*WebRTCSignal, error)
+	grpc.ClientStream
+}
+
+type webRTCStartSignalChannelClient struct {
+	grpc.ClientStream
+}
+
+func (x *webRTCStartSignalChannelClient) Send(m *WebRTCSignal) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *webRTCStartSignalChannelClient) Recv() (*WebRTCSignal, error) {
+	m := new(WebRTCSignal)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // WebRTCServer is the server API for WebRTC service.
 // All implementations must embed UnimplementedWebRTCServer
 // for forward compatibility
@@ -106,6 +142,10 @@ type WebRTCServer interface {
 	// After the offer is accepted, the stream can be used to exchange ICE candidates
 	// to speed up the connection process.
 	StartDataChannel(WebRTC_StartDataChannelServer) error
+	// StartSignalChannel starts a signaling channel to a remote node. This can be used to
+	// negotiate WebRTC connections both inside and outside of the mesh. Messages on the wire
+	// are proxied to the remote node.
+	StartSignalChannel(WebRTC_StartSignalChannelServer) error
 	mustEmbedUnimplementedWebRTCServer()
 }
 
@@ -115,6 +155,9 @@ type UnimplementedWebRTCServer struct {
 
 func (UnimplementedWebRTCServer) StartDataChannel(WebRTC_StartDataChannelServer) error {
 	return status.Errorf(codes.Unimplemented, "method StartDataChannel not implemented")
+}
+func (UnimplementedWebRTCServer) StartSignalChannel(WebRTC_StartSignalChannelServer) error {
+	return status.Errorf(codes.Unimplemented, "method StartSignalChannel not implemented")
 }
 func (UnimplementedWebRTCServer) mustEmbedUnimplementedWebRTCServer() {}
 
@@ -155,6 +198,32 @@ func (x *webRTCStartDataChannelServer) Recv() (*StartDataChannelRequest, error) 
 	return m, nil
 }
 
+func _WebRTC_StartSignalChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(WebRTCServer).StartSignalChannel(&webRTCStartSignalChannelServer{stream})
+}
+
+type WebRTC_StartSignalChannelServer interface {
+	Send(*WebRTCSignal) error
+	Recv() (*WebRTCSignal, error)
+	grpc.ServerStream
+}
+
+type webRTCStartSignalChannelServer struct {
+	grpc.ServerStream
+}
+
+func (x *webRTCStartSignalChannelServer) Send(m *WebRTCSignal) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *webRTCStartSignalChannelServer) Recv() (*WebRTCSignal, error) {
+	m := new(WebRTCSignal)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // WebRTC_ServiceDesc is the grpc.ServiceDesc for WebRTC service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,6 +235,12 @@ var WebRTC_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StartDataChannel",
 			Handler:       _WebRTC_StartDataChannel_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "StartSignalChannel",
+			Handler:       _WebRTC_StartSignalChannel_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

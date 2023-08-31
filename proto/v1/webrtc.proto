@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+import "v1/node.proto";
+
 // StartDataChannelRequest is a request to start a data channel.
 // The answer and candidate fields are populated after the offer 
 // is received.
@@ -62,4 +64,9 @@ service WebRTC {
     // After the offer is accepted, the stream can be used to exchange ICE candidates
     // to speed up the connection process.
     rpc StartDataChannel(stream StartDataChannelRequest) returns (stream DataChannelOffer) {}
+
+    // StartSignalChannel starts a signaling channel to a remote node. This can be used to 
+    // negotiate WebRTC connections both inside and outside of the mesh. Messages on the wire
+    // are proxied to the remote node.
+    rpc StartSignalChannel(stream WebRTCSignal) returns (stream WebRTCSignal) {}
 }

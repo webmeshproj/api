@@ -198,6 +198,10 @@
                   <a href="#v1.Status"><span class="badge">M</span>Status</a>
                 </li>
               
+                <li>
+                  <a href="#v1.WebRTCSignal"><span class="badge">M</span>WebRTCSignal</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.ClusterStatus"><span class="badge">E</span>ClusterStatus</a>
@@ -1088,6 +1092,47 @@ local node is returned. </p></td>
 
         
       
+        <h3 id="v1.WebRTCSignal">WebRTCSignal</h3>
+        <p>WebRTCSignal is a signal sent to a remote peer over the WebRTC API.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>node_id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node_id is the ID of the node to send the signal to.
+This is set by the original sender. On the node that
+receives the ReceiveSignalChannel request, this will
+be set to the ID of the node that sent the request. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>candidate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>candidate is an ICE candidate. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>description is a session description. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
 
       
         <h3 id="v1.ClusterStatus">ClusterStatus</h3>
@@ -1248,7 +1293,7 @@ This will be deprecated in favor of the MEMBERSHIP feature.</p></td>
 
       
         <h3 id="v1.Node">Node</h3>
-        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves and provide a mesh API to applications.</p>
+        <p>Node is the service exposed on every node in the mesh to communicate network</p><p>information amongst themselves and facilitate inbound/outbound connections.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -1273,6 +1318,16 @@ the destination for traffic, and STUN/TURN servers to use for the negotiation. T
 responds with an offer to be forwarded to the client. When the handler receives an answer
 from the client, it forwards it to the node. Once the node receives the answer, the stream
 can optionally be used to exchange ICE candidates.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ReceiveSignalChannel</td>
+                <td><a href="#v1.WebRTCSignal">WebRTCSignal</a> stream</td>
+                <td><a href="#v1.WebRTCSignal">WebRTCSignal</a> stream</td>
+                <td><p>ReceiveSignalChannel is used to receive a request to start a WebRTC connection between a remote
+node and this node. The node should wait for the client to send an offer, and then respond with
+an answer. Once the node receives the answer, the stream can optionally be used to exchange ICE
+candidates.</p></td>
               </tr>
             
           </tbody>
@@ -4974,6 +5029,15 @@ spec of the DataChannel.CHANNELS enum value.
 
 After the offer is accepted, the stream can be used to exchange ICE candidates
 to speed up the connection process.</p></td>
+              </tr>
+            
+              <tr>
+                <td>StartSignalChannel</td>
+                <td><a href="#v1.WebRTCSignal">WebRTCSignal</a> stream</td>
+                <td><a href="#v1.WebRTCSignal">WebRTCSignal</a> stream</td>
+                <td><p>StartSignalChannel starts a signaling channel to a remote node. This can be used to 
+negotiate WebRTC connections both inside and outside of the mesh. Messages on the wire
+are proxied to the remote node.</p></td>
               </tr>
             
           </tbody>

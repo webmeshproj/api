@@ -36,6 +36,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Node_GetStatus_FullMethodName            = "/v1.Node/GetStatus"
 	Node_NegotiateDataChannel_FullMethodName = "/v1.Node/NegotiateDataChannel"
+	Node_ReceiveSignalChannel_FullMethodName = "/v1.Node/ReceiveSignalChannel"
 )
 
 // NodeClient is the client API for Node service.
@@ -52,6 +53,11 @@ type NodeClient interface {
 	// from the client, it forwards it to the node. Once the node receives the answer, the stream
 	// can optionally be used to exchange ICE candidates.
 	NegotiateDataChannel(ctx context.Context, opts ...grpc.CallOption) (Node_NegotiateDataChannelClient, error)
+	// ReceiveSignalChannel is used to receive a request to start a WebRTC connection between a remote
+	// node and this node. The node should wait for the client to send an offer, and then respond with
+	// an answer. Once the node receives the answer, the stream can optionally be used to exchange ICE
+	// candidates.
+	ReceiveSignalChannel(ctx context.Context, opts ...grpc.CallOption) (Node_ReceiveSignalChannelClient, error)
 }
 
 type nodeClient struct {
@@ -102,6 +108,37 @@ func (x *nodeNegotiateDataChannelClient) Recv() (*DataChannelNegotiation, error)
 	return m, nil
 }
 
+func (c *nodeClient) ReceiveSignalChannel(ctx context.Context, opts ...grpc.CallOption) (Node_ReceiveSignalChannelClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Node_ServiceDesc.Streams[1], Node_ReceiveSignalChannel_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &nodeReceiveSignalChannelClient{stream}
+	return x, nil
+}
+
+type Node_ReceiveSignalChannelClient interface {
+	Send(*WebRTCSignal) error
+	Recv() (*WebRTCSignal, error)
+	grpc.ClientStream
+}
+
+type nodeReceiveSignalChannelClient struct {
+	grpc.ClientStream
+}
+
+func (x *nodeReceiveSignalChannelClient) Send(m *WebRTCSignal) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *nodeReceiveSignalChannelClient) Recv() (*WebRTCSignal, error) {
+	m := new(WebRTCSignal)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // NodeServer is the server API for Node service.
 // All implementations must embed UnimplementedNodeServer
 // for forward compatibility
@@ -116,6 +153,11 @@ type NodeServer interface {
 	// from the client, it forwards it to the node. Once the node receives the answer, the stream
 	// can optionally be used to exchange ICE candidates.
 	NegotiateDataChannel(Node_NegotiateDataChannelServer) error
+	// ReceiveSignalChannel is used to receive a request to start a WebRTC connection between a remote
+	// node and this node. The node should wait for the client to send an offer, and then respond with
+	// an answer. Once the node receives the answer, the stream can optionally be used to exchange ICE
+	// candidates.
+	ReceiveSignalChannel(Node_ReceiveSignalChannelServer) error
 	mustEmbedUnimplementedNodeServer()
 }
 
@@ -128,6 +170,9 @@ func (UnimplementedNodeServer) GetStatus(context.Context, *GetStatusRequest) (*S
 }
 func (UnimplementedNodeServer) NegotiateDataChannel(Node_NegotiateDataChannelServer) error {
 	return status.Errorf(codes.Unimplemented, "method NegotiateDataChannel not implemented")
+}
+func (UnimplementedNodeServer) ReceiveSignalChannel(Node_ReceiveSignalChannelServer) error {
+	return status.Errorf(codes.Unimplemented, "method ReceiveSignalChannel not implemented")
 }
 func (UnimplementedNodeServer) mustEmbedUnimplementedNodeServer() {}
 
@@ -186,6 +231,32 @@ func (x *nodeNegotiateDataChannelServer) Recv() (*DataChannelNegotiation, error)
 	return m, nil
 }
 
+func _Node_ReceiveSignalChannel_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(NodeServer).ReceiveSignalChannel(&nodeReceiveSignalChannelServer{stream})
+}
+
+type Node_ReceiveSignalChannelServer interface {
+	Send(*WebRTCSignal) error
+	Recv() (*WebRTCSignal, error)
+	grpc.ServerStream
+}
+
+type nodeReceiveSignalChannelServer struct {
+	grpc.ServerStream
+}
+
+func (x *nodeReceiveSignalChannelServer) Send(m *WebRTCSignal) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *nodeReceiveSignalChannelServer) Recv() (*WebRTCSignal, error) {
+	m := new(WebRTCSignal)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Node_ServiceDesc is the grpc.ServiceDesc for Node service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -202,6 +273,12 @@ var Node_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "NegotiateDataChannel",
 			Handler:       _Node_NegotiateDataChannel_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "ReceiveSignalChannel",
+			Handler:       _Node_ReceiveSignalChannel_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
