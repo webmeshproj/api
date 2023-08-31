@@ -294,6 +294,7 @@ Feature is a list of features supported by a node.
 | MESH_DNS         | 9      | MESH_DNS is the feature for mesh DNS.                                                                 |
 | FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.                      |
 | STORAGE          | 11     | STORAGE is the feature for querying, publishing, and subscribing to mesh state.                       |
+| RAFT             | 12     | RAFT is the feature for participating in raft consensus.                                              |
 
 ### Node
 
