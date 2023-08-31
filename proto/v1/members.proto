@@ -27,35 +27,27 @@ message JoinRequest {
     string id = 1;
     // public_key is the public wireguard key of the node to broadcast to peers.
     string public_key = 2;
-    // raft_port is the Raft listen port of the node.
-    int32 raft_port = 3;
-    // grpc_port is the gRPC listen port of the node.
-    int32 grpc_port = 4;
-    // meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
-    // a value of 0 indicates the node does not wish to offer DNS. ports are currently
-    // assumed to be UDP.
-    int32 meshdns_port = 5;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 6;
+    string primary_endpoint = 3;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 7;
+    repeated string wireguard_endpoints = 4;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 8;
+    string zone_awareness_id = 5;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 9;
+    bool assign_ipv4 = 6;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 10;
+    bool prefer_raft_ipv6 = 7;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
-    bool as_voter = 11;
+    bool as_voter = 8;
     // as_observer is whether the node should be added as an observer. They will receive
     // updates to the raft log, but not be able to vote in elections.
-    bool as_observer = 12;
+    bool as_observer = 9;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
-    repeated string routes = 13;
+    repeated string routes = 10;
     // direct_peers is a list of extra peers that should be connected to directly over ICE. 
     // The request will be denied if the node is not allowed to put data channels or edges.
     // The default joining behavior creates non-ICE links between the caller and the joiner.
@@ -63,9 +55,10 @@ message JoinRequest {
     // other nodes with a primary endpoint. If the caller has a zone awareness ID,
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
-    repeated string direct_peers = 14;
-    // features is a list of features supported by the node that should be advertised to peers.
-    repeated Feature features = 15;
+    repeated string direct_peers = 11;
+    // features is a list of features supported by the node that should be advertised to peers
+    // and the port they are available on.
+    repeated FeaturePort features = 12;
 }
 
 // JoinResponse is a response to a join request.
@@ -101,29 +94,22 @@ message UpdateRequest {
     string id = 1;
     // public_key is the public wireguard key of the node to broadcast to peers.
     string public_key = 2;
-    // raft_port is the Raft listen port of the node.
-    int32 raft_port = 3;
-    // grpc_port is the gRPC listen port of the node.
-    int32 grpc_port = 4;
-    // meshdns_port is the port the node wishes to advertise to offer DNS to other peers.
-    // a value of 0 indicates the node does not wish to offer DNS. ports are currently
-    // assumed to be UDP.
-    int32 meshdns_port = 5;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 6;
+    string primary_endpoint = 3;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 7;
+    repeated string wireguard_endpoints = 4;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 8;
+    string zone_awareness_id = 5;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
-    bool as_voter = 9;
+    bool as_voter = 6;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
-    repeated string routes = 10;
-    // features is a list of features supported by the node that should be advertised to peers.
-    repeated Feature features = 11;
+    repeated string routes = 7;
+    // features is a list of features supported by the node that should be advertised to peers
+    // and the port they are available on.
+    repeated FeaturePort features = 8;
 }
 
 // UpdateResponse is a response to an update request. It is currently empty.
@@ -152,12 +138,8 @@ message WireGuardPeer {
     // ice indicates whether the connection to this peer should be
     // established over ICE.
     bool ice = 10;
-    // grpc_port is the gRPC port of the peer.
-    int32 grpc_port = 11;
-    // raft_member indicates that this peer is able to serve raft requests.
-    bool raft_member = 12;
-    // features is a list of features supported by the peer.
-    repeated Feature features = 13;
+    // features is a list of features and the ports they are advertised on.
+    repeated FeaturePort features = 11;
 }
 
 // LeaveRequest is a request to leave the cluster.

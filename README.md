@@ -6,8 +6,11 @@
 
 - [v1/node.proto](#v1%2fnode.proto)
   - [<span class="badge">M</span>DataChannelNegotiation](#v1.DataChannelNegotiation)
+  - [<span class="badge">M</span>FeaturePort](#v1.FeaturePort)
   - [<span class="badge">M</span>GetStatusRequest](#v1.GetStatusRequest)
   - [<span class="badge">M</span>InterfaceMetrics](#v1.InterfaceMetrics)
+  - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
+  - [<span class="badge">M</span>NodeList](#v1.NodeList)
   - [<span class="badge">M</span>PeerMetrics](#v1.PeerMetrics)
   - [<span class="badge">M</span>Status](#v1.Status)
   - [<span class="badge">M</span>WebRTCSignal](#v1.WebRTCSignal)
@@ -21,8 +24,6 @@
   - [<span class="badge">M</span>MeshEdge.AttributesEntry](#v1.MeshEdge.AttributesEntry)
   - [<span class="badge">M</span>MeshEdges](#v1.MeshEdges)
   - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
-  - [<span class="badge">M</span>MeshNode](#v1.MeshNode)
-  - [<span class="badge">M</span>NodeList](#v1.NodeList)
   - [<span class="badge">E</span>EdgeAttributes](#v1.EdgeAttributes)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
 - [v1/rbac.proto](#v1%2frbac.proto)
@@ -148,6 +149,15 @@ nodes.
 | candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
 | stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
 
+### FeaturePort
+
+FeaturePort describes a feature and the port it is advertised on.
+
+| Field   | Type                   | Label | Description                                    |
+|---------|------------------------|-------|------------------------------------------------|
+| feature | [Feature](#v1.Feature) |       | feature is the feature.                        |
+| port    | [int32](#int32)        |       | port is the port the feature is advertised on. |
+
 ### GetStatusRequest
 
 GetStatusRequest is a request to get the status of a node.
@@ -172,6 +182,31 @@ InterfaceMetrics is the metrics for the WireGuard interface on a node.
 | total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
 | num_peers            | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
 | peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
+
+### MeshNode
+
+MeshNode is a node that has been registered with the mesh.
+
+| Field               | Type                                                    | Label    | Description                                                           |
+|---------------------|---------------------------------------------------------|----------|-----------------------------------------------------------------------|
+| id                  | [string](#string)                                       |          | id is the ID of the node.                                             |
+| primary_endpoint    | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.                 |
+| wireguard_endpoints | [string](#string)                                       | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.    |
+| zone_awareness_id   | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.               |
+| public_key          | [string](#string)                                       |          | public_key is the public key of the node.                             |
+| private_ipv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.                 |
+| private_ipv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.                 |
+| cluster_status      | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.              |
+| features            | [FeaturePort](#v1.FeaturePort)                          | repeated | features are a list of features and the ports they are advertised on. |
+| joined_at           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | joined_at is the time the node joined the cluster.                    |
+
+### NodeList
+
+NodeList is a list of nodes.
+
+| Field | Type                     | Label    | Description                 |
+|-------|--------------------------|----------|-----------------------------|
+| nodes | [MeshNode](#v1.MeshNode) | repeated | nodes is the list of nodes. |
 
 ### PeerMetrics
 
@@ -325,35 +360,6 @@ MeshGraph is a graph of nodes.
 | nodes | [string](#string)        | repeated | nodes is the list of nodes.                 |
 | edges | [MeshEdge](#v1.MeshEdge) | repeated | edges is the list of edges.                 |
 | dot   | [string](#string)        |          | dot is the DOT representation of the graph. |
-
-### MeshNode
-
-MeshNode is a node that has been registered with the controller.
-
-| Field               | Type                                                    | Label    | Description                                                                                                                                                      |
-|---------------------|---------------------------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)                                       |          | id is the ID of the node.                                                                                                                                        |
-| primary_endpoint    | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.                                                                                                            |
-| wireguard_endpoints | [string](#string)                                       | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                               |
-| zone_awareness_id   | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                          |
-| raft_port           | [int32](#int32)                                         |          | raft_port is the Raft listen port of the node.                                                                                                                   |
-| grpc_port           | [int32](#int32)                                         |          | grpc_port is the gRPC listen port of the node.                                                                                                                   |
-| meshdns_port        | [int32](#int32)                                         |          | meshdns_port is the port the node advertises to offer DNS to other peers. a value of 0 means the node does not offer DNS. ports are currently assumed to be UDP. |
-| public_key          | [string](#string)                                       |          | public_key is the public key of the node.                                                                                                                        |
-| private_ipv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.                                                                                                            |
-| private_ipv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.                                                                                                            |
-| features            | [Feature](#v1.Feature)                                  | repeated | features is a list of features supported by the node.                                                                                                            |
-| updated_at          | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | updated_at is the last time the node joined the cluster.                                                                                                         |
-| created_at          | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | created_at is the creation time for the node.                                                                                                                    |
-| cluster_status      | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.                                                                                                         |
-
-### NodeList
-
-NodeList is a list of nodes.
-
-| Field | Type                     | Label    | Description                 |
-|-------|--------------------------|----------|-----------------------------|
-| nodes | [MeshNode](#v1.MeshNode) | repeated | nodes is the list of nodes. |
 
 ### EdgeAttributes
 
@@ -947,23 +953,20 @@ Raft log.
 
 JoinRequest is a request to join the cluster.
 
-| Field               | Type                   | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|---------------------|------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)      |          | id is the ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| public_key          | [string](#string)      |          | public_key is the public wireguard key of the node to broadcast to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| raft_port           | [int32](#int32)        |          | raft_port is the Raft listen port of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| grpc_port           | [int32](#int32)        |          | grpc_port is the gRPC listen port of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| meshdns_port        | [int32](#int32)        |          | meshdns_port is the port the node wishes to advertise to offer DNS to other peers. a value of 0 indicates the node does not wish to offer DNS. ports are currently assumed to be UDP.                                                                                                                                                                                                                                                                                                                                                          |
-| primary_endpoint    | [string](#string)      |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                                                                                                                                                                                                                                                                                                                                                                                        |
-| wireguard_endpoints | [string](#string)      | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| zone_awareness_id   | [string](#string)      |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| assign_ipv4         | [bool](#bool)          |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| prefer_raft_ipv6    | [bool](#bool)          |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.                                                                                                                                                                                                                                                                                                                                                                                                               |
-| as_voter            | [bool](#bool)          |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                                                                                                                                                                                                                                                                                                                                                                                |
-| as_observer         | [bool](#bool)          |          | as_observer is whether the node should be added as an observer. They will receive updates to the raft log, but not be able to vote in elections.                                                                                                                                                                                                                                                                                                                                                                                               |
-| routes              | [string](#string)      | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| direct_peers        | [string](#string)      | repeated | direct_peers is a list of extra peers that should be connected to directly over ICE. The request will be denied if the node is not allowed to put data channels or edges. The default joining behavior creates non-ICE links between the caller and the joiner. If the caller has a primary endpoint, the joiner will link the caller to all other nodes with a primary endpoint. If the caller has a zone awareness ID, the joiner will link the caller to all other nodes with the same zone awareness ID that also have a primary endpoint. |
-| features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the node that should be advertised to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Field               | Type                           | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|---------------------|--------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | [string](#string)              |          | id is the ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| public_key          | [string](#string)              |          | public_key is the public wireguard key of the node to broadcast to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| primary_endpoint    | [string](#string)              |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| wireguard_endpoints | [string](#string)              | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| zone_awareness_id   | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| assign_ipv4         | [bool](#bool)                  |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| prefer_raft_ipv6    | [bool](#bool)                  |          | prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication. This is only used if assign_ipv4 is true.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| as_voter            | [bool](#bool)                  |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                                                                                                                                                                                                                                                                                                                                                                                |
+| as_observer         | [bool](#bool)                  |          | as_observer is whether the node should be added as an observer. They will receive updates to the raft log, but not be able to vote in elections.                                                                                                                                                                                                                                                                                                                                                                                               |
+| routes              | [string](#string)              | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| direct_peers        | [string](#string)              | repeated | direct_peers is a list of extra peers that should be connected to directly over ICE. The request will be denied if the node is not allowed to put data channels or edges. The default joining behavior creates non-ICE links between the caller and the joiner. If the caller has a primary endpoint, the joiner will link the caller to all other nodes with a primary endpoint. If the caller has a zone awareness ID, the joiner will link the caller to all other nodes with the same zone awareness ID that also have a primary endpoint. |
+| features            | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
 ### JoinResponse
 
@@ -1039,19 +1042,16 @@ UpdateRequest contains most of the same fields as JoinRequest, but is
 
 used to update the state of a node in the cluster.
 
-| Field               | Type                   | Label    | Description                                                                                                                                                                           |
-|---------------------|------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)      |          | id is the ID of the node.                                                                                                                                                             |
-| public_key          | [string](#string)      |          | public_key is the public wireguard key of the node to broadcast to peers.                                                                                                             |
-| raft_port           | [int32](#int32)        |          | raft_port is the Raft listen port of the node.                                                                                                                                        |
-| grpc_port           | [int32](#int32)        |          | grpc_port is the gRPC listen port of the node.                                                                                                                                        |
-| meshdns_port        | [int32](#int32)        |          | meshdns_port is the port the node wishes to advertise to offer DNS to other peers. a value of 0 indicates the node does not wish to offer DNS. ports are currently assumed to be UDP. |
-| primary_endpoint    | [string](#string)      |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                               |
-| wireguard_endpoints | [string](#string)      | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                    |
-| zone_awareness_id   | [string](#string)      |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                               |
-| as_voter            | [bool](#bool)          |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                       |
-| routes              | [string](#string)      | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                |
-| features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the node that should be advertised to peers.                                                                                              |
+| Field               | Type                           | Label    | Description                                                                                                                             |
+|---------------------|--------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | [string](#string)              |          | id is the ID of the node.                                                                                                               |
+| public_key          | [string](#string)              |          | public_key is the public wireguard key of the node to broadcast to peers.                                                               |
+| primary_endpoint    | [string](#string)              |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
+| wireguard_endpoints | [string](#string)              | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
+| zone_awareness_id   | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
+| as_voter            | [bool](#bool)                  |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.         |
+| routes              | [string](#string)              | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                  |
+| features            | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.             |
 
 ### UpdateResponse
 
@@ -1062,21 +1062,19 @@ empty.
 
 WireGuardPeer is a peer in the Wireguard network.
 
-| Field               | Type                   | Label    | Description                                                                       |
-|---------------------|------------------------|----------|-----------------------------------------------------------------------------------|
-| id                  | [string](#string)      |          | id is the ID of the peer.                                                         |
-| public_key          | [string](#string)      |          | public_key is the public key of the peer.                                         |
-| primary_endpoint    | [string](#string)      |          | primary_endpoint is the primary endpoint of the peer.                             |
-| wireguard_endpoints | [string](#string)      | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.      |
-| zone_awareness_id   | [string](#string)      |          | zone_awareness_id is the zone awareness ID of the peer.                           |
-| address_ipv4        | [string](#string)      |          | address_ipv4 is the private IPv4 wireguard address of the peer.                   |
-| address_ipv6        | [string](#string)      |          | address_ipv6 is the private IPv6 wireguard address of the peer.                   |
-| allowed_ips         | [string](#string)      | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
-| allowed_routes      | [string](#string)      | repeated | allowed_routes is the list of allowed routes for the peer.                        |
-| ice                 | [bool](#bool)          |          | ice indicates whether the connection to this peer should be established over ICE. |
-| grpc_port           | [int32](#int32)        |          | grpc_port is the gRPC port of the peer.                                           |
-| raft_member         | [bool](#bool)          |          | raft_member indicates that this peer is able to serve raft requests.              |
-| features            | [Feature](#v1.Feature) | repeated | features is a list of features supported by the peer.                             |
+| Field               | Type                           | Label    | Description                                                                       |
+|---------------------|--------------------------------|----------|-----------------------------------------------------------------------------------|
+| id                  | [string](#string)              |          | id is the ID of the peer.                                                         |
+| public_key          | [string](#string)              |          | public_key is the public key of the peer.                                         |
+| primary_endpoint    | [string](#string)              |          | primary_endpoint is the primary endpoint of the peer.                             |
+| wireguard_endpoints | [string](#string)              | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.      |
+| zone_awareness_id   | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the peer.                           |
+| address_ipv4        | [string](#string)              |          | address_ipv4 is the private IPv4 wireguard address of the peer.                   |
+| address_ipv6        | [string](#string)              |          | address_ipv6 is the private IPv6 wireguard address of the peer.                   |
+| allowed_ips         | [string](#string)              | repeated | allowed_ips is the list of allowed IPs for the peer.                              |
+| allowed_routes      | [string](#string)              | repeated | allowed_routes is the list of allowed routes for the peer.                        |
+| ice                 | [bool](#bool)                  |          | ice indicates whether the connection to this peer should be established over ICE. |
+| features            | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features and the ports they are advertised on.              |
 
 ### Membership
 

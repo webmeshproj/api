@@ -29,46 +29,6 @@ message GetNodeRequest {
     string id = 1;
 }
 
-// MeshNode is a node that has been registered with the controller.
-message MeshNode {
-    // id is the ID of the node.
-    string id = 1;
-    // primary_endpoint is the primary endpoint of the node.
-    string primary_endpoint = 2;
-    // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 3;
-    // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 4;
-    // raft_port is the Raft listen port of the node.
-    int32 raft_port = 5;
-    // grpc_port is the gRPC listen port of the node.
-    int32 grpc_port = 6;
-    // meshdns_port is the port the node advertises to offer DNS to other peers.
-    // a value of 0 means the node does not offer DNS. ports are currently
-    // assumed to be UDP.
-    int32 meshdns_port = 7;
-    // public_key is the public key of the node.
-    string public_key = 8;
-    // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 9;
-    // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 10;
-    // features is a list of features supported by the node.
-    repeated Feature features = 11;
-    // updated_at is the last time the node joined the cluster.
-    google.protobuf.Timestamp updated_at = 12;
-    // created_at is the creation time for the node.
-    google.protobuf.Timestamp created_at = 13;
-    // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 14;
-}
-
-// NodeList is a list of nodes.
-message NodeList {
-    // nodes is the list of nodes.
-    repeated MeshNode nodes = 1;
-}
-
 // EdgeAttributes are pre-defined edge attributes. They should
 // be used as their string values.
 enum EdgeAttributes {
