@@ -196,7 +196,6 @@ MeshNode is a node that has been registered with the mesh.
 | public_key          | [string](#string)                                       |          | public_key is the public key of the node.                             |
 | private_ipv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.                 |
 | private_ipv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.                 |
-| cluster_status      | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.              |
 | features            | [FeaturePort](#v1.FeaturePort)                          | repeated | features are a list of features and the ports they are advertised on. |
 | joined_at           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | joined_at is the time the node joined the cluster.                    |
 
