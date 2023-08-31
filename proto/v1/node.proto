@@ -137,7 +137,7 @@ message Status {
     // started_at is the time the node started.
     google.protobuf.Timestamp started_at = 6;
     // features is the list of features currently enabled.
-    repeated Feature features = 7;
+    repeated FeaturePort features = 7;
     // cluster_status is the status of the node in the cluster.
     ClusterStatus cluster_status = 8;
     // current_leader is the current leader of the cluster.

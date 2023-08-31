@@ -234,7 +234,7 @@ Status represents the status of a node.
 | build_date        | [string](#string)                                       |          | build_date is the build date of the node.                    |
 | uptime            | [string](#string)                                       |          | uptime is the uptime of the node.                            |
 | started_at        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
-| features          | [Feature](#v1.Feature)                                  | repeated | features is the list of features currently enabled.          |
+| features          | [FeaturePort](#v1.FeaturePort)                          | repeated | features is the list of features currently enabled.          |
 | cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
 | current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
 | current_term      | [uint64](#uint64)                                       |          | current_term is the current term of the cluster.             |
