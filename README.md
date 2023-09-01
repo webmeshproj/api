@@ -286,8 +286,9 @@ be used as their string values.
 | Name                   | Number | Description                                          |
 |------------------------|--------|------------------------------------------------------|
 | EDGE_ATTRIBUTE_UNKNOWN | 0      | EDGE_ATTRIBUTE_UNKNOWN is an unknown edge attribute. |
-| EDGE_ATTRIBUTE_ICE     | 1      | EDGE_ATTRIBUTE_ICE is an ICE edge attribute.         |
-| EDGE_ATTRIBUTE_LIBP2P  | 2      | EDGE_ATTRIBUTE_LIBP2P is a libp2p edge attribute.    |
+| EDGE_ATTRIBUTE_NATIVE  | 1      | EDGE_ATTRIBUTE_NATIVE is a native edge attribute.    |
+| EDGE_ATTRIBUTE_ICE     | 2      | EDGE_ATTRIBUTE_ICE is an ICE edge attribute.         |
+| EDGE_ATTRIBUTE_LIBP2P  | 3      | EDGE_ATTRIBUTE_LIBP2P is a libp2p edge attribute.    |
 
 ### Feature
 
