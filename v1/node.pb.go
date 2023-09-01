@@ -192,6 +192,60 @@ func (Feature) EnumDescriptor() ([]byte, []int) {
 	return file_v1_node_proto_rawDescGZIP(), []int{1}
 }
 
+// EdgeAttribute are pre-defined edge attributes. They should
+// be used as their string values.
+type EdgeAttribute int32
+
+const (
+	// EDGE_ATTRIBUTE_UNKNOWN is an unknown edge attribute.
+	EdgeAttribute_EDGE_ATTRIBUTE_UNKNOWN EdgeAttribute = 0
+	// EDGE_ATTRIBUTE_ICE is an ICE edge attribute.
+	EdgeAttribute_EDGE_ATTRIBUTE_ICE EdgeAttribute = 1
+	// EDGE_ATTRIBUTE_LIBP2P is a libp2p edge attribute.
+	EdgeAttribute_EDGE_ATTRIBUTE_LIBP2P EdgeAttribute = 2
+)
+
+// Enum value maps for EdgeAttribute.
+var (
+	EdgeAttribute_name = map[int32]string{
+		0: "EDGE_ATTRIBUTE_UNKNOWN",
+		1: "EDGE_ATTRIBUTE_ICE",
+		2: "EDGE_ATTRIBUTE_LIBP2P",
+	}
+	EdgeAttribute_value = map[string]int32{
+		"EDGE_ATTRIBUTE_UNKNOWN": 0,
+		"EDGE_ATTRIBUTE_ICE":     1,
+		"EDGE_ATTRIBUTE_LIBP2P":  2,
+	}
+)
+
+func (x EdgeAttribute) Enum() *EdgeAttribute {
+	p := new(EdgeAttribute)
+	*p = x
+	return p
+}
+
+func (x EdgeAttribute) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (EdgeAttribute) Descriptor() protoreflect.EnumDescriptor {
+	return file_v1_node_proto_enumTypes[2].Descriptor()
+}
+
+func (EdgeAttribute) Type() protoreflect.EnumType {
+	return &file_v1_node_proto_enumTypes[2]
+}
+
+func (x EdgeAttribute) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use EdgeAttribute.Descriptor instead.
+func (EdgeAttribute) EnumDescriptor() ([]byte, []int) {
+	return file_v1_node_proto_rawDescGZIP(), []int{2}
+}
+
 // DataChannel are the data channels used when communicating over ICE
 // with a node.
 type DataChannel int32
@@ -230,11 +284,11 @@ func (x DataChannel) String() string {
 }
 
 func (DataChannel) Descriptor() protoreflect.EnumDescriptor {
-	return file_v1_node_proto_enumTypes[2].Descriptor()
+	return file_v1_node_proto_enumTypes[3].Descriptor()
 }
 
 func (DataChannel) Type() protoreflect.EnumType {
-	return &file_v1_node_proto_enumTypes[2]
+	return &file_v1_node_proto_enumTypes[3]
 }
 
 func (x DataChannel) Number() protoreflect.EnumNumber {
@@ -243,7 +297,7 @@ func (x DataChannel) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DataChannel.Descriptor instead.
 func (DataChannel) EnumDescriptor() ([]byte, []int) {
-	return file_v1_node_proto_rawDescGZIP(), []int{2}
+	return file_v1_node_proto_rawDescGZIP(), []int{3}
 }
 
 // FeaturePort describes a feature and the port it is advertised on.
@@ -1260,7 +1314,13 @@ var file_v1_node_proto_rawDesc = []byte{
 	0x4d, 0x45, 0x53, 0x48, 0x5f, 0x44, 0x4e, 0x53, 0x10, 0x09, 0x12, 0x14, 0x0a, 0x10, 0x46, 0x4f,
 	0x52, 0x57, 0x41, 0x52, 0x44, 0x5f, 0x4d, 0x45, 0x53, 0x48, 0x5f, 0x44, 0x4e, 0x53, 0x10, 0x0a,
 	0x12, 0x0b, 0x0a, 0x07, 0x53, 0x54, 0x4f, 0x52, 0x41, 0x47, 0x45, 0x10, 0x0b, 0x12, 0x08, 0x0a,
-	0x04, 0x52, 0x41, 0x46, 0x54, 0x10, 0x0c, 0x2a, 0x2c, 0x0a, 0x0b, 0x44, 0x61, 0x74, 0x61, 0x43,
+	0x04, 0x52, 0x41, 0x46, 0x54, 0x10, 0x0c, 0x2a, 0x5e, 0x0a, 0x0d, 0x45, 0x64, 0x67, 0x65, 0x41,
+	0x74, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x65, 0x12, 0x1a, 0x0a, 0x16, 0x45, 0x44, 0x47, 0x45,
+	0x5f, 0x41, 0x54, 0x54, 0x52, 0x49, 0x42, 0x55, 0x54, 0x45, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f,
+	0x57, 0x4e, 0x10, 0x00, 0x12, 0x16, 0x0a, 0x12, 0x45, 0x44, 0x47, 0x45, 0x5f, 0x41, 0x54, 0x54,
+	0x52, 0x49, 0x42, 0x55, 0x54, 0x45, 0x5f, 0x49, 0x43, 0x45, 0x10, 0x01, 0x12, 0x19, 0x0a, 0x15,
+	0x45, 0x44, 0x47, 0x45, 0x5f, 0x41, 0x54, 0x54, 0x52, 0x49, 0x42, 0x55, 0x54, 0x45, 0x5f, 0x4c,
+	0x49, 0x42, 0x50, 0x32, 0x50, 0x10, 0x02, 0x2a, 0x2c, 0x0a, 0x0b, 0x44, 0x61, 0x74, 0x61, 0x43,
 	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x48, 0x41, 0x4e, 0x4e, 0x45,
 	0x4c, 0x53, 0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b, 0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x49,
 	0x4f, 0x4e, 0x53, 0x10, 0x01, 0x32, 0xcf, 0x01, 0x0a, 0x04, 0x4e, 0x6f, 0x64, 0x65, 0x12, 0x2f,
@@ -1298,39 +1358,40 @@ func file_v1_node_proto_rawDescGZIP() []byte {
 	return file_v1_node_proto_rawDescData
 }
 
-var file_v1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_v1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_v1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_v1_node_proto_goTypes = []interface{}{
 	(ClusterStatus)(0),             // 0: v1.ClusterStatus
 	(Feature)(0),                   // 1: v1.Feature
-	(DataChannel)(0),               // 2: v1.DataChannel
-	(*FeaturePort)(nil),            // 3: v1.FeaturePort
-	(*MeshNode)(nil),               // 4: v1.MeshNode
-	(*NodeList)(nil),               // 5: v1.NodeList
-	(*GetStatusRequest)(nil),       // 6: v1.GetStatusRequest
-	(*Status)(nil),                 // 7: v1.Status
-	(*DataChannelNegotiation)(nil), // 8: v1.DataChannelNegotiation
-	(*InterfaceMetrics)(nil),       // 9: v1.InterfaceMetrics
-	(*PeerMetrics)(nil),            // 10: v1.PeerMetrics
-	(*WebRTCSignal)(nil),           // 11: v1.WebRTCSignal
-	(*timestamppb.Timestamp)(nil),  // 12: google.protobuf.Timestamp
+	(EdgeAttribute)(0),             // 2: v1.EdgeAttribute
+	(DataChannel)(0),               // 3: v1.DataChannel
+	(*FeaturePort)(nil),            // 4: v1.FeaturePort
+	(*MeshNode)(nil),               // 5: v1.MeshNode
+	(*NodeList)(nil),               // 6: v1.NodeList
+	(*GetStatusRequest)(nil),       // 7: v1.GetStatusRequest
+	(*Status)(nil),                 // 8: v1.Status
+	(*DataChannelNegotiation)(nil), // 9: v1.DataChannelNegotiation
+	(*InterfaceMetrics)(nil),       // 10: v1.InterfaceMetrics
+	(*PeerMetrics)(nil),            // 11: v1.PeerMetrics
+	(*WebRTCSignal)(nil),           // 12: v1.WebRTCSignal
+	(*timestamppb.Timestamp)(nil),  // 13: google.protobuf.Timestamp
 }
 var file_v1_node_proto_depIdxs = []int32{
 	1,  // 0: v1.FeaturePort.feature:type_name -> v1.Feature
-	3,  // 1: v1.MeshNode.features:type_name -> v1.FeaturePort
-	12, // 2: v1.MeshNode.joined_at:type_name -> google.protobuf.Timestamp
-	4,  // 3: v1.NodeList.nodes:type_name -> v1.MeshNode
-	12, // 4: v1.Status.started_at:type_name -> google.protobuf.Timestamp
-	3,  // 5: v1.Status.features:type_name -> v1.FeaturePort
+	4,  // 1: v1.MeshNode.features:type_name -> v1.FeaturePort
+	13, // 2: v1.MeshNode.joined_at:type_name -> google.protobuf.Timestamp
+	5,  // 3: v1.NodeList.nodes:type_name -> v1.MeshNode
+	13, // 4: v1.Status.started_at:type_name -> google.protobuf.Timestamp
+	4,  // 5: v1.Status.features:type_name -> v1.FeaturePort
 	0,  // 6: v1.Status.cluster_status:type_name -> v1.ClusterStatus
-	9,  // 7: v1.Status.interface_metrics:type_name -> v1.InterfaceMetrics
-	10, // 8: v1.InterfaceMetrics.peers:type_name -> v1.PeerMetrics
-	6,  // 9: v1.Node.GetStatus:input_type -> v1.GetStatusRequest
-	8,  // 10: v1.Node.NegotiateDataChannel:input_type -> v1.DataChannelNegotiation
-	11, // 11: v1.Node.ReceiveSignalChannel:input_type -> v1.WebRTCSignal
-	7,  // 12: v1.Node.GetStatus:output_type -> v1.Status
-	8,  // 13: v1.Node.NegotiateDataChannel:output_type -> v1.DataChannelNegotiation
-	11, // 14: v1.Node.ReceiveSignalChannel:output_type -> v1.WebRTCSignal
+	10, // 7: v1.Status.interface_metrics:type_name -> v1.InterfaceMetrics
+	11, // 8: v1.InterfaceMetrics.peers:type_name -> v1.PeerMetrics
+	7,  // 9: v1.Node.GetStatus:input_type -> v1.GetStatusRequest
+	9,  // 10: v1.Node.NegotiateDataChannel:input_type -> v1.DataChannelNegotiation
+	12, // 11: v1.Node.ReceiveSignalChannel:input_type -> v1.WebRTCSignal
+	8,  // 12: v1.Node.GetStatus:output_type -> v1.Status
+	9,  // 13: v1.Node.NegotiateDataChannel:output_type -> v1.DataChannelNegotiation
+	12, // 14: v1.Node.ReceiveSignalChannel:output_type -> v1.WebRTCSignal
 	12, // [12:15] is the sub-list for method output_type
 	9,  // [9:12] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
@@ -1458,7 +1519,7 @@ func file_v1_node_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_node_proto_rawDesc,
-			NumEnums:      3,
+			NumEnums:      4,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
