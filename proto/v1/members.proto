@@ -21,6 +21,17 @@ package v1;
 import "v1/node.proto";
 import "v1/raft.proto";
 
+// ConnectProtocol is a type of protocol for establishing a connection into a mesh.
+enum ConnectProtocol {
+    // CONNECT_NATIVE indicates that the node should connect to other nodes via the native
+    // webmesh mechanisms.
+    CONNECT_NATIVE = 0;
+    // CONNECT_ICE indicates that the node should connect to other nodes via ICE.
+    CONNECT_ICE = 1;
+    // CONNECT_LIBP2P indicates that the node should connect to other nodes via libp2p.
+    CONNECT_LIBP2P = 2;
+};
+
 // JoinRequest is a request to join the cluster.
 message JoinRequest {
     // id is the ID of the node.
@@ -56,7 +67,7 @@ message JoinRequest {
     // other nodes with a primary endpoint. If the caller has a zone awareness ID,
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
-    map<string, EdgeAttribute> direct_peers = 11;
+    map<string, ConnectProtocol> direct_peers = 11;
     // features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 12;
@@ -136,10 +147,8 @@ message WireGuardPeer {
     repeated string allowed_ips = 8;
     // allowed_routes is the list of allowed routes for the peer.
     repeated string allowed_routes = 9;
-    // p2p indicates that the connection to this peer should be created
-    // over a p2p proxy. This will be set by network preference or assumed
-    // by the lack of a primary endpoint.
-    bool p2p = 10;
+    // proto indicates the protocol to use to connect to the peer.
+    ConnectProtocol proto = 10;
     // features is a list of features and the ports they are advertised on.
     repeated FeaturePort features = 11;
 }

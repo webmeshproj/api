@@ -94,6 +94,7 @@
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
   - [<span class="badge">M</span>UpdateResponse](#v1.UpdateResponse)
   - [<span class="badge">M</span>WireGuardPeer](#v1.WireGuardPeer)
+  - [<span class="badge">E</span>ConnectProtocol](#v1.ConnectProtocol)
   - [<span class="badge">S</span>Membership](#v1.Membership)
 - [v1/plugin.proto](#v1%2fplugin.proto)
   - [<span class="badge">M</span>AllocateIPRequest](#v1.AllocateIPRequest)
@@ -972,10 +973,10 @@ JoinRequest is a request to join the cluster.
 
 ### JoinRequest.DirectPeersEntry
 
-| Field | Type                               | Label | Description |
-|-------|------------------------------------|-------|-------------|
-| key   | [string](#string)                  |       |             |
-| value | [EdgeAttribute](#v1.EdgeAttribute) |       |             |
+| Field | Type                                   | Label | Description |
+|-------|----------------------------------------|-------|-------------|
+| key   | [string](#string)                      |       |             |
+| value | [ConnectProtocol](#v1.ConnectProtocol) |       |             |
 
 ### JoinResponse
 
@@ -1071,19 +1072,30 @@ empty.
 
 WireGuardPeer is a peer in the Wireguard network.
 
-| Field               | Type                           | Label    | Description                                                                                                                                                             |
-|---------------------|--------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)              |          | id is the ID of the peer.                                                                                                                                               |
-| public_key          | [string](#string)              |          | public_key is the public key of the peer.                                                                                                                               |
-| primary_endpoint    | [string](#string)              |          | primary_endpoint is the primary endpoint of the peer.                                                                                                                   |
-| wireguard_endpoints | [string](#string)              | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.                                                                                            |
-| zone_awareness_id   | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the peer.                                                                                                                 |
-| address_ipv4        | [string](#string)              |          | address_ipv4 is the private IPv4 wireguard address of the peer.                                                                                                         |
-| address_ipv6        | [string](#string)              |          | address_ipv6 is the private IPv6 wireguard address of the peer.                                                                                                         |
-| allowed_ips         | [string](#string)              | repeated | allowed_ips is the list of allowed IPs for the peer.                                                                                                                    |
-| allowed_routes      | [string](#string)              | repeated | allowed_routes is the list of allowed routes for the peer.                                                                                                              |
-| p2p                 | [bool](#bool)                  |          | p2p indicates that the connection to this peer should be created over a p2p proxy. This will be set by network preference or assumed by the lack of a primary endpoint. |
-| features            | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features and the ports they are advertised on.                                                                                                    |
+| Field               | Type                                   | Label    | Description                                                                  |
+|---------------------|----------------------------------------|----------|------------------------------------------------------------------------------|
+| id                  | [string](#string)                      |          | id is the ID of the peer.                                                    |
+| public_key          | [string](#string)                      |          | public_key is the public key of the peer.                                    |
+| primary_endpoint    | [string](#string)                      |          | primary_endpoint is the primary endpoint of the peer.                        |
+| wireguard_endpoints | [string](#string)                      | repeated | wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. |
+| zone_awareness_id   | [string](#string)                      |          | zone_awareness_id is the zone awareness ID of the peer.                      |
+| address_ipv4        | [string](#string)                      |          | address_ipv4 is the private IPv4 wireguard address of the peer.              |
+| address_ipv6        | [string](#string)                      |          | address_ipv6 is the private IPv6 wireguard address of the peer.              |
+| allowed_ips         | [string](#string)                      | repeated | allowed_ips is the list of allowed IPs for the peer.                         |
+| allowed_routes      | [string](#string)                      | repeated | allowed_routes is the list of allowed routes for the peer.                   |
+| proto               | [ConnectProtocol](#v1.ConnectProtocol) |          | proto indicates the protocol to use to connect to the peer.                  |
+| features            | [FeaturePort](#v1.FeaturePort)         | repeated | features is a list of features and the ports they are advertised on.         |
+
+### ConnectProtocol
+
+ConnectProtocol is a type of protocol for establishing a connection into
+a mesh.
+
+| Name           | Number | Description                                                                                             |
+|----------------|--------|---------------------------------------------------------------------------------------------------------|
+| CONNECT_NATIVE | 0      | CONNECT_NATIVE indicates that the node should connect to other nodes via the native webmesh mechanisms. |
+| CONNECT_ICE    | 1      | CONNECT_ICE indicates that the node should connect to other nodes via ICE.                              |
+| CONNECT_LIBP2P | 2      | CONNECT_LIBP2P indicates that the node should connect to other nodes via libp2p.                        |
 
 ### Membership
 
