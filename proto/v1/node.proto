@@ -91,22 +91,24 @@ message FeaturePort {
 message MeshNode {
     // id is the ID of the node.
     string id = 1;
+    // public_key is the public WireGuard key of the node.
+    string public_key = 2;
+    // host_public_key is the public key of the host for p2p connections.
+    string host_public_key = 3;
     // primary_endpoint is the primary endpoint of the node.
-    string primary_endpoint = 2;
+    string primary_endpoint = 4;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 3;
+    repeated string wireguard_endpoints = 5;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 4;
-    // public_key is the public key of the node.
-    string public_key = 5;
+    string zone_awareness_id = 6;
     // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 6;
+    string private_ipv4 = 7;
     // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 7;
+    string private_ipv6 = 8;
     // features are a list of features and the ports they are advertised on.
-    repeated FeaturePort features = 8;
+    repeated FeaturePort features = 9;
     // joined_at is the time the node joined the cluster.
-    google.protobuf.Timestamp joined_at = 9;
+    google.protobuf.Timestamp joined_at = 10;
 }
 
 // NodeList is a list of nodes.

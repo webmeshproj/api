@@ -972,6 +972,20 @@ local node is returned. </p></td>
                 </tr>
               
                 <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the public WireGuard key of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>host_public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>host_public_key is the public key of the host for p2p connections. </p></td>
+                </tr>
+              
+                <tr>
                   <td>primary_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -990,13 +1004,6 @@ local node is returned. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the node. </p></td>
                 </tr>
               
                 <tr>
@@ -3556,6 +3563,13 @@ for other nodes to discover.</p></td>
                 </tr>
               
                 <tr>
+                  <td>host_public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>host_public_key is the public key the peer will use for p2p connections. </p></td>
+                </tr>
+              
+                <tr>
                   <td>primary_endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -4014,52 +4028,10 @@ and the port they are available on. </p></td>
             <tbody>
               
                 <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
+                  <td>node</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
-                  <td><p>id is the ID of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>public_key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>public_key is the public key of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>primary_endpoint</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>primary_endpoint is the primary endpoint of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>wireguard_endpoints</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>wireguard_endpoints are the WireGuard endpoints for the peer, if applicable. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>zone_awareness_id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_ipv4</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv4 is the private IPv4 wireguard address of the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>address_ipv6</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>address_ipv6 is the private IPv6 wireguard address of the peer. </p></td>
+                  <td><p>Node is information about this node. </p></td>
                 </tr>
               
                 <tr>
@@ -4081,13 +4053,6 @@ and the port they are available on. </p></td>
                   <td><a href="#v1.ConnectProtocol">ConnectProtocol</a></td>
                   <td></td>
                   <td><p>proto indicates the protocol to use to connect to the peer. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>features</td>
-                  <td><a href="#v1.FeaturePort">FeaturePort</a></td>
-                  <td>repeated</td>
-                  <td><p>features is a list of features and the ports they are advertised on. </p></td>
                 </tr>
               
             </tbody>

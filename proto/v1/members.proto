@@ -38,27 +38,29 @@ message JoinRequest {
     string id = 1;
     // public_key is the public wireguard key of the node to broadcast to peers.
     string public_key = 2;
+    // host_public_key is the public key the peer will use for p2p connections.
+    string host_public_key = 3;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 3;
+    string primary_endpoint = 4;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 4;
+    repeated string wireguard_endpoints = 5;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 5;
+    string zone_awareness_id = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 6;
+    bool assign_ipv4 = 7;
     // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 7;
+    bool prefer_raft_ipv6 = 8;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
-    bool as_voter = 8;
+    bool as_voter = 9;
     // as_observer is whether the node should be added as an observer. They will receive
     // updates to the raft log, but not be able to vote in elections.
-    bool as_observer = 9;
+    bool as_observer = 10;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
-    repeated string routes = 10;
+    repeated string routes = 11;
     // direct_peers is a map of extra peers that should be connected to directly over relays. 
     // The provided edge attribute is the callers preference of how the relay should be created.
     // The request will be denied if the node is not allowed to put data channels or edges.
@@ -67,10 +69,10 @@ message JoinRequest {
     // other nodes with a primary endpoint. If the caller has a zone awareness ID,
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
-    map<string, ConnectProtocol> direct_peers = 11;
+    map<string, ConnectProtocol> direct_peers = 12;
     // features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
-    repeated FeaturePort features = 12;
+    repeated FeaturePort features = 13;
 }
 
 // JoinResponse is a response to a join request.
@@ -129,28 +131,14 @@ message UpdateResponse {}
 
 // WireGuardPeer is a peer in the Wireguard network.
 message WireGuardPeer {
-    // id is the ID of the peer.
-    string id = 1;
-    // public_key is the public key of the peer.
-    string public_key = 2;
-    // primary_endpoint is the primary endpoint of the peer.
-    string primary_endpoint = 3;
-    // wireguard_endpoints are the WireGuard endpoints for the peer, if applicable.
-    repeated string wireguard_endpoints = 4;
-    // zone_awareness_id is the zone awareness ID of the peer.
-    string zone_awareness_id = 5;
-    // address_ipv4 is the private IPv4 wireguard address of the peer.
-    string address_ipv4 = 6;
-    // address_ipv6 is the private IPv6 wireguard address of the peer.
-    string address_ipv6 = 7;
+    // Node is information about this node.
+    MeshNode node = 1;
     // allowed_ips is the list of allowed IPs for the peer.
-    repeated string allowed_ips = 8;
+    repeated string allowed_ips = 2;
     // allowed_routes is the list of allowed routes for the peer.
-    repeated string allowed_routes = 9;
+    repeated string allowed_routes = 3;
     // proto indicates the protocol to use to connect to the peer.
-    ConnectProtocol proto = 10;
-    // features is a list of features and the ports they are advertised on.
-    repeated FeaturePort features = 11;
+    ConnectProtocol proto = 4;
 }
 
 // LeaveRequest is a request to leave the cluster.
