@@ -107,8 +107,10 @@ message MeshNode {
     string private_ipv6 = 8;
     // features are a list of features and the ports they are advertised on.
     repeated FeaturePort features = 9;
+    // multiaddrs are the multiaddrs of the node.
+    repeated string multiaddrs = 10;
     // joined_at is the time the node joined the cluster.
-    google.protobuf.Timestamp joined_at = 10;
+    google.protobuf.Timestamp joined_at = 11;
 }
 
 // NodeList is a list of nodes.

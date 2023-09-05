@@ -73,6 +73,8 @@ message JoinRequest {
     // features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 13;
+    // multiaddrs are libp2p multiaddresses this node is listening on.
+    repeated string multiaddrs = 14;
 }
 
 // JoinResponse is a response to a join request.
@@ -124,6 +126,8 @@ message UpdateRequest {
     // features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 8;
+    // multiaddrs are libp2p multiaddresses this node is listening on.
+    repeated string multiaddrs = 9;
 }
 
 // UpdateResponse is a response to an update request. It is currently empty.
