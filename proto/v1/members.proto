@@ -36,10 +36,8 @@ enum ConnectProtocol {
 message JoinRequest {
     // id is the ID of the node.
     string id = 1;
-    // public_key is the public wireguard key of the node to broadcast to peers.
+    // public_key is the public key of the node to broadcast to peers.
     string public_key = 2;
-    // host_public_key is the public key the peer will use for p2p connections.
-    string host_public_key = 3;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
     string primary_endpoint = 4;
@@ -108,7 +106,7 @@ message JoinResponse {
 message UpdateRequest {
     // id is the ID of the node.
     string id = 1;
-    // public_key is the public wireguard key of the node to broadcast to peers.
+    // public_key is the public key of the node to broadcast to peers.
     string public_key = 2;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.

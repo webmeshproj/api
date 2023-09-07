@@ -91,10 +91,8 @@ message FeaturePort {
 message MeshNode {
     // id is the ID of the node.
     string id = 1;
-    // public_key is the public WireGuard key of the node.
+    // public_key is the public key of the node.
     string public_key = 2;
-    // host_public_key is the public key of the host for p2p connections.
-    string host_public_key = 3;
     // primary_endpoint is the primary endpoint of the node.
     string primary_endpoint = 4;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
