@@ -2266,22 +2266,13 @@ can be specified with the prefix &#34;group:&#34;. </p></td>
                   <td>destination_cidrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>protocols</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>protocols is a list of protocols to match against. If empty, all protocols are matched.
-Protocols can be specified by name or number. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>ports</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td>repeated</td>
-                  <td><p>ports is a list of ports to match against. If empty, all ports are matched. </p></td>
+                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+
+// protocols is a list of protocols to match against. If empty, all protocols are matched.
+// Protocols can be specified by name or number.
+repeated string protocols = 8;
+// ports is a list of ports to match against. If empty, all ports are matched.
+repeated uint32 ports = 9; </p></td>
                 </tr>
               
             </tbody>
@@ -2350,21 +2341,12 @@ Protocols can be specified by name or number. </p></td>
                   <td>dst_cidr</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dst_cidr is the destination CIDR of the action. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>protocol</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>protocol is the protocol of the action. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>port</td>
-                  <td><a href="#uint32">uint32</a></td>
-                  <td></td>
-                  <td><p>port is the port of the action. </p></td>
+                  <td><p>dst_cidr is the destination CIDR of the action.
+
+// protocol is the protocol of the action.
+string protocol = 5;
+// port is the port of the action.
+uint32 port = 6; </p></td>
                 </tr>
               
             </tbody>

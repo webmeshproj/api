@@ -537,17 +537,15 @@ SubjectType is the type of a subject.
 
 NetworkACL is a network ACL.
 
-| Field             | Type                       | Label    | Description                                                                                                                                 |
-|-------------------|----------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                |
-| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                         |
-| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                |
-| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". |
-| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                         |
-| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                                   |
-| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.                                         |
-| protocols         | [string](#string)          | repeated | protocols is a list of protocols to match against. If empty, all protocols are matched. Protocols can be specified by name or number.       |
-| ports             | [uint32](#uint32)          | repeated | ports is a list of ports to match against. If empty, all ports are matched.                                                                 |
+| Field             | Type                       | Label    | Description                                                                                                                                                                                                                                                                                                                                                                              |
+|-------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                                                                                                                                                                                                                                                             |
+| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                                                                                                                                                                                                                                                                      |
+| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                                                                                                                                                                                                                                                             |
+| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:".                                                                                                                                                                                                                                              |
+| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.                                                                                                                                                                                                                                                                                      |
+| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.                                                                                                                                                                                                                                                                                                |
+| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. // protocols is a list of protocols to match against. If empty, all protocols are matched. // Protocols can be specified by name or number. repeated string protocols = 8; // ports is a list of ports to match against. If empty, all ports are matched. repeated uint32 ports = 9; |
 
 ### NetworkACLs
 
@@ -564,14 +562,12 @@ It is used
 
 by implementations to evaluate network ACLs.
 
-| Field    | Type              | Label | Description                                     |
-|----------|-------------------|-------|-------------------------------------------------|
-| src_node | [string](#string) |       | src_node is the source node of the action.      |
-| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.      |
-| dst_node | [string](#string) |       | dst_node is the destination node of the action. |
-| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. |
-| protocol | [string](#string) |       | protocol is the protocol of the action.         |
-| port     | [uint32](#uint32) |       | port is the port of the action.                 |
+| Field    | Type              | Label | Description                                                                                                                                                         |
+|----------|-------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| src_node | [string](#string) |       | src_node is the source node of the action.                                                                                                                          |
+| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.                                                                                                                          |
+| dst_node | [string](#string) |       | dst_node is the destination node of the action.                                                                                                                     |
+| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. // protocol is the protocol of the action. string protocol = 5; // port is the port of the action. uint32 port = 6; |
 
 ### Route
 
