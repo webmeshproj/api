@@ -2245,21 +2245,23 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
-can be specified with the prefix &#34;group:&#34;. </p></td>
+can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
                 </tr>
               
                 <tr>
                   <td>destination_nodes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. </p></td>
+                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+Groups can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
                 </tr>
               
                 <tr>
                   <td>source_cidrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. </p></td>
+                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
                 </tr>
               
                 <tr>
@@ -2267,6 +2269,7 @@ can be specified with the prefix &#34;group:&#34;. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched.
 
 // protocols is a list of protocols to match against. If empty, all protocols are matched.
 // Protocols can be specified by name or number.

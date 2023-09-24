@@ -101,13 +101,16 @@ type NetworkACL struct {
 	// action is the action to take when a request matches the ACL.
 	Action ACLAction `protobuf:"varint,3,opt,name=action,proto3,enum=v1.ACLAction" json:"action,omitempty"`
 	// source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
-	// can be specified with the prefix "group:".
+	// can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
 	SourceNodes []string `protobuf:"bytes,4,rep,name=source_nodes,json=sourceNodes,proto3" json:"source_nodes,omitempty"`
 	// destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+	// Groups can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
 	DestinationNodes []string `protobuf:"bytes,5,rep,name=destination_nodes,json=destinationNodes,proto3" json:"destination_nodes,omitempty"`
 	// source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+	// If one or more of the CIDRs is '*', all CIDRs are matched.
 	SourceCidrs []string `protobuf:"bytes,6,rep,name=source_cidrs,json=sourceCidrs,proto3" json:"source_cidrs,omitempty"`
 	// destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+	// If one or more of the CIDRs is '*', all CIDRs are matched.
 	DestinationCidrs []string `protobuf:"bytes,7,rep,name=destination_cidrs,json=destinationCidrs,proto3" json:"destination_cidrs,omitempty"`
 }
 
