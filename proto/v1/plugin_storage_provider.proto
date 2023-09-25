@@ -183,6 +183,14 @@ service StorageProviderPlugin {
     // mutate the storage.
     rpc GetLeader(GetLeaderRequest) returns (StoragePeer) {}
 
+    // For all of the following RPCs, the underlying implementation should ensure
+    // that the storage is in a consistent state before returning.
+    // FailedPrecondition should be returned if the operation cannot be performed 
+    // for any of the following conditions:
+    // - The storage is not writable.
+    // - The storage is not bootstrapped.
+    // - The storage is not the leader.
+
     // Storage Membership RPCs
 
     // AddVoter adds a voter to the storage. The underlying implementation
