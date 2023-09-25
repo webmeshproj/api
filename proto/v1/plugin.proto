@@ -64,7 +64,7 @@ message PluginInfo {
 service Plugin {
     // GetInfo returns the information for the plugin.
     rpc GetInfo (google.protobuf.Empty) returns (PluginInfo) {}
-    // Configure configures the plugin.
+    // Configure starts and configures the plugin.
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
     // Close closes the plugin. It is called when the node is shutting down.
     rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}

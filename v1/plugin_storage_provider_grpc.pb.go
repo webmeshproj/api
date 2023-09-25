@@ -34,6 +34,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	StorageProviderPlugin_Bootstrap_FullMethodName       = "/v1.StorageProviderPlugin/Bootstrap"
 	StorageProviderPlugin_GetStatus_FullMethodName       = "/v1.StorageProviderPlugin/GetStatus"
 	StorageProviderPlugin_AddVoter_FullMethodName        = "/v1.StorageProviderPlugin/AddVoter"
 	StorageProviderPlugin_AddObserver_FullMethodName     = "/v1.StorageProviderPlugin/AddObserver"
@@ -51,6 +52,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StorageProviderPluginClient interface {
+	// Bootstrap is called when the storage is created for the first time.
+	// It is assumed that this node has been elected as the leader of the cluster.
+	Bootstrap(ctx context.Context, in *BootstrapRequest, opts ...grpc.CallOption) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
@@ -93,6 +97,15 @@ type storageProviderPluginClient struct {
 
 func NewStorageProviderPluginClient(cc grpc.ClientConnInterface) StorageProviderPluginClient {
 	return &storageProviderPluginClient{cc}
+}
+
+func (c *storageProviderPluginClient) Bootstrap(ctx context.Context, in *BootstrapRequest, opts ...grpc.CallOption) (*BootstrapResponse, error) {
+	out := new(BootstrapResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_Bootstrap_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *storageProviderPluginClient) GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error) {
@@ -221,6 +234,9 @@ func (x *storageProviderPluginSubscribePrefixClient) Recv() (*PrefixEvent, error
 // All implementations must embed UnimplementedStorageProviderPluginServer
 // for forward compatibility
 type StorageProviderPluginServer interface {
+	// Bootstrap is called when the storage is created for the first time.
+	// It is assumed that this node has been elected as the leader of the cluster.
+	Bootstrap(context.Context, *BootstrapRequest) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
@@ -262,6 +278,9 @@ type StorageProviderPluginServer interface {
 type UnimplementedStorageProviderPluginServer struct {
 }
 
+func (UnimplementedStorageProviderPluginServer) Bootstrap(context.Context, *BootstrapRequest) (*BootstrapResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Bootstrap not implemented")
+}
 func (UnimplementedStorageProviderPluginServer) GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
@@ -306,6 +325,24 @@ type UnsafeStorageProviderPluginServer interface {
 
 func RegisterStorageProviderPluginServer(s grpc.ServiceRegistrar, srv StorageProviderPluginServer) {
 	s.RegisterService(&StorageProviderPlugin_ServiceDesc, srv)
+}
+
+func _StorageProviderPlugin_Bootstrap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BootstrapRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).Bootstrap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_Bootstrap_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).Bootstrap(ctx, req.(*BootstrapRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _StorageProviderPlugin_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -516,6 +553,10 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.StorageProviderPlugin",
 	HandlerType: (*StorageProviderPluginServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Bootstrap",
+			Handler:    _StorageProviderPlugin_Bootstrap_Handler,
+		},
 		{
 			MethodName: "GetStatus",
 			Handler:    _StorageProviderPlugin_GetStatus_Handler,

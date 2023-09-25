@@ -119,6 +119,8 @@
 - [v1/plugin_storage_provider.proto](#v1%2fplugin_storage_provider.proto)
   - [<span class="badge">M</span>AddObserverResponse](#v1.AddObserverResponse)
   - [<span class="badge">M</span>AddVoterResponse](#v1.AddVoterResponse)
+  - [<span class="badge">M</span>BootstrapRequest](#v1.BootstrapRequest)
+  - [<span class="badge">M</span>BootstrapResponse](#v1.BootstrapResponse)
   - [<span class="badge">M</span>DeleteValueRequest](#v1.DeleteValueRequest)
   - [<span class="badge">M</span>DeleteValueResponse](#v1.DeleteValueResponse)
   - [<span class="badge">M</span>DemoteVoterResponse](#v1.DemoteVoterResponse)
@@ -1307,7 +1309,7 @@ It must be implemented by all plugins.
 | Method Name | Request Type                                     | Response Type                                    | Description                                                           |
 |-------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------------------|
 | GetInfo     | [.google.protobuf.Empty](#google.protobuf.Empty) | [PluginInfo](#v1.PluginInfo)                     | GetInfo returns the information for the plugin.                       |
-| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                      |
+| Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure starts and configures the plugin.                           |
 | Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down. |
 
 ### StorageQuerierPlugin
@@ -1342,6 +1344,18 @@ AddObserverResponse is the response object for the AddObserver RPC.
 ### AddVoterResponse
 
 AddVoterResponse is the response object for the AddVoter RPC.
+
+### BootstrapRequest
+
+BootstrapRequest is the request object for the Bootstrap RPC.
+
+### BootstrapResponse
+
+BootstrapResponse is the response object for the Bootstrap RPC.
+
+| Field  | Type                               | Label | Description                                              |
+|--------|------------------------------------|-------|----------------------------------------------------------|
+| status | [StorageStatus](#v1.StorageStatus) |       | Status is the status of the storage after the bootstrap. |
 
 ### DeleteValueRequest
 
@@ -1496,6 +1510,7 @@ provider.
 
 | Method Name     | Request Type                                         | Response Type                                    | Description                                                                                                                                                                                                                                                                                                                                                              |
 |-----------------|------------------------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Bootstrap       | [BootstrapRequest](#v1.BootstrapRequest)             | [BootstrapResponse](#v1.BootstrapResponse)       | Bootstrap is called when the storage is created for the first time. It is assumed that this node has been elected as the leader of the cluster.                                                                                                                                                                                                                          |
 | GetStatus       | [StorageStatusRequest](#v1.StorageStatusRequest)     | [StorageStatus](#v1.StorageStatus)               | GetStatus returns the status of the storage.                                                                                                                                                                                                                                                                                                                             |
 | AddVoter        | [StoragePeer](#v1.StoragePeer)                       | [AddVoterResponse](#v1.AddVoterResponse)         | AddVoter adds a voter to the storage. The underlying implementation should ensure that the voter is added to the storage and that the storage is in a consistent state before returning.                                                                                                                                                                                 |
 | AddObserver     | [StoragePeer](#v1.StoragePeer)                       | [AddObserverResponse](#v1.AddObserverResponse)   | AddObserver adds an observer to the storage. The underlying implementation should ensure that the observer is added to the storage and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible. |

@@ -22,6 +22,15 @@ import "google/protobuf/duration.proto";
 
 import "v1/node.proto";
 
+// BootstrapRequest is the request object for the Bootstrap RPC.
+message BootstrapRequest {}
+
+// BootstrapResponse is the response object for the Bootstrap RPC.
+message BootstrapResponse {
+    // Status is the status of the storage after the bootstrap.
+    StorageStatus status = 1;
+}
+
 // StorageStatusRequest is the request object for the StorageStatus RPC.
 message StorageStatusRequest {}
 
@@ -159,6 +168,9 @@ message PrefixEvent {
 
 // StorageProviderPlugin is the service definition for a Webmesh storage provider.
 service StorageProviderPlugin {
+    // Bootstrap is called when the storage is created for the first time. 
+    // It is assumed that this node has been elected as the leader of the cluster.
+    rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
     // GetStatus returns the status of the storage.
     rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
 

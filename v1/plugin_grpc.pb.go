@@ -46,7 +46,7 @@ const (
 type PluginClient interface {
 	// GetInfo returns the information for the plugin.
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PluginInfo, error)
-	// Configure configures the plugin.
+	// Configure starts and configures the plugin.
 	Configure(ctx context.Context, in *PluginConfiguration, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -93,7 +93,7 @@ func (c *pluginClient) Close(ctx context.Context, in *emptypb.Empty, opts ...grp
 type PluginServer interface {
 	// GetInfo returns the information for the plugin.
 	GetInfo(context.Context, *emptypb.Empty) (*PluginInfo, error)
-	// Configure configures the plugin.
+	// Configure starts and configures the plugin.
 	Configure(context.Context, *PluginConfiguration) (*emptypb.Empty, error)
 	// Close closes the plugin. It is called when the node is shutting down.
 	Close(context.Context, *emptypb.Empty) (*emptypb.Empty, error)

@@ -705,6 +705,14 @@
                 </li>
               
                 <li>
+                  <a href="#v1.BootstrapRequest"><span class="badge">M</span>BootstrapRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.BootstrapResponse"><span class="badge">M</span>BootstrapResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.DeleteValueRequest"><span class="badge">M</span>DeleteValueRequest</a>
                 </li>
               
@@ -4808,7 +4816,7 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                 <td>Configure</td>
                 <td><a href="#v1.PluginConfiguration">PluginConfiguration</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>Configure configures the plugin.</p></td>
+                <td><p>Configure starts and configures the plugin.</p></td>
               </tr>
             
               <tr>
@@ -4883,6 +4891,37 @@ received.</p></td>
         <p>AddVoterResponse is the response object for the AddVoter RPC.</p>
 
         
+
+        
+      
+        <h3 id="v1.BootstrapRequest">BootstrapRequest</h3>
+        <p>BootstrapRequest is the request object for the Bootstrap RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.BootstrapResponse">BootstrapResponse</h3>
+        <p>BootstrapResponse is the response object for the Bootstrap RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#v1.StorageStatus">StorageStatus</a></td>
+                  <td></td>
+                  <td><p>Status is the status of the storage after the bootstrap. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -5350,6 +5389,14 @@ additional information about the storage status. </p></td>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
+            
+              <tr>
+                <td>Bootstrap</td>
+                <td><a href="#v1.BootstrapRequest">BootstrapRequest</a></td>
+                <td><a href="#v1.BootstrapResponse">BootstrapResponse</a></td>
+                <td><p>Bootstrap is called when the storage is created for the first time. 
+It is assumed that this node has been elected as the leader of the cluster.</p></td>
+              </tr>
             
               <tr>
                 <td>GetStatus</td>
