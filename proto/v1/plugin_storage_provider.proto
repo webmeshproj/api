@@ -79,6 +79,19 @@ message DemoteVoterResponse {}
 // RemoveServerResponse is the response object for the RemoveServer RPC.
 message RemoveServerResponse {}
 
+// IsMemberRequest is the request object for the IsMember RPC.
+message IsMemberRequest {
+    // Peer is the peer to check if it is a member of the storage.
+    // An empty peer should be treated as the local peer.
+    StoragePeer peer = 1;
+}
+
+// IsMemberResponse is the response object for the IsMember RPC.
+message IsMemberResponse {
+    // IsMember is true if the peer is a member of the storage.
+    bool is_member = 1;
+}
+
 // StorageValue is a value stored in the storage.
 message StorageValue {
     // Key is the key of the value.
@@ -213,8 +226,11 @@ service StorageProviderPlugin {
     // should ensure that the server is removed and that the storage is in a
     // consistent state before returning.
     rpc RemovePeer(StoragePeer) returns (RemoveServerResponse) {}
+    // IsMember returns true if the peer is a member of the storage.
+    rpc IsMember(IsMemberRequest) returns (IsMemberResponse) {}
 
     // Storage Usage RPCs
+    // For the below RPCs, NotFound should be returned if the key does not exist.
 
     // GetValue returns the value for a key.
     rpc GetValue(GetValueRequest) returns (GetValueResponse) {}
