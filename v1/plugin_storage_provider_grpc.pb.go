@@ -59,7 +59,7 @@ type StorageProviderPluginClient interface {
 	Bootstrap(ctx context.Context, in *BootstrapRequest, opts ...grpc.CallOption) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error)
-	// GetLeader returns the leader of the storage. Leader is loosely defined
+	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
 	GetLeader(ctx context.Context, in *GetLeaderRequest, opts ...grpc.CallOption) (*StoragePeer, error)
@@ -255,7 +255,7 @@ type StorageProviderPluginServer interface {
 	Bootstrap(context.Context, *BootstrapRequest) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error)
-	// GetLeader returns the leader of the storage. Leader is loosely defined
+	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
 	GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error)
