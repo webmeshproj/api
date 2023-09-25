@@ -1400,9 +1400,9 @@ GetValueResponse is the response object for the GetValue RPC.
 
 IsMemberRequest is the request object for the IsMember RPC.
 
-| Field | Type                           | Label | Description                                                                                                    |
-|-------|--------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
-| peer  | [StoragePeer](#v1.StoragePeer) |       | Peer is the peer to check if it is a member of the storage. An empty peer should be treated as the local peer. |
+| Field | Type              | Label | Description                                                                                                              |
+|-------|-------------------|-------|--------------------------------------------------------------------------------------------------------------------------|
+| peer  | [string](#string) |       | Peer is the ID of the peer to check if it is a member of the storage. An empty peer should be treated as the local peer. |
 
 ### IsMemberResponse
 

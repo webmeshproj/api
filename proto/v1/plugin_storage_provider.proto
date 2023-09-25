@@ -81,9 +81,9 @@ message RemoveServerResponse {}
 
 // IsMemberRequest is the request object for the IsMember RPC.
 message IsMemberRequest {
-    // Peer is the peer to check if it is a member of the storage.
+    // Peer is the ID of the peer to check if it is a member of the storage.
     // An empty peer should be treated as the local peer.
-    StoragePeer peer = 1;
+    string peer = 1;
 }
 
 // IsMemberResponse is the response object for the IsMember RPC.
