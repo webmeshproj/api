@@ -25,26 +25,33 @@ import "v1/node.proto";
 // StorageStatusRequest is the request object for the StorageStatus RPC.
 message StorageStatusRequest {}
 
-// StorageStatusResponse is the response object for the StorageStatus RPC.
-message StorageStatusResponse {
+// StorageStatus is the response object for the StorageStatus RPC.
+message StorageStatus {
     // IsWritable is true if the storage can currently be written to.
     bool is_writable = 1;
     // ClusterStatus is the status of the storage.
     ClusterStatus cluster_status = 2;
-    // Servers is the list of servers that are currently recognized by the storage plugin.
-    repeated StoragePeer servers = 3;
+    // Peers is the list of servers that are currently recognized as peers 
+    // by the storage plugin.
+    repeated StoragePeer peers = 3;
+    // message is an implementation specific message that can be used to provide
+    // additional information about the storage status.
+    string message = 4;
 }
 
 // StoragePeer is a server that is currently recognized by the storage plugin.
 message StoragePeer {
     // ID is the id of the server.
     string id = 1;
+    // public_key is the encoded public key of the server. This is not required
+    // for demotion or removal RPCs. Not all implementations need to support this.
+    string public_key = 2;
     // Address is the address of the server. This is not required
     // for demotion or removal RPCs.
-    string address = 2;
+    string address = 3;
     // ClusterStatus is the status of the server. This is only
     // applicable during a GetStatus RPC.
-    ClusterStatus cluster_status = 3;
+    ClusterStatus cluster_status = 4;
 }
 
 // AddVoterResponse is the response object for the AddVoter RPC.
@@ -155,7 +162,7 @@ service StorageProviderPlugin {
     // Storage Membership RPCs
 
     // GetStatus returns the status of the storage.
-    rpc GetStatus(StorageStatusRequest) returns (StorageStatusResponse) {}
+    rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
     // AddVoter adds a voter to the storage. The underlying implementation
     // should ensure that the voter is added to the storage and that the
     // storage is in a consistent state before returning.

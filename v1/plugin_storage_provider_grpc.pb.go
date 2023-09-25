@@ -52,7 +52,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StorageProviderPluginClient interface {
 	// GetStatus returns the status of the storage.
-	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatusResponse, error)
+	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
 	// should ensure that the voter is added to the storage and that the
 	// storage is in a consistent state before returning.
@@ -95,8 +95,8 @@ func NewStorageProviderPluginClient(cc grpc.ClientConnInterface) StorageProvider
 	return &storageProviderPluginClient{cc}
 }
 
-func (c *storageProviderPluginClient) GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatusResponse, error) {
-	out := new(StorageStatusResponse)
+func (c *storageProviderPluginClient) GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error) {
+	out := new(StorageStatus)
 	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetStatus_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -222,7 +222,7 @@ func (x *storageProviderPluginSubscribePrefixClient) Recv() (*PrefixEvent, error
 // for forward compatibility
 type StorageProviderPluginServer interface {
 	// GetStatus returns the status of the storage.
-	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatusResponse, error)
+	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
 	// should ensure that the voter is added to the storage and that the
 	// storage is in a consistent state before returning.
@@ -262,7 +262,7 @@ type StorageProviderPluginServer interface {
 type UnimplementedStorageProviderPluginServer struct {
 }
 
-func (UnimplementedStorageProviderPluginServer) GetStatus(context.Context, *StorageStatusRequest) (*StorageStatusResponse, error) {
+func (UnimplementedStorageProviderPluginServer) GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
 func (UnimplementedStorageProviderPluginServer) AddVoter(context.Context, *StoragePeer) (*AddVoterResponse, error) {

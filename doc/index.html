@@ -761,11 +761,11 @@
                 </li>
               
                 <li>
-                  <a href="#v1.StorageStatusRequest"><span class="badge">M</span>StorageStatusRequest</a>
+                  <a href="#v1.StorageStatus"><span class="badge">M</span>StorageStatus</a>
                 </li>
               
                 <li>
-                  <a href="#v1.StorageStatusResponse"><span class="badge">M</span>StorageStatusResponse</a>
+                  <a href="#v1.StorageStatusRequest"><span class="badge">M</span>StorageStatusRequest</a>
                 </li>
               
                 <li>
@@ -5169,6 +5169,14 @@ received.</p></td>
                 </tr>
               
                 <tr>
+                  <td>public_key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>public_key is the encoded public key of the server. This is not required
+for demotion or removal RPCs. Not all implementations need to support this. </p></td>
+                </tr>
+              
+                <tr>
                   <td>address</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -5191,15 +5199,8 @@ applicable during a GetStatus RPC. </p></td>
 
         
       
-        <h3 id="v1.StorageStatusRequest">StorageStatusRequest</h3>
-        <p>StorageStatusRequest is the request object for the StorageStatus RPC.</p>
-
-        
-
-        
-      
-        <h3 id="v1.StorageStatusResponse">StorageStatusResponse</h3>
-        <p>StorageStatusResponse is the response object for the StorageStatus RPC.</p>
+        <h3 id="v1.StorageStatus">StorageStatus</h3>
+        <p>StorageStatus is the response object for the StorageStatus RPC.</p>
 
         
           <table class="field-table">
@@ -5223,16 +5224,32 @@ applicable during a GetStatus RPC. </p></td>
                 </tr>
               
                 <tr>
-                  <td>servers</td>
+                  <td>peers</td>
                   <td><a href="#v1.StoragePeer">StoragePeer</a></td>
                   <td>repeated</td>
-                  <td><p>Servers is the list of servers that are currently recognized by the storage plugin. </p></td>
+                  <td><p>Peers is the list of servers that are currently recognized as peers 
+by the storage plugin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>message</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>message is an implementation specific message that can be used to provide
+additional information about the storage status. </p></td>
                 </tr>
               
             </tbody>
           </table>
 
           
+
+        
+      
+        <h3 id="v1.StorageStatusRequest">StorageStatusRequest</h3>
+        <p>StorageStatusRequest is the request object for the StorageStatus RPC.</p>
+
+        
 
         
       
@@ -5337,7 +5354,7 @@ applicable during a GetStatus RPC. </p></td>
               <tr>
                 <td>GetStatus</td>
                 <td><a href="#v1.StorageStatusRequest">StorageStatusRequest</a></td>
-                <td><a href="#v1.StorageStatusResponse">StorageStatusResponse</a></td>
+                <td><a href="#v1.StorageStatus">StorageStatus</a></td>
                 <td><p>GetStatus returns the status of the storage.</p></td>
               </tr>
             
