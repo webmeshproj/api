@@ -24,7 +24,9 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -34,13 +36,1169 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type PrefixEvent_EventType int32
+
+const (
+	// EventTypeUnknown is an unknown event type.
+	PrefixEvent_EventTypeUnknown PrefixEvent_EventType = 0
+	// EventTypeUpdated is an event for when a value is added or updated.
+	PrefixEvent_EventTypeUpdated PrefixEvent_EventType = 1
+	// EventTypeRemoved is an event for when a value is removed.
+	PrefixEvent_EventTypeRemoved PrefixEvent_EventType = 2
+)
+
+// Enum value maps for PrefixEvent_EventType.
+var (
+	PrefixEvent_EventType_name = map[int32]string{
+		0: "EventTypeUnknown",
+		1: "EventTypeUpdated",
+		2: "EventTypeRemoved",
+	}
+	PrefixEvent_EventType_value = map[string]int32{
+		"EventTypeUnknown": 0,
+		"EventTypeUpdated": 1,
+		"EventTypeRemoved": 2,
+	}
+)
+
+func (x PrefixEvent_EventType) Enum() *PrefixEvent_EventType {
+	p := new(PrefixEvent_EventType)
+	*p = x
+	return p
+}
+
+func (x PrefixEvent_EventType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PrefixEvent_EventType) Descriptor() protoreflect.EnumDescriptor {
+	return file_v1_plugin_storage_provider_proto_enumTypes[0].Descriptor()
+}
+
+func (PrefixEvent_EventType) Type() protoreflect.EnumType {
+	return &file_v1_plugin_storage_provider_proto_enumTypes[0]
+}
+
+func (x PrefixEvent_EventType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PrefixEvent_EventType.Descriptor instead.
+func (PrefixEvent_EventType) EnumDescriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{19, 0}
+}
+
+// StorageStatusRequest is the request object for the StorageStatus RPC.
+type StorageStatusRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StorageStatusRequest) Reset() {
+	*x = StorageStatusRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StorageStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StorageStatusRequest) ProtoMessage() {}
+
+func (x *StorageStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StorageStatusRequest.ProtoReflect.Descriptor instead.
+func (*StorageStatusRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{0}
+}
+
+// StorageStatusResponse is the response object for the StorageStatus RPC.
+type StorageStatusResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IsWritable is true if the storage can currently be written to.
+	IsWritable bool `protobuf:"varint,1,opt,name=is_writable,json=isWritable,proto3" json:"is_writable,omitempty"`
+	// ClusterStatus is the status of the storage.
+	ClusterStatus ClusterStatus `protobuf:"varint,2,opt,name=cluster_status,json=clusterStatus,proto3,enum=v1.ClusterStatus" json:"cluster_status,omitempty"`
+	// Servers is the list of servers that are currently recognized by the storage plugin.
+	Servers []*StoragePeer `protobuf:"bytes,3,rep,name=servers,proto3" json:"servers,omitempty"`
+}
+
+func (x *StorageStatusResponse) Reset() {
+	*x = StorageStatusResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StorageStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StorageStatusResponse) ProtoMessage() {}
+
+func (x *StorageStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StorageStatusResponse.ProtoReflect.Descriptor instead.
+func (*StorageStatusResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *StorageStatusResponse) GetIsWritable() bool {
+	if x != nil {
+		return x.IsWritable
+	}
+	return false
+}
+
+func (x *StorageStatusResponse) GetClusterStatus() ClusterStatus {
+	if x != nil {
+		return x.ClusterStatus
+	}
+	return ClusterStatus_CLUSTER_STATUS_UNKNOWN
+}
+
+func (x *StorageStatusResponse) GetServers() []*StoragePeer {
+	if x != nil {
+		return x.Servers
+	}
+	return nil
+}
+
+// StoragePeer is a server that is currently recognized by the storage plugin.
+type StoragePeer struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID is the id of the server.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Address is the address of the server. This is not required
+	// for demotion or removal RPCs.
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	// ClusterStatus is the status of the server. This is only
+	// applicable during a GetStatus RPC.
+	ClusterStatus ClusterStatus `protobuf:"varint,3,opt,name=cluster_status,json=clusterStatus,proto3,enum=v1.ClusterStatus" json:"cluster_status,omitempty"`
+}
+
+func (x *StoragePeer) Reset() {
+	*x = StoragePeer{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StoragePeer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StoragePeer) ProtoMessage() {}
+
+func (x *StoragePeer) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StoragePeer.ProtoReflect.Descriptor instead.
+func (*StoragePeer) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *StoragePeer) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *StoragePeer) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *StoragePeer) GetClusterStatus() ClusterStatus {
+	if x != nil {
+		return x.ClusterStatus
+	}
+	return ClusterStatus_CLUSTER_STATUS_UNKNOWN
+}
+
+// AddVoterResponse is the response object for the AddVoter RPC.
+type AddVoterResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *AddVoterResponse) Reset() {
+	*x = AddVoterResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddVoterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddVoterResponse) ProtoMessage() {}
+
+func (x *AddVoterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddVoterResponse.ProtoReflect.Descriptor instead.
+func (*AddVoterResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{3}
+}
+
+// AddObserverResponse is the response object for the AddObserver RPC.
+type AddObserverResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *AddObserverResponse) Reset() {
+	*x = AddObserverResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddObserverResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddObserverResponse) ProtoMessage() {}
+
+func (x *AddObserverResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddObserverResponse.ProtoReflect.Descriptor instead.
+func (*AddObserverResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{4}
+}
+
+// DemoteVoterResponse is the response object for the DemoteVoter RPC.
+type DemoteVoterResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DemoteVoterResponse) Reset() {
+	*x = DemoteVoterResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DemoteVoterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DemoteVoterResponse) ProtoMessage() {}
+
+func (x *DemoteVoterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DemoteVoterResponse.ProtoReflect.Descriptor instead.
+func (*DemoteVoterResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{5}
+}
+
+// RemoveServerResponse is the response object for the RemoveServer RPC.
+type RemoveServerResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RemoveServerResponse) Reset() {
+	*x = RemoveServerResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveServerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveServerResponse) ProtoMessage() {}
+
+func (x *RemoveServerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveServerResponse.ProtoReflect.Descriptor instead.
+func (*RemoveServerResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{6}
+}
+
+// StorageValue is a value stored in the storage.
+type StorageValue struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Key is the key of the value.
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// Value is the value of the key.
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *StorageValue) Reset() {
+	*x = StorageValue{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StorageValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StorageValue) ProtoMessage() {}
+
+func (x *StorageValue) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StorageValue.ProtoReflect.Descriptor instead.
+func (*StorageValue) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *StorageValue) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *StorageValue) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// GetValueRequest is the request object for the GetValue RPC.
+type GetValueRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Key is the key to get the value for.
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+}
+
+func (x *GetValueRequest) Reset() {
+	*x = GetValueRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetValueRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetValueRequest) ProtoMessage() {}
+
+func (x *GetValueRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetValueRequest.ProtoReflect.Descriptor instead.
+func (*GetValueRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetValueRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+// GetValueResponse is the response object for the GetValue RPC.
+type GetValueResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Value is the value of the key.
+	Value *StorageValue `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *GetValueResponse) Reset() {
+	*x = GetValueResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetValueResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetValueResponse) ProtoMessage() {}
+
+func (x *GetValueResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetValueResponse.ProtoReflect.Descriptor instead.
+func (*GetValueResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetValueResponse) GetValue() *StorageValue {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+// PutValueRequest is the request object for the PutValue RPC.
+type PutValueRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Value is the value to put.
+	Value *StorageValue `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	// TTL is the time to live for the value.
+	Ttl *durationpb.Duration `protobuf:"bytes,2,opt,name=ttl,proto3" json:"ttl,omitempty"`
+}
+
+func (x *PutValueRequest) Reset() {
+	*x = PutValueRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PutValueRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PutValueRequest) ProtoMessage() {}
+
+func (x *PutValueRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PutValueRequest.ProtoReflect.Descriptor instead.
+func (*PutValueRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PutValueRequest) GetValue() *StorageValue {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *PutValueRequest) GetTtl() *durationpb.Duration {
+	if x != nil {
+		return x.Ttl
+	}
+	return nil
+}
+
+// PutValueResponse is the response object for the PutValue RPC.
+type PutValueResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *PutValueResponse) Reset() {
+	*x = PutValueResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PutValueResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PutValueResponse) ProtoMessage() {}
+
+func (x *PutValueResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PutValueResponse.ProtoReflect.Descriptor instead.
+func (*PutValueResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{11}
+}
+
+// DeleteValueRequest is the request object for the DeleteValue RPC.
+type DeleteValueRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Key is the key to delete.
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+}
+
+func (x *DeleteValueRequest) Reset() {
+	*x = DeleteValueRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteValueRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteValueRequest) ProtoMessage() {}
+
+func (x *DeleteValueRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteValueRequest.ProtoReflect.Descriptor instead.
+func (*DeleteValueRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteValueRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+// DeleteValueResponse is the response object for the DeleteValue RPC.
+type DeleteValueResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteValueResponse) Reset() {
+	*x = DeleteValueResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteValueResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteValueResponse) ProtoMessage() {}
+
+func (x *DeleteValueResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteValueResponse.ProtoReflect.Descriptor instead.
+func (*DeleteValueResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{13}
+}
+
+// ListKeysRequest is the request object for the ListValues RPC.
+type ListKeysRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Prefix is the prefix to list values for.
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+}
+
+func (x *ListKeysRequest) Reset() {
+	*x = ListKeysRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListKeysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListKeysRequest) ProtoMessage() {}
+
+func (x *ListKeysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListKeysRequest.ProtoReflect.Descriptor instead.
+func (*ListKeysRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListKeysRequest) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+// ListKeysResponse is the response object for the ListValues RPC.
+type ListKeysResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Keys is the list of value keys for the prefix.
+	Keys []string `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
+}
+
+func (x *ListKeysResponse) Reset() {
+	*x = ListKeysResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListKeysResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListKeysResponse) ProtoMessage() {}
+
+func (x *ListKeysResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListKeysResponse.ProtoReflect.Descriptor instead.
+func (*ListKeysResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListKeysResponse) GetKeys() []string {
+	if x != nil {
+		return x.Keys
+	}
+	return nil
+}
+
+// ListValuesRequest is the request object for the ListValues RPC.
+type ListValuesRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Prefix is the prefix to list values for.
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+}
+
+func (x *ListValuesRequest) Reset() {
+	*x = ListValuesRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListValuesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListValuesRequest) ProtoMessage() {}
+
+func (x *ListValuesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListValuesRequest.ProtoReflect.Descriptor instead.
+func (*ListValuesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ListValuesRequest) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+// ListValuesResponse is the response object for the ListValues RPC.
+type ListValuesResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Values is the list of values for the prefix.
+	Values []*StorageValue `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`
+}
+
+func (x *ListValuesResponse) Reset() {
+	*x = ListValuesResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListValuesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListValuesResponse) ProtoMessage() {}
+
+func (x *ListValuesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListValuesResponse.ProtoReflect.Descriptor instead.
+func (*ListValuesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *ListValuesResponse) GetValues() []*StorageValue {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+// SubscribePrefixRequest is the request object for the SubscribePrefix RPC.
+type SubscribePrefixRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Prefix is the prefix to subscribe to.
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+}
+
+func (x *SubscribePrefixRequest) Reset() {
+	*x = SubscribePrefixRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SubscribePrefixRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubscribePrefixRequest) ProtoMessage() {}
+
+func (x *SubscribePrefixRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubscribePrefixRequest.ProtoReflect.Descriptor instead.
+func (*SubscribePrefixRequest) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SubscribePrefixRequest) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+// PrefixEvent is an event that is emitted when a value is added or removed
+// from the storage for a prefix.
+type PrefixEvent struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Prefix is the prefix that the event is for.
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	// Value is the value that was added or removed.
+	Value *StorageValue `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	// EventType is the type of event.
+	EventType PrefixEvent_EventType `protobuf:"varint,3,opt,name=event_type,json=eventType,proto3,enum=v1.PrefixEvent_EventType" json:"event_type,omitempty"`
+}
+
+func (x *PrefixEvent) Reset() {
+	*x = PrefixEvent{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_storage_provider_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PrefixEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrefixEvent) ProtoMessage() {}
+
+func (x *PrefixEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_storage_provider_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrefixEvent.ProtoReflect.Descriptor instead.
+func (*PrefixEvent) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_storage_provider_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *PrefixEvent) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+func (x *PrefixEvent) GetValue() *StorageValue {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *PrefixEvent) GetEventType() PrefixEvent_EventType {
+	if x != nil {
+		return x.EventType
+	}
+	return PrefixEvent_EventTypeUnknown
+}
+
 var File_v1_plugin_storage_provider_proto protoreflect.FileDescriptor
 
 var file_v1_plugin_storage_provider_proto_rawDesc = []byte{
 	0x0a, 0x20, 0x76, 0x31, 0x2f, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x5f, 0x73, 0x74, 0x6f, 0x72,
 	0x61, 0x67, 0x65, 0x5f, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x12, 0x02, 0x76, 0x31, 0x32, 0x17, 0x0a, 0x15, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67,
-	0x65, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x50, 0x6c, 0x67, 0x75, 0x69, 0x6e, 0x42,
+	0x74, 0x6f, 0x12, 0x02, 0x76, 0x31, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x0d, 0x76, 0x31, 0x2f, 0x6e, 0x6f, 0x64, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x16, 0x0a, 0x14, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x9d, 0x01,
+	0x0a, 0x15, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x73, 0x5f, 0x77, 0x72,
+	0x69, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x69, 0x73,
+	0x57, 0x72, 0x69, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x38, 0x0a, 0x0e, 0x63, 0x6c, 0x75, 0x73,
+	0x74, 0x65, 0x72, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x11, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x52, 0x0d, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x12, 0x29, 0x0a, 0x07, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x73, 0x18, 0x03, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
+	0x50, 0x65, 0x65, 0x72, 0x52, 0x07, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x73, 0x22, 0x71, 0x0a,
+	0x0b, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07,
+	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x38, 0x0a, 0x0e, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65,
+	0x72, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x11,
+	0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x52, 0x0d, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x22, 0x12, 0x0a, 0x10, 0x41, 0x64, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x15, 0x0a, 0x13, 0x41, 0x64, 0x64, 0x4f, 0x62, 0x73, 0x65, 0x72,
+	0x76, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x15, 0x0a, 0x13, 0x44,
+	0x65, 0x6d, 0x6f, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x16, 0x0a, 0x14, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x36, 0x0a, 0x0c, 0x53, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65,
+	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x22, 0x23, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x3a, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x56, 0x61,
+	0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x22, 0x66, 0x0a, 0x0f, 0x50, 0x75, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x26, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61,
+	0x67, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x2b,
+	0x0a, 0x03, 0x74, 0x74, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x03, 0x74, 0x74, 0x6c, 0x22, 0x12, 0x0a, 0x10, 0x50,
+	0x75, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x26, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x15, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x29,
+	0x0a, 0x0f, 0x4c, 0x69, 0x73, 0x74, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x22, 0x26, 0x0a, 0x10, 0x4c, 0x69, 0x73,
+	0x74, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65, 0x79,
+	0x73, 0x22, 0x2b, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x22, 0x3e,
+	0x0a, 0x12, 0x4c, 0x69, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x28, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67,
+	0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x30,
+	0x0a, 0x16, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x50, 0x72, 0x65, 0x66, 0x69,
+	0x78, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66,
+	0x69, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78,
+	0x22, 0xd6, 0x01, 0x0a, 0x0b, 0x50, 0x72, 0x65, 0x66, 0x69, 0x78, 0x45, 0x76, 0x65, 0x6e, 0x74,
+	0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x12, 0x26, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f,
+	0x72, 0x61, 0x67, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x12, 0x38, 0x0a, 0x0a, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x19, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x65, 0x66, 0x69, 0x78,
+	0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x52,
+	0x09, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x22, 0x4d, 0x0a, 0x09, 0x45, 0x76,
+	0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x10, 0x45, 0x76, 0x65, 0x6e, 0x74,
+	0x54, 0x79, 0x70, 0x65, 0x55, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x14, 0x0a,
+	0x10, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x64, 0x10, 0x01, 0x12, 0x14, 0x0a, 0x10, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65,
+	0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x64, 0x10, 0x02, 0x32, 0xb3, 0x05, 0x0a, 0x15, 0x53, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x50, 0x6c, 0x75,
+	0x67, 0x69, 0x6e, 0x12, 0x42, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x12, 0x18, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x33, 0x0a, 0x08, 0x41, 0x64, 0x64, 0x56, 0x6f,
+	0x74, 0x65, 0x72, 0x12, 0x0f, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
+	0x50, 0x65, 0x65, 0x72, 0x1a, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x64, 0x64, 0x56, 0x6f, 0x74,
+	0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x39, 0x0a, 0x0b,
+	0x41, 0x64, 0x64, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x12, 0x0f, 0x2e, 0x76, 0x31,
+	0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x1a, 0x17, 0x2e, 0x76,
+	0x31, 0x2e, 0x41, 0x64, 0x64, 0x4f, 0x62, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x39, 0x0a, 0x0b, 0x44, 0x65, 0x6d, 0x6f, 0x74,
+	0x65, 0x56, 0x6f, 0x74, 0x65, 0x72, 0x12, 0x0f, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72,
+	0x61, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x1a, 0x17, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x6d,
+	0x6f, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x3b, 0x0a, 0x0c, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x12, 0x0f, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x50,
+	0x65, 0x65, 0x72, 0x1a, 0x18, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x53,
+	0x65, 0x72, 0x76, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x37, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x13, 0x2e, 0x76, 0x31,
+	0x2e, 0x47, 0x65, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x37, 0x0a, 0x08, 0x50, 0x75, 0x74, 0x56,
+	0x61, 0x6c, 0x75, 0x65, 0x12, 0x13, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x75, 0x74, 0x56, 0x61, 0x6c,
+	0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x50,
+	0x75, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x40, 0x0a, 0x0b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65,
+	0x12, 0x16, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x61, 0x6c, 0x75,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65,
+	0x6c, 0x65, 0x74, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x37, 0x0a, 0x08, 0x4c, 0x69, 0x73, 0x74, 0x4b, 0x65, 0x79, 0x73, 0x12,
+	0x13, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4b, 0x65,
+	0x79, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3d, 0x0a, 0x0a,
+	0x4c, 0x69, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x12, 0x15, 0x2e, 0x76, 0x31, 0x2e,
+	0x4c, 0x69, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x16, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x42, 0x0a, 0x0f, 0x53,
+	0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x50, 0x72, 0x65, 0x66, 0x69, 0x78, 0x12, 0x1a,
+	0x2e, 0x76, 0x31, 0x2e, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x50, 0x72, 0x65,
+	0x66, 0x69, 0x78, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0f, 0x2e, 0x76, 0x31, 0x2e,
+	0x50, 0x72, 0x65, 0x66, 0x69, 0x78, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x22, 0x00, 0x30, 0x01, 0x42,
 	0x76, 0x0a, 0x06, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x31, 0x42, 0x1a, 0x50, 0x6c, 0x75, 0x67, 0x69,
 	0x6e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
 	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
@@ -51,13 +1209,82 @@ var file_v1_plugin_storage_provider_proto_rawDesc = []byte{
 	0x74, 0x61, 0xea, 0x02, 0x02, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_v1_plugin_storage_provider_proto_goTypes = []interface{}{}
+var (
+	file_v1_plugin_storage_provider_proto_rawDescOnce sync.Once
+	file_v1_plugin_storage_provider_proto_rawDescData = file_v1_plugin_storage_provider_proto_rawDesc
+)
+
+func file_v1_plugin_storage_provider_proto_rawDescGZIP() []byte {
+	file_v1_plugin_storage_provider_proto_rawDescOnce.Do(func() {
+		file_v1_plugin_storage_provider_proto_rawDescData = protoimpl.X.CompressGZIP(file_v1_plugin_storage_provider_proto_rawDescData)
+	})
+	return file_v1_plugin_storage_provider_proto_rawDescData
+}
+
+var file_v1_plugin_storage_provider_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_v1_plugin_storage_provider_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_v1_plugin_storage_provider_proto_goTypes = []interface{}{
+	(PrefixEvent_EventType)(0),     // 0: v1.PrefixEvent.EventType
+	(*StorageStatusRequest)(nil),   // 1: v1.StorageStatusRequest
+	(*StorageStatusResponse)(nil),  // 2: v1.StorageStatusResponse
+	(*StoragePeer)(nil),            // 3: v1.StoragePeer
+	(*AddVoterResponse)(nil),       // 4: v1.AddVoterResponse
+	(*AddObserverResponse)(nil),    // 5: v1.AddObserverResponse
+	(*DemoteVoterResponse)(nil),    // 6: v1.DemoteVoterResponse
+	(*RemoveServerResponse)(nil),   // 7: v1.RemoveServerResponse
+	(*StorageValue)(nil),           // 8: v1.StorageValue
+	(*GetValueRequest)(nil),        // 9: v1.GetValueRequest
+	(*GetValueResponse)(nil),       // 10: v1.GetValueResponse
+	(*PutValueRequest)(nil),        // 11: v1.PutValueRequest
+	(*PutValueResponse)(nil),       // 12: v1.PutValueResponse
+	(*DeleteValueRequest)(nil),     // 13: v1.DeleteValueRequest
+	(*DeleteValueResponse)(nil),    // 14: v1.DeleteValueResponse
+	(*ListKeysRequest)(nil),        // 15: v1.ListKeysRequest
+	(*ListKeysResponse)(nil),       // 16: v1.ListKeysResponse
+	(*ListValuesRequest)(nil),      // 17: v1.ListValuesRequest
+	(*ListValuesResponse)(nil),     // 18: v1.ListValuesResponse
+	(*SubscribePrefixRequest)(nil), // 19: v1.SubscribePrefixRequest
+	(*PrefixEvent)(nil),            // 20: v1.PrefixEvent
+	(ClusterStatus)(0),             // 21: v1.ClusterStatus
+	(*durationpb.Duration)(nil),    // 22: google.protobuf.Duration
+}
 var file_v1_plugin_storage_provider_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	21, // 0: v1.StorageStatusResponse.cluster_status:type_name -> v1.ClusterStatus
+	3,  // 1: v1.StorageStatusResponse.servers:type_name -> v1.StoragePeer
+	21, // 2: v1.StoragePeer.cluster_status:type_name -> v1.ClusterStatus
+	8,  // 3: v1.GetValueResponse.value:type_name -> v1.StorageValue
+	8,  // 4: v1.PutValueRequest.value:type_name -> v1.StorageValue
+	22, // 5: v1.PutValueRequest.ttl:type_name -> google.protobuf.Duration
+	8,  // 6: v1.ListValuesResponse.values:type_name -> v1.StorageValue
+	8,  // 7: v1.PrefixEvent.value:type_name -> v1.StorageValue
+	0,  // 8: v1.PrefixEvent.event_type:type_name -> v1.PrefixEvent.EventType
+	1,  // 9: v1.StorageProviderPlugin.GetStatus:input_type -> v1.StorageStatusRequest
+	3,  // 10: v1.StorageProviderPlugin.AddVoter:input_type -> v1.StoragePeer
+	3,  // 11: v1.StorageProviderPlugin.AddObserver:input_type -> v1.StoragePeer
+	3,  // 12: v1.StorageProviderPlugin.DemoteVoter:input_type -> v1.StoragePeer
+	3,  // 13: v1.StorageProviderPlugin.RemoveServer:input_type -> v1.StoragePeer
+	9,  // 14: v1.StorageProviderPlugin.GetValue:input_type -> v1.GetValueRequest
+	11, // 15: v1.StorageProviderPlugin.PutValue:input_type -> v1.PutValueRequest
+	13, // 16: v1.StorageProviderPlugin.DeleteValue:input_type -> v1.DeleteValueRequest
+	15, // 17: v1.StorageProviderPlugin.ListKeys:input_type -> v1.ListKeysRequest
+	17, // 18: v1.StorageProviderPlugin.ListValues:input_type -> v1.ListValuesRequest
+	19, // 19: v1.StorageProviderPlugin.SubscribePrefix:input_type -> v1.SubscribePrefixRequest
+	2,  // 20: v1.StorageProviderPlugin.GetStatus:output_type -> v1.StorageStatusResponse
+	4,  // 21: v1.StorageProviderPlugin.AddVoter:output_type -> v1.AddVoterResponse
+	5,  // 22: v1.StorageProviderPlugin.AddObserver:output_type -> v1.AddObserverResponse
+	6,  // 23: v1.StorageProviderPlugin.DemoteVoter:output_type -> v1.DemoteVoterResponse
+	7,  // 24: v1.StorageProviderPlugin.RemoveServer:output_type -> v1.RemoveServerResponse
+	10, // 25: v1.StorageProviderPlugin.GetValue:output_type -> v1.GetValueResponse
+	12, // 26: v1.StorageProviderPlugin.PutValue:output_type -> v1.PutValueResponse
+	14, // 27: v1.StorageProviderPlugin.DeleteValue:output_type -> v1.DeleteValueResponse
+	16, // 28: v1.StorageProviderPlugin.ListKeys:output_type -> v1.ListKeysResponse
+	18, // 29: v1.StorageProviderPlugin.ListValues:output_type -> v1.ListValuesResponse
+	20, // 30: v1.StorageProviderPlugin.SubscribePrefix:output_type -> v1.PrefixEvent
+	20, // [20:31] is the sub-list for method output_type
+	9,  // [9:20] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_v1_plugin_storage_provider_proto_init() }
@@ -65,18 +1292,263 @@ func file_v1_plugin_storage_provider_proto_init() {
 	if File_v1_plugin_storage_provider_proto != nil {
 		return
 	}
+	file_v1_node_proto_init()
+	if !protoimpl.UnsafeEnabled {
+		file_v1_plugin_storage_provider_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StorageStatusRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StorageStatusResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StoragePeer); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddVoterResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddObserverResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DemoteVoterResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RemoveServerResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StorageValue); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetValueRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetValueResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PutValueRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PutValueResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteValueRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteValueResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListKeysRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListKeysResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListValuesRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListValuesResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SubscribePrefixRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_storage_provider_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PrefixEvent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_v1_plugin_storage_provider_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   0,
+			NumEnums:      1,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_v1_plugin_storage_provider_proto_goTypes,
 		DependencyIndexes: file_v1_plugin_storage_provider_proto_depIdxs,
+		EnumInfos:         file_v1_plugin_storage_provider_proto_enumTypes,
+		MessageInfos:      file_v1_plugin_storage_provider_proto_msgTypes,
 	}.Build()
 	File_v1_plugin_storage_provider_proto = out.File
 	file_v1_plugin_storage_provider_proto_rawDesc = nil

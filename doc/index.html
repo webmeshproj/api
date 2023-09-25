@@ -696,11 +696,95 @@
             <a href="#v1%2fplugin_storage_provider.proto">v1/plugin_storage_provider.proto</a>
             <ul>
               
+                <li>
+                  <a href="#v1.AddObserverResponse"><span class="badge">M</span>AddObserverResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AddVoterResponse"><span class="badge">M</span>AddVoterResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DeleteValueRequest"><span class="badge">M</span>DeleteValueRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DeleteValueResponse"><span class="badge">M</span>DeleteValueResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DemoteVoterResponse"><span class="badge">M</span>DemoteVoterResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetValueRequest"><span class="badge">M</span>GetValueRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetValueResponse"><span class="badge">M</span>GetValueResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListKeysRequest"><span class="badge">M</span>ListKeysRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListKeysResponse"><span class="badge">M</span>ListKeysResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListValuesRequest"><span class="badge">M</span>ListValuesRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListValuesResponse"><span class="badge">M</span>ListValuesResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PrefixEvent"><span class="badge">M</span>PrefixEvent</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PutValueRequest"><span class="badge">M</span>PutValueRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PutValueResponse"><span class="badge">M</span>PutValueResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RemoveServerResponse"><span class="badge">M</span>RemoveServerResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StoragePeer"><span class="badge">M</span>StoragePeer</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StorageStatusRequest"><span class="badge">M</span>StorageStatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StorageStatusResponse"><span class="badge">M</span>StorageStatusResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StorageValue"><span class="badge">M</span>StorageValue</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.SubscribePrefixRequest"><span class="badge">M</span>SubscribePrefixRequest</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.PrefixEvent.EventType"><span class="badge">E</span>PrefixEvent.EventType</a>
+                </li>
               
               
               
                 <li>
-                  <a href="#v1.StorageProviderPlguin"><span class="badge">S</span>StorageProviderPlguin</a>
+                  <a href="#v1.StorageProviderPlugin"><span class="badge">S</span>StorageProviderPlugin</a>
                 </li>
               
             </ul>
@@ -4789,19 +4873,556 @@ received.</p></td>
       <p></p>
 
       
+        <h3 id="v1.AddObserverResponse">AddObserverResponse</h3>
+        <p>AddObserverResponse is the response object for the AddObserver RPC.</p>
 
+        
+
+        
+      
+        <h3 id="v1.AddVoterResponse">AddVoterResponse</h3>
+        <p>AddVoterResponse is the response object for the AddVoter RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.DeleteValueRequest">DeleteValueRequest</h3>
+        <p>DeleteValueRequest is the request object for the DeleteValue RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Key is the key to delete. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.DeleteValueResponse">DeleteValueResponse</h3>
+        <p>DeleteValueResponse is the response object for the DeleteValue RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.DemoteVoterResponse">DemoteVoterResponse</h3>
+        <p>DemoteVoterResponse is the response object for the DemoteVoter RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.GetValueRequest">GetValueRequest</h3>
+        <p>GetValueRequest is the request object for the GetValue RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Key is the key to get the value for. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.GetValueResponse">GetValueResponse</h3>
+        <p>GetValueResponse is the response object for the GetValue RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.StorageValue">StorageValue</a></td>
+                  <td></td>
+                  <td><p>Value is the value of the key. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListKeysRequest">ListKeysRequest</h3>
+        <p>ListKeysRequest is the request object for the ListValues RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Prefix is the prefix to list values for. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListKeysResponse">ListKeysResponse</h3>
+        <p>ListKeysResponse is the response object for the ListValues RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>keys</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Keys is the list of value keys for the prefix. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListValuesRequest">ListValuesRequest</h3>
+        <p>ListValuesRequest is the request object for the ListValues RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Prefix is the prefix to list values for. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListValuesResponse">ListValuesResponse</h3>
+        <p>ListValuesResponse is the response object for the ListValues RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>values</td>
+                  <td><a href="#v1.StorageValue">StorageValue</a></td>
+                  <td>repeated</td>
+                  <td><p>Values is the list of values for the prefix. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PrefixEvent">PrefixEvent</h3>
+        <p>PrefixEvent is an event that is emitted when a value is added or removed</p><p>from the storage for a prefix.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Prefix is the prefix that the event is for. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.StorageValue">StorageValue</a></td>
+                  <td></td>
+                  <td><p>Value is the value that was added or removed. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>event_type</td>
+                  <td><a href="#v1.PrefixEvent.EventType">PrefixEvent.EventType</a></td>
+                  <td></td>
+                  <td><p>EventType is the type of event. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PutValueRequest">PutValueRequest</h3>
+        <p>PutValueRequest is the request object for the PutValue RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.StorageValue">StorageValue</a></td>
+                  <td></td>
+                  <td><p>Value is the value to put. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ttl</td>
+                  <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
+                  <td></td>
+                  <td><p>TTL is the time to live for the value. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PutValueResponse">PutValueResponse</h3>
+        <p>PutValueResponse is the response object for the PutValue RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.RemoveServerResponse">RemoveServerResponse</h3>
+        <p>RemoveServerResponse is the response object for the RemoveServer RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.StoragePeer">StoragePeer</h3>
+        <p>StoragePeer is a server that is currently recognized by the storage plugin.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the id of the server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>address</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Address is the address of the server. This is not required
+for demotion or removal RPCs. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cluster_status</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
+                  <td></td>
+                  <td><p>ClusterStatus is the status of the server. This is only
+applicable during a GetStatus RPC. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StorageStatusRequest">StorageStatusRequest</h3>
+        <p>StorageStatusRequest is the request object for the StorageStatus RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.StorageStatusResponse">StorageStatusResponse</h3>
+        <p>StorageStatusResponse is the response object for the StorageStatus RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>is_writable</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>IsWritable is true if the storage can currently be written to. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>cluster_status</td>
+                  <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
+                  <td></td>
+                  <td><p>ClusterStatus is the status of the storage. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>servers</td>
+                  <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                  <td>repeated</td>
+                  <td><p>Servers is the list of servers that are currently recognized by the storage plugin. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StorageValue">StorageValue</h3>
+        <p>StorageValue is a value stored in the storage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Key is the key of the value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Value is the value of the key. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.SubscribePrefixRequest">SubscribePrefixRequest</h3>
+        <p>SubscribePrefixRequest is the request object for the SubscribePrefix RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>prefix</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Prefix is the prefix to subscribe to. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.PrefixEvent.EventType">PrefixEvent.EventType</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>EventTypeUnknown</td>
+                <td>0</td>
+                <td><p>EventTypeUnknown is an unknown event type.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EventTypeUpdated</td>
+                <td>1</td>
+                <td><p>EventTypeUpdated is an event for when a value is added or updated.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EventTypeRemoved</td>
+                <td>2</td>
+                <td><p>EventTypeRemoved is an event for when a value is removed.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
 
       
 
       
-        <h3 id="v1.StorageProviderPlguin">StorageProviderPlguin</h3>
-        <p>StorageProviderPlguin is the service definition for a Webmesh storage provider.</p>
+        <h3 id="v1.StorageProviderPlugin">StorageProviderPlugin</h3>
+        <p>StorageProviderPlugin is the service definition for a Webmesh storage provider.</p><p>Storage Membership RPCs</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
+            
+              <tr>
+                <td>GetStatus</td>
+                <td><a href="#v1.StorageStatusRequest">StorageStatusRequest</a></td>
+                <td><a href="#v1.StorageStatusResponse">StorageStatusResponse</a></td>
+                <td><p>GetStatus returns the status of the storage.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AddVoter</td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><a href="#v1.AddVoterResponse">AddVoterResponse</a></td>
+                <td><p>AddVoter adds a voter to the storage. The underlying implementation
+should ensure that the voter is added to the storage and that the
+storage is in a consistent state before returning.</p></td>
+              </tr>
+            
+              <tr>
+                <td>AddObserver</td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><a href="#v1.AddObserverResponse">AddObserverResponse</a></td>
+                <td><p>AddObserver adds an observer to the storage. The underlying implementation
+should ensure that the observer is added to the storage and that the
+storage is in a consistent state before returning. If observers are not
+supported the underlying implementation can silently ignore this RPC, but
+it should keep track of the observer in the GetStatus RPC if possible.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DemoteVoter</td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><a href="#v1.DemoteVoterResponse">DemoteVoterResponse</a></td>
+                <td><p>DemoteVoter demotes a voter to an observer. The underlying implementation
+should ensure that the voter is demoted and that the storage is in a
+consistent state before returning. If observers are not supported the
+underlying implementation can silently ignore this RPC, but it should keep 
+track of the observer in the GetStatus RPC if possible.</p></td>
+              </tr>
+            
+              <tr>
+                <td>RemoveServer</td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><a href="#v1.RemoveServerResponse">RemoveServerResponse</a></td>
+                <td><p>RemoveServer removes a server from the storage. The underlying implementation
+should ensure that the server is removed and that the storage is in a
+consistent state before returning.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetValue</td>
+                <td><a href="#v1.GetValueRequest">GetValueRequest</a></td>
+                <td><a href="#v1.GetValueResponse">GetValueResponse</a></td>
+                <td><p>GetValue returns the value for a key.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PutValue</td>
+                <td><a href="#v1.PutValueRequest">PutValueRequest</a></td>
+                <td><a href="#v1.PutValueResponse">PutValueResponse</a></td>
+                <td><p>PutValue puts a value for a key.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DeleteValue</td>
+                <td><a href="#v1.DeleteValueRequest">DeleteValueRequest</a></td>
+                <td><a href="#v1.DeleteValueResponse">DeleteValueResponse</a></td>
+                <td><p>DeleteValue deletes a value for a key.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListKeys</td>
+                <td><a href="#v1.ListKeysRequest">ListKeysRequest</a></td>
+                <td><a href="#v1.ListKeysResponse">ListKeysResponse</a></td>
+                <td><p>ListKeys lists all keys for a prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListValues</td>
+                <td><a href="#v1.ListValuesRequest">ListValuesRequest</a></td>
+                <td><a href="#v1.ListValuesResponse">ListValuesResponse</a></td>
+                <td><p>ListValues lists all values for a prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>SubscribePrefix</td>
+                <td><a href="#v1.SubscribePrefixRequest">SubscribePrefixRequest</a></td>
+                <td><a href="#v1.PrefixEvent">PrefixEvent</a> stream</td>
+                <td><p>SubscribePrefix subscribes to events for a prefix.</p></td>
+              </tr>
             
           </tbody>
         </table>

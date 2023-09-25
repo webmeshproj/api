@@ -22,7 +22,10 @@
 package v1
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,53 +33,536 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const ()
+const (
+	StorageProviderPlugin_GetStatus_FullMethodName       = "/v1.StorageProviderPlugin/GetStatus"
+	StorageProviderPlugin_AddVoter_FullMethodName        = "/v1.StorageProviderPlugin/AddVoter"
+	StorageProviderPlugin_AddObserver_FullMethodName     = "/v1.StorageProviderPlugin/AddObserver"
+	StorageProviderPlugin_DemoteVoter_FullMethodName     = "/v1.StorageProviderPlugin/DemoteVoter"
+	StorageProviderPlugin_RemoveServer_FullMethodName    = "/v1.StorageProviderPlugin/RemoveServer"
+	StorageProviderPlugin_GetValue_FullMethodName        = "/v1.StorageProviderPlugin/GetValue"
+	StorageProviderPlugin_PutValue_FullMethodName        = "/v1.StorageProviderPlugin/PutValue"
+	StorageProviderPlugin_DeleteValue_FullMethodName     = "/v1.StorageProviderPlugin/DeleteValue"
+	StorageProviderPlugin_ListKeys_FullMethodName        = "/v1.StorageProviderPlugin/ListKeys"
+	StorageProviderPlugin_ListValues_FullMethodName      = "/v1.StorageProviderPlugin/ListValues"
+	StorageProviderPlugin_SubscribePrefix_FullMethodName = "/v1.StorageProviderPlugin/SubscribePrefix"
+)
 
-// StorageProviderPlguinClient is the client API for StorageProviderPlguin service.
+// StorageProviderPluginClient is the client API for StorageProviderPlugin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type StorageProviderPlguinClient interface {
+type StorageProviderPluginClient interface {
+	// GetStatus returns the status of the storage.
+	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatusResponse, error)
+	// AddVoter adds a voter to the storage. The underlying implementation
+	// should ensure that the voter is added to the storage and that the
+	// storage is in a consistent state before returning.
+	AddVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*AddVoterResponse, error)
+	// AddObserver adds an observer to the storage. The underlying implementation
+	// should ensure that the observer is added to the storage and that the
+	// storage is in a consistent state before returning. If observers are not
+	// supported the underlying implementation can silently ignore this RPC, but
+	// it should keep track of the observer in the GetStatus RPC if possible.
+	AddObserver(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*AddObserverResponse, error)
+	// DemoteVoter demotes a voter to an observer. The underlying implementation
+	// should ensure that the voter is demoted and that the storage is in a
+	// consistent state before returning. If observers are not supported the
+	// underlying implementation can silently ignore this RPC, but it should keep
+	// track of the observer in the GetStatus RPC if possible.
+	DemoteVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*DemoteVoterResponse, error)
+	// RemoveServer removes a server from the storage. The underlying implementation
+	// should ensure that the server is removed and that the storage is in a
+	// consistent state before returning.
+	RemoveServer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error)
+	// GetValue returns the value for a key.
+	GetValue(ctx context.Context, in *GetValueRequest, opts ...grpc.CallOption) (*GetValueResponse, error)
+	// PutValue puts a value for a key.
+	PutValue(ctx context.Context, in *PutValueRequest, opts ...grpc.CallOption) (*PutValueResponse, error)
+	// DeleteValue deletes a value for a key.
+	DeleteValue(ctx context.Context, in *DeleteValueRequest, opts ...grpc.CallOption) (*DeleteValueResponse, error)
+	// ListKeys lists all keys for a prefix.
+	ListKeys(ctx context.Context, in *ListKeysRequest, opts ...grpc.CallOption) (*ListKeysResponse, error)
+	// ListValues lists all values for a prefix.
+	ListValues(ctx context.Context, in *ListValuesRequest, opts ...grpc.CallOption) (*ListValuesResponse, error)
+	// SubscribePrefix subscribes to events for a prefix.
+	SubscribePrefix(ctx context.Context, in *SubscribePrefixRequest, opts ...grpc.CallOption) (StorageProviderPlugin_SubscribePrefixClient, error)
 }
 
-type storageProviderPlguinClient struct {
+type storageProviderPluginClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStorageProviderPlguinClient(cc grpc.ClientConnInterface) StorageProviderPlguinClient {
-	return &storageProviderPlguinClient{cc}
+func NewStorageProviderPluginClient(cc grpc.ClientConnInterface) StorageProviderPluginClient {
+	return &storageProviderPluginClient{cc}
 }
 
-// StorageProviderPlguinServer is the server API for StorageProviderPlguin service.
-// All implementations must embed UnimplementedStorageProviderPlguinServer
+func (c *storageProviderPluginClient) GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatusResponse, error) {
+	out := new(StorageStatusResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) AddVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*AddVoterResponse, error) {
+	out := new(AddVoterResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_AddVoter_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) AddObserver(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*AddObserverResponse, error) {
+	out := new(AddObserverResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_AddObserver_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) DemoteVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*DemoteVoterResponse, error) {
+	out := new(DemoteVoterResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_DemoteVoter_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) RemoveServer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error) {
+	out := new(RemoveServerResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_RemoveServer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) GetValue(ctx context.Context, in *GetValueRequest, opts ...grpc.CallOption) (*GetValueResponse, error) {
+	out := new(GetValueResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetValue_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) PutValue(ctx context.Context, in *PutValueRequest, opts ...grpc.CallOption) (*PutValueResponse, error) {
+	out := new(PutValueResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_PutValue_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) DeleteValue(ctx context.Context, in *DeleteValueRequest, opts ...grpc.CallOption) (*DeleteValueResponse, error) {
+	out := new(DeleteValueResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_DeleteValue_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) ListKeys(ctx context.Context, in *ListKeysRequest, opts ...grpc.CallOption) (*ListKeysResponse, error) {
+	out := new(ListKeysResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_ListKeys_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) ListValues(ctx context.Context, in *ListValuesRequest, opts ...grpc.CallOption) (*ListValuesResponse, error) {
+	out := new(ListValuesResponse)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_ListValues_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) SubscribePrefix(ctx context.Context, in *SubscribePrefixRequest, opts ...grpc.CallOption) (StorageProviderPlugin_SubscribePrefixClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StorageProviderPlugin_ServiceDesc.Streams[0], StorageProviderPlugin_SubscribePrefix_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &storageProviderPluginSubscribePrefixClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type StorageProviderPlugin_SubscribePrefixClient interface {
+	Recv() (*PrefixEvent, error)
+	grpc.ClientStream
+}
+
+type storageProviderPluginSubscribePrefixClient struct {
+	grpc.ClientStream
+}
+
+func (x *storageProviderPluginSubscribePrefixClient) Recv() (*PrefixEvent, error) {
+	m := new(PrefixEvent)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// StorageProviderPluginServer is the server API for StorageProviderPlugin service.
+// All implementations must embed UnimplementedStorageProviderPluginServer
 // for forward compatibility
-type StorageProviderPlguinServer interface {
-	mustEmbedUnimplementedStorageProviderPlguinServer()
+type StorageProviderPluginServer interface {
+	// GetStatus returns the status of the storage.
+	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatusResponse, error)
+	// AddVoter adds a voter to the storage. The underlying implementation
+	// should ensure that the voter is added to the storage and that the
+	// storage is in a consistent state before returning.
+	AddVoter(context.Context, *StoragePeer) (*AddVoterResponse, error)
+	// AddObserver adds an observer to the storage. The underlying implementation
+	// should ensure that the observer is added to the storage and that the
+	// storage is in a consistent state before returning. If observers are not
+	// supported the underlying implementation can silently ignore this RPC, but
+	// it should keep track of the observer in the GetStatus RPC if possible.
+	AddObserver(context.Context, *StoragePeer) (*AddObserverResponse, error)
+	// DemoteVoter demotes a voter to an observer. The underlying implementation
+	// should ensure that the voter is demoted and that the storage is in a
+	// consistent state before returning. If observers are not supported the
+	// underlying implementation can silently ignore this RPC, but it should keep
+	// track of the observer in the GetStatus RPC if possible.
+	DemoteVoter(context.Context, *StoragePeer) (*DemoteVoterResponse, error)
+	// RemoveServer removes a server from the storage. The underlying implementation
+	// should ensure that the server is removed and that the storage is in a
+	// consistent state before returning.
+	RemoveServer(context.Context, *StoragePeer) (*RemoveServerResponse, error)
+	// GetValue returns the value for a key.
+	GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error)
+	// PutValue puts a value for a key.
+	PutValue(context.Context, *PutValueRequest) (*PutValueResponse, error)
+	// DeleteValue deletes a value for a key.
+	DeleteValue(context.Context, *DeleteValueRequest) (*DeleteValueResponse, error)
+	// ListKeys lists all keys for a prefix.
+	ListKeys(context.Context, *ListKeysRequest) (*ListKeysResponse, error)
+	// ListValues lists all values for a prefix.
+	ListValues(context.Context, *ListValuesRequest) (*ListValuesResponse, error)
+	// SubscribePrefix subscribes to events for a prefix.
+	SubscribePrefix(*SubscribePrefixRequest, StorageProviderPlugin_SubscribePrefixServer) error
+	mustEmbedUnimplementedStorageProviderPluginServer()
 }
 
-// UnimplementedStorageProviderPlguinServer must be embedded to have forward compatible implementations.
-type UnimplementedStorageProviderPlguinServer struct {
+// UnimplementedStorageProviderPluginServer must be embedded to have forward compatible implementations.
+type UnimplementedStorageProviderPluginServer struct {
 }
 
-func (UnimplementedStorageProviderPlguinServer) mustEmbedUnimplementedStorageProviderPlguinServer() {}
+func (UnimplementedStorageProviderPluginServer) GetStatus(context.Context, *StorageStatusRequest) (*StorageStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) AddVoter(context.Context, *StoragePeer) (*AddVoterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddVoter not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) AddObserver(context.Context, *StoragePeer) (*AddObserverResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddObserver not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) DemoteVoter(context.Context, *StoragePeer) (*DemoteVoterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DemoteVoter not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) RemoveServer(context.Context, *StoragePeer) (*RemoveServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveServer not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetValue not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) PutValue(context.Context, *PutValueRequest) (*PutValueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutValue not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) DeleteValue(context.Context, *DeleteValueRequest) (*DeleteValueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteValue not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) ListKeys(context.Context, *ListKeysRequest) (*ListKeysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListKeys not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) ListValues(context.Context, *ListValuesRequest) (*ListValuesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListValues not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) SubscribePrefix(*SubscribePrefixRequest, StorageProviderPlugin_SubscribePrefixServer) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribePrefix not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) mustEmbedUnimplementedStorageProviderPluginServer() {}
 
-// UnsafeStorageProviderPlguinServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StorageProviderPlguinServer will
+// UnsafeStorageProviderPluginServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StorageProviderPluginServer will
 // result in compilation errors.
-type UnsafeStorageProviderPlguinServer interface {
-	mustEmbedUnimplementedStorageProviderPlguinServer()
+type UnsafeStorageProviderPluginServer interface {
+	mustEmbedUnimplementedStorageProviderPluginServer()
 }
 
-func RegisterStorageProviderPlguinServer(s grpc.ServiceRegistrar, srv StorageProviderPlguinServer) {
-	s.RegisterService(&StorageProviderPlguin_ServiceDesc, srv)
+func RegisterStorageProviderPluginServer(s grpc.ServiceRegistrar, srv StorageProviderPluginServer) {
+	s.RegisterService(&StorageProviderPlugin_ServiceDesc, srv)
 }
 
-// StorageProviderPlguin_ServiceDesc is the grpc.ServiceDesc for StorageProviderPlguin service.
+func _StorageProviderPlugin_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StorageStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).GetStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_GetStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).GetStatus(ctx, req.(*StorageStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_AddVoter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoragePeer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).AddVoter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_AddVoter_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).AddVoter(ctx, req.(*StoragePeer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_AddObserver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoragePeer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).AddObserver(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_AddObserver_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).AddObserver(ctx, req.(*StoragePeer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_DemoteVoter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoragePeer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).DemoteVoter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_DemoteVoter_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).DemoteVoter(ctx, req.(*StoragePeer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_RemoveServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoragePeer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).RemoveServer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_RemoveServer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).RemoveServer(ctx, req.(*StoragePeer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_GetValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetValueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).GetValue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_GetValue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).GetValue(ctx, req.(*GetValueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_PutValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutValueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).PutValue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_PutValue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).PutValue(ctx, req.(*PutValueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_DeleteValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteValueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).DeleteValue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_DeleteValue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).DeleteValue(ctx, req.(*DeleteValueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_ListKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListKeysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).ListKeys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_ListKeys_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).ListKeys(ctx, req.(*ListKeysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_ListValues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListValuesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).ListValues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_ListValues_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).ListValues(ctx, req.(*ListValuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_SubscribePrefix_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribePrefixRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(StorageProviderPluginServer).SubscribePrefix(m, &storageProviderPluginSubscribePrefixServer{stream})
+}
+
+type StorageProviderPlugin_SubscribePrefixServer interface {
+	Send(*PrefixEvent) error
+	grpc.ServerStream
+}
+
+type storageProviderPluginSubscribePrefixServer struct {
+	grpc.ServerStream
+}
+
+func (x *storageProviderPluginSubscribePrefixServer) Send(m *PrefixEvent) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+// StorageProviderPlugin_ServiceDesc is the grpc.ServiceDesc for StorageProviderPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var StorageProviderPlguin_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.StorageProviderPlguin",
-	HandlerType: (*StorageProviderPlguinServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "v1/plugin_storage_provider.proto",
+var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.StorageProviderPlugin",
+	HandlerType: (*StorageProviderPluginServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetStatus",
+			Handler:    _StorageProviderPlugin_GetStatus_Handler,
+		},
+		{
+			MethodName: "AddVoter",
+			Handler:    _StorageProviderPlugin_AddVoter_Handler,
+		},
+		{
+			MethodName: "AddObserver",
+			Handler:    _StorageProviderPlugin_AddObserver_Handler,
+		},
+		{
+			MethodName: "DemoteVoter",
+			Handler:    _StorageProviderPlugin_DemoteVoter_Handler,
+		},
+		{
+			MethodName: "RemoveServer",
+			Handler:    _StorageProviderPlugin_RemoveServer_Handler,
+		},
+		{
+			MethodName: "GetValue",
+			Handler:    _StorageProviderPlugin_GetValue_Handler,
+		},
+		{
+			MethodName: "PutValue",
+			Handler:    _StorageProviderPlugin_PutValue_Handler,
+		},
+		{
+			MethodName: "DeleteValue",
+			Handler:    _StorageProviderPlugin_DeleteValue_Handler,
+		},
+		{
+			MethodName: "ListKeys",
+			Handler:    _StorageProviderPlugin_ListKeys_Handler,
+		},
+		{
+			MethodName: "ListValues",
+			Handler:    _StorageProviderPlugin_ListValues_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SubscribePrefix",
+			Handler:       _StorageProviderPlugin_SubscribePrefix_Handler,
+			ServerStreams: true,
+		},
+	},
+	Metadata: "v1/plugin_storage_provider.proto",
 }

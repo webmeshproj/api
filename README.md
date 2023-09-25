@@ -117,7 +117,28 @@
   - [<span class="badge">S</span>StorageQuerierPlugin](#v1.StorageQuerierPlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
 - [v1/plugin_storage_provider.proto](#v1%2fplugin_storage_provider.proto)
-  - [<span class="badge">S</span>StorageProviderPlguin](#v1.StorageProviderPlguin)
+  - [<span class="badge">M</span>AddObserverResponse](#v1.AddObserverResponse)
+  - [<span class="badge">M</span>AddVoterResponse](#v1.AddVoterResponse)
+  - [<span class="badge">M</span>DeleteValueRequest](#v1.DeleteValueRequest)
+  - [<span class="badge">M</span>DeleteValueResponse](#v1.DeleteValueResponse)
+  - [<span class="badge">M</span>DemoteVoterResponse](#v1.DemoteVoterResponse)
+  - [<span class="badge">M</span>GetValueRequest](#v1.GetValueRequest)
+  - [<span class="badge">M</span>GetValueResponse](#v1.GetValueResponse)
+  - [<span class="badge">M</span>ListKeysRequest](#v1.ListKeysRequest)
+  - [<span class="badge">M</span>ListKeysResponse](#v1.ListKeysResponse)
+  - [<span class="badge">M</span>ListValuesRequest](#v1.ListValuesRequest)
+  - [<span class="badge">M</span>ListValuesResponse](#v1.ListValuesResponse)
+  - [<span class="badge">M</span>PrefixEvent](#v1.PrefixEvent)
+  - [<span class="badge">M</span>PutValueRequest](#v1.PutValueRequest)
+  - [<span class="badge">M</span>PutValueResponse](#v1.PutValueResponse)
+  - [<span class="badge">M</span>RemoveServerResponse](#v1.RemoveServerResponse)
+  - [<span class="badge">M</span>StoragePeer](#v1.StoragePeer)
+  - [<span class="badge">M</span>StorageStatusRequest](#v1.StorageStatusRequest)
+  - [<span class="badge">M</span>StorageStatusResponse](#v1.StorageStatusResponse)
+  - [<span class="badge">M</span>StorageValue](#v1.StorageValue)
+  - [<span class="badge">M</span>SubscribePrefixRequest](#v1.SubscribePrefixRequest)
+  - [<span class="badge">E</span>PrefixEvent.EventType](#v1.PrefixEvent.EventType)
+  - [<span class="badge">S</span>StorageProviderPlugin](#v1.StorageProviderPlugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
   - [<span class="badge">M</span>StartDataChannelRequest](#v1.StartDataChannelRequest)
@@ -1314,13 +1335,178 @@ WatchPlugin is the service definition for a Webmesh watch plugin.
 
 </div>
 
-### StorageProviderPlguin
+### AddObserverResponse
 
-StorageProviderPlguin is the service definition for a Webmesh storage
+AddObserverResponse is the response object for the AddObserver RPC.
+
+### AddVoterResponse
+
+AddVoterResponse is the response object for the AddVoter RPC.
+
+### DeleteValueRequest
+
+DeleteValueRequest is the request object for the DeleteValue RPC.
+
+| Field | Type              | Label | Description               |
+|-------|-------------------|-------|---------------------------|
+| key   | [string](#string) |       | Key is the key to delete. |
+
+### DeleteValueResponse
+
+DeleteValueResponse is the response object for the DeleteValue RPC.
+
+### DemoteVoterResponse
+
+DemoteVoterResponse is the response object for the DemoteVoter RPC.
+
+### GetValueRequest
+
+GetValueRequest is the request object for the GetValue RPC.
+
+| Field | Type              | Label | Description                          |
+|-------|-------------------|-------|--------------------------------------|
+| key   | [string](#string) |       | Key is the key to get the value for. |
+
+### GetValueResponse
+
+GetValueResponse is the response object for the GetValue RPC.
+
+| Field | Type                             | Label | Description                    |
+|-------|----------------------------------|-------|--------------------------------|
+| value | [StorageValue](#v1.StorageValue) |       | Value is the value of the key. |
+
+### ListKeysRequest
+
+ListKeysRequest is the request object for the ListValues RPC.
+
+| Field  | Type              | Label | Description                              |
+|--------|-------------------|-------|------------------------------------------|
+| prefix | [string](#string) |       | Prefix is the prefix to list values for. |
+
+### ListKeysResponse
+
+ListKeysResponse is the response object for the ListValues RPC.
+
+| Field | Type              | Label    | Description                                    |
+|-------|-------------------|----------|------------------------------------------------|
+| keys  | [string](#string) | repeated | Keys is the list of value keys for the prefix. |
+
+### ListValuesRequest
+
+ListValuesRequest is the request object for the ListValues RPC.
+
+| Field  | Type              | Label | Description                              |
+|--------|-------------------|-------|------------------------------------------|
+| prefix | [string](#string) |       | Prefix is the prefix to list values for. |
+
+### ListValuesResponse
+
+ListValuesResponse is the response object for the ListValues RPC.
+
+| Field  | Type                             | Label    | Description                                  |
+|--------|----------------------------------|----------|----------------------------------------------|
+| values | [StorageValue](#v1.StorageValue) | repeated | Values is the list of values for the prefix. |
+
+### PrefixEvent
+
+PrefixEvent is an event that is emitted when a value is added or removed
+
+from the storage for a prefix.
+
+| Field      | Type                                               | Label | Description                                   |
+|------------|----------------------------------------------------|-------|-----------------------------------------------|
+| prefix     | [string](#string)                                  |       | Prefix is the prefix that the event is for.   |
+| value      | [StorageValue](#v1.StorageValue)                   |       | Value is the value that was added or removed. |
+| event_type | [PrefixEvent.EventType](#v1.PrefixEvent.EventType) |       | EventType is the type of event.               |
+
+### PutValueRequest
+
+PutValueRequest is the request object for the PutValue RPC.
+
+| Field | Type                                                  | Label | Description                            |
+|-------|-------------------------------------------------------|-------|----------------------------------------|
+| value | [StorageValue](#v1.StorageValue)                      |       | Value is the value to put.             |
+| ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | TTL is the time to live for the value. |
+
+### PutValueResponse
+
+PutValueResponse is the response object for the PutValue RPC.
+
+### RemoveServerResponse
+
+RemoveServerResponse is the response object for the RemoveServer RPC.
+
+### StoragePeer
+
+StoragePeer is a server that is currently recognized by the storage
+plugin.
+
+| Field          | Type                               | Label | Description                                                                                |
+|----------------|------------------------------------|-------|--------------------------------------------------------------------------------------------|
+| id             | [string](#string)                  |       | ID is the id of the server.                                                                |
+| address        | [string](#string)                  |       | Address is the address of the server. This is not required for demotion or removal RPCs.   |
+| cluster_status | [ClusterStatus](#v1.ClusterStatus) |       | ClusterStatus is the status of the server. This is only applicable during a GetStatus RPC. |
+
+### StorageStatusRequest
+
+StorageStatusRequest is the request object for the StorageStatus RPC.
+
+### StorageStatusResponse
+
+StorageStatusResponse is the response object for the StorageStatus RPC.
+
+| Field          | Type                               | Label    | Description                                                                         |
+|----------------|------------------------------------|----------|-------------------------------------------------------------------------------------|
+| is_writable    | [bool](#bool)                      |          | IsWritable is true if the storage can currently be written to.                      |
+| cluster_status | [ClusterStatus](#v1.ClusterStatus) |          | ClusterStatus is the status of the storage.                                         |
+| servers        | [StoragePeer](#v1.StoragePeer)     | repeated | Servers is the list of servers that are currently recognized by the storage plugin. |
+
+### StorageValue
+
+StorageValue is a value stored in the storage.
+
+| Field | Type              | Label | Description                    |
+|-------|-------------------|-------|--------------------------------|
+| key   | [string](#string) |       | Key is the key of the value.   |
+| value | [string](#string) |       | Value is the value of the key. |
+
+### SubscribePrefixRequest
+
+SubscribePrefixRequest is the request object for the SubscribePrefix
+RPC.
+
+| Field  | Type              | Label | Description                           |
+|--------|-------------------|-------|---------------------------------------|
+| prefix | [string](#string) |       | Prefix is the prefix to subscribe to. |
+
+### PrefixEvent.EventType
+
+| Name             | Number | Description                                                        |
+|------------------|--------|--------------------------------------------------------------------|
+| EventTypeUnknown | 0      | EventTypeUnknown is an unknown event type.                         |
+| EventTypeUpdated | 1      | EventTypeUpdated is an event for when a value is added or updated. |
+| EventTypeRemoved | 2      | EventTypeRemoved is an event for when a value is removed.          |
+
+### StorageProviderPlugin
+
+StorageProviderPlugin is the service definition for a Webmesh storage
 provider.
 
-| Method Name | Request Type | Response Type | Description |
-|-------------|--------------|---------------|-------------|
+Storage Membership RPCs
+
+| Method Name     | Request Type                                         | Response Type                                      | Description                                                                                                                                                                                                                                                                                                                                                              |
+|-----------------|------------------------------------------------------|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GetStatus       | [StorageStatusRequest](#v1.StorageStatusRequest)     | [StorageStatusResponse](#v1.StorageStatusResponse) | GetStatus returns the status of the storage.                                                                                                                                                                                                                                                                                                                             |
+| AddVoter        | [StoragePeer](#v1.StoragePeer)                       | [AddVoterResponse](#v1.AddVoterResponse)           | AddVoter adds a voter to the storage. The underlying implementation should ensure that the voter is added to the storage and that the storage is in a consistent state before returning.                                                                                                                                                                                 |
+| AddObserver     | [StoragePeer](#v1.StoragePeer)                       | [AddObserverResponse](#v1.AddObserverResponse)     | AddObserver adds an observer to the storage. The underlying implementation should ensure that the observer is added to the storage and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible. |
+| DemoteVoter     | [StoragePeer](#v1.StoragePeer)                       | [DemoteVoterResponse](#v1.DemoteVoterResponse)     | DemoteVoter demotes a voter to an observer. The underlying implementation should ensure that the voter is demoted and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible.                  |
+| RemoveServer    | [StoragePeer](#v1.StoragePeer)                       | [RemoveServerResponse](#v1.RemoveServerResponse)   | RemoveServer removes a server from the storage. The underlying implementation should ensure that the server is removed and that the storage is in a consistent state before returning.                                                                                                                                                                                   |
+| GetValue        | [GetValueRequest](#v1.GetValueRequest)               | [GetValueResponse](#v1.GetValueResponse)           | GetValue returns the value for a key.                                                                                                                                                                                                                                                                                                                                    |
+| PutValue        | [PutValueRequest](#v1.PutValueRequest)               | [PutValueResponse](#v1.PutValueResponse)           | PutValue puts a value for a key.                                                                                                                                                                                                                                                                                                                                         |
+| DeleteValue     | [DeleteValueRequest](#v1.DeleteValueRequest)         | [DeleteValueResponse](#v1.DeleteValueResponse)     | DeleteValue deletes a value for a key.                                                                                                                                                                                                                                                                                                                                   |
+| ListKeys        | [ListKeysRequest](#v1.ListKeysRequest)               | [ListKeysResponse](#v1.ListKeysResponse)           | ListKeys lists all keys for a prefix.                                                                                                                                                                                                                                                                                                                                    |
+| ListValues      | [ListValuesRequest](#v1.ListValuesRequest)           | [ListValuesResponse](#v1.ListValuesResponse)       | ListValues lists all values for a prefix.                                                                                                                                                                                                                                                                                                                                |
+| SubscribePrefix | [SubscribePrefixRequest](#v1.SubscribePrefixRequest) | [PrefixEvent](#v1.PrefixEvent) stream              | SubscribePrefix subscribes to events for a prefix.                                                                                                                                                                                                                                                                                                                       |
 
 <div class="file-heading">
 

@@ -102,6 +102,63 @@ func (PluginInfo_PluginCapability) EnumDescriptor() ([]byte, []int) {
 	return file_v1_plugin_proto_rawDescGZIP(), []int{1, 0}
 }
 
+// WatchEvent is the type of a watch event.
+type Event_WatchEvent int32
+
+const (
+	// UNKNOWN is the default value of WatchEvent.
+	Event_UNKNOWN Event_WatchEvent = 0
+	// NODE_JOIN indicates that a node has joined the cluster.
+	Event_NODE_JOIN Event_WatchEvent = 1
+	// NODE_LEAVE indicates that a node has left the cluster.
+	Event_NODE_LEAVE Event_WatchEvent = 2
+	// LEADER_CHANGE indicates that the leader of the cluster has changed.
+	Event_LEADER_CHANGE Event_WatchEvent = 3
+)
+
+// Enum value maps for Event_WatchEvent.
+var (
+	Event_WatchEvent_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "NODE_JOIN",
+		2: "NODE_LEAVE",
+		3: "LEADER_CHANGE",
+	}
+	Event_WatchEvent_value = map[string]int32{
+		"UNKNOWN":       0,
+		"NODE_JOIN":     1,
+		"NODE_LEAVE":    2,
+		"LEADER_CHANGE": 3,
+	}
+)
+
+func (x Event_WatchEvent) Enum() *Event_WatchEvent {
+	p := new(Event_WatchEvent)
+	*p = x
+	return p
+}
+
+func (x Event_WatchEvent) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Event_WatchEvent) Descriptor() protoreflect.EnumDescriptor {
+	return file_v1_plugin_proto_enumTypes[1].Descriptor()
+}
+
+func (Event_WatchEvent) Type() protoreflect.EnumType {
+	return &file_v1_plugin_proto_enumTypes[1]
+}
+
+func (x Event_WatchEvent) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Event_WatchEvent.Descriptor instead.
+func (Event_WatchEvent) EnumDescriptor() ([]byte, []int) {
+	return file_v1_plugin_proto_rawDescGZIP(), []int{4, 0}
+}
+
 // QueryCommand is the type of the query.
 type PluginQuery_QueryCommand int32
 
@@ -155,11 +212,11 @@ func (x PluginQuery_QueryCommand) String() string {
 }
 
 func (PluginQuery_QueryCommand) Descriptor() protoreflect.EnumDescriptor {
-	return file_v1_plugin_proto_enumTypes[1].Descriptor()
+	return file_v1_plugin_proto_enumTypes[2].Descriptor()
 }
 
 func (PluginQuery_QueryCommand) Type() protoreflect.EnumType {
-	return &file_v1_plugin_proto_enumTypes[1]
+	return &file_v1_plugin_proto_enumTypes[2]
 }
 
 func (x PluginQuery_QueryCommand) Number() protoreflect.EnumNumber {
@@ -168,64 +225,7 @@ func (x PluginQuery_QueryCommand) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PluginQuery_QueryCommand.Descriptor instead.
 func (PluginQuery_QueryCommand) EnumDescriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{2, 0}
-}
-
-// WatchEvent is the type of a watch event.
-type Event_WatchEvent int32
-
-const (
-	// UNKNOWN is the default value of WatchEvent.
-	Event_UNKNOWN Event_WatchEvent = 0
-	// NODE_JOIN indicates that a node has joined the cluster.
-	Event_NODE_JOIN Event_WatchEvent = 1
-	// NODE_LEAVE indicates that a node has left the cluster.
-	Event_NODE_LEAVE Event_WatchEvent = 2
-	// LEADER_CHANGE indicates that the leader of the cluster has changed.
-	Event_LEADER_CHANGE Event_WatchEvent = 3
-)
-
-// Enum value maps for Event_WatchEvent.
-var (
-	Event_WatchEvent_name = map[int32]string{
-		0: "UNKNOWN",
-		1: "NODE_JOIN",
-		2: "NODE_LEAVE",
-		3: "LEADER_CHANGE",
-	}
-	Event_WatchEvent_value = map[string]int32{
-		"UNKNOWN":       0,
-		"NODE_JOIN":     1,
-		"NODE_LEAVE":    2,
-		"LEADER_CHANGE": 3,
-	}
-)
-
-func (x Event_WatchEvent) Enum() *Event_WatchEvent {
-	p := new(Event_WatchEvent)
-	*p = x
-	return p
-}
-
-func (x Event_WatchEvent) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Event_WatchEvent) Descriptor() protoreflect.EnumDescriptor {
-	return file_v1_plugin_proto_enumTypes[2].Descriptor()
-}
-
-func (Event_WatchEvent) Type() protoreflect.EnumType {
-	return &file_v1_plugin_proto_enumTypes[2]
-}
-
-func (x Event_WatchEvent) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Event_WatchEvent.Descriptor instead.
-func (Event_WatchEvent) EnumDescriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{6, 0}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{8, 0}
 }
 
 // PluginConfiguration is the message containing the configuration of a plugin.
@@ -353,154 +353,6 @@ func (x *PluginInfo) GetCapabilities() []PluginInfo_PluginCapability {
 	return nil
 }
 
-// PluginQuery is the message containing a storage query. It contains
-// a request ID that is used to correlate the query with the result.
-type PluginQuery struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// id is the ID of the query.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// command is the command of the query.
-	Command PluginQuery_QueryCommand `protobuf:"varint,2,opt,name=command,proto3,enum=v1.PluginQuery_QueryCommand" json:"command,omitempty"`
-	// query is the key or prefix of the query.
-	Query string `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
-}
-
-func (x *PluginQuery) Reset() {
-	*x = PluginQuery{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PluginQuery) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PluginQuery) ProtoMessage() {}
-
-func (x *PluginQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PluginQuery.ProtoReflect.Descriptor instead.
-func (*PluginQuery) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *PluginQuery) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PluginQuery) GetCommand() PluginQuery_QueryCommand {
-	if x != nil {
-		return x.Command
-	}
-	return PluginQuery_UNKNOWN
-}
-
-func (x *PluginQuery) GetQuery() string {
-	if x != nil {
-		return x.Query
-	}
-	return ""
-}
-
-// PluginQueryResult is the message containing a storage query result. It contains
-// a request ID that is used to correlate the query with the result.
-type PluginQueryResult struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// id is the ID of the query.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// key is the key of the query. For GET and ITER queries it will be the current key.
-	// For LIST queries it will be the prefix.
-	Key string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the query. For GET and ITER queries it will be the value of the current key.
-	// For LIST queries it will be the list of keys that match the prefix.
-	Value []string `protobuf:"bytes,3,rep,name=value,proto3" json:"value,omitempty"`
-	// error is an error that occurred during the query. At the end of an ITER query it will be set to
-	// "EOF" to indicate that the iteration is complete.
-	Error string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
-}
-
-func (x *PluginQueryResult) Reset() {
-	*x = PluginQueryResult{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PluginQueryResult) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PluginQueryResult) ProtoMessage() {}
-
-func (x *PluginQueryResult) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PluginQueryResult.ProtoReflect.Descriptor instead.
-func (*PluginQueryResult) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *PluginQueryResult) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PluginQueryResult) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *PluginQueryResult) GetValue() []string {
-	if x != nil {
-		return x.Value
-	}
-	return nil
-}
-
-func (x *PluginQueryResult) GetError() string {
-	if x != nil {
-		return x.Error
-	}
-	return ""
-}
-
 // AuthenticationRequest is the message containing an authentication request.
 type AuthenticationRequest struct {
 	state         protoimpl.MessageState
@@ -516,7 +368,7 @@ type AuthenticationRequest struct {
 func (x *AuthenticationRequest) Reset() {
 	*x = AuthenticationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[4]
+		mi := &file_v1_plugin_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -529,7 +381,7 @@ func (x *AuthenticationRequest) String() string {
 func (*AuthenticationRequest) ProtoMessage() {}
 
 func (x *AuthenticationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[4]
+	mi := &file_v1_plugin_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -542,7 +394,7 @@ func (x *AuthenticationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthenticationRequest.ProtoReflect.Descriptor instead.
 func (*AuthenticationRequest) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{4}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AuthenticationRequest) GetHeaders() map[string]string {
@@ -572,7 +424,7 @@ type AuthenticationResponse struct {
 func (x *AuthenticationResponse) Reset() {
 	*x = AuthenticationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[5]
+		mi := &file_v1_plugin_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -585,7 +437,7 @@ func (x *AuthenticationResponse) String() string {
 func (*AuthenticationResponse) ProtoMessage() {}
 
 func (x *AuthenticationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[5]
+	mi := &file_v1_plugin_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -598,7 +450,7 @@ func (x *AuthenticationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthenticationResponse.ProtoReflect.Descriptor instead.
 func (*AuthenticationResponse) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{5}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AuthenticationResponse) GetId() string {
@@ -627,7 +479,7 @@ type Event struct {
 func (x *Event) Reset() {
 	*x = Event{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[6]
+		mi := &file_v1_plugin_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -640,7 +492,7 @@ func (x *Event) String() string {
 func (*Event) ProtoMessage() {}
 
 func (x *Event) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[6]
+	mi := &file_v1_plugin_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -653,7 +505,7 @@ func (x *Event) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Event.ProtoReflect.Descriptor instead.
 func (*Event) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{6}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Event) GetType() Event_WatchEvent {
@@ -703,7 +555,7 @@ type AllocateIPRequest struct {
 func (x *AllocateIPRequest) Reset() {
 	*x = AllocateIPRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[7]
+		mi := &file_v1_plugin_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -716,7 +568,7 @@ func (x *AllocateIPRequest) String() string {
 func (*AllocateIPRequest) ProtoMessage() {}
 
 func (x *AllocateIPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[7]
+	mi := &file_v1_plugin_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,7 +581,7 @@ func (x *AllocateIPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AllocateIPRequest.ProtoReflect.Descriptor instead.
 func (*AllocateIPRequest) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{7}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *AllocateIPRequest) GetNodeId() string {
@@ -759,7 +611,7 @@ type AllocatedIP struct {
 func (x *AllocatedIP) Reset() {
 	*x = AllocatedIP{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[8]
+		mi := &file_v1_plugin_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -772,7 +624,7 @@ func (x *AllocatedIP) String() string {
 func (*AllocatedIP) ProtoMessage() {}
 
 func (x *AllocatedIP) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[8]
+	mi := &file_v1_plugin_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -785,7 +637,7 @@ func (x *AllocatedIP) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AllocatedIP.ProtoReflect.Descriptor instead.
 func (*AllocatedIP) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{8}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *AllocatedIP) GetIp() string {
@@ -810,7 +662,7 @@ type ReleaseIPRequest struct {
 func (x *ReleaseIPRequest) Reset() {
 	*x = ReleaseIPRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_v1_plugin_proto_msgTypes[9]
+		mi := &file_v1_plugin_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -823,7 +675,7 @@ func (x *ReleaseIPRequest) String() string {
 func (*ReleaseIPRequest) ProtoMessage() {}
 
 func (x *ReleaseIPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_plugin_proto_msgTypes[9]
+	mi := &file_v1_plugin_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -836,7 +688,7 @@ func (x *ReleaseIPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReleaseIPRequest.ProtoReflect.Descriptor instead.
 func (*ReleaseIPRequest) Descriptor() ([]byte, []int) {
-	return file_v1_plugin_proto_rawDescGZIP(), []int{9}
+	return file_v1_plugin_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ReleaseIPRequest) GetNodeId() string {
@@ -849,6 +701,154 @@ func (x *ReleaseIPRequest) GetNodeId() string {
 func (x *ReleaseIPRequest) GetIp() string {
 	if x != nil {
 		return x.Ip
+	}
+	return ""
+}
+
+// PluginQuery is the message containing a storage query. It contains
+// a request ID that is used to correlate the query with the result.
+type PluginQuery struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// id is the ID of the query.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// command is the command of the query.
+	Command PluginQuery_QueryCommand `protobuf:"varint,2,opt,name=command,proto3,enum=v1.PluginQuery_QueryCommand" json:"command,omitempty"`
+	// query is the key or prefix of the query.
+	Query string `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
+}
+
+func (x *PluginQuery) Reset() {
+	*x = PluginQuery{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PluginQuery) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PluginQuery) ProtoMessage() {}
+
+func (x *PluginQuery) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PluginQuery.ProtoReflect.Descriptor instead.
+func (*PluginQuery) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *PluginQuery) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PluginQuery) GetCommand() PluginQuery_QueryCommand {
+	if x != nil {
+		return x.Command
+	}
+	return PluginQuery_UNKNOWN
+}
+
+func (x *PluginQuery) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+// PluginQueryResult is the message containing a storage query result. It contains
+// a request ID that is used to correlate the query with the result.
+type PluginQueryResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// id is the ID of the query.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// key is the key of the query. For GET and ITER queries it will be the current key.
+	// For LIST queries it will be the prefix.
+	Key string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	// value is the value of the query. For GET and ITER queries it will be the value of the current key.
+	// For LIST queries it will be the list of keys that match the prefix.
+	Value []string `protobuf:"bytes,3,rep,name=value,proto3" json:"value,omitempty"`
+	// error is an error that occurred during the query. At the end of an ITER query it will be set to
+	// "EOF" to indicate that the iteration is complete.
+	Error string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+}
+
+func (x *PluginQueryResult) Reset() {
+	*x = PluginQueryResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_plugin_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PluginQueryResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PluginQueryResult) ProtoMessage() {}
+
+func (x *PluginQueryResult) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_plugin_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PluginQueryResult.ProtoReflect.Descriptor instead.
+func (*PluginQueryResult) Descriptor() ([]byte, []int) {
+	return file_v1_plugin_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *PluginQueryResult) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PluginQueryResult) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *PluginQueryResult) GetValue() []string {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *PluginQueryResult) GetError() string {
+	if x != nil {
+		return x.Error
 	}
 	return ""
 }
@@ -884,61 +884,61 @@ var file_v1_plugin_proto_rawDesc = []byte{
 	0x01, 0x12, 0x08, 0x0a, 0x04, 0x41, 0x55, 0x54, 0x48, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x57,
 	0x41, 0x54, 0x43, 0x48, 0x10, 0x03, 0x12, 0x0a, 0x0a, 0x06, 0x49, 0x50, 0x41, 0x4d, 0x56, 0x34,
 	0x10, 0x04, 0x12, 0x13, 0x0a, 0x0f, 0x53, 0x54, 0x4f, 0x52, 0x41, 0x47, 0x45, 0x5f, 0x51, 0x55,
-	0x45, 0x52, 0x49, 0x45, 0x52, 0x10, 0x05, 0x22, 0xc9, 0x01, 0x0a, 0x0b, 0x50, 0x6c, 0x75, 0x67,
-	0x69, 0x6e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x36, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61,
-	0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x6c,
-	0x75, 0x67, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43,
-	0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x12,
-	0x14, 0x0a, 0x05, 0x71, 0x75, 0x65, 0x72, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x71, 0x75, 0x65, 0x72, 0x79, 0x22, 0x5c, 0x0a, 0x0c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x6f,
-	0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e,
-	0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x45, 0x54, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x4c,
-	0x49, 0x53, 0x54, 0x10, 0x02, 0x12, 0x08, 0x0a, 0x04, 0x49, 0x54, 0x45, 0x52, 0x10, 0x03, 0x12,
-	0x07, 0x0a, 0x03, 0x50, 0x55, 0x54, 0x10, 0x04, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45,
-	0x54, 0x45, 0x10, 0x05, 0x12, 0x0d, 0x0a, 0x09, 0x53, 0x55, 0x42, 0x53, 0x43, 0x52, 0x49, 0x42,
-	0x45, 0x10, 0x06, 0x22, 0x61, 0x0a, 0x11, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
-	0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0xb9, 0x01, 0x0a, 0x15, 0x41, 0x75, 0x74, 0x68, 0x65,
-	0x6e, 0x74, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x40, 0x0a, 0x07, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x26, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x48, 0x65, 0x61,
-	0x64, 0x65, 0x72, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x07, 0x68, 0x65, 0x61, 0x64, 0x65,
-	0x72, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x63, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
-	0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x0c, 0x63, 0x65, 0x72, 0x74, 0x69, 0x66,
-	0x69, 0x63, 0x61, 0x74, 0x65, 0x73, 0x1a, 0x3a, 0x0a, 0x0c, 0x48, 0x65, 0x61, 0x64, 0x65, 0x72,
-	0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02,
-	0x38, 0x01, 0x22, 0x28, 0x0a, 0x16, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0xab, 0x01, 0x0a,
-	0x05, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x28, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e,
-	0x57, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65,
-	0x12, 0x22, 0x0a, 0x04, 0x6e, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x73, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x48, 0x00, 0x52, 0x04,
-	0x6e, 0x6f, 0x64, 0x65, 0x22, 0x4b, 0x0a, 0x0a, 0x57, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76, 0x65,
-	0x6e, 0x74, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12,
-	0x0d, 0x0a, 0x09, 0x4e, 0x4f, 0x44, 0x45, 0x5f, 0x4a, 0x4f, 0x49, 0x4e, 0x10, 0x01, 0x12, 0x0e,
-	0x0a, 0x0a, 0x4e, 0x4f, 0x44, 0x45, 0x5f, 0x4c, 0x45, 0x41, 0x56, 0x45, 0x10, 0x02, 0x12, 0x11,
-	0x0a, 0x0d, 0x4c, 0x45, 0x41, 0x44, 0x45, 0x52, 0x5f, 0x43, 0x48, 0x41, 0x4e, 0x47, 0x45, 0x10,
-	0x03, 0x42, 0x07, 0x0a, 0x05, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x22, 0x44, 0x0a, 0x11, 0x41, 0x6c,
-	0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x49, 0x50, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x17, 0x0a, 0x07, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x06, 0x6e, 0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x75, 0x62, 0x6e,
-	0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x75, 0x62, 0x6e, 0x65, 0x74,
-	0x22, 0x1d, 0x0a, 0x0b, 0x41, 0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x64, 0x49, 0x50, 0x12,
-	0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x22,
-	0x3b, 0x0a, 0x10, 0x52, 0x65, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x49, 0x50, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6e, 0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x32, 0xb8, 0x01, 0x0a,
+	0x45, 0x52, 0x49, 0x45, 0x52, 0x10, 0x05, 0x22, 0xb9, 0x01, 0x0a, 0x15, 0x41, 0x75, 0x74, 0x68,
+	0x65, 0x6e, 0x74, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x40, 0x0a, 0x07, 0x68, 0x65, 0x61, 0x64, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x26, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69,
+	0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x48, 0x65,
+	0x61, 0x64, 0x65, 0x72, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x07, 0x68, 0x65, 0x61, 0x64,
+	0x65, 0x72, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x63, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61,
+	0x74, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x0c, 0x63, 0x65, 0x72, 0x74, 0x69,
+	0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x73, 0x1a, 0x3a, 0x0a, 0x0c, 0x48, 0x65, 0x61, 0x64, 0x65,
+	0x72, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a,
+	0x02, 0x38, 0x01, 0x22, 0x28, 0x0a, 0x16, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0xab, 0x01,
+	0x0a, 0x05, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x28, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x76, 0x31, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74,
+	0x2e, 0x57, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x04, 0x74, 0x79, 0x70,
+	0x65, 0x12, 0x22, 0x0a, 0x04, 0x6e, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x0c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x73, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x48, 0x00, 0x52,
+	0x04, 0x6e, 0x6f, 0x64, 0x65, 0x22, 0x4b, 0x0a, 0x0a, 0x57, 0x61, 0x74, 0x63, 0x68, 0x45, 0x76,
+	0x65, 0x6e, 0x74, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00,
+	0x12, 0x0d, 0x0a, 0x09, 0x4e, 0x4f, 0x44, 0x45, 0x5f, 0x4a, 0x4f, 0x49, 0x4e, 0x10, 0x01, 0x12,
+	0x0e, 0x0a, 0x0a, 0x4e, 0x4f, 0x44, 0x45, 0x5f, 0x4c, 0x45, 0x41, 0x56, 0x45, 0x10, 0x02, 0x12,
+	0x11, 0x0a, 0x0d, 0x4c, 0x45, 0x41, 0x44, 0x45, 0x52, 0x5f, 0x43, 0x48, 0x41, 0x4e, 0x47, 0x45,
+	0x10, 0x03, 0x42, 0x07, 0x0a, 0x05, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x22, 0x44, 0x0a, 0x11, 0x41,
+	0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x49, 0x50, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x17, 0x0a, 0x07, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x6e, 0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x75, 0x62,
+	0x6e, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x75, 0x62, 0x6e, 0x65,
+	0x74, 0x22, 0x1d, 0x0a, 0x0b, 0x41, 0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x64, 0x49, 0x50,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70,
+	0x22, 0x3b, 0x0a, 0x10, 0x52, 0x65, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x49, 0x50, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6e, 0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x22, 0xc9, 0x01,
+	0x0a, 0x0b, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x36, 0x0a,
+	0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c,
+	0x2e, 0x76, 0x31, 0x2e, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x52, 0x07, 0x63, 0x6f,
+	0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x71, 0x75, 0x65, 0x72, 0x79, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x71, 0x75, 0x65, 0x72, 0x79, 0x22, 0x5c, 0x0a, 0x0c, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x12, 0x0b, 0x0a, 0x07, 0x55,
+	0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x45, 0x54, 0x10,
+	0x01, 0x12, 0x08, 0x0a, 0x04, 0x4c, 0x49, 0x53, 0x54, 0x10, 0x02, 0x12, 0x08, 0x0a, 0x04, 0x49,
+	0x54, 0x45, 0x52, 0x10, 0x03, 0x12, 0x07, 0x0a, 0x03, 0x50, 0x55, 0x54, 0x10, 0x04, 0x12, 0x0a,
+	0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x05, 0x12, 0x0d, 0x0a, 0x09, 0x53, 0x55,
+	0x42, 0x53, 0x43, 0x52, 0x49, 0x42, 0x45, 0x10, 0x06, 0x22, 0x61, 0x0a, 0x11, 0x50, 0x6c, 0x75,
+	0x67, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x0e,
+	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x10,
+	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x32, 0xb8, 0x01, 0x0a,
 	0x06, 0x50, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x12, 0x33, 0x0a, 0x07, 0x47, 0x65, 0x74, 0x49, 0x6e,
 	0x66, 0x6f, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x0e, 0x2e, 0x76, 0x31, 0x2e,
@@ -999,18 +999,18 @@ var file_v1_plugin_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_v1_plugin_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_v1_plugin_proto_goTypes = []interface{}{
 	(PluginInfo_PluginCapability)(0), // 0: v1.PluginInfo.PluginCapability
-	(PluginQuery_QueryCommand)(0),    // 1: v1.PluginQuery.QueryCommand
-	(Event_WatchEvent)(0),            // 2: v1.Event.WatchEvent
+	(Event_WatchEvent)(0),            // 1: v1.Event.WatchEvent
+	(PluginQuery_QueryCommand)(0),    // 2: v1.PluginQuery.QueryCommand
 	(*PluginConfiguration)(nil),      // 3: v1.PluginConfiguration
 	(*PluginInfo)(nil),               // 4: v1.PluginInfo
-	(*PluginQuery)(nil),              // 5: v1.PluginQuery
-	(*PluginQueryResult)(nil),        // 6: v1.PluginQueryResult
-	(*AuthenticationRequest)(nil),    // 7: v1.AuthenticationRequest
-	(*AuthenticationResponse)(nil),   // 8: v1.AuthenticationResponse
-	(*Event)(nil),                    // 9: v1.Event
-	(*AllocateIPRequest)(nil),        // 10: v1.AllocateIPRequest
-	(*AllocatedIP)(nil),              // 11: v1.AllocatedIP
-	(*ReleaseIPRequest)(nil),         // 12: v1.ReleaseIPRequest
+	(*AuthenticationRequest)(nil),    // 5: v1.AuthenticationRequest
+	(*AuthenticationResponse)(nil),   // 6: v1.AuthenticationResponse
+	(*Event)(nil),                    // 7: v1.Event
+	(*AllocateIPRequest)(nil),        // 8: v1.AllocateIPRequest
+	(*AllocatedIP)(nil),              // 9: v1.AllocatedIP
+	(*ReleaseIPRequest)(nil),         // 10: v1.ReleaseIPRequest
+	(*PluginQuery)(nil),              // 11: v1.PluginQuery
+	(*PluginQueryResult)(nil),        // 12: v1.PluginQueryResult
 	nil,                              // 13: v1.AuthenticationRequest.HeadersEntry
 	(*structpb.Struct)(nil),          // 14: google.protobuf.Struct
 	(*MeshNode)(nil),                 // 15: v1.MeshNode
@@ -1019,26 +1019,26 @@ var file_v1_plugin_proto_goTypes = []interface{}{
 var file_v1_plugin_proto_depIdxs = []int32{
 	14, // 0: v1.PluginConfiguration.config:type_name -> google.protobuf.Struct
 	0,  // 1: v1.PluginInfo.capabilities:type_name -> v1.PluginInfo.PluginCapability
-	1,  // 2: v1.PluginQuery.command:type_name -> v1.PluginQuery.QueryCommand
-	13, // 3: v1.AuthenticationRequest.headers:type_name -> v1.AuthenticationRequest.HeadersEntry
-	2,  // 4: v1.Event.type:type_name -> v1.Event.WatchEvent
-	15, // 5: v1.Event.node:type_name -> v1.MeshNode
+	13, // 2: v1.AuthenticationRequest.headers:type_name -> v1.AuthenticationRequest.HeadersEntry
+	1,  // 3: v1.Event.type:type_name -> v1.Event.WatchEvent
+	15, // 4: v1.Event.node:type_name -> v1.MeshNode
+	2,  // 5: v1.PluginQuery.command:type_name -> v1.PluginQuery.QueryCommand
 	16, // 6: v1.Plugin.GetInfo:input_type -> google.protobuf.Empty
 	3,  // 7: v1.Plugin.Configure:input_type -> v1.PluginConfiguration
 	16, // 8: v1.Plugin.Close:input_type -> google.protobuf.Empty
-	7,  // 9: v1.AuthPlugin.Authenticate:input_type -> v1.AuthenticationRequest
-	9,  // 10: v1.WatchPlugin.Emit:input_type -> v1.Event
-	10, // 11: v1.IPAMPlugin.Allocate:input_type -> v1.AllocateIPRequest
-	12, // 12: v1.IPAMPlugin.Release:input_type -> v1.ReleaseIPRequest
-	6,  // 13: v1.StorageQuerierPlugin.InjectQuerier:input_type -> v1.PluginQueryResult
+	5,  // 9: v1.AuthPlugin.Authenticate:input_type -> v1.AuthenticationRequest
+	7,  // 10: v1.WatchPlugin.Emit:input_type -> v1.Event
+	8,  // 11: v1.IPAMPlugin.Allocate:input_type -> v1.AllocateIPRequest
+	10, // 12: v1.IPAMPlugin.Release:input_type -> v1.ReleaseIPRequest
+	12, // 13: v1.StorageQuerierPlugin.InjectQuerier:input_type -> v1.PluginQueryResult
 	4,  // 14: v1.Plugin.GetInfo:output_type -> v1.PluginInfo
 	16, // 15: v1.Plugin.Configure:output_type -> google.protobuf.Empty
 	16, // 16: v1.Plugin.Close:output_type -> google.protobuf.Empty
-	8,  // 17: v1.AuthPlugin.Authenticate:output_type -> v1.AuthenticationResponse
+	6,  // 17: v1.AuthPlugin.Authenticate:output_type -> v1.AuthenticationResponse
 	16, // 18: v1.WatchPlugin.Emit:output_type -> google.protobuf.Empty
-	11, // 19: v1.IPAMPlugin.Allocate:output_type -> v1.AllocatedIP
+	9,  // 19: v1.IPAMPlugin.Allocate:output_type -> v1.AllocatedIP
 	16, // 20: v1.IPAMPlugin.Release:output_type -> google.protobuf.Empty
-	5,  // 21: v1.StorageQuerierPlugin.InjectQuerier:output_type -> v1.PluginQuery
+	11, // 21: v1.StorageQuerierPlugin.InjectQuerier:output_type -> v1.PluginQuery
 	14, // [14:22] is the sub-list for method output_type
 	6,  // [6:14] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
@@ -1079,30 +1079,6 @@ func file_v1_plugin_proto_init() {
 			}
 		}
 		file_v1_plugin_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PluginQuery); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_plugin_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PluginQueryResult); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_v1_plugin_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AuthenticationRequest); i {
 			case 0:
 				return &v.state
@@ -1114,7 +1090,7 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_v1_plugin_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_plugin_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AuthenticationResponse); i {
 			case 0:
 				return &v.state
@@ -1126,7 +1102,7 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_v1_plugin_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_plugin_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Event); i {
 			case 0:
 				return &v.state
@@ -1138,7 +1114,7 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_v1_plugin_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_plugin_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AllocateIPRequest); i {
 			case 0:
 				return &v.state
@@ -1150,7 +1126,7 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_v1_plugin_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_plugin_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*AllocatedIP); i {
 			case 0:
 				return &v.state
@@ -1162,7 +1138,7 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_v1_plugin_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_v1_plugin_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ReleaseIPRequest); i {
 			case 0:
 				return &v.state
@@ -1174,8 +1150,32 @@ func file_v1_plugin_proto_init() {
 				return nil
 			}
 		}
+		file_v1_plugin_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PluginQuery); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_v1_plugin_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PluginQueryResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
-	file_v1_plugin_proto_msgTypes[6].OneofWrappers = []interface{}{
+	file_v1_plugin_proto_msgTypes[4].OneofWrappers = []interface{}{
 		(*Event_Node)(nil),
 	}
 	type x struct{}

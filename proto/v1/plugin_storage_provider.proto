@@ -18,7 +18,177 @@ syntax = "proto3";
 
 package v1;
 
-// StorageProviderPlguin is the service definition for a Webmesh storage provider.
-service StorageProviderPlguin {
+import "google/protobuf/duration.proto";
 
+import "v1/node.proto";
+
+// StorageStatusRequest is the request object for the StorageStatus RPC.
+message StorageStatusRequest {}
+
+// StorageStatusResponse is the response object for the StorageStatus RPC.
+message StorageStatusResponse {
+    // IsWritable is true if the storage can currently be written to.
+    bool is_writable = 1;
+    // ClusterStatus is the status of the storage.
+    ClusterStatus cluster_status = 2;
+    // Servers is the list of servers that are currently recognized by the storage plugin.
+    repeated StoragePeer servers = 3;
+}
+
+// StoragePeer is a server that is currently recognized by the storage plugin.
+message StoragePeer {
+    // ID is the id of the server.
+    string id = 1;
+    // Address is the address of the server. This is not required
+    // for demotion or removal RPCs.
+    string address = 2;
+    // ClusterStatus is the status of the server. This is only
+    // applicable during a GetStatus RPC.
+    ClusterStatus cluster_status = 3;
+}
+
+// AddVoterResponse is the response object for the AddVoter RPC.
+message AddVoterResponse {}
+
+// AddObserverResponse is the response object for the AddObserver RPC.
+message AddObserverResponse {}
+
+// DemoteVoterResponse is the response object for the DemoteVoter RPC.
+message DemoteVoterResponse {}
+
+// RemoveServerResponse is the response object for the RemoveServer RPC.
+message RemoveServerResponse {}
+
+// StorageValue is a value stored in the storage.
+message StorageValue {
+    // Key is the key of the value.
+    string key = 1;
+    // Value is the value of the key.
+    string value = 2;
+}
+
+// GetValueRequest is the request object for the GetValue RPC.
+message GetValueRequest {
+    // Key is the key to get the value for.
+    string key = 1;
+}
+
+// GetValueResponse is the response object for the GetValue RPC.
+message GetValueResponse {
+    // Value is the value of the key.
+    StorageValue value = 1;
+}
+
+// PutValueRequest is the request object for the PutValue RPC.
+message PutValueRequest {
+    // Value is the value to put.
+    StorageValue value = 1;
+    // TTL is the time to live for the value.
+    google.protobuf.Duration ttl = 2;
+}
+
+// PutValueResponse is the response object for the PutValue RPC.
+message PutValueResponse {}
+
+// DeleteValueRequest is the request object for the DeleteValue RPC.
+message DeleteValueRequest {
+    // Key is the key to delete.
+    string key = 1;
+}
+
+// DeleteValueResponse is the response object for the DeleteValue RPC.
+message DeleteValueResponse {}
+
+// ListKeysRequest is the request object for the ListValues RPC.
+message ListKeysRequest {
+    // Prefix is the prefix to list values for.
+    string prefix = 1;
+}
+
+// ListKeysResponse is the response object for the ListValues RPC.
+message ListKeysResponse {
+    // Keys is the list of value keys for the prefix.
+    repeated string keys = 1;
+}
+
+// ListValuesRequest is the request object for the ListValues RPC.
+message ListValuesRequest {
+    // Prefix is the prefix to list values for.
+    string prefix = 1;
+}
+
+// ListValuesResponse is the response object for the ListValues RPC.
+message ListValuesResponse {
+    // Values is the list of values for the prefix.
+    repeated StorageValue values = 1;
+}
+
+// SubscribePrefixRequest is the request object for the SubscribePrefix RPC.
+message SubscribePrefixRequest {
+    // Prefix is the prefix to subscribe to.
+    string prefix = 1;
+}
+
+// PrefixEvent is an event that is emitted when a value is added or removed
+// from the storage for a prefix.
+message PrefixEvent {
+    // Prefix is the prefix that the event is for.
+    string prefix = 1;
+    // Value is the value that was added or removed.
+    StorageValue value = 2;
+
+    enum EventType {
+        // EventTypeUnknown is an unknown event type.
+        EventTypeUnknown = 0;
+        // EventTypeUpdated is an event for when a value is added or updated.
+        EventTypeUpdated = 1;
+        // EventTypeRemoved is an event for when a value is removed.
+        EventTypeRemoved = 2;
+    }
+
+    // EventType is the type of event.
+    EventType event_type = 3;
+}
+
+// StorageProviderPlugin is the service definition for a Webmesh storage provider.
+service StorageProviderPlugin {
+    // Storage Membership RPCs
+
+    // GetStatus returns the status of the storage.
+    rpc GetStatus(StorageStatusRequest) returns (StorageStatusResponse) {}
+    // AddVoter adds a voter to the storage. The underlying implementation
+    // should ensure that the voter is added to the storage and that the
+    // storage is in a consistent state before returning.
+    rpc AddVoter(StoragePeer) returns (AddVoterResponse) {}
+    // AddObserver adds an observer to the storage. The underlying implementation
+    // should ensure that the observer is added to the storage and that the
+    // storage is in a consistent state before returning. If observers are not
+    // supported the underlying implementation can silently ignore this RPC, but
+    // it should keep track of the observer in the GetStatus RPC if possible.
+    rpc AddObserver(StoragePeer) returns (AddObserverResponse) {}
+    // DemoteVoter demotes a voter to an observer. The underlying implementation
+    // should ensure that the voter is demoted and that the storage is in a
+    // consistent state before returning. If observers are not supported the
+    // underlying implementation can silently ignore this RPC, but it should keep 
+    // track of the observer in the GetStatus RPC if possible.
+    rpc DemoteVoter(StoragePeer) returns (DemoteVoterResponse) {}
+    // RemoveServer removes a server from the storage. The underlying implementation
+    // should ensure that the server is removed and that the storage is in a
+    // consistent state before returning.
+    rpc RemoveServer(StoragePeer) returns (RemoveServerResponse) {}
+
+    // Storage Usage RPCs
+
+    // GetValue returns the value for a key.
+    rpc GetValue(GetValueRequest) returns (GetValueResponse) {}
+    // PutValue puts a value for a key.
+    rpc PutValue(PutValueRequest) returns (PutValueResponse) {}
+    // DeleteValue deletes a value for a key.
+    rpc DeleteValue(DeleteValueRequest) returns (DeleteValueResponse) {}
+    // ListKeys lists all keys for a prefix.
+    rpc ListKeys(ListKeysRequest) returns (ListKeysResponse) {}
+    // ListValues lists all values for a prefix.
+    rpc ListValues(ListValuesRequest) returns (ListValuesResponse) {}
+    // SubscribePrefix subscribes to events for a prefix.
+    rpc SubscribePrefix(SubscribePrefixRequest) returns (stream PrefixEvent) {}
 }
