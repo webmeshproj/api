@@ -5344,7 +5344,7 @@ additional information about the storage status. </p></td>
 
       
         <h3 id="v1.StorageProviderPlugin">StorageProviderPlugin</h3>
-        <p>StorageProviderPlugin is the service definition for a Webmesh storage provider.</p><p>Storage Membership RPCs</p>
+        <p>StorageProviderPlugin is the service definition for a Webmesh storage provider.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -5390,10 +5390,10 @@ track of the observer in the GetStatus RPC if possible.</p></td>
               </tr>
             
               <tr>
-                <td>RemoveServer</td>
+                <td>RemovePeer</td>
                 <td><a href="#v1.StoragePeer">StoragePeer</a></td>
                 <td><a href="#v1.RemoveServerResponse">RemoveServerResponse</a></td>
-                <td><p>RemoveServer removes a server from the storage. The underlying implementation
+                <td><p>RemovePeer removes a peer from the storage. The underlying implementation
 should ensure that the server is removed and that the storage is in a
 consistent state before returning.</p></td>
               </tr>

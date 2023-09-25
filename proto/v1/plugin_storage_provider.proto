@@ -159,10 +159,11 @@ message PrefixEvent {
 
 // StorageProviderPlugin is the service definition for a Webmesh storage provider.
 service StorageProviderPlugin {
-    // Storage Membership RPCs
-
     // GetStatus returns the status of the storage.
     rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
+
+    // Storage Membership RPCs
+
     // AddVoter adds a voter to the storage. The underlying implementation
     // should ensure that the voter is added to the storage and that the
     // storage is in a consistent state before returning.
@@ -179,10 +180,10 @@ service StorageProviderPlugin {
     // underlying implementation can silently ignore this RPC, but it should keep 
     // track of the observer in the GetStatus RPC if possible.
     rpc DemoteVoter(StoragePeer) returns (DemoteVoterResponse) {}
-    // RemoveServer removes a server from the storage. The underlying implementation
+    // RemovePeer removes a peer from the storage. The underlying implementation
     // should ensure that the server is removed and that the storage is in a
     // consistent state before returning.
-    rpc RemoveServer(StoragePeer) returns (RemoveServerResponse) {}
+    rpc RemovePeer(StoragePeer) returns (RemoveServerResponse) {}
 
     // Storage Usage RPCs
 

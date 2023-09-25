@@ -38,7 +38,7 @@ const (
 	StorageProviderPlugin_AddVoter_FullMethodName        = "/v1.StorageProviderPlugin/AddVoter"
 	StorageProviderPlugin_AddObserver_FullMethodName     = "/v1.StorageProviderPlugin/AddObserver"
 	StorageProviderPlugin_DemoteVoter_FullMethodName     = "/v1.StorageProviderPlugin/DemoteVoter"
-	StorageProviderPlugin_RemoveServer_FullMethodName    = "/v1.StorageProviderPlugin/RemoveServer"
+	StorageProviderPlugin_RemovePeer_FullMethodName      = "/v1.StorageProviderPlugin/RemovePeer"
 	StorageProviderPlugin_GetValue_FullMethodName        = "/v1.StorageProviderPlugin/GetValue"
 	StorageProviderPlugin_PutValue_FullMethodName        = "/v1.StorageProviderPlugin/PutValue"
 	StorageProviderPlugin_DeleteValue_FullMethodName     = "/v1.StorageProviderPlugin/DeleteValue"
@@ -69,10 +69,10 @@ type StorageProviderPluginClient interface {
 	// underlying implementation can silently ignore this RPC, but it should keep
 	// track of the observer in the GetStatus RPC if possible.
 	DemoteVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*DemoteVoterResponse, error)
-	// RemoveServer removes a server from the storage. The underlying implementation
+	// RemovePeer removes a peer from the storage. The underlying implementation
 	// should ensure that the server is removed and that the storage is in a
 	// consistent state before returning.
-	RemoveServer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error)
+	RemovePeer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error)
 	// GetValue returns the value for a key.
 	GetValue(ctx context.Context, in *GetValueRequest, opts ...grpc.CallOption) (*GetValueResponse, error)
 	// PutValue puts a value for a key.
@@ -131,9 +131,9 @@ func (c *storageProviderPluginClient) DemoteVoter(ctx context.Context, in *Stora
 	return out, nil
 }
 
-func (c *storageProviderPluginClient) RemoveServer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error) {
+func (c *storageProviderPluginClient) RemovePeer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error) {
 	out := new(RemoveServerResponse)
-	err := c.cc.Invoke(ctx, StorageProviderPlugin_RemoveServer_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_RemovePeer_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -239,10 +239,10 @@ type StorageProviderPluginServer interface {
 	// underlying implementation can silently ignore this RPC, but it should keep
 	// track of the observer in the GetStatus RPC if possible.
 	DemoteVoter(context.Context, *StoragePeer) (*DemoteVoterResponse, error)
-	// RemoveServer removes a server from the storage. The underlying implementation
+	// RemovePeer removes a peer from the storage. The underlying implementation
 	// should ensure that the server is removed and that the storage is in a
 	// consistent state before returning.
-	RemoveServer(context.Context, *StoragePeer) (*RemoveServerResponse, error)
+	RemovePeer(context.Context, *StoragePeer) (*RemoveServerResponse, error)
 	// GetValue returns the value for a key.
 	GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error)
 	// PutValue puts a value for a key.
@@ -274,8 +274,8 @@ func (UnimplementedStorageProviderPluginServer) AddObserver(context.Context, *St
 func (UnimplementedStorageProviderPluginServer) DemoteVoter(context.Context, *StoragePeer) (*DemoteVoterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DemoteVoter not implemented")
 }
-func (UnimplementedStorageProviderPluginServer) RemoveServer(context.Context, *StoragePeer) (*RemoveServerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveServer not implemented")
+func (UnimplementedStorageProviderPluginServer) RemovePeer(context.Context, *StoragePeer) (*RemoveServerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemovePeer not implemented")
 }
 func (UnimplementedStorageProviderPluginServer) GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValue not implemented")
@@ -380,20 +380,20 @@ func _StorageProviderPlugin_DemoteVoter_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StorageProviderPlugin_RemoveServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageProviderPlugin_RemovePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StoragePeer)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageProviderPluginServer).RemoveServer(ctx, in)
+		return srv.(StorageProviderPluginServer).RemovePeer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StorageProviderPlugin_RemoveServer_FullMethodName,
+		FullMethod: StorageProviderPlugin_RemovePeer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageProviderPluginServer).RemoveServer(ctx, req.(*StoragePeer))
+		return srv.(StorageProviderPluginServer).RemovePeer(ctx, req.(*StoragePeer))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -533,8 +533,8 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageProviderPlugin_DemoteVoter_Handler,
 		},
 		{
-			MethodName: "RemoveServer",
-			Handler:    _StorageProviderPlugin_RemoveServer_Handler,
+			MethodName: "RemovePeer",
+			Handler:    _StorageProviderPlugin_RemovePeer_Handler,
 		},
 		{
 			MethodName: "GetValue",
