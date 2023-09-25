@@ -28,10 +28,9 @@ enum ClusterStatus {
     CLUSTER_LEADER = 1;
     // CLUSTER_VOTER is the status for a voter node.
     CLUSTER_VOTER = 2;
-    // CLUSTER_NON_VOTER is the status for a non-voter node.
-    CLUSTER_NON_VOTER = 3;
-    // CLUSTER_NODE is the status of a node that is not a part
-    // of the raft cluster.
+    // CLUSTER_OBSERVER is the status for a non-voter node.
+    CLUSTER_OBSERVER = 3;
+    // CLUSTER_NODE is the status of a node that is not a part of the storage consensus.
     CLUSTER_NODE = 4;
 }
 

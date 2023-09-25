@@ -279,13 +279,13 @@ WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
 
 ClusterStatus is the status of the node in the cluster.
 
-| Name                   | Number | Description                                                                  |
-|------------------------|--------|------------------------------------------------------------------------------|
-| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.                                |
-| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.                            |
-| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.                                |
-| CLUSTER_NON_VOTER      | 3      | CLUSTER_NON_VOTER is the status for a non-voter node.                        |
-| CLUSTER_NODE           | 4      | CLUSTER_NODE is the status of a node that is not a part of the raft cluster. |
+| Name                   | Number | Description                                                                       |
+|------------------------|--------|-----------------------------------------------------------------------------------|
+| CLUSTER_STATUS_UNKNOWN | 0      | CLUSTER_STATUS_UNKNOWN is the default status.                                     |
+| CLUSTER_LEADER         | 1      | CLUSTER_LEADER is the status for the leader node.                                 |
+| CLUSTER_VOTER          | 2      | CLUSTER_VOTER is the status for a voter node.                                     |
+| CLUSTER_OBSERVER       | 3      | CLUSTER_OBSERVER is the status for a non-voter node.                              |
+| CLUSTER_NODE           | 4      | CLUSTER_NODE is the status of a node that is not a part of the storage consensus. |
 
 ### DataChannel
 
