@@ -651,53 +651,53 @@ var IPAMPlugin_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	StoragePlugin_InjectQuerier_FullMethodName = "/v1.StoragePlugin/InjectQuerier"
+	StorageQuerierPlugin_InjectQuerier_FullMethodName = "/v1.StorageQuerierPlugin/InjectQuerier"
 )
 
-// StoragePluginClient is the client API for StoragePlugin service.
+// StorageQuerierPluginClient is the client API for StorageQuerierPlugin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type StoragePluginClient interface {
+type StorageQuerierPluginClient interface {
 	// InjectQuerier is a stream opened by the node to faciliate read-write operations
 	// against the mesh state. The signature is misleading, but it is required to be
 	// able to stream the query results back to the node. The node will open a stream
 	// to the plugin and send a PluginSQLQueryResult message for every query that is
 	// received.
-	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StoragePlugin_InjectQuerierClient, error)
+	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StorageQuerierPlugin_InjectQuerierClient, error)
 }
 
-type storagePluginClient struct {
+type storageQuerierPluginClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStoragePluginClient(cc grpc.ClientConnInterface) StoragePluginClient {
-	return &storagePluginClient{cc}
+func NewStorageQuerierPluginClient(cc grpc.ClientConnInterface) StorageQuerierPluginClient {
+	return &storageQuerierPluginClient{cc}
 }
 
-func (c *storagePluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StoragePlugin_InjectQuerierClient, error) {
-	stream, err := c.cc.NewStream(ctx, &StoragePlugin_ServiceDesc.Streams[0], StoragePlugin_InjectQuerier_FullMethodName, opts...)
+func (c *storageQuerierPluginClient) InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StorageQuerierPlugin_InjectQuerierClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StorageQuerierPlugin_ServiceDesc.Streams[0], StorageQuerierPlugin_InjectQuerier_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &storagePluginInjectQuerierClient{stream}
+	x := &storageQuerierPluginInjectQuerierClient{stream}
 	return x, nil
 }
 
-type StoragePlugin_InjectQuerierClient interface {
+type StorageQuerierPlugin_InjectQuerierClient interface {
 	Send(*PluginQueryResult) error
 	Recv() (*PluginQuery, error)
 	grpc.ClientStream
 }
 
-type storagePluginInjectQuerierClient struct {
+type storageQuerierPluginInjectQuerierClient struct {
 	grpc.ClientStream
 }
 
-func (x *storagePluginInjectQuerierClient) Send(m *PluginQueryResult) error {
+func (x *storageQuerierPluginInjectQuerierClient) Send(m *PluginQueryResult) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *storagePluginInjectQuerierClient) Recv() (*PluginQuery, error) {
+func (x *storageQuerierPluginInjectQuerierClient) Recv() (*PluginQuery, error) {
 	m := new(PluginQuery)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -705,58 +705,58 @@ func (x *storagePluginInjectQuerierClient) Recv() (*PluginQuery, error) {
 	return m, nil
 }
 
-// StoragePluginServer is the server API for StoragePlugin service.
-// All implementations must embed UnimplementedStoragePluginServer
+// StorageQuerierPluginServer is the server API for StorageQuerierPlugin service.
+// All implementations must embed UnimplementedStorageQuerierPluginServer
 // for forward compatibility
-type StoragePluginServer interface {
+type StorageQuerierPluginServer interface {
 	// InjectQuerier is a stream opened by the node to faciliate read-write operations
 	// against the mesh state. The signature is misleading, but it is required to be
 	// able to stream the query results back to the node. The node will open a stream
 	// to the plugin and send a PluginSQLQueryResult message for every query that is
 	// received.
-	InjectQuerier(StoragePlugin_InjectQuerierServer) error
-	mustEmbedUnimplementedStoragePluginServer()
+	InjectQuerier(StorageQuerierPlugin_InjectQuerierServer) error
+	mustEmbedUnimplementedStorageQuerierPluginServer()
 }
 
-// UnimplementedStoragePluginServer must be embedded to have forward compatible implementations.
-type UnimplementedStoragePluginServer struct {
+// UnimplementedStorageQuerierPluginServer must be embedded to have forward compatible implementations.
+type UnimplementedStorageQuerierPluginServer struct {
 }
 
-func (UnimplementedStoragePluginServer) InjectQuerier(StoragePlugin_InjectQuerierServer) error {
+func (UnimplementedStorageQuerierPluginServer) InjectQuerier(StorageQuerierPlugin_InjectQuerierServer) error {
 	return status.Errorf(codes.Unimplemented, "method InjectQuerier not implemented")
 }
-func (UnimplementedStoragePluginServer) mustEmbedUnimplementedStoragePluginServer() {}
+func (UnimplementedStorageQuerierPluginServer) mustEmbedUnimplementedStorageQuerierPluginServer() {}
 
-// UnsafeStoragePluginServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StoragePluginServer will
+// UnsafeStorageQuerierPluginServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StorageQuerierPluginServer will
 // result in compilation errors.
-type UnsafeStoragePluginServer interface {
-	mustEmbedUnimplementedStoragePluginServer()
+type UnsafeStorageQuerierPluginServer interface {
+	mustEmbedUnimplementedStorageQuerierPluginServer()
 }
 
-func RegisterStoragePluginServer(s grpc.ServiceRegistrar, srv StoragePluginServer) {
-	s.RegisterService(&StoragePlugin_ServiceDesc, srv)
+func RegisterStorageQuerierPluginServer(s grpc.ServiceRegistrar, srv StorageQuerierPluginServer) {
+	s.RegisterService(&StorageQuerierPlugin_ServiceDesc, srv)
 }
 
-func _StoragePlugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(StoragePluginServer).InjectQuerier(&storagePluginInjectQuerierServer{stream})
+func _StorageQuerierPlugin_InjectQuerier_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(StorageQuerierPluginServer).InjectQuerier(&storageQuerierPluginInjectQuerierServer{stream})
 }
 
-type StoragePlugin_InjectQuerierServer interface {
+type StorageQuerierPlugin_InjectQuerierServer interface {
 	Send(*PluginQuery) error
 	Recv() (*PluginQueryResult, error)
 	grpc.ServerStream
 }
 
-type storagePluginInjectQuerierServer struct {
+type storageQuerierPluginInjectQuerierServer struct {
 	grpc.ServerStream
 }
 
-func (x *storagePluginInjectQuerierServer) Send(m *PluginQuery) error {
+func (x *storageQuerierPluginInjectQuerierServer) Send(m *PluginQuery) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *storagePluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
+func (x *storageQuerierPluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
 	m := new(PluginQueryResult)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -764,17 +764,17 @@ func (x *storagePluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
 	return m, nil
 }
 
-// StoragePlugin_ServiceDesc is the grpc.ServiceDesc for StoragePlugin service.
+// StorageQuerierPlugin_ServiceDesc is the grpc.ServiceDesc for StorageQuerierPlugin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var StoragePlugin_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.StoragePlugin",
-	HandlerType: (*StoragePluginServer)(nil),
+var StorageQuerierPlugin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.StorageQuerierPlugin",
+	HandlerType: (*StorageQuerierPluginServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "InjectQuerier",
-			Handler:       _StoragePlugin_InjectQuerier_Handler,
+			Handler:       _StorageQuerierPlugin_InjectQuerier_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

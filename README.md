@@ -117,7 +117,7 @@
   - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
   - [<span class="badge">S</span>RaftPlugin](#v1.RaftPlugin)
-  - [<span class="badge">S</span>StoragePlugin](#v1.StoragePlugin)
+  - [<span class="badge">S</span>StorageQuerierPlugin](#v1.StorageQuerierPlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
@@ -1258,14 +1258,14 @@ WatchEvent is the type of a watch event.
 
 PluginCapability is the capabilities of a plugin.
 
-| Name    | Number | Description                                                     |
-|---------|--------|-----------------------------------------------------------------|
-| UNKNOWN | 0      | UNKNOWN is the default value of PluginCapability.               |
-| RAFT    | 1      | RAFT indicates that the plugin is a raft store plugin.          |
-| AUTH    | 2      | AUTH indicates that the plugin is an auth plugin.               |
-| WATCH   | 3      | WATCH indicates that the plugin wants to receive watch events.  |
-| IPAMV4  | 4      | IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.        |
-| STORAGE | 5      | STORAGE indicates a plugin that wants to interact with storage. |
+| Name             | Number | Description                                                                                |
+|------------------|--------|--------------------------------------------------------------------------------------------|
+| UNKNOWN          | 0      | UNKNOWN is the default value of PluginCapability.                                          |
+| STORAGE_PROVIDER | 1      | STORAGE_PROVIDER indicates that the plugin can provide storage and underlying consistency. |
+| AUTH             | 2      | AUTH indicates that the plugin is an auth plugin.                                          |
+| WATCH            | 3      | WATCH indicates that the plugin wants to receive watch events.                             |
+| IPAMV4           | 4      | IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.                                   |
+| STORAGE_QUERIER  | 5      | STORAGE_QUERIER indicates a plugin that wants to interact with storage.                    |
 
 ### PluginQuery.QueryCommand
 
@@ -1319,9 +1319,10 @@ RaftPlugin is the service definition for a Webmesh raft plugin.
 | Store           | [StoreLogRequest](#v1.StoreLogRequest) | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store dispatches a Raft log entry for storage.                                |
 | RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)       | [.google.protobuf.Empty](#google.protobuf.Empty) | RestoreSnapshot should drop any existing state and restore from the snapshot. |
 
-### StoragePlugin
+### StorageQuerierPlugin
 
-StoragePlugin is the service definition for a Webmesh storage plugin.
+StorageQuerierPlugin is the service definition for a Webmesh storage
+querier plugin.
 
 | Method Name   | Request Type                                      | Response Type                         | Description                                                                                                                                                                                                                                                                                                                          |
 |---------------|---------------------------------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

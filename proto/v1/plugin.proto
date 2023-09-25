@@ -43,16 +43,16 @@ message PluginInfo {
     enum PluginCapability {
         // UNKNOWN is the default value of PluginCapability.
         UNKNOWN = 0;
-        // RAFT indicates that the plugin is a raft store plugin.
-        RAFT = 1;
+        // STORAGE_PROVIDER indicates that the plugin can provide storage and underlying consistency.
+        STORAGE_PROVIDER = 1;
         // AUTH indicates that the plugin is an auth plugin.
         AUTH = 2;
         // WATCH indicates that the plugin wants to receive watch events.
         WATCH = 3;
         // IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.
         IPAMV4 = 4;
-        // STORAGE indicates a plugin that wants to interact with storage.
-        STORAGE = 5;
+        // STORAGE_QUERIER indicates a plugin that wants to interact with storage.
+        STORAGE_QUERIER = 5;
     }
 
     // Capabilities is the capabilities of the plugin.
@@ -220,8 +220,8 @@ service IPAMPlugin {
     rpc Release (ReleaseIPRequest) returns (google.protobuf.Empty) {}
 }
 
-// StoragePlugin is the service definition for a Webmesh storage plugin.
-service StoragePlugin {
+// StorageQuerierPlugin is the service definition for a Webmesh storage querier plugin.
+service StorageQuerierPlugin {
     // InjectQuerier is a stream opened by the node to faciliate read-write operations
     // against the mesh state. The signature is misleading, but it is required to be 
     // able to stream the query results back to the node. The node will open a stream 

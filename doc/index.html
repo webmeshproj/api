@@ -693,7 +693,7 @@
                 </li>
               
                 <li>
-                  <a href="#v1.StoragePlugin"><span class="badge">S</span>StoragePlugin</a>
+                  <a href="#v1.StorageQuerierPlugin"><span class="badge">S</span>StorageQuerierPlugin</a>
                 </li>
               
                 <li>
@@ -4645,9 +4645,9 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               </tr>
             
               <tr>
-                <td>RAFT</td>
+                <td>STORAGE_PROVIDER</td>
                 <td>1</td>
-                <td><p>RAFT indicates that the plugin is a raft store plugin.</p></td>
+                <td><p>STORAGE_PROVIDER indicates that the plugin can provide storage and underlying consistency.</p></td>
               </tr>
             
               <tr>
@@ -4669,9 +4669,9 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               </tr>
             
               <tr>
-                <td>STORAGE</td>
+                <td>STORAGE_QUERIER</td>
                 <td>5</td>
-                <td><p>STORAGE indicates a plugin that wants to interact with storage.</p></td>
+                <td><p>STORAGE_QUERIER indicates a plugin that wants to interact with storage.</p></td>
               </tr>
             
           </tbody>
@@ -4838,8 +4838,8 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
         </table>
 
         
-        <h3 id="v1.StoragePlugin">StoragePlugin</h3>
-        <p>StoragePlugin is the service definition for a Webmesh storage plugin.</p>
+        <h3 id="v1.StorageQuerierPlugin">StorageQuerierPlugin</h3>
+        <p>StorageQuerierPlugin is the service definition for a Webmesh storage querier plugin.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
