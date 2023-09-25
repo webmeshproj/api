@@ -124,6 +124,7 @@
   - [<span class="badge">M</span>DeleteValueRequest](#v1.DeleteValueRequest)
   - [<span class="badge">M</span>DeleteValueResponse](#v1.DeleteValueResponse)
   - [<span class="badge">M</span>DemoteVoterResponse](#v1.DemoteVoterResponse)
+  - [<span class="badge">M</span>GetLeaderRequest](#v1.GetLeaderRequest)
   - [<span class="badge">M</span>GetValueRequest](#v1.GetValueRequest)
   - [<span class="badge">M</span>GetValueResponse](#v1.GetValueResponse)
   - [<span class="badge">M</span>ListKeysRequest](#v1.ListKeysRequest)
@@ -1373,6 +1374,10 @@ DeleteValueResponse is the response object for the DeleteValue RPC.
 
 DemoteVoterResponse is the response object for the DemoteVoter RPC.
 
+### GetLeaderRequest
+
+GetLeaderRequest is the request object for the GetLeader RPC.
+
 ### GetValueRequest
 
 GetValueRequest is the request object for the GetValue RPC.
@@ -1512,6 +1517,7 @@ provider.
 |-----------------|------------------------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Bootstrap       | [BootstrapRequest](#v1.BootstrapRequest)             | [BootstrapResponse](#v1.BootstrapResponse)       | Bootstrap is called when the storage is created for the first time. It is assumed that this node has been elected as the leader of the cluster. FailedPrecondition should be returned if the storage is already bootstrapped.                                                                                                                                            |
 | GetStatus       | [StorageStatusRequest](#v1.StorageStatusRequest)     | [StorageStatus](#v1.StorageStatus)               | GetStatus returns the status of the storage.                                                                                                                                                                                                                                                                                                                             |
+| GetLeader       | [GetLeaderRequest](#v1.GetLeaderRequest)             | [StoragePeer](#v1.StoragePeer)                   | GetLeader returns the leader of the storage. Leader is loosely defined by the implementation, but must be a node that can reliably be used to mutate the storage.                                                                                                                                                                                                        |
 | AddVoter        | [StoragePeer](#v1.StoragePeer)                       | [AddVoterResponse](#v1.AddVoterResponse)         | AddVoter adds a voter to the storage. The underlying implementation should ensure that the voter is added to the storage and that the storage is in a consistent state before returning.                                                                                                                                                                                 |
 | AddObserver     | [StoragePeer](#v1.StoragePeer)                       | [AddObserverResponse](#v1.AddObserverResponse)   | AddObserver adds an observer to the storage. The underlying implementation should ensure that the observer is added to the storage and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible. |
 | DemoteVoter     | [StoragePeer](#v1.StoragePeer)                       | [DemoteVoterResponse](#v1.DemoteVoterResponse)   | DemoteVoter demotes a voter to an observer. The underlying implementation should ensure that the voter is demoted and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible.                  |

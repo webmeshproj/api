@@ -725,6 +725,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.GetLeaderRequest"><span class="badge">M</span>GetLeaderRequest</a>
+                </li>
+              
+                <li>
                   <a href="#v1.GetValueRequest"><span class="badge">M</span>GetValueRequest</a>
                 </li>
               
@@ -4963,6 +4967,13 @@ received.</p></td>
 
         
       
+        <h3 id="v1.GetLeaderRequest">GetLeaderRequest</h3>
+        <p>GetLeaderRequest is the request object for the GetLeader RPC.</p>
+
+        
+
+        
+      
         <h3 id="v1.GetValueRequest">GetValueRequest</h3>
         <p>GetValueRequest is the request object for the GetValue RPC.</p>
 
@@ -5405,6 +5416,15 @@ FailedPrecondition should be returned if the storage is already bootstrapped.</p
                 <td><a href="#v1.StorageStatusRequest">StorageStatusRequest</a></td>
                 <td><a href="#v1.StorageStatus">StorageStatus</a></td>
                 <td><p>GetStatus returns the status of the storage.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetLeader</td>
+                <td><a href="#v1.GetLeaderRequest">GetLeaderRequest</a></td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><p>GetLeader returns the leader of the storage. Leader is loosely defined
+by the implementation, but must be a node that can reliably be used to
+mutate the storage.</p></td>
               </tr>
             
               <tr>

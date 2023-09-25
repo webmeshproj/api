@@ -36,6 +36,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	StorageProviderPlugin_Bootstrap_FullMethodName       = "/v1.StorageProviderPlugin/Bootstrap"
 	StorageProviderPlugin_GetStatus_FullMethodName       = "/v1.StorageProviderPlugin/GetStatus"
+	StorageProviderPlugin_GetLeader_FullMethodName       = "/v1.StorageProviderPlugin/GetLeader"
 	StorageProviderPlugin_AddVoter_FullMethodName        = "/v1.StorageProviderPlugin/AddVoter"
 	StorageProviderPlugin_AddObserver_FullMethodName     = "/v1.StorageProviderPlugin/AddObserver"
 	StorageProviderPlugin_DemoteVoter_FullMethodName     = "/v1.StorageProviderPlugin/DemoteVoter"
@@ -58,6 +59,10 @@ type StorageProviderPluginClient interface {
 	Bootstrap(ctx context.Context, in *BootstrapRequest, opts ...grpc.CallOption) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error)
+	// GetLeader returns the leader of the storage. Leader is loosely defined
+	// by the implementation, but must be a node that can reliably be used to
+	// mutate the storage.
+	GetLeader(ctx context.Context, in *GetLeaderRequest, opts ...grpc.CallOption) (*StoragePeer, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
 	// should ensure that the voter is added to the storage and that the
 	// storage is in a consistent state before returning.
@@ -112,6 +117,15 @@ func (c *storageProviderPluginClient) Bootstrap(ctx context.Context, in *Bootstr
 func (c *storageProviderPluginClient) GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error) {
 	out := new(StorageStatus)
 	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) GetLeader(ctx context.Context, in *GetLeaderRequest, opts ...grpc.CallOption) (*StoragePeer, error) {
+	out := new(StoragePeer)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetLeader_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -241,6 +255,10 @@ type StorageProviderPluginServer interface {
 	Bootstrap(context.Context, *BootstrapRequest) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error)
+	// GetLeader returns the leader of the storage. Leader is loosely defined
+	// by the implementation, but must be a node that can reliably be used to
+	// mutate the storage.
+	GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error)
 	// AddVoter adds a voter to the storage. The underlying implementation
 	// should ensure that the voter is added to the storage and that the
 	// storage is in a consistent state before returning.
@@ -285,6 +303,9 @@ func (UnimplementedStorageProviderPluginServer) Bootstrap(context.Context, *Boot
 }
 func (UnimplementedStorageProviderPluginServer) GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLeader not implemented")
 }
 func (UnimplementedStorageProviderPluginServer) AddVoter(context.Context, *StoragePeer) (*AddVoterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddVoter not implemented")
@@ -361,6 +382,24 @@ func _StorageProviderPlugin_GetStatus_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageProviderPluginServer).GetStatus(ctx, req.(*StorageStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StorageProviderPlugin_GetLeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLeaderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).GetLeader(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_GetLeader_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).GetLeader(ctx, req.(*GetLeaderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -562,6 +601,10 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetStatus",
 			Handler:    _StorageProviderPlugin_GetStatus_Handler,
+		},
+		{
+			MethodName: "GetLeader",
+			Handler:    _StorageProviderPlugin_GetLeader_Handler,
 		},
 		{
 			MethodName: "AddVoter",

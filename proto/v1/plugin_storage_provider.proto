@@ -31,6 +31,9 @@ message BootstrapResponse {
     StorageStatus status = 1;
 }
 
+// GetLeaderRequest is the request object for the GetLeader RPC.
+message GetLeaderRequest {}
+
 // StorageStatusRequest is the request object for the StorageStatus RPC.
 message StorageStatusRequest {}
 
@@ -175,6 +178,10 @@ service StorageProviderPlugin {
     rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
     // GetStatus returns the status of the storage.
     rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
+    // GetLeader returns the leader of the storage. Leader is loosely defined
+    // by the implementation, but must be a node that can reliably be used to
+    // mutate the storage.
+    rpc GetLeader(GetLeaderRequest) returns (StoragePeer) {}
 
     // Storage Membership RPCs
 
