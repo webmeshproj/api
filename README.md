@@ -1469,7 +1469,7 @@ StorageStatus is the response object for the StorageStatus RPC.
 | Field          | Type                               | Label    | Description                                                                                                                |
 |----------------|------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------|
 | is_writable    | [bool](#bool)                      |          | IsWritable is true if the storage can currently be written to.                                                             |
-| cluster_status | [ClusterStatus](#v1.ClusterStatus) |          | ClusterStatus is the status of the storage.                                                                                |
+| cluster_status | [ClusterStatus](#v1.ClusterStatus) |          | ClusterStatus is the status of the storage. The definitions applied to each status are implementation specific.            |
 | peers          | [StoragePeer](#v1.StoragePeer)     | repeated | Peers is the list of servers that are currently recognized as peers by the storage plugin.                                 |
 | message        | [string](#string)                  |          | message is an implementation specific message that can be used to provide additional information about the storage status. |
 

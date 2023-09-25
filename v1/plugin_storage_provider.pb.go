@@ -223,7 +223,8 @@ type StorageStatus struct {
 
 	// IsWritable is true if the storage can currently be written to.
 	IsWritable bool `protobuf:"varint,1,opt,name=is_writable,json=isWritable,proto3" json:"is_writable,omitempty"`
-	// ClusterStatus is the status of the storage.
+	// ClusterStatus is the status of the storage. The definitions applied
+	// to each status are implementation specific.
 	ClusterStatus ClusterStatus `protobuf:"varint,2,opt,name=cluster_status,json=clusterStatus,proto3,enum=v1.ClusterStatus" json:"cluster_status,omitempty"`
 	// Peers is the list of servers that are currently recognized as peers
 	// by the storage plugin.

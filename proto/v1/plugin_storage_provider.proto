@@ -38,7 +38,8 @@ message StorageStatusRequest {}
 message StorageStatus {
     // IsWritable is true if the storage can currently be written to.
     bool is_writable = 1;
-    // ClusterStatus is the status of the storage.
+    // ClusterStatus is the status of the storage. The definitions applied
+    // to each status are implementation specific.
     ClusterStatus cluster_status = 2;
     // Peers is the list of servers that are currently recognized as peers 
     // by the storage plugin.
