@@ -54,6 +54,7 @@ const (
 type StorageProviderPluginClient interface {
 	// Bootstrap is called when the storage is created for the first time.
 	// It is assumed that this node has been elected as the leader of the cluster.
+	// FailedPrecondition should be returned if the storage is already bootstrapped.
 	Bootstrap(ctx context.Context, in *BootstrapRequest, opts ...grpc.CallOption) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(ctx context.Context, in *StorageStatusRequest, opts ...grpc.CallOption) (*StorageStatus, error)
@@ -236,6 +237,7 @@ func (x *storageProviderPluginSubscribePrefixClient) Recv() (*PrefixEvent, error
 type StorageProviderPluginServer interface {
 	// Bootstrap is called when the storage is created for the first time.
 	// It is assumed that this node has been elected as the leader of the cluster.
+	// FailedPrecondition should be returned if the storage is already bootstrapped.
 	Bootstrap(context.Context, *BootstrapRequest) (*BootstrapResponse, error)
 	// GetStatus returns the status of the storage.
 	GetStatus(context.Context, *StorageStatusRequest) (*StorageStatus, error)

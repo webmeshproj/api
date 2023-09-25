@@ -5395,7 +5395,8 @@ additional information about the storage status. </p></td>
                 <td><a href="#v1.BootstrapRequest">BootstrapRequest</a></td>
                 <td><a href="#v1.BootstrapResponse">BootstrapResponse</a></td>
                 <td><p>Bootstrap is called when the storage is created for the first time. 
-It is assumed that this node has been elected as the leader of the cluster.</p></td>
+It is assumed that this node has been elected as the leader of the cluster.
+FailedPrecondition should be returned if the storage is already bootstrapped.</p></td>
               </tr>
             
               <tr>

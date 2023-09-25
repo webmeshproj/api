@@ -170,6 +170,7 @@ message PrefixEvent {
 service StorageProviderPlugin {
     // Bootstrap is called when the storage is created for the first time. 
     // It is assumed that this node has been elected as the leader of the cluster.
+    // FailedPrecondition should be returned if the storage is already bootstrapped.
     rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
     // GetStatus returns the status of the storage.
     rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
