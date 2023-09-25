@@ -1,5 +1,5 @@
 /*
-Copyright 2023.
+Copyright 2023 Avi Zimmerman <avi.zimmerman@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -112,34 +112,6 @@ service Plugin {
     rpc Configure (PluginConfiguration) returns (google.protobuf.Empty) {}
     // Close closes the plugin. It is called when the node is shutting down.
     rpc Close (google.protobuf.Empty) returns (google.protobuf.Empty) {}
-}
-
-// StoreLogRequest is the message containing a raft log entry.
-message StoreLogRequest {
-    // term is the term of the log entry.
-    uint64 term = 1;
-    // index is the index of the log entry.
-    uint64 index = 2;
-    // log is the log entry.
-    RaftLogEntry log = 3;
-}
-
-// DataSnapshot is the message containing a snapshot of the data.
-message DataSnapshot {
-    // term is the term of the log entry.
-    uint64 term = 1;
-    // index is the index of the log entry.
-    uint64 index = 2;
-    // data is the snapshot of the data.
-    bytes data = 3;
-}
-
-// RaftPlugin is the service definition for a Webmesh raft plugin.
-service RaftPlugin {
-    // Store dispatches a Raft log entry for storage.
-    rpc Store(StoreLogRequest) returns (RaftApplyResponse) {}
-    // RestoreSnapshot should drop any existing state and restore from the snapshot.
-    rpc RestoreSnapshot (DataSnapshot) returns (google.protobuf.Empty) {}
 }
 
 // AuthenticationRequest is the message containing an authentication request.

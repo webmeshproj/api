@@ -630,10 +630,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.DataSnapshot"><span class="badge">M</span>DataSnapshot</a>
-                </li>
-              
-                <li>
                   <a href="#v1.Event"><span class="badge">M</span>Event</a>
                 </li>
               
@@ -655,10 +651,6 @@
               
                 <li>
                   <a href="#v1.ReleaseIPRequest"><span class="badge">M</span>ReleaseIPRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StoreLogRequest"><span class="badge">M</span>StoreLogRequest</a>
                 </li>
               
               
@@ -689,15 +681,26 @@
                 </li>
               
                 <li>
-                  <a href="#v1.RaftPlugin"><span class="badge">S</span>RaftPlugin</a>
-                </li>
-              
-                <li>
                   <a href="#v1.StorageQuerierPlugin"><span class="badge">S</span>StorageQuerierPlugin</a>
                 </li>
               
                 <li>
                   <a href="#v1.WatchPlugin"><span class="badge">S</span>WatchPlugin</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#v1%2fplugin_storage_provider.proto">v1/plugin_storage_provider.proto</a>
+            <ul>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.StorageProviderPlguin"><span class="badge">S</span>StorageProviderPlguin</a>
                 </li>
               
             </ul>
@@ -4300,44 +4303,6 @@ to vote.</p></td>
 
         
       
-        <h3 id="v1.DataSnapshot">DataSnapshot</h3>
-        <p>DataSnapshot is the message containing a snapshot of the data.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>term</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>term is the term of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>index</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>index is the index of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>data</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>data is the snapshot of the data. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.Event">Event</h3>
         <p>Event is the message containing a watch event.</p>
 
@@ -4546,44 +4511,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p>ip is the IP that should be released. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StoreLogRequest">StoreLogRequest</h3>
-        <p>StoreLogRequest is the message containing a raft log entry.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>term</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>term is the term of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>index</td>
-                  <td><a href="#uint64">uint64</a></td>
-                  <td></td>
-                  <td><p>index is the index of the log entry. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>log</td>
-                  <td><a href="#v1.RaftLogEntry">RaftLogEntry</a></td>
-                  <td></td>
-                  <td><p>log is the log entry. </p></td>
                 </tr>
               
             </tbody>
@@ -4812,32 +4739,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
         </table>
 
         
-        <h3 id="v1.RaftPlugin">RaftPlugin</h3>
-        <p>RaftPlugin is the service definition for a Webmesh raft plugin.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>Store</td>
-                <td><a href="#v1.StoreLogRequest">StoreLogRequest</a></td>
-                <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
-                <td><p>Store dispatches a Raft log entry for storage.</p></td>
-              </tr>
-            
-              <tr>
-                <td>RestoreSnapshot</td>
-                <td><a href="#v1.DataSnapshot">DataSnapshot</a></td>
-                <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
-                <td><p>RestoreSnapshot should drop any existing state and restore from the snapshot.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-
-        
         <h3 id="v1.StorageQuerierPlugin">StorageQuerierPlugin</h3>
         <p>StorageQuerierPlugin is the service definition for a Webmesh storage querier plugin.</p>
         <table class="enum-table">
@@ -4875,6 +4776,32 @@ received.</p></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Emit handles a watch event.</p></td>
               </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/plugin_storage_provider.proto">v1/plugin_storage_provider.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.StorageProviderPlguin">StorageProviderPlguin</h3>
+        <p>StorageProviderPlguin is the service definition for a Webmesh storage provider.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
             
           </tbody>
         </table>

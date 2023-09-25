@@ -102,23 +102,22 @@
   - [<span class="badge">M</span>AuthenticationRequest](#v1.AuthenticationRequest)
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
-  - [<span class="badge">M</span>DataSnapshot](#v1.DataSnapshot)
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
   - [<span class="badge">M</span>PluginQuery](#v1.PluginQuery)
   - [<span class="badge">M</span>PluginQueryResult](#v1.PluginQueryResult)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
-  - [<span class="badge">M</span>StoreLogRequest](#v1.StoreLogRequest)
   - [<span class="badge">E</span>Event.WatchEvent](#v1.Event.WatchEvent)
   - [<span class="badge">E</span>PluginInfo.PluginCapability](#v1.PluginInfo.PluginCapability)
   - [<span class="badge">E</span>PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand)
   - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
   - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
-  - [<span class="badge">S</span>RaftPlugin](#v1.RaftPlugin)
   - [<span class="badge">S</span>StorageQuerierPlugin](#v1.StorageQuerierPlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
+- [v1/plugin_storage_provider.proto](#v1%2fplugin_storage_provider.proto)
+  - [<span class="badge">S</span>StorageProviderPlguin](#v1.StorageProviderPlguin)
 - [v1/webrtc.proto](#v1%2fwebrtc.proto)
   - [<span class="badge">M</span>DataChannelOffer](#v1.DataChannelOffer)
   - [<span class="badge">M</span>StartDataChannelRequest](#v1.StartDataChannelRequest)
@@ -1159,16 +1158,6 @@ response.
 |-------|-------------------|-------|-----------------------------------------|
 | id    | [string](#string) |       | id is the id of the authenticated user. |
 
-### DataSnapshot
-
-DataSnapshot is the message containing a snapshot of the data.
-
-| Field | Type              | Label | Description                          |
-|-------|-------------------|-------|--------------------------------------|
-| term  | [uint64](#uint64) |       | term is the term of the log entry.   |
-| index | [uint64](#uint64) |       | index is the index of the log entry. |
-| data  | [bytes](#bytes)   |       | data is the snapshot of the data.    |
-
 ### Event
 
 Event is the message containing a watch event.
@@ -1232,16 +1221,6 @@ ReleaseIPRequest is the message containing an IP release request.
 |---------|-------------------|-------|---------------------------------------------------------|
 | node_id | [string](#string) |       | node_id is the node that the IP should be released for. |
 | ip      | [string](#string) |       | ip is the IP that should be released.                   |
-
-### StoreLogRequest
-
-StoreLogRequest is the message containing a raft log entry.
-
-| Field | Type                             | Label | Description                          |
-|-------|----------------------------------|-------|--------------------------------------|
-| term  | [uint64](#uint64)                |       | term is the term of the log entry.   |
-| index | [uint64](#uint64)                |       | index is the index of the log entry. |
-| log   | [RaftLogEntry](#v1.RaftLogEntry) |       | log is the log entry.                |
 
 ### Event.WatchEvent
 
@@ -1310,15 +1289,6 @@ It must be implemented by all plugins.
 | Configure   | [PluginConfiguration](#v1.PluginConfiguration)   | [.google.protobuf.Empty](#google.protobuf.Empty) | Configure configures the plugin.                                      |
 | Close       | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Close closes the plugin. It is called when the node is shutting down. |
 
-### RaftPlugin
-
-RaftPlugin is the service definition for a Webmesh raft plugin.
-
-| Method Name     | Request Type                           | Response Type                                    | Description                                                                   |
-|-----------------|----------------------------------------|--------------------------------------------------|-------------------------------------------------------------------------------|
-| Store           | [StoreLogRequest](#v1.StoreLogRequest) | [RaftApplyResponse](#v1.RaftApplyResponse)       | Store dispatches a Raft log entry for storage.                                |
-| RestoreSnapshot | [DataSnapshot](#v1.DataSnapshot)       | [.google.protobuf.Empty](#google.protobuf.Empty) | RestoreSnapshot should drop any existing state and restore from the snapshot. |
-
 ### StorageQuerierPlugin
 
 StorageQuerierPlugin is the service definition for a Webmesh storage
@@ -1335,6 +1305,22 @@ WatchPlugin is the service definition for a Webmesh watch plugin.
 | Method Name | Request Type       | Response Type                                    | Description                 |
 |-------------|--------------------|--------------------------------------------------|-----------------------------|
 | Emit        | [Event](#v1.Event) | [.google.protobuf.Empty](#google.protobuf.Empty) | Emit handles a watch event. |
+
+<div class="file-heading">
+
+## v1/plugin_storage_provider.proto
+
+[Top](#title)
+
+</div>
+
+### StorageProviderPlguin
+
+StorageProviderPlguin is the service definition for a Webmesh storage
+provider.
+
+| Method Name | Request Type | Response Type | Description |
+|-------------|--------------|---------------|-------------|
 
 <div class="file-heading">
 
