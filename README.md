@@ -265,9 +265,6 @@ Status represents the status of a node.
 | features          | [FeaturePort](#v1.FeaturePort)                          | repeated | features is the list of features currently enabled.          |
 | cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
 | current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
-| current_term      | [uint64](#uint64)                                       |          | current_term is the current term of the cluster.             |
-| last_log_index    | [uint64](#uint64)                                       |          | last_log_index is the last log index of the cluster.         |
-| last_applied      | [uint64](#uint64)                                       |          | last_applied is the last applied index of the cluster.       |
 | interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
 
 ### WebRTCSignal

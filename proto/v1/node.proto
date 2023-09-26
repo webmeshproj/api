@@ -156,14 +156,8 @@ message Status {
     ClusterStatus cluster_status = 8;
     // current_leader is the current leader of the cluster.
     string current_leader = 9;
-    // current_term is the current term of the cluster.
-    uint64 current_term = 10;
-    // last_log_index is the last log index of the cluster.
-    uint64 last_log_index = 11;
-    // last_applied is the last applied index of the cluster.
-    uint64 last_applied = 12;
     // interface_metrics are the metrics for the node's interfaces.
-    InterfaceMetrics interface_metrics = 13;
+    InterfaceMetrics interface_metrics = 10;
 }
 
 // DataChannelNegotiation is the message for communicating data channels to nodes.
