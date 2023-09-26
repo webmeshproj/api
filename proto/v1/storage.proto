@@ -84,8 +84,8 @@ message PublishRequest {
 message PublishResponse {
 }
 
-// Storage is the service for querying information about the mesh state.
-service Storage {
+// StorageQueryService is the service for querying information about the mesh state.
+service StorageQueryService {
     // Query is used to query the mesh for information.
     rpc Query(QueryRequest) returns (stream QueryResponse) {}
 

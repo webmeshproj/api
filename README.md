@@ -56,7 +56,7 @@
   - [<span class="badge">M</span>SubscribeRequest](#v1.SubscribeRequest)
   - [<span class="badge">M</span>SubscriptionEvent](#v1.SubscriptionEvent)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
-  - [<span class="badge">S</span>Storage](#v1.Storage)
+  - [<span class="badge">S</span>StorageQueryService](#v1.StorageQueryService)
 - [v1/app.proto](#v1%2fapp.proto)
   - [<span class="badge">M</span>AnnounceDHTRequest](#v1.AnnounceDHTRequest)
   - [<span class="badge">M</span>AnnounceDHTResponse](#v1.AnnounceDHTResponse)
@@ -740,9 +740,10 @@ QueryCommand is the type of the query.
 | LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
 | ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
 
-### Storage
+### StorageQueryService
 
-Storage is the service for querying information about the mesh state.
+StorageQueryService is the service for querying information about the
+mesh state.
 
 | Method Name | Request Type                             | Response Type                                     | Description                                                                                                                                                                        |
 |-------------|------------------------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

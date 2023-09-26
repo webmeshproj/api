@@ -34,40 +34,40 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Storage_Query_FullMethodName     = "/v1.Storage/Query"
-	Storage_Publish_FullMethodName   = "/v1.Storage/Publish"
-	Storage_Subscribe_FullMethodName = "/v1.Storage/Subscribe"
+	StorageQueryService_Query_FullMethodName     = "/v1.StorageQueryService/Query"
+	StorageQueryService_Publish_FullMethodName   = "/v1.StorageQueryService/Publish"
+	StorageQueryService_Subscribe_FullMethodName = "/v1.StorageQueryService/Subscribe"
 )
 
-// StorageClient is the client API for Storage service.
+// StorageQueryServiceClient is the client API for StorageQueryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type StorageClient interface {
+type StorageQueryServiceClient interface {
 	// Query is used to query the mesh for information.
-	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Storage_QueryClient, error)
+	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (StorageQueryService_QueryClient, error)
 	// Publish is used to publish events to the mesh database. A restricted set
 	// of keys are allowed to be published to. This is only available on nodes
 	// that are able to provide storage.
 	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
 	// Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
 	// available on nodes that are able to provide storage.
-	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Storage_SubscribeClient, error)
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (StorageQueryService_SubscribeClient, error)
 }
 
-type storageClient struct {
+type storageQueryServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStorageClient(cc grpc.ClientConnInterface) StorageClient {
-	return &storageClient{cc}
+func NewStorageQueryServiceClient(cc grpc.ClientConnInterface) StorageQueryServiceClient {
+	return &storageQueryServiceClient{cc}
 }
 
-func (c *storageClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Storage_QueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Storage_ServiceDesc.Streams[0], Storage_Query_FullMethodName, opts...)
+func (c *storageQueryServiceClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (StorageQueryService_QueryClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StorageQueryService_ServiceDesc.Streams[0], StorageQueryService_Query_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &storageQueryClient{stream}
+	x := &storageQueryServiceQueryClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -77,16 +77,16 @@ func (c *storageClient) Query(ctx context.Context, in *QueryRequest, opts ...grp
 	return x, nil
 }
 
-type Storage_QueryClient interface {
+type StorageQueryService_QueryClient interface {
 	Recv() (*QueryResponse, error)
 	grpc.ClientStream
 }
 
-type storageQueryClient struct {
+type storageQueryServiceQueryClient struct {
 	grpc.ClientStream
 }
 
-func (x *storageQueryClient) Recv() (*QueryResponse, error) {
+func (x *storageQueryServiceQueryClient) Recv() (*QueryResponse, error) {
 	m := new(QueryResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -94,21 +94,21 @@ func (x *storageQueryClient) Recv() (*QueryResponse, error) {
 	return m, nil
 }
 
-func (c *storageClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
+func (c *storageQueryServiceClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
 	out := new(PublishResponse)
-	err := c.cc.Invoke(ctx, Storage_Publish_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, StorageQueryService_Publish_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Storage_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Storage_ServiceDesc.Streams[1], Storage_Subscribe_FullMethodName, opts...)
+func (c *storageQueryServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (StorageQueryService_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &StorageQueryService_ServiceDesc.Streams[1], StorageQueryService_Subscribe_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &storageSubscribeClient{stream}
+	x := &storageQueryServiceSubscribeClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -118,16 +118,16 @@ func (c *storageClient) Subscribe(ctx context.Context, in *SubscribeRequest, opt
 	return x, nil
 }
 
-type Storage_SubscribeClient interface {
+type StorageQueryService_SubscribeClient interface {
 	Recv() (*SubscriptionEvent, error)
 	grpc.ClientStream
 }
 
-type storageSubscribeClient struct {
+type storageQueryServiceSubscribeClient struct {
 	grpc.ClientStream
 }
 
-func (x *storageSubscribeClient) Recv() (*SubscriptionEvent, error) {
+func (x *storageQueryServiceSubscribeClient) Recv() (*SubscriptionEvent, error) {
 	m := new(SubscriptionEvent)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -135,129 +135,129 @@ func (x *storageSubscribeClient) Recv() (*SubscriptionEvent, error) {
 	return m, nil
 }
 
-// StorageServer is the server API for Storage service.
-// All implementations must embed UnimplementedStorageServer
+// StorageQueryServiceServer is the server API for StorageQueryService service.
+// All implementations must embed UnimplementedStorageQueryServiceServer
 // for forward compatibility
-type StorageServer interface {
+type StorageQueryServiceServer interface {
 	// Query is used to query the mesh for information.
-	Query(*QueryRequest, Storage_QueryServer) error
+	Query(*QueryRequest, StorageQueryService_QueryServer) error
 	// Publish is used to publish events to the mesh database. A restricted set
 	// of keys are allowed to be published to. This is only available on nodes
 	// that are able to provide storage.
 	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
 	// Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
 	// available on nodes that are able to provide storage.
-	Subscribe(*SubscribeRequest, Storage_SubscribeServer) error
-	mustEmbedUnimplementedStorageServer()
+	Subscribe(*SubscribeRequest, StorageQueryService_SubscribeServer) error
+	mustEmbedUnimplementedStorageQueryServiceServer()
 }
 
-// UnimplementedStorageServer must be embedded to have forward compatible implementations.
-type UnimplementedStorageServer struct {
+// UnimplementedStorageQueryServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedStorageQueryServiceServer struct {
 }
 
-func (UnimplementedStorageServer) Query(*QueryRequest, Storage_QueryServer) error {
+func (UnimplementedStorageQueryServiceServer) Query(*QueryRequest, StorageQueryService_QueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
-func (UnimplementedStorageServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
+func (UnimplementedStorageQueryServiceServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
-func (UnimplementedStorageServer) Subscribe(*SubscribeRequest, Storage_SubscribeServer) error {
+func (UnimplementedStorageQueryServiceServer) Subscribe(*SubscribeRequest, StorageQueryService_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (UnimplementedStorageServer) mustEmbedUnimplementedStorageServer() {}
+func (UnimplementedStorageQueryServiceServer) mustEmbedUnimplementedStorageQueryServiceServer() {}
 
-// UnsafeStorageServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StorageServer will
+// UnsafeStorageQueryServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StorageQueryServiceServer will
 // result in compilation errors.
-type UnsafeStorageServer interface {
-	mustEmbedUnimplementedStorageServer()
+type UnsafeStorageQueryServiceServer interface {
+	mustEmbedUnimplementedStorageQueryServiceServer()
 }
 
-func RegisterStorageServer(s grpc.ServiceRegistrar, srv StorageServer) {
-	s.RegisterService(&Storage_ServiceDesc, srv)
+func RegisterStorageQueryServiceServer(s grpc.ServiceRegistrar, srv StorageQueryServiceServer) {
+	s.RegisterService(&StorageQueryService_ServiceDesc, srv)
 }
 
-func _Storage_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _StorageQueryService_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(QueryRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(StorageServer).Query(m, &storageQueryServer{stream})
+	return srv.(StorageQueryServiceServer).Query(m, &storageQueryServiceQueryServer{stream})
 }
 
-type Storage_QueryServer interface {
+type StorageQueryService_QueryServer interface {
 	Send(*QueryResponse) error
 	grpc.ServerStream
 }
 
-type storageQueryServer struct {
+type storageQueryServiceQueryServer struct {
 	grpc.ServerStream
 }
 
-func (x *storageQueryServer) Send(m *QueryResponse) error {
+func (x *storageQueryServiceQueryServer) Send(m *QueryResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _Storage_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _StorageQueryService_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PublishRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).Publish(ctx, in)
+		return srv.(StorageQueryServiceServer).Publish(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Storage_Publish_FullMethodName,
+		FullMethod: StorageQueryService_Publish_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).Publish(ctx, req.(*PublishRequest))
+		return srv.(StorageQueryServiceServer).Publish(ctx, req.(*PublishRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _StorageQueryService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(SubscribeRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(StorageServer).Subscribe(m, &storageSubscribeServer{stream})
+	return srv.(StorageQueryServiceServer).Subscribe(m, &storageQueryServiceSubscribeServer{stream})
 }
 
-type Storage_SubscribeServer interface {
+type StorageQueryService_SubscribeServer interface {
 	Send(*SubscriptionEvent) error
 	grpc.ServerStream
 }
 
-type storageSubscribeServer struct {
+type storageQueryServiceSubscribeServer struct {
 	grpc.ServerStream
 }
 
-func (x *storageSubscribeServer) Send(m *SubscriptionEvent) error {
+func (x *storageQueryServiceSubscribeServer) Send(m *SubscriptionEvent) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// Storage_ServiceDesc is the grpc.ServiceDesc for Storage service.
+// StorageQueryService_ServiceDesc is the grpc.ServiceDesc for StorageQueryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Storage_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.Storage",
-	HandlerType: (*StorageServer)(nil),
+var StorageQueryService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.StorageQueryService",
+	HandlerType: (*StorageQueryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Publish",
-			Handler:    _Storage_Publish_Handler,
+			Handler:    _StorageQueryService_Publish_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Query",
-			Handler:       _Storage_Query_Handler,
+			Handler:       _StorageQueryService_Query_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Subscribe",
-			Handler:       _Storage_Subscribe_Handler,
+			Handler:       _StorageQueryService_Subscribe_Handler,
 			ServerStreams: true,
 		},
 	},
