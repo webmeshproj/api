@@ -47,7 +47,7 @@ enum Feature {
     MESH_API = 3;
     // ADMIN_API is the feature for the admin API.
     ADMIN_API = 4;
-    // MEMBERSHIP is the feature for membership. This is always supported on raft members.
+    // MEMBERSHIP is the feature for membership. This is always supported on storage-providing members.
     MEMBERSHIP = 5;
     // METRICS is the feature for exposing metrics.
     METRICS = 6;
@@ -59,10 +59,10 @@ enum Feature {
     MESH_DNS = 9;
     // FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.
     FORWARD_MESH_DNS = 10;
-    // STORAGE is the feature for querying, publishing, and subscribing to mesh state.
-    STORAGE = 11;
-    // RAFT is the feature for participating in raft consensus.
-    RAFT = 12;
+    // STORAGE_QUERIER is the feature for querying, publishing, and subscribing to mesh state.
+    STORAGE_QUERIER = 11;
+    // STORAGE_PROVIDER is the feature for being able to provide distributed storage.
+    STORAGE_PROVIDER = 12;
 }
 
 // EdgeAttribute are pre-defined edge attributes. They should

@@ -90,10 +90,11 @@ service Storage {
     rpc Query(QueryRequest) returns (stream QueryResponse) {}
 
     // Publish is used to publish events to the mesh database. A restricted set
-    // of keys are allowed to be published to.
+    // of keys are allowed to be published to. This is only available on nodes 
+    // that are able to provide storage.
     rpc Publish(PublishRequest) returns (PublishResponse) {}
 
-    // Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-    // available on nodes that are members of the raft cluster.
+    // Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
+    // available on nodes that are able to provide storage.
     rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
 }

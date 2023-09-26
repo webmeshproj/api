@@ -41,7 +41,7 @@ type RuleResource int32
 const (
 	// RESOURCE_UNKNOWN is an unknown resource.
 	RuleResource_RESOURCE_UNKNOWN RuleResource = 0
-	// RESOURCE_VOTES is the resource for voting in raft elections. The only
+	// RESOURCE_VOTES is the resource for voting in storage elections. The only
 	// verb evaluated for this resource is PUT.
 	RuleResource_RESOURCE_VOTES RuleResource = 1
 	// RESOURCE_ROLES is the resource for managing roles.

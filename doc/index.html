@@ -563,15 +563,15 @@
                 </li>
               
                 <li>
-                  <a href="#v1.RaftConfigurationRequest"><span class="badge">M</span>RaftConfigurationRequest</a>
+                  <a href="#v1.StorageConfigurationRequest"><span class="badge">M</span>StorageConfigurationRequest</a>
                 </li>
               
                 <li>
-                  <a href="#v1.RaftConfigurationResponse"><span class="badge">M</span>RaftConfigurationResponse</a>
+                  <a href="#v1.StorageConfigurationResponse"><span class="badge">M</span>StorageConfigurationResponse</a>
                 </li>
               
                 <li>
-                  <a href="#v1.RaftServer"><span class="badge">M</span>RaftServer</a>
+                  <a href="#v1.StorageServer"><span class="badge">M</span>StorageServer</a>
                 </li>
               
                 <li>
@@ -1541,7 +1541,7 @@ This will be deprecated in favor of the MEMBERSHIP feature.</p></td>
               <tr>
                 <td>MEMBERSHIP</td>
                 <td>5</td>
-                <td><p>MEMBERSHIP is the feature for membership. This is always supported on raft members.</p></td>
+                <td><p>MEMBERSHIP is the feature for membership. This is always supported on storage-providing members.</p></td>
               </tr>
             
               <tr>
@@ -1575,15 +1575,15 @@ This will be deprecated in favor of the MEMBERSHIP feature.</p></td>
               </tr>
             
               <tr>
-                <td>STORAGE</td>
+                <td>STORAGE_QUERIER</td>
                 <td>11</td>
-                <td><p>STORAGE is the feature for querying, publishing, and subscribing to mesh state.</p></td>
+                <td><p>STORAGE_QUERIER is the feature for querying, publishing, and subscribing to mesh state.</p></td>
               </tr>
             
               <tr>
-                <td>RAFT</td>
+                <td>STORAGE_PROVIDER</td>
                 <td>12</td>
-                <td><p>RAFT is the feature for participating in raft consensus.</p></td>
+                <td><p>STORAGE_PROVIDER is the feature for being able to provide distributed storage.</p></td>
               </tr>
             
           </tbody>
@@ -2152,7 +2152,7 @@ performed. </p></td>
               <tr>
                 <td>RESOURCE_VOTES</td>
                 <td>1</td>
-                <td><p>RESOURCE_VOTES is the resource for voting in raft elections. The only
+                <td><p>RESOURCE_VOTES is the resource for voting in storage elections. The only
 verb evaluated for this resource is PUT.</p></td>
               </tr>
             
@@ -3004,15 +3004,16 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
                 <td><a href="#v1.PublishRequest">PublishRequest</a></td>
                 <td><a href="#v1.PublishResponse">PublishResponse</a></td>
                 <td><p>Publish is used to publish events to the mesh database. A restricted set
-of keys are allowed to be published to.</p></td>
+of keys are allowed to be published to. This is only available on nodes 
+that are able to provide storage.</p></td>
               </tr>
             
               <tr>
                 <td>Subscribe</td>
                 <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
                 <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
-                <td><p>Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-available on nodes that are members of the raft cluster.</p></td>
+                <td><p>Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
+available on nodes that are able to provide storage.</p></td>
               </tr>
             
           </tbody>
@@ -3683,10 +3684,10 @@ the node is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
                 <tr>
-                  <td>prefer_raft_ipv6</td>
+                  <td>prefer_storage_ipv6</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
+                  <td><p>prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
 This is only used if assign_ipv4 is true. </p></td>
                 </tr>
               
@@ -3703,7 +3704,7 @@ will be denied if the node is not allowed to vote. </p></td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
                   <td><p>as_observer is whether the node should be added as an observer. They will receive
-updates to the raft log, but not be able to vote in elections. </p></td>
+updates to the storage, but not be able to vote in elections. </p></td>
                 </tr>
               
                 <tr>
@@ -3931,15 +3932,15 @@ the peers has the ICE flag set. </p></td>
 
         
       
-        <h3 id="v1.RaftConfigurationRequest">RaftConfigurationRequest</h3>
-        <p>RaftConfigurationRequest is a request to get the current Raft configuration.</p>
+        <h3 id="v1.StorageConfigurationRequest">StorageConfigurationRequest</h3>
+        <p>StorageConfigurationRequest is a request to get the current Storage configuration.</p>
 
         
 
         
       
-        <h3 id="v1.RaftConfigurationResponse">RaftConfigurationResponse</h3>
-        <p>RaftConfigurationResponse is a response to a Raft configuration request.</p>
+        <h3 id="v1.StorageConfigurationResponse">StorageConfigurationResponse</h3>
+        <p>StorageConfigurationResponse is a response to a Storage configuration request.</p>
 
         
           <table class="field-table">
@@ -3950,9 +3951,9 @@ the peers has the ICE flag set. </p></td>
               
                 <tr>
                   <td>servers</td>
-                  <td><a href="#v1.RaftServer">RaftServer</a></td>
+                  <td><a href="#v1.StorageServer">StorageServer</a></td>
                   <td>repeated</td>
-                  <td><p>servers is the list of servers in the Raft configuration. </p></td>
+                  <td><p>servers is the list of servers in the storage configuration. </p></td>
                 </tr>
               
             </tbody>
@@ -3962,8 +3963,8 @@ the peers has the ICE flag set. </p></td>
 
         
       
-        <h3 id="v1.RaftServer">RaftServer</h3>
-        <p>RaftServer is a server in the Raft configuration.</p>
+        <h3 id="v1.StorageServer">StorageServer</h3>
+        <p>StorageServer is a server in the Storage configuration.</p>
 
         
           <table class="field-table">
@@ -4197,7 +4198,7 @@ webmesh mechanisms.</p></td>
 
       
         <h3 id="v1.Membership">Membership</h3>
-        <p>The membership service is exposed on raft-nodes to allow nodes to join</p><p>and leave the cluster. This service is meant to be made available publicly</p><p>to allow people in from the outside.</p>
+        <p>The membership service is exposed on storage-providing nodes to allow nodes to join</p><p>and leave the cluster. This service is meant to be made available publicly</p><p>to allow people in from the outside.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -4243,14 +4244,14 @@ will receive updates to the peer configuration as it changes.</p></td>
                 <td><a href="#v1.RaftApplyResponse">RaftApplyResponse</a></td>
                 <td><p>Apply is used by voting nodes to request a log entry be applied to the state machine.
 This is only available on the leader, and can only be called by nodes that are allowed
-to vote.</p></td>
+to vote. This is only used by the built-in raft storage implementation.</p></td>
               </tr>
             
               <tr>
-                <td>GetRaftConfiguration</td>
-                <td><a href="#v1.RaftConfigurationRequest">RaftConfigurationRequest</a></td>
-                <td><a href="#v1.RaftConfigurationResponse">RaftConfigurationResponse</a></td>
-                <td><p>GetRaftConfiguration returns the current Raft configuration.</p></td>
+                <td>GetStorageConfiguration</td>
+                <td><a href="#v1.StorageConfigurationRequest">StorageConfigurationRequest</a></td>
+                <td><a href="#v1.StorageConfigurationResponse">StorageConfigurationResponse</a></td>
+                <td><p>GetStorageConfiguration returns the current Storage configuration.</p></td>
               </tr>
             
           </tbody>
@@ -5460,15 +5461,6 @@ additional information about the storage status. </p></td>
           <tbody>
             
               <tr>
-                <td>Bootstrap</td>
-                <td><a href="#v1.BootstrapRequest">BootstrapRequest</a></td>
-                <td><a href="#v1.BootstrapResponse">BootstrapResponse</a></td>
-                <td><p>Bootstrap is called when the storage is created for the first time. 
-It is assumed that this node has been elected as the leader of the cluster.
-FailedPrecondition should be returned if the storage is already bootstrapped.</p></td>
-              </tr>
-            
-              <tr>
                 <td>GetStatus</td>
                 <td><a href="#v1.StorageStatusRequest">StorageStatusRequest</a></td>
                 <td><a href="#v1.StorageStatus">StorageStatus</a></td>
@@ -5476,12 +5468,12 @@ FailedPrecondition should be returned if the storage is already bootstrapped.</p
               </tr>
             
               <tr>
-                <td>GetLeader</td>
-                <td><a href="#v1.GetLeaderRequest">GetLeaderRequest</a></td>
-                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
-                <td><p>GetLeader returns the leader of the storage. Leader may be loosely defined
-by the implementation, but must be a node that can reliably be used to
-mutate the storage.</p></td>
+                <td>Bootstrap</td>
+                <td><a href="#v1.BootstrapRequest">BootstrapRequest</a></td>
+                <td><a href="#v1.BootstrapResponse">BootstrapResponse</a></td>
+                <td><p>Bootstrap is called when the storage is created for the first time. 
+It is assumed that this node has been elected as the leader of the cluster.
+FailedPrecondition should be returned if the storage is already bootstrapped.</p></td>
               </tr>
             
               <tr>
@@ -5529,6 +5521,15 @@ consistent state before returning.</p></td>
                 <td><a href="#v1.IsMemberRequest">IsMemberRequest</a></td>
                 <td><a href="#v1.IsMemberResponse">IsMemberResponse</a></td>
                 <td><p>IsMember returns true if the peer is a member of the storage.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetLeader</td>
+                <td><a href="#v1.GetLeaderRequest">GetLeaderRequest</a></td>
+                <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                <td><p>GetLeader returns the leader of the storage. Leader may be loosely defined
+by the implementation, but must be a node that can reliably be used to
+mutate the storage.</p></td>
               </tr>
             
               <tr>

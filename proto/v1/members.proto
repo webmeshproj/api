@@ -47,14 +47,14 @@ message JoinRequest {
     string zone_awareness_id = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
     bool assign_ipv4 = 7;
-    // prefer_raft_ipv6 is whether IPv6 should be preferred over IPv4 for raft communication.
+    // prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_raft_ipv6 = 8;
+    bool prefer_storage_ipv6 = 8;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
     bool as_voter = 9;
     // as_observer is whether the node should be added as an observer. They will receive
-    // updates to the raft log, but not be able to vote in elections.
+    // updates to the storage, but not be able to vote in elections.
     bool as_observer = 10;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
@@ -152,17 +152,17 @@ message LeaveRequest {
 // LeaveResponse is a response to a leave request. It is currently empty.
 message LeaveResponse {}
 
-// RaftConfigurationRequest is a request to get the current Raft configuration.
-message RaftConfigurationRequest {}
+// StorageConfigurationRequest is a request to get the current Storage configuration.
+message StorageConfigurationRequest {}
 
-// RaftConfigurationResponse is a response to a Raft configuration request.
-message RaftConfigurationResponse {
-    // servers is the list of servers in the Raft configuration.
-    repeated RaftServer servers = 1;
+// StorageConfigurationResponse is a response to a Storage configuration request.
+message StorageConfigurationResponse {
+    // servers is the list of servers in the storage configuration.
+    repeated StorageServer servers = 1;
 }
 
-// RaftServer is a server in the Raft configuration.
-message RaftServer {
+// StorageServer is a server in the Storage configuration.
+message StorageServer {
     // ID is the ID of the server.
     string id = 1;
     // Suffrage is the suffrage of the server.
@@ -189,7 +189,7 @@ message PeerConfigurations {
     repeated string dns_servers = 7;
 }
 
-// The membership service is exposed on raft-nodes to allow nodes to join
+// The membership service is exposed on storage-providing nodes to allow nodes to join
 // and leave the cluster. This service is meant to be made available publicly
 // to allow people in from the outside. 
 service Membership {
@@ -212,9 +212,9 @@ service Membership {
 
     // Apply is used by voting nodes to request a log entry be applied to the state machine.
     // This is only available on the leader, and can only be called by nodes that are allowed
-    // to vote.
+    // to vote. This is only used by the built-in raft storage implementation.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
 
-    // GetRaftConfiguration returns the current Raft configuration.
-    rpc GetRaftConfiguration(RaftConfigurationRequest) returns (RaftConfigurationResponse) {}
+    // GetStorageConfiguration returns the current Storage configuration.
+    rpc GetStorageConfiguration(StorageConfigurationRequest) returns (StorageConfigurationResponse) {}
 }

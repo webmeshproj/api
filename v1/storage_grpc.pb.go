@@ -46,10 +46,11 @@ type StorageClient interface {
 	// Query is used to query the mesh for information.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (Storage_QueryClient, error)
 	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
+	// of keys are allowed to be published to. This is only available on nodes
+	// that are able to provide storage.
 	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
-	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-	// available on nodes that are members of the raft cluster.
+	// Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
+	// available on nodes that are able to provide storage.
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (Storage_SubscribeClient, error)
 }
 
@@ -141,10 +142,11 @@ type StorageServer interface {
 	// Query is used to query the mesh for information.
 	Query(*QueryRequest, Storage_QueryServer) error
 	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
+	// of keys are allowed to be published to. This is only available on nodes
+	// that are able to provide storage.
 	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
-	// Subscribe is used by non-raft nodes to receive updates to the mesh state. This is only
-	// available on nodes that are members of the raft cluster.
+	// Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
+	// available on nodes that are able to provide storage.
 	Subscribe(*SubscribeRequest, Storage_SubscribeServer) error
 	mustEmbedUnimplementedStorageServer()
 }

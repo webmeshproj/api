@@ -185,16 +185,12 @@ message PrefixEvent {
 
 // StorageProviderPlugin is the service definition for a Webmesh storage provider.
 service StorageProviderPlugin {
+    // GetStatus returns the status of the storage.
+    rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
     // Bootstrap is called when the storage is created for the first time. 
     // It is assumed that this node has been elected as the leader of the cluster.
     // FailedPrecondition should be returned if the storage is already bootstrapped.
     rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
-    // GetStatus returns the status of the storage.
-    rpc GetStatus(StorageStatusRequest) returns (StorageStatus) {}
-    // GetLeader returns the leader of the storage. Leader may be loosely defined
-    // by the implementation, but must be a node that can reliably be used to
-    // mutate the storage.
-    rpc GetLeader(GetLeaderRequest) returns (StoragePeer) {}
 
     // For all of the following RPCs, the underlying implementation should ensure
     // that the storage is in a consistent state before returning.
@@ -228,6 +224,10 @@ service StorageProviderPlugin {
     rpc RemovePeer(StoragePeer) returns (RemoveServerResponse) {}
     // IsMember returns true if the peer is a member of the storage.
     rpc IsMember(IsMemberRequest) returns (IsMemberResponse) {}
+    // GetLeader returns the leader of the storage. Leader may be loosely defined
+    // by the implementation, but must be a node that can reliably be used to
+    // mutate the storage.
+    rpc GetLeader(GetLeaderRequest) returns (StoragePeer) {}
 
     // Storage Usage RPCs
     // For the below RPCs, NotFound should be returned if the key does not exist.
