@@ -40,7 +40,6 @@ const (
 	StorageProviderPlugin_AddObserver_FullMethodName     = "/v1.StorageProviderPlugin/AddObserver"
 	StorageProviderPlugin_DemoteVoter_FullMethodName     = "/v1.StorageProviderPlugin/DemoteVoter"
 	StorageProviderPlugin_RemovePeer_FullMethodName      = "/v1.StorageProviderPlugin/RemovePeer"
-	StorageProviderPlugin_IsMember_FullMethodName        = "/v1.StorageProviderPlugin/IsMember"
 	StorageProviderPlugin_GetLeader_FullMethodName       = "/v1.StorageProviderPlugin/GetLeader"
 	StorageProviderPlugin_GetValue_FullMethodName        = "/v1.StorageProviderPlugin/GetValue"
 	StorageProviderPlugin_PutValue_FullMethodName        = "/v1.StorageProviderPlugin/PutValue"
@@ -80,8 +79,6 @@ type StorageProviderPluginClient interface {
 	// should ensure that the server is removed and that the storage is in a
 	// consistent state before returning.
 	RemovePeer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error)
-	// IsMember returns true if the peer is a member of the storage.
-	IsMember(ctx context.Context, in *IsMemberRequest, opts ...grpc.CallOption) (*IsMemberResponse, error)
 	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
@@ -156,15 +153,6 @@ func (c *storageProviderPluginClient) DemoteVoter(ctx context.Context, in *Stora
 func (c *storageProviderPluginClient) RemovePeer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error) {
 	out := new(RemoveServerResponse)
 	err := c.cc.Invoke(ctx, StorageProviderPlugin_RemovePeer_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *storageProviderPluginClient) IsMember(ctx context.Context, in *IsMemberRequest, opts ...grpc.CallOption) (*IsMemberResponse, error) {
-	out := new(IsMemberResponse)
-	err := c.cc.Invoke(ctx, StorageProviderPlugin_IsMember_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -287,8 +275,6 @@ type StorageProviderPluginServer interface {
 	// should ensure that the server is removed and that the storage is in a
 	// consistent state before returning.
 	RemovePeer(context.Context, *StoragePeer) (*RemoveServerResponse, error)
-	// IsMember returns true if the peer is a member of the storage.
-	IsMember(context.Context, *IsMemberRequest) (*IsMemberResponse, error)
 	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
@@ -329,9 +315,6 @@ func (UnimplementedStorageProviderPluginServer) DemoteVoter(context.Context, *St
 }
 func (UnimplementedStorageProviderPluginServer) RemovePeer(context.Context, *StoragePeer) (*RemoveServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemovePeer not implemented")
-}
-func (UnimplementedStorageProviderPluginServer) IsMember(context.Context, *IsMemberRequest) (*IsMemberResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsMember not implemented")
 }
 func (UnimplementedStorageProviderPluginServer) GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLeader not implemented")
@@ -471,24 +454,6 @@ func _StorageProviderPlugin_RemovePeer_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StorageProviderPluginServer).RemovePeer(ctx, req.(*StoragePeer))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _StorageProviderPlugin_IsMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsMemberRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StorageProviderPluginServer).IsMember(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: StorageProviderPlugin_IsMember_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageProviderPluginServer).IsMember(ctx, req.(*IsMemberRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -652,10 +617,6 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemovePeer",
 			Handler:    _StorageProviderPlugin_RemovePeer_Handler,
-		},
-		{
-			MethodName: "IsMember",
-			Handler:    _StorageProviderPlugin_IsMember_Handler,
 		},
 		{
 			MethodName: "GetLeader",

@@ -127,8 +127,6 @@
   - [<span class="badge">M</span>GetLeaderRequest](#v1.GetLeaderRequest)
   - [<span class="badge">M</span>GetValueRequest](#v1.GetValueRequest)
   - [<span class="badge">M</span>GetValueResponse](#v1.GetValueResponse)
-  - [<span class="badge">M</span>IsMemberRequest](#v1.IsMemberRequest)
-  - [<span class="badge">M</span>IsMemberResponse](#v1.IsMemberResponse)
   - [<span class="badge">M</span>ListKeysRequest](#v1.ListKeysRequest)
   - [<span class="badge">M</span>ListKeysResponse](#v1.ListKeysResponse)
   - [<span class="badge">M</span>ListValuesRequest](#v1.ListValuesRequest)
@@ -1396,22 +1394,6 @@ GetValueResponse is the response object for the GetValue RPC.
 |-------|----------------------------------|-------|--------------------------------|
 | value | [StorageValue](#v1.StorageValue) |       | Value is the value of the key. |
 
-### IsMemberRequest
-
-IsMemberRequest is the request object for the IsMember RPC.
-
-| Field | Type              | Label | Description                                                                                                              |
-|-------|-------------------|-------|--------------------------------------------------------------------------------------------------------------------------|
-| peer  | [string](#string) |       | Peer is the ID of the peer to check if it is a member of the storage. An empty peer should be treated as the local peer. |
-
-### IsMemberResponse
-
-IsMemberResponse is the response object for the IsMember RPC.
-
-| Field     | Type          | Label | Description                                              |
-|-----------|---------------|-------|----------------------------------------------------------|
-| is_member | [bool](#bool) |       | IsMember is true if the peer is a member of the storage. |
-
 ### ListKeysRequest
 
 ListKeysRequest is the request object for the ListValues RPC.
@@ -1539,7 +1521,6 @@ provider.
 | AddObserver     | [StoragePeer](#v1.StoragePeer)                       | [AddObserverResponse](#v1.AddObserverResponse)   | AddObserver adds an observer to the storage. The underlying implementation should ensure that the observer is added to the storage and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible. |
 | DemoteVoter     | [StoragePeer](#v1.StoragePeer)                       | [DemoteVoterResponse](#v1.DemoteVoterResponse)   | DemoteVoter demotes a voter to an observer. The underlying implementation should ensure that the voter is demoted and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible.                  |
 | RemovePeer      | [StoragePeer](#v1.StoragePeer)                       | [RemoveServerResponse](#v1.RemoveServerResponse) | RemovePeer removes a peer from the storage. The underlying implementation should ensure that the server is removed and that the storage is in a consistent state before returning.                                                                                                                                                                                       |
-| IsMember        | [IsMemberRequest](#v1.IsMemberRequest)               | [IsMemberResponse](#v1.IsMemberResponse)         | IsMember returns true if the peer is a member of the storage.                                                                                                                                                                                                                                                                                                            |
 | GetLeader       | [GetLeaderRequest](#v1.GetLeaderRequest)             | [StoragePeer](#v1.StoragePeer)                   | GetLeader returns the leader of the storage. Leader may be loosely defined by the implementation, but must be a node that can reliably be used to mutate the storage.                                                                                                                                                                                                    |
 | GetValue        | [GetValueRequest](#v1.GetValueRequest)               | [GetValueResponse](#v1.GetValueResponse)         | GetValue returns the value for a key.                                                                                                                                                                                                                                                                                                                                    |
 | PutValue        | [PutValueRequest](#v1.PutValueRequest)               | [PutValueResponse](#v1.PutValueResponse)         | PutValue puts a value for a key.                                                                                                                                                                                                                                                                                                                                         |

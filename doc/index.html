@@ -737,14 +737,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.IsMemberRequest"><span class="badge">M</span>IsMemberRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.IsMemberResponse"><span class="badge">M</span>IsMemberResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.ListKeysRequest"><span class="badge">M</span>ListKeysRequest</a>
                 </li>
               
@@ -5010,55 +5002,6 @@ received.</p></td>
 
         
       
-        <h3 id="v1.IsMemberRequest">IsMemberRequest</h3>
-        <p>IsMemberRequest is the request object for the IsMember RPC.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>peer</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>Peer is the ID of the peer to check if it is a member of the storage.
-An empty peer should be treated as the local peer. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.IsMemberResponse">IsMemberResponse</h3>
-        <p>IsMemberResponse is the response object for the IsMember RPC.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>is_member</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>IsMember is true if the peer is a member of the storage. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.ListKeysRequest">ListKeysRequest</h3>
         <p>ListKeysRequest is the request object for the ListValues RPC.</p>
 
@@ -5493,13 +5436,6 @@ track of the observer in the GetStatus RPC if possible.</p></td>
                 <td><p>RemovePeer removes a peer from the storage. The underlying implementation
 should ensure that the server is removed and that the storage is in a
 consistent state before returning.</p></td>
-              </tr>
-            
-              <tr>
-                <td>IsMember</td>
-                <td><a href="#v1.IsMemberRequest">IsMemberRequest</a></td>
-                <td><a href="#v1.IsMemberResponse">IsMemberResponse</a></td>
-                <td><p>IsMember returns true if the peer is a member of the storage.</p></td>
               </tr>
             
               <tr>
