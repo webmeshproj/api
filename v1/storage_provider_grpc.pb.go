@@ -17,7 +17,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: v1/plugin_storage_provider.proto
+// source: v1/storage_provider.proto
 
 package v1
 
@@ -41,6 +41,7 @@ const (
 	StorageProviderPlugin_DemoteVoter_FullMethodName     = "/v1.StorageProviderPlugin/DemoteVoter"
 	StorageProviderPlugin_RemovePeer_FullMethodName      = "/v1.StorageProviderPlugin/RemovePeer"
 	StorageProviderPlugin_GetLeader_FullMethodName       = "/v1.StorageProviderPlugin/GetLeader"
+	StorageProviderPlugin_GetPeers_FullMethodName        = "/v1.StorageProviderPlugin/GetPeers"
 	StorageProviderPlugin_GetValue_FullMethodName        = "/v1.StorageProviderPlugin/GetValue"
 	StorageProviderPlugin_PutValue_FullMethodName        = "/v1.StorageProviderPlugin/PutValue"
 	StorageProviderPlugin_DeleteValue_FullMethodName     = "/v1.StorageProviderPlugin/DeleteValue"
@@ -83,6 +84,10 @@ type StorageProviderPluginClient interface {
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
 	GetLeader(ctx context.Context, in *GetLeaderRequest, opts ...grpc.CallOption) (*StoragePeer, error)
+	// GetPeers returns all peers of the storage. Peer status may be loosely defined
+	// by the implementation, but must correlate to nodes that can reliably be used to
+	// mutate the storage.
+	GetPeers(ctx context.Context, in *GetPeersRequest, opts ...grpc.CallOption) (*StoragePeers, error)
 	// GetValue returns the value for a key.
 	GetValue(ctx context.Context, in *GetValueRequest, opts ...grpc.CallOption) (*GetValueResponse, error)
 	// PutValue puts a value for a key.
@@ -162,6 +167,15 @@ func (c *storageProviderPluginClient) RemovePeer(ctx context.Context, in *Storag
 func (c *storageProviderPluginClient) GetLeader(ctx context.Context, in *GetLeaderRequest, opts ...grpc.CallOption) (*StoragePeer, error) {
 	out := new(StoragePeer)
 	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetLeader_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *storageProviderPluginClient) GetPeers(ctx context.Context, in *GetPeersRequest, opts ...grpc.CallOption) (*StoragePeers, error) {
+	out := new(StoragePeers)
+	err := c.cc.Invoke(ctx, StorageProviderPlugin_GetPeers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -279,6 +293,10 @@ type StorageProviderPluginServer interface {
 	// by the implementation, but must be a node that can reliably be used to
 	// mutate the storage.
 	GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error)
+	// GetPeers returns all peers of the storage. Peer status may be loosely defined
+	// by the implementation, but must correlate to nodes that can reliably be used to
+	// mutate the storage.
+	GetPeers(context.Context, *GetPeersRequest) (*StoragePeers, error)
 	// GetValue returns the value for a key.
 	GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error)
 	// PutValue puts a value for a key.
@@ -318,6 +336,9 @@ func (UnimplementedStorageProviderPluginServer) RemovePeer(context.Context, *Sto
 }
 func (UnimplementedStorageProviderPluginServer) GetLeader(context.Context, *GetLeaderRequest) (*StoragePeer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLeader not implemented")
+}
+func (UnimplementedStorageProviderPluginServer) GetPeers(context.Context, *GetPeersRequest) (*StoragePeers, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPeers not implemented")
 }
 func (UnimplementedStorageProviderPluginServer) GetValue(context.Context, *GetValueRequest) (*GetValueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValue not implemented")
@@ -476,6 +497,24 @@ func _StorageProviderPlugin_GetLeader_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StorageProviderPlugin_GetPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPeersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StorageProviderPluginServer).GetPeers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StorageProviderPlugin_GetPeers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StorageProviderPluginServer).GetPeers(ctx, req.(*GetPeersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _StorageProviderPlugin_GetValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetValueRequest)
 	if err := dec(in); err != nil {
@@ -623,6 +662,10 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StorageProviderPlugin_GetLeader_Handler,
 		},
 		{
+			MethodName: "GetPeers",
+			Handler:    _StorageProviderPlugin_GetPeers_Handler,
+		},
+		{
 			MethodName: "GetValue",
 			Handler:    _StorageProviderPlugin_GetValue_Handler,
 		},
@@ -650,5 +693,5 @@ var StorageProviderPlugin_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "v1/plugin_storage_provider.proto",
+	Metadata: "v1/storage_provider.proto",
 }

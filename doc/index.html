@@ -277,6 +277,41 @@
         
           
           <li>
+            <a href="#v1%2fnetwork_acls.proto">v1/network_acls.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.NetworkACL"><span class="badge">M</span>NetworkACL</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.NetworkACLs"><span class="badge">M</span>NetworkACLs</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.NetworkAction"><span class="badge">M</span>NetworkAction</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.Route"><span class="badge">M</span>Route</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.Routes"><span class="badge">M</span>Routes</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#v1.ACLAction"><span class="badge">E</span>ACLAction</a>
+                </li>
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2frbac.proto">v1/rbac.proto</a>
             <ul>
               
@@ -336,41 +371,6 @@
         
           
           <li>
-            <a href="#v1%2fnetwork_acls.proto">v1/network_acls.proto</a>
-            <ul>
-              
-                <li>
-                  <a href="#v1.NetworkACL"><span class="badge">M</span>NetworkACL</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.NetworkACLs"><span class="badge">M</span>NetworkACLs</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.NetworkAction"><span class="badge">M</span>NetworkAction</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.Route"><span class="badge">M</span>Route</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.Routes"><span class="badge">M</span>Routes</a>
-                </li>
-              
-              
-                <li>
-                  <a href="#v1.ACLAction"><span class="badge">E</span>ACLAction</a>
-                </li>
-              
-              
-              
-            </ul>
-          </li>
-        
-          
-          <li>
             <a href="#v1%2fadmin.proto">v1/admin.proto</a>
             <ul>
               
@@ -386,7 +386,7 @@
         
           
           <li>
-            <a href="#v1%2fstorage.proto">v1/storage.proto</a>
+            <a href="#v1%2fstorage_query.proto">v1/storage_query.proto</a>
             <ul>
               
                 <li>
@@ -693,7 +693,7 @@
         
           
           <li>
-            <a href="#v1%2fplugin_storage_provider.proto">v1/plugin_storage_provider.proto</a>
+            <a href="#v1%2fstorage_provider.proto">v1/storage_provider.proto</a>
             <ul>
               
                 <li>
@@ -726,6 +726,10 @@
               
                 <li>
                   <a href="#v1.GetLeaderRequest"><span class="badge">M</span>GetLeaderRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetPeersRequest"><span class="badge">M</span>GetPeersRequest</a>
                 </li>
               
                 <li>
@@ -770,6 +774,10 @@
               
                 <li>
                   <a href="#v1.StoragePeer"><span class="badge">M</span>StoragePeer</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.StoragePeers"><span class="badge">M</span>StoragePeers</a>
                 </li>
               
                 <li>
@@ -1819,6 +1827,268 @@ edges, and a rendering in the dot format.</p></td>
     
       
       <div class="file-heading">
+        <h2 id="v1/network_acls.proto">v1/network_acls.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.NetworkACL">NetworkACL</h3>
+        <p>NetworkACL is a network ACL.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the ACL. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>priority</td>
+                  <td><a href="#int32">int32</a></td>
+                  <td></td>
+                  <td><p>priority is the priority of the ACL. ACLs with higher priority are evaluated first. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#v1.ACLAction">ACLAction</a></td>
+                  <td></td>
+                  <td><p>action is the action to take when a request matches the ACL. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_nodes</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+Groups can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>source_cidrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_cidrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched.
+
+// protocols is a list of protocols to match against. If empty, all protocols are matched.
+// Protocols can be specified by name or number.
+repeated string protocols = 8;
+// ports is a list of ports to match against. If empty, all ports are matched.
+repeated uint32 ports = 9; </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.NetworkACLs">NetworkACLs</h3>
+        <p>NetworkACLs is a list of network ACLs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#v1.NetworkACL">NetworkACL</a></td>
+                  <td>repeated</td>
+                  <td><p>items is the list of network ACLs. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.NetworkAction">NetworkAction</h3>
+        <p>NetworkAction is an action that can be performed on a network resource. It is used</p><p>by implementations to evaluate network ACLs.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>src_node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>src_node is the source node of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>src_cidr</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>src_cidr is the source CIDR of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst_node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst_node is the destination node of the action. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>dst_cidr</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>dst_cidr is the destination CIDR of the action.
+
+// protocol is the protocol of the action.
+string protocol = 5;
+// port is the port of the action.
+uint32 port = 6; </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Route">Route</h3>
+        <p>Route is a route that is broadcasted by one or more nodes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>name is the name of the route. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>node is the node that broadcasts the route. A group can be specified with the prefix &#34;group:&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>destination_cidrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>destination_cidrs are the destination CIDRs of the route. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>next_hop_node</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>next_hop_node is an optional node that is used as the next hop for the route. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.Routes">Routes</h3>
+        <p>Routes is a list of routes.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>items</td>
+                  <td><a href="#v1.Route">Route</a></td>
+                  <td>repeated</td>
+                  <td><p>items is the list of routes. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+        <h3 id="v1.ACLAction">ACLAction</h3>
+        <p>ACLAction is the action to take when a request matches an ACL.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACTION_UNKNOWN</td>
+                <td>0</td>
+                <td><p>ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACTION_ACCEPT</td>
+                <td>1</td>
+                <td><p>ACTION_ACCEPT allows the request to proceed.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACTION_DENY</td>
+                <td>2</td>
+                <td><p>ACTION_DENY denies the request.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
         <h2 id="v1/rbac.proto">v1/rbac.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -2281,268 +2551,6 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
     
       
       <div class="file-heading">
-        <h2 id="v1/network_acls.proto">v1/network_acls.proto</h2><a href="#title">Top</a>
-      </div>
-      <p></p>
-
-      
-        <h3 id="v1.NetworkACL">NetworkACL</h3>
-        <p>NetworkACL is a network ACL.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>name is the name of the ACL. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>priority</td>
-                  <td><a href="#int32">int32</a></td>
-                  <td></td>
-                  <td><p>priority is the priority of the ACL. ACLs with higher priority are evaluated first. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>action</td>
-                  <td><a href="#v1.ACLAction">ACLAction</a></td>
-                  <td></td>
-                  <td><p>action is the action to take when a request matches the ACL. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>source_nodes</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
-can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>destination_nodes</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
-Groups can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>source_cidrs</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
-If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>destination_cidrs</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
-If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched.
-
-// protocols is a list of protocols to match against. If empty, all protocols are matched.
-// Protocols can be specified by name or number.
-repeated string protocols = 8;
-// ports is a list of ports to match against. If empty, all ports are matched.
-repeated uint32 ports = 9; </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.NetworkACLs">NetworkACLs</h3>
-        <p>NetworkACLs is a list of network ACLs.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#v1.NetworkACL">NetworkACL</a></td>
-                  <td>repeated</td>
-                  <td><p>items is the list of network ACLs. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.NetworkAction">NetworkAction</h3>
-        <p>NetworkAction is an action that can be performed on a network resource. It is used</p><p>by implementations to evaluate network ACLs.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>src_node</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>src_node is the source node of the action. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>src_cidr</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>src_cidr is the source CIDR of the action. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dst_node</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>dst_node is the destination node of the action. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>dst_cidr</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>dst_cidr is the destination CIDR of the action.
-
-// protocol is the protocol of the action.
-string protocol = 5;
-// port is the port of the action.
-uint32 port = 6; </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.Route">Route</h3>
-        <p>Route is a route that is broadcasted by one or more nodes.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>name is the name of the route. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>node</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>node is the node that broadcasts the route. A group can be specified with the prefix &#34;group:&#34;. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>destination_cidrs</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>destination_cidrs are the destination CIDRs of the route. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>next_hop_node</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>next_hop_node is an optional node that is used as the next hop for the route. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.Routes">Routes</h3>
-        <p>Routes is a list of routes.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>items</td>
-                  <td><a href="#v1.Route">Route</a></td>
-                  <td>repeated</td>
-                  <td><p>items is the list of routes. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-
-      
-        <h3 id="v1.ACLAction">ACLAction</h3>
-        <p>ACLAction is the action to take when a request matches an ACL.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>ACTION_UNKNOWN</td>
-                <td>0</td>
-                <td><p>ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ACTION_ACCEPT</td>
-                <td>1</td>
-                <td><p>ACTION_ACCEPT allows the request to proceed.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ACTION_DENY</td>
-                <td>2</td>
-                <td><p>ACTION_DENY denies the request.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-
-      
-
-      
-    
-      
-      <div class="file-heading">
         <h2 id="v1/admin.proto">v1/admin.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
@@ -2737,7 +2745,7 @@ uint32 port = 6; </p></td>
     
       
       <div class="file-heading">
-        <h2 id="v1/storage.proto">v1/storage.proto</h2><a href="#title">Top</a>
+        <h2 id="v1/storage_query.proto">v1/storage_query.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
@@ -4859,7 +4867,7 @@ received.</p></td>
     
       
       <div class="file-heading">
-        <h2 id="v1/plugin_storage_provider.proto">v1/plugin_storage_provider.proto</h2><a href="#title">Top</a>
+        <h2 id="v1/storage_provider.proto">v1/storage_provider.proto</h2><a href="#title">Top</a>
       </div>
       <p></p>
 
@@ -4949,6 +4957,13 @@ received.</p></td>
       
         <h3 id="v1.GetLeaderRequest">GetLeaderRequest</h3>
         <p>GetLeaderRequest is the request object for the GetLeader RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.GetPeersRequest">GetPeersRequest</h3>
+        <p>GetPeersRequest is the request object for the GetPeers RPC.</p>
 
         
 
@@ -5229,6 +5244,31 @@ applicable during a GetStatus RPC. </p></td>
 
         
       
+        <h3 id="v1.StoragePeers">StoragePeers</h3>
+        <p>StoragePeers is a list of servers that are currently recognized by the storage plugin.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>peers</td>
+                  <td><a href="#v1.StoragePeer">StoragePeer</a></td>
+                  <td>repeated</td>
+                  <td><p>Peers is the list of servers that are currently recognized as peers 
+by the storage plugin. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.StorageStatus">StorageStatus</h3>
         <p>StorageStatus is the response object for the StorageStatus RPC.</p>
 
@@ -5444,6 +5484,15 @@ consistent state before returning.</p></td>
                 <td><a href="#v1.StoragePeer">StoragePeer</a></td>
                 <td><p>GetLeader returns the leader of the storage. Leader may be loosely defined
 by the implementation, but must be a node that can reliably be used to
+mutate the storage.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetPeers</td>
+                <td><a href="#v1.GetPeersRequest">GetPeersRequest</a></td>
+                <td><a href="#v1.StoragePeers">StoragePeers</a></td>
+                <td><p>GetPeers returns all peers of the storage. Peer status may be loosely defined
+by the implementation, but must correlate to nodes that can reliably be used to
 mutate the storage.</p></td>
               </tr>
             

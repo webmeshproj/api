@@ -21,8 +21,8 @@ package v1;
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 
-import "v1/raft.proto";
 import "v1/node.proto";
+import "v1/raft.proto";
 
 // PluginConfiguration is the message containing the configuration of a plugin.
 message PluginConfiguration {

@@ -26,6 +26,13 @@
   - [<span class="badge">M</span>MeshEdges](#v1.MeshEdges)
   - [<span class="badge">M</span>MeshGraph](#v1.MeshGraph)
   - [<span class="badge">S</span>Mesh](#v1.Mesh)
+- [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
+  - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
+  - [<span class="badge">M</span>NetworkACLs](#v1.NetworkACLs)
+  - [<span class="badge">M</span>NetworkAction](#v1.NetworkAction)
+  - [<span class="badge">M</span>Route](#v1.Route)
+  - [<span class="badge">M</span>Routes](#v1.Routes)
+  - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/rbac.proto](#v1%2frbac.proto)
   - [<span class="badge">M</span>Group](#v1.Group)
   - [<span class="badge">M</span>Groups](#v1.Groups)
@@ -39,16 +46,9 @@
   - [<span class="badge">E</span>RuleResource](#v1.RuleResource)
   - [<span class="badge">E</span>RuleVerb](#v1.RuleVerb)
   - [<span class="badge">E</span>SubjectType](#v1.SubjectType)
-- [v1/network_acls.proto](#v1%2fnetwork_acls.proto)
-  - [<span class="badge">M</span>NetworkACL](#v1.NetworkACL)
-  - [<span class="badge">M</span>NetworkACLs](#v1.NetworkACLs)
-  - [<span class="badge">M</span>NetworkAction](#v1.NetworkAction)
-  - [<span class="badge">M</span>Route](#v1.Route)
-  - [<span class="badge">M</span>Routes](#v1.Routes)
-  - [<span class="badge">E</span>ACLAction](#v1.ACLAction)
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
-- [v1/storage.proto](#v1%2fstorage.proto)
+- [v1/storage_query.proto](#v1%2fstorage_query.proto)
   - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
   - [<span class="badge">M</span>PublishResponse](#v1.PublishResponse)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
@@ -116,7 +116,7 @@
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
   - [<span class="badge">S</span>StorageQuerierPlugin](#v1.StorageQuerierPlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
-- [v1/plugin_storage_provider.proto](#v1%2fplugin_storage_provider.proto)
+- [v1/storage_provider.proto](#v1%2fstorage_provider.proto)
   - [<span class="badge">M</span>AddObserverResponse](#v1.AddObserverResponse)
   - [<span class="badge">M</span>AddVoterResponse](#v1.AddVoterResponse)
   - [<span class="badge">M</span>BootstrapRequest](#v1.BootstrapRequest)
@@ -125,6 +125,7 @@
   - [<span class="badge">M</span>DeleteValueResponse](#v1.DeleteValueResponse)
   - [<span class="badge">M</span>DemoteVoterResponse](#v1.DemoteVoterResponse)
   - [<span class="badge">M</span>GetLeaderRequest](#v1.GetLeaderRequest)
+  - [<span class="badge">M</span>GetPeersRequest](#v1.GetPeersRequest)
   - [<span class="badge">M</span>GetValueRequest](#v1.GetValueRequest)
   - [<span class="badge">M</span>GetValueResponse](#v1.GetValueResponse)
   - [<span class="badge">M</span>ListKeysRequest](#v1.ListKeysRequest)
@@ -136,6 +137,7 @@
   - [<span class="badge">M</span>PutValueResponse](#v1.PutValueResponse)
   - [<span class="badge">M</span>RemoveServerResponse](#v1.RemoveServerResponse)
   - [<span class="badge">M</span>StoragePeer](#v1.StoragePeer)
+  - [<span class="badge">M</span>StoragePeers](#v1.StoragePeers)
   - [<span class="badge">M</span>StorageStatus](#v1.StorageStatus)
   - [<span class="badge">M</span>StorageStatusRequest](#v1.StorageStatusRequest)
   - [<span class="badge">M</span>StorageValue](#v1.StorageValue)
@@ -412,6 +414,79 @@ interfacing with the webmesh from the outside.
 
 <div class="file-heading">
 
+## v1/network_acls.proto
+
+[Top](#title)
+
+</div>
+
+### NetworkACL
+
+NetworkACL is a network ACL.
+
+| Field             | Type                       | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|-------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                                                                                                                                                                                                                                                                                                                                  |
+| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                                                                                                                                                                                                                                                                                                                         |
+| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                              |
+| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                    |
+| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched.                                                                                                                                                                                                                                                                                                |
+| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched. // protocols is a list of protocols to match against. If empty, all protocols are matched. // Protocols can be specified by name or number. repeated string protocols = 8; // ports is a list of ports to match against. If empty, all ports are matched. repeated uint32 ports = 9; |
+
+### NetworkACLs
+
+NetworkACLs is a list of network ACLs.
+
+| Field | Type                         | Label    | Description                        |
+|-------|------------------------------|----------|------------------------------------|
+| items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
+
+### NetworkAction
+
+NetworkAction is an action that can be performed on a network resource.
+It is used
+
+by implementations to evaluate network ACLs.
+
+| Field    | Type              | Label | Description                                                                                                                                                         |
+|----------|-------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| src_node | [string](#string) |       | src_node is the source node of the action.                                                                                                                          |
+| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.                                                                                                                          |
+| dst_node | [string](#string) |       | dst_node is the destination node of the action.                                                                                                                     |
+| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. // protocol is the protocol of the action. string protocol = 5; // port is the port of the action. uint32 port = 6; |
+
+### Route
+
+Route is a route that is broadcasted by one or more nodes.
+
+| Field             | Type              | Label    | Description                                                                                    |
+|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
+| name              | [string](#string) |          | name is the name of the route.                                                                 |
+| node              | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
+| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
+| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
+
+### Routes
+
+Routes is a list of routes.
+
+| Field | Type               | Label    | Description                  |
+|-------|--------------------|----------|------------------------------|
+| items | [Route](#v1.Route) | repeated | items is the list of routes. |
+
+### ACLAction
+
+ACLAction is the action to take when a request matches an ACL.
+
+| Name           | Number | Description                                                                       |
+|----------------|--------|-----------------------------------------------------------------------------------|
+| ACTION_UNKNOWN | 0      | ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY. |
+| ACTION_ACCEPT  | 1      | ACTION_ACCEPT allows the request to proceed.                                      |
+| ACTION_DENY    | 2      | ACTION_DENY denies the request.                                                   |
+
+<div class="file-heading">
+
 ## v1/rbac.proto
 
 [Top](#title)
@@ -547,79 +622,6 @@ SubjectType is the type of a subject.
 
 <div class="file-heading">
 
-## v1/network_acls.proto
-
-[Top](#title)
-
-</div>
-
-### NetworkACL
-
-NetworkACL is a network ACL.
-
-| Field             | Type                       | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|-------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                                                                                                                                                                                                                                                                                                                                  |
-| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                                                                                                                                                                                                                                                                                                                         |
-| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                              |
-| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                    |
-| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched.                                                                                                                                                                                                                                                                                                |
-| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched. // protocols is a list of protocols to match against. If empty, all protocols are matched. // Protocols can be specified by name or number. repeated string protocols = 8; // ports is a list of ports to match against. If empty, all ports are matched. repeated uint32 ports = 9; |
-
-### NetworkACLs
-
-NetworkACLs is a list of network ACLs.
-
-| Field | Type                         | Label    | Description                        |
-|-------|------------------------------|----------|------------------------------------|
-| items | [NetworkACL](#v1.NetworkACL) | repeated | items is the list of network ACLs. |
-
-### NetworkAction
-
-NetworkAction is an action that can be performed on a network resource.
-It is used
-
-by implementations to evaluate network ACLs.
-
-| Field    | Type              | Label | Description                                                                                                                                                         |
-|----------|-------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| src_node | [string](#string) |       | src_node is the source node of the action.                                                                                                                          |
-| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.                                                                                                                          |
-| dst_node | [string](#string) |       | dst_node is the destination node of the action.                                                                                                                     |
-| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. // protocol is the protocol of the action. string protocol = 5; // port is the port of the action. uint32 port = 6; |
-
-### Route
-
-Route is a route that is broadcasted by one or more nodes.
-
-| Field             | Type              | Label    | Description                                                                                    |
-|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
-| name              | [string](#string) |          | name is the name of the route.                                                                 |
-| node              | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
-| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
-| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
-
-### Routes
-
-Routes is a list of routes.
-
-| Field | Type               | Label    | Description                  |
-|-------|--------------------|----------|------------------------------|
-| items | [Route](#v1.Route) | repeated | items is the list of routes. |
-
-### ACLAction
-
-ACLAction is the action to take when a request matches an ACL.
-
-| Name           | Number | Description                                                                       |
-|----------------|--------|-----------------------------------------------------------------------------------|
-| ACTION_UNKNOWN | 0      | ACTION_UNKNOWN is the default action for ACLs. It is synonymous with ACTION_DENY. |
-| ACTION_ACCEPT  | 1      | ACTION_ACCEPT allows the request to proceed.                                      |
-| ACTION_DENY    | 2      | ACTION_DENY denies the request.                                                   |
-
-<div class="file-heading">
-
 ## v1/admin.proto
 
 [Top](#title)
@@ -662,7 +664,7 @@ require the leader to be contacted.
 
 <div class="file-heading">
 
-## v1/storage.proto
+## v1/storage_query.proto
 
 [Top](#title)
 
@@ -1332,7 +1334,7 @@ WatchPlugin is the service definition for a Webmesh watch plugin.
 
 <div class="file-heading">
 
-## v1/plugin_storage_provider.proto
+## v1/storage_provider.proto
 
 [Top](#title)
 
@@ -1377,6 +1379,10 @@ DemoteVoterResponse is the response object for the DemoteVoter RPC.
 ### GetLeaderRequest
 
 GetLeaderRequest is the request object for the GetLeader RPC.
+
+### GetPeersRequest
+
+GetPeersRequest is the request object for the GetPeers RPC.
 
 ### GetValueRequest
 
@@ -1467,6 +1473,15 @@ plugin.
 | address        | [string](#string)                  |       | Address is the address of the server. This is not required for demotion or removal RPCs.                                                             |
 | cluster_status | [ClusterStatus](#v1.ClusterStatus) |       | ClusterStatus is the status of the server. This is only applicable during a GetStatus RPC.                                                           |
 
+### StoragePeers
+
+StoragePeers is a list of servers that are currently recognized by the
+storage plugin.
+
+| Field | Type                           | Label    | Description                                                                                |
+|-------|--------------------------------|----------|--------------------------------------------------------------------------------------------|
+| peers | [StoragePeer](#v1.StoragePeer) | repeated | Peers is the list of servers that are currently recognized as peers by the storage plugin. |
+
 ### StorageStatus
 
 StorageStatus is the response object for the StorageStatus RPC.
@@ -1522,6 +1537,7 @@ provider.
 | DemoteVoter     | [StoragePeer](#v1.StoragePeer)                       | [DemoteVoterResponse](#v1.DemoteVoterResponse)   | DemoteVoter demotes a voter to an observer. The underlying implementation should ensure that the voter is demoted and that the storage is in a consistent state before returning. If observers are not supported the underlying implementation can silently ignore this RPC, but it should keep track of the observer in the GetStatus RPC if possible.                  |
 | RemovePeer      | [StoragePeer](#v1.StoragePeer)                       | [RemoveServerResponse](#v1.RemoveServerResponse) | RemovePeer removes a peer from the storage. The underlying implementation should ensure that the server is removed and that the storage is in a consistent state before returning.                                                                                                                                                                                       |
 | GetLeader       | [GetLeaderRequest](#v1.GetLeaderRequest)             | [StoragePeer](#v1.StoragePeer)                   | GetLeader returns the leader of the storage. Leader may be loosely defined by the implementation, but must be a node that can reliably be used to mutate the storage.                                                                                                                                                                                                    |
+| GetPeers        | [GetPeersRequest](#v1.GetPeersRequest)               | [StoragePeers](#v1.StoragePeers)                 | GetPeers returns all peers of the storage. Peer status may be loosely defined by the implementation, but must correlate to nodes that can reliably be used to mutate the storage.                                                                                                                                                                                        |
 | GetValue        | [GetValueRequest](#v1.GetValueRequest)               | [GetValueResponse](#v1.GetValueResponse)         | GetValue returns the value for a key.                                                                                                                                                                                                                                                                                                                                    |
 | PutValue        | [PutValueRequest](#v1.PutValueRequest)               | [PutValueResponse](#v1.PutValueResponse)         | PutValue puts a value for a key.                                                                                                                                                                                                                                                                                                                                         |
 | DeleteValue     | [DeleteValueRequest](#v1.DeleteValueRequest)         | [DeleteValueResponse](#v1.DeleteValueResponse)   | DeleteValue deletes a value for a key.                                                                                                                                                                                                                                                                                                                                   |

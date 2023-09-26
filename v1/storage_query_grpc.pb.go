@@ -17,7 +17,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: v1/storage.proto
+// source: v1/storage_query.proto
 
 package v1
 
@@ -261,5 +261,5 @@ var StorageQueryService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "v1/storage.proto",
+	Metadata: "v1/storage_query.proto",
 }

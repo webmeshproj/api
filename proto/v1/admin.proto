@@ -21,8 +21,8 @@ package v1;
 import "google/protobuf/empty.proto";
 
 import "v1/mesh.proto";
-import "v1/rbac.proto";
 import "v1/network_acls.proto";
+import "v1/rbac.proto";
 
 // Admin is the service that provides cluster admin operations. Most methods 
 // require the leader to be contacted.

@@ -21,9 +21,9 @@ package v1;
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 
-import "v1/node.proto";
-import "v1/storage.proto";
 import "v1/mesh.proto";
+import "v1/node.proto";
+import "v1/storage_query.proto";
 
 // ConnectRequest is sent by the application to the node to establish a
 // connection to a mesh. This message will eventually contain unique
