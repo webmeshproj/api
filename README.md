@@ -78,7 +78,6 @@
   - [<span class="badge">M</span>RaftDataItem](#v1.RaftDataItem)
   - [<span class="badge">M</span>RaftLogEntry](#v1.RaftLogEntry)
   - [<span class="badge">M</span>RaftSnapshot](#v1.RaftSnapshot)
-  - [<span class="badge">M</span>RaftSnapshot.KvEntry](#v1.RaftSnapshot.KvEntry)
   - [<span class="badge">E</span>RaftCommandType](#v1.RaftCommandType)
 - [v1/members.proto](#v1%2fmembers.proto)
   - [<span class="badge">M</span>JoinRequest](#v1.JoinRequest)
@@ -942,16 +941,9 @@ RaftLogEntry is the data of an entry in the Raft log.
 
 RaftSnapshot is the data of a snapshot.
 
-| Field | Type                                             | Label    | Description |
-|-------|--------------------------------------------------|----------|-------------|
-| kv    | [RaftSnapshot.KvEntry](#v1.RaftSnapshot.KvEntry) | repeated |             |
-
-### RaftSnapshot.KvEntry
-
-| Field | Type                             | Label | Description |
-|-------|----------------------------------|-------|-------------|
-| key   | [string](#string)                |       |             |
-| value | [RaftDataItem](#v1.RaftDataItem) |       |             |
+| Field | Type                             | Label    | Description |
+|-------|----------------------------------|----------|-------------|
+| kv    | [RaftDataItem](#v1.RaftDataItem) | repeated |             |
 
 ### RaftCommandType
 

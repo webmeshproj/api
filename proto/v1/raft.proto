@@ -54,7 +54,7 @@ message RaftApplyResponse {
 
 // RaftSnapshot is the data of a snapshot.
 message RaftSnapshot {
-    map<string, RaftDataItem> kv = 1;
+    repeated RaftDataItem kv = 1;
 }
 
 // RaftDataItem represents a value in the Raft data store.
