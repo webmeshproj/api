@@ -48,7 +48,7 @@ message StorageStatus {
     // to each status are implementation specific.
     ClusterStatus cluster_status = 2;
     // Peers is the list of servers that are currently recognized as peers 
-    // by the storage plugin.
+    // by the storage plugin. This should include the current server.
     repeated StoragePeer peers = 3;
     // message is an implementation specific message that can be used to provide
     // additional information about the storage status.

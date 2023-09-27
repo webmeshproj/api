@@ -305,7 +305,7 @@ type StorageStatus struct {
 	// to each status are implementation specific.
 	ClusterStatus ClusterStatus `protobuf:"varint,2,opt,name=cluster_status,json=clusterStatus,proto3,enum=v1.ClusterStatus" json:"cluster_status,omitempty"`
 	// Peers is the list of servers that are currently recognized as peers
-	// by the storage plugin.
+	// by the storage plugin. This should include the current server.
 	Peers []*StoragePeer `protobuf:"bytes,3,rep,name=peers,proto3" json:"peers,omitempty"`
 	// message is an implementation specific message that can be used to provide
 	// additional information about the storage status.
