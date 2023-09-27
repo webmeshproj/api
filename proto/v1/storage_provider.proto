@@ -92,15 +92,15 @@ message RemoveServerResponse {}
 // StorageValue is a value stored in the storage.
 message StorageValue {
     // Key is the key of the value.
-    string key = 1;
+    bytes key = 1;
     // Value is the value of the key.
-    string value = 2;
+    bytes value = 2;
 }
 
 // GetValueRequest is the request object for the GetValue RPC.
 message GetValueRequest {
     // Key is the key to get the value for.
-    string key = 1;
+    bytes key = 1;
 }
 
 // GetValueResponse is the response object for the GetValue RPC.
@@ -123,7 +123,7 @@ message PutValueResponse {}
 // DeleteValueRequest is the request object for the DeleteValue RPC.
 message DeleteValueRequest {
     // Key is the key to delete.
-    string key = 1;
+    bytes key = 1;
 }
 
 // DeleteValueResponse is the response object for the DeleteValue RPC.
@@ -132,19 +132,19 @@ message DeleteValueResponse {}
 // ListKeysRequest is the request object for the ListValues RPC.
 message ListKeysRequest {
     // Prefix is the prefix to list values for.
-    string prefix = 1;
+    bytes prefix = 1;
 }
 
 // ListKeysResponse is the response object for the ListValues RPC.
 message ListKeysResponse {
     // Keys is the list of value keys for the prefix.
-    repeated string keys = 1;
+    repeated bytes keys = 1;
 }
 
 // ListValuesRequest is the request object for the ListValues RPC.
 message ListValuesRequest {
     // Prefix is the prefix to list values for.
-    string prefix = 1;
+    bytes prefix = 1;
 }
 
 // ListValuesResponse is the response object for the ListValues RPC.
@@ -156,14 +156,14 @@ message ListValuesResponse {
 // SubscribePrefixRequest is the request object for the SubscribePrefix RPC.
 message SubscribePrefixRequest {
     // Prefix is the prefix to subscribe to.
-    string prefix = 1;
+    bytes prefix = 1;
 }
 
 // PrefixEvent is an event that is emitted when a value is added or removed
 // from the storage for a prefix.
 message PrefixEvent {
     // Prefix is the prefix that the event is for.
-    string prefix = 1;
+    bytes prefix = 1;
     // Value is the value that was added or removed.
     StorageValue value = 2;
 

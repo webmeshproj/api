@@ -678,8 +678,8 @@ This currently only supports database events.
 
 | Field | Type                                                  | Label | Description                                                             |
 |-------|-------------------------------------------------------|-------|-------------------------------------------------------------------------|
-| key   | [string](#string)                                     |       | key is the key of the event.                                            |
-| value | [string](#string)                                     |       | value is the value of the event. This will be the raw value of the key. |
+| key   | [bytes](#bytes)                                       |       | key is the key of the event.                                            |
+| value | [bytes](#bytes)                                       |       | value is the value of the event. This will be the raw value of the key. |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time for the event to live in the database.                  |
 
 ### PublishResponse
@@ -698,7 +698,7 @@ information.
 | Field   | Type                                                       | Label | Description                              |
 |---------|------------------------------------------------------------|-------|------------------------------------------|
 | command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.     |
-| query   | [string](#string)                                          |       | query is the key or prefix of the query. |
+| query   | [bytes](#bytes)                                            |       | query is the key or prefix of the query. |
 
 ### QueryResponse
 
@@ -706,8 +706,8 @@ QueryResponse is the message containing a mesh query result.
 
 | Field | Type              | Label    | Description                                                                                                                                                            |
 |-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
-| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
+| key   | [bytes](#bytes)   |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
+| value | [bytes](#bytes)   | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
 | error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
 
 ### SubscribeRequest
@@ -716,18 +716,18 @@ SubscribeRequest is sent by the application to the node to subscribe to
 
 events. This currently only supports database events.
 
-| Field  | Type              | Label | Description                                         |
-|--------|-------------------|-------|-----------------------------------------------------|
-| prefix | [string](#string) |       | prefix is the prefix of the events to subscribe to. |
+| Field  | Type            | Label | Description                                         |
+|--------|-----------------|-------|-----------------------------------------------------|
+| prefix | [bytes](#bytes) |       | prefix is the prefix of the events to subscribe to. |
 
 ### SubscriptionEvent
 
 SubscriptionEvent is a message containing a subscription event.
 
-| Field | Type              | Label | Description                                                             |
-|-------|-------------------|-------|-------------------------------------------------------------------------|
-| key   | [string](#string) |       | key is the key of the event.                                            |
-| value | [string](#string) |       | value is the value of the event. This will be the raw value of the key. |
+| Field | Type            | Label | Description                                                             |
+|-------|-----------------|-------|-------------------------------------------------------------------------|
+| key   | [bytes](#bytes) |       | key is the key of the event.                                            |
+| value | [bytes](#bytes) |       | value is the value of the event. This will be the raw value of the key. |
 
 ### QueryRequest.QueryCommand
 
@@ -923,8 +923,8 @@ RaftDataItem represents a value in the Raft data store.
 
 | Field | Type                                                  | Label | Description                               |
 |-------|-------------------------------------------------------|-------|-------------------------------------------|
-| key   | [string](#string)                                     |       | key is the key of the data item.          |
-| value | [string](#string)                                     |       | value is the value of the data item.      |
+| key   | [bytes](#bytes)                                       |       | key is the key of the data item.          |
+| value | [bytes](#bytes)                                       |       | value is the value of the data item.      |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the data item. |
 
 ### RaftLogEntry
@@ -934,8 +934,8 @@ RaftLogEntry is the data of an entry in the Raft log.
 | Field | Type                                                  | Label | Description                               |
 |-------|-------------------------------------------------------|-------|-------------------------------------------|
 | type  | [RaftCommandType](#v1.RaftCommandType)                |       | type is the type of the log entry.        |
-| key   | [string](#string)                                     |       | key is the key of the log entry.          |
-| value | [string](#string)                                     |       | value is the value of the log entry.      |
+| key   | [bytes](#bytes)                                       |       | key is the key of the log entry.          |
+| value | [bytes](#bytes)                                       |       | value is the value of the log entry.      |
 | ttl   | [google.protobuf.Duration](#google.protobuf.Duration) |       | ttl is the time to live of the log entry. |
 
 ### RaftSnapshot
@@ -1223,7 +1223,7 @@ a request ID that is used to correlate the query with the result.
 |---------|----------------------------------------------------------|-------|------------------------------------------|
 | id      | [string](#string)                                        |       | id is the ID of the query.               |
 | command | [PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand) |       | command is the command of the query.     |
-| query   | [string](#string)                                        |       | query is the key or prefix of the query. |
+| query   | [bytes](#bytes)                                          |       | query is the key or prefix of the query. |
 
 ### PluginQueryResult
 
@@ -1235,8 +1235,8 @@ a request ID that is used to correlate the query with the result.
 | Field | Type              | Label    | Description                                                                                                                                                            |
 |-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | id    | [string](#string) |          | id is the ID of the query.                                                                                                                                             |
-| key   | [string](#string) |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
-| value | [string](#string) | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
+| key   | [bytes](#bytes)   |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
+| value | [bytes](#bytes)   | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
 | error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
 
 ### ReleaseIPRequest
@@ -1364,9 +1364,9 @@ BootstrapResponse is the response object for the Bootstrap RPC.
 
 DeleteValueRequest is the request object for the DeleteValue RPC.
 
-| Field | Type              | Label | Description               |
-|-------|-------------------|-------|---------------------------|
-| key   | [string](#string) |       | Key is the key to delete. |
+| Field | Type            | Label | Description               |
+|-------|-----------------|-------|---------------------------|
+| key   | [bytes](#bytes) |       | Key is the key to delete. |
 
 ### DeleteValueResponse
 
@@ -1388,9 +1388,9 @@ GetPeersRequest is the request object for the GetPeers RPC.
 
 GetValueRequest is the request object for the GetValue RPC.
 
-| Field | Type              | Label | Description                          |
-|-------|-------------------|-------|--------------------------------------|
-| key   | [string](#string) |       | Key is the key to get the value for. |
+| Field | Type            | Label | Description                          |
+|-------|-----------------|-------|--------------------------------------|
+| key   | [bytes](#bytes) |       | Key is the key to get the value for. |
 
 ### GetValueResponse
 
@@ -1404,25 +1404,25 @@ GetValueResponse is the response object for the GetValue RPC.
 
 ListKeysRequest is the request object for the ListValues RPC.
 
-| Field  | Type              | Label | Description                              |
-|--------|-------------------|-------|------------------------------------------|
-| prefix | [string](#string) |       | Prefix is the prefix to list values for. |
+| Field  | Type            | Label | Description                              |
+|--------|-----------------|-------|------------------------------------------|
+| prefix | [bytes](#bytes) |       | Prefix is the prefix to list values for. |
 
 ### ListKeysResponse
 
 ListKeysResponse is the response object for the ListValues RPC.
 
-| Field | Type              | Label    | Description                                    |
-|-------|-------------------|----------|------------------------------------------------|
-| keys  | [string](#string) | repeated | Keys is the list of value keys for the prefix. |
+| Field | Type            | Label    | Description                                    |
+|-------|-----------------|----------|------------------------------------------------|
+| keys  | [bytes](#bytes) | repeated | Keys is the list of value keys for the prefix. |
 
 ### ListValuesRequest
 
 ListValuesRequest is the request object for the ListValues RPC.
 
-| Field  | Type              | Label | Description                              |
-|--------|-------------------|-------|------------------------------------------|
-| prefix | [string](#string) |       | Prefix is the prefix to list values for. |
+| Field  | Type            | Label | Description                              |
+|--------|-----------------|-------|------------------------------------------|
+| prefix | [bytes](#bytes) |       | Prefix is the prefix to list values for. |
 
 ### ListValuesResponse
 
@@ -1440,7 +1440,7 @@ from the storage for a prefix.
 
 | Field      | Type                                               | Label | Description                                   |
 |------------|----------------------------------------------------|-------|-----------------------------------------------|
-| prefix     | [string](#string)                                  |       | Prefix is the prefix that the event is for.   |
+| prefix     | [bytes](#bytes)                                    |       | Prefix is the prefix that the event is for.   |
 | value      | [StorageValue](#v1.StorageValue)                   |       | Value is the value that was added or removed. |
 | event_type | [PrefixEvent.EventType](#v1.PrefixEvent.EventType) |       | EventType is the type of event.               |
 
@@ -1501,19 +1501,19 @@ StorageStatusRequest is the request object for the StorageStatus RPC.
 
 StorageValue is a value stored in the storage.
 
-| Field | Type              | Label | Description                    |
-|-------|-------------------|-------|--------------------------------|
-| key   | [string](#string) |       | Key is the key of the value.   |
-| value | [string](#string) |       | Value is the value of the key. |
+| Field | Type            | Label | Description                    |
+|-------|-----------------|-------|--------------------------------|
+| key   | [bytes](#bytes) |       | Key is the key of the value.   |
+| value | [bytes](#bytes) |       | Value is the value of the key. |
 
 ### SubscribePrefixRequest
 
 SubscribePrefixRequest is the request object for the SubscribePrefix
 RPC.
 
-| Field  | Type              | Label | Description                           |
-|--------|-------------------|-------|---------------------------------------|
-| prefix | [string](#string) |       | Prefix is the prefix to subscribe to. |
+| Field  | Type            | Label | Description                           |
+|--------|-----------------|-------|---------------------------------------|
+| prefix | [bytes](#bytes) |       | Prefix is the prefix to subscribe to. |
 
 ### PrefixEvent.EventType
 

@@ -36,9 +36,9 @@ message RaftLogEntry {
     // type is the type of the log entry.
     RaftCommandType type = 1;
     // key is the key of the log entry.
-    string key = 2;
+    bytes key = 2;
     // value is the value of the log entry.
-    string value = 3;
+    bytes value = 3;
     // ttl is the time to live of the log entry.
     google.protobuf.Duration ttl = 4;
 }
@@ -60,9 +60,9 @@ message RaftSnapshot {
 // RaftDataItem represents a value in the Raft data store.
 message RaftDataItem {
     // key is the key of the data item.
-    string key = 1;
+    bytes key = 1;
     // value is the value of the data item.
-    string value = 2;
+    bytes value = 2;
     // ttl is the time to live of the data item.
     google.protobuf.Duration ttl = 3;
 }

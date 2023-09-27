@@ -2762,14 +2762,14 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the event. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
@@ -2814,7 +2814,7 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
               
                 <tr>
                   <td>query</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>query is the key or prefix of the query. </p></td>
                 </tr>
@@ -2838,7 +2838,7 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
 For LIST queries it will be the prefix. </p></td>
@@ -2846,7 +2846,7 @@ For LIST queries it will be the prefix. </p></td>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
                   <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
 For LIST queries it will be the list of keys that match the prefix. </p></td>
@@ -2879,7 +2879,7 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               
                 <tr>
                   <td>prefix</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>prefix is the prefix of the events to subscribe to. </p></td>
                 </tr>
@@ -2903,14 +2903,14 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the event. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
@@ -3440,14 +3440,14 @@ for other nodes to discover.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the data item. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>value is the value of the data item. </p></td>
                 </tr>
@@ -3485,14 +3485,14 @@ for other nodes to discover.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the log entry. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>value is the value of the log entry. </p></td>
                 </tr>
@@ -4512,7 +4512,7 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
               
                 <tr>
                   <td>query</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>query is the key or prefix of the query. </p></td>
                 </tr>
@@ -4543,7 +4543,7 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
 For LIST queries it will be the prefix. </p></td>
@@ -4551,7 +4551,7 @@ For LIST queries it will be the prefix. </p></td>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
                   <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
 For LIST queries it will be the list of keys that match the prefix. </p></td>
@@ -4929,7 +4929,7 @@ received.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Key is the key to delete. </p></td>
                 </tr>
@@ -4981,7 +4981,7 @@ received.</p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Key is the key to get the value for. </p></td>
                 </tr>
@@ -5029,7 +5029,7 @@ received.</p></td>
               
                 <tr>
                   <td>prefix</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Prefix is the prefix to list values for. </p></td>
                 </tr>
@@ -5053,7 +5053,7 @@ received.</p></td>
               
                 <tr>
                   <td>keys</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
                   <td><p>Keys is the list of value keys for the prefix. </p></td>
                 </tr>
@@ -5077,7 +5077,7 @@ received.</p></td>
               
                 <tr>
                   <td>prefix</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Prefix is the prefix to list values for. </p></td>
                 </tr>
@@ -5125,7 +5125,7 @@ received.</p></td>
               
                 <tr>
                   <td>prefix</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Prefix is the prefix that the event is for. </p></td>
                 </tr>
@@ -5336,14 +5336,14 @@ additional information about the storage status. </p></td>
               
                 <tr>
                   <td>key</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Key is the key of the value. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Value is the value of the key. </p></td>
                 </tr>
@@ -5367,7 +5367,7 @@ additional information about the storage status. </p></td>
               
                 <tr>
                   <td>prefix</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#bytes">bytes</a></td>
                   <td></td>
                   <td><p>Prefix is the prefix to subscribe to. </p></td>
                 </tr>

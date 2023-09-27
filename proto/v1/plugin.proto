@@ -173,7 +173,7 @@ message PluginQuery {
     // command is the command of the query.
     QueryCommand command = 2;
     // query is the key or prefix of the query.
-    string query = 3;
+    bytes query = 3;
 }
 
 // PluginQueryResult is the message containing a storage query result. It contains
@@ -183,10 +183,10 @@ message PluginQueryResult {
     string id = 1;
     // key is the key of the query. For GET and ITER queries it will be the current key.
     // For LIST queries it will be the prefix.
-    string key = 2;
+    bytes key = 2;
     // value is the value of the query. For GET and ITER queries it will be the value of the current key.
     // For LIST queries it will be the list of keys that match the prefix.
-    repeated string value = 3;
+    repeated bytes value = 3;
     // error is an error that occurred during the query. At the end of an ITER query it will be set to
     // "EOF" to indicate that the iteration is complete.
     string error = 4;

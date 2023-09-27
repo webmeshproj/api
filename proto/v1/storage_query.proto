@@ -37,17 +37,17 @@ message QueryRequest {
     // command is the command of the query.
     QueryCommand command = 2;
     // query is the key or prefix of the query.
-    string query = 3;
+    bytes query = 3;
 }
 
 // QueryResponse is the message containing a mesh query result.
 message QueryResponse {
     // key is the key of the query. For GET and ITER queries it will be the current key.
     // For LIST queries it will be the prefix.
-    string key = 2;
+    bytes key = 2;
     // value is the value of the query. For GET and ITER queries it will be the value of the current key.
     // For LIST queries it will be the list of keys that match the prefix.
-    repeated string value = 3;
+    repeated bytes value = 3;
     // error is an error that occurred during the query. At the end of an ITER query it will be set to
     // "EOF" to indicate that the iteration is complete.
     string error = 4;
@@ -57,24 +57,24 @@ message QueryResponse {
 // events. This currently only supports database events.
 message SubscribeRequest{
     // prefix is the prefix of the events to subscribe to.
-    string prefix = 1;
+    bytes prefix = 1;
 }
 
 // SubscriptionEvent is a message containing a subscription event.
 message SubscriptionEvent {
     // key is the key of the event.
-    string key = 1;
+    bytes key = 1;
     // value is the value of the event. This will be the raw value of the key.
-    string value = 2;
+    bytes value = 2;
 }
 
 // PublishRequest is sent by the application to the node to publish events.
 // This currently only supports database events.
 message PublishRequest {
     // key is the key of the event.
-    string key = 1;
+    bytes key = 1;
     // value is the value of the event. This will be the raw value of the key.
-    string value = 2;
+    bytes value = 2;
     // ttl is the time for the event to live in the database.
     google.protobuf.Duration ttl = 3;
 }
