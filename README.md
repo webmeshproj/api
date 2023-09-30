@@ -164,16 +164,16 @@
 DataChannelNegotiation is the message for communicating data channels to
 nodes.
 
-| Field        | Type              | Label    | Description                                                         |
-|--------------|-------------------|----------|---------------------------------------------------------------------|
-| proto        | [string](#string) |          | proto is the protocol of the traffic.                               |
-| src          | [string](#string) |          | src is the address of the client that initiated the request.        |
-| dst          | [string](#string) |          | dst is the destination address of the traffic.                      |
-| port         | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
-| offer        | [string](#string) |          | offer is the offer for the node to use as its local description.    |
-| answer       | [string](#string) |          | answer is the answer for the node to use as its remote description. |
-| candidate    | [string](#string) |          | candidate is an ICE candidate.                                      |
-| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
+| Field       | Type              | Label    | Description                                                         |
+|-------------|-------------------|----------|---------------------------------------------------------------------|
+| proto       | [string](#string) |          | proto is the protocol of the traffic.                               |
+| src         | [string](#string) |          | src is the address of the client that initiated the request.        |
+| dst         | [string](#string) |          | dst is the destination address of the traffic.                      |
+| port        | [uint32](#uint32) |          | port is the destination port of the traffic.                        |
+| offer       | [string](#string) |          | offer is the offer for the node to use as its local description.    |
+| answer      | [string](#string) |          | answer is the answer for the node to use as its remote description. |
+| candidate   | [string](#string) |          | candidate is an ICE candidate.                                      |
+| stunServers | [string](#string) | repeated | stun_servers is the list of STUN servers to use.                    |
 
 ### FeaturePort
 
@@ -196,35 +196,35 @@ GetStatusRequest is a request to get the status of a node.
 
 InterfaceMetrics is the metrics for the WireGuard interface on a node.
 
-| Field                | Type                           | Label    | Description                                                    |
-|----------------------|--------------------------------|----------|----------------------------------------------------------------|
-| device_name          | [string](#string)              |          | device_name is the name of the device.                         |
-| public_key           | [string](#string)              |          | public_key is the public key of the node.                      |
-| address_v4           | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
-| address_v6           | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
-| type                 | [string](#string)              |          | type is the type of interface being used for wireguard.        |
-| listen_port          | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
-| total_receive_bytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
-| total_transmit_bytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
-| num_peers            | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
-| peers                | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
+| Field              | Type                           | Label    | Description                                                    |
+|--------------------|--------------------------------|----------|----------------------------------------------------------------|
+| deviceName         | [string](#string)              |          | device_name is the name of the device.                         |
+| publicKey          | [string](#string)              |          | public_key is the public key of the node.                      |
+| addressV4          | [string](#string)              |          | address_v4 is the IPv4 address of the node.                    |
+| addressV6          | [string](#string)              |          | address_v6 is the IPv6 address of the node.                    |
+| type               | [string](#string)              |          | type is the type of interface being used for wireguard.        |
+| listenPort         | [int32](#int32)                |          | listen_port is the port wireguard is listening on.             |
+| totalReceiveBytes  | [uint64](#uint64)              |          | total_receive_bytes is the total number of bytes received.     |
+| totalTransmitBytes | [uint64](#uint64)              |          | total_transmit_bytes is the total number of bytes transmitted. |
+| numPeers           | [int32](#int32)                |          | num_peers is the number of peers connected to the node.        |
+| peers              | [PeerMetrics](#v1.PeerMetrics) | repeated | peers are the per-peer statistics.                             |
 
 ### MeshNode
 
 MeshNode is a node that has been registered with the mesh.
 
-| Field               | Type                                                    | Label    | Description                                                           |
-|---------------------|---------------------------------------------------------|----------|-----------------------------------------------------------------------|
-| id                  | [string](#string)                                       |          | id is the ID of the node.                                             |
-| public_key          | [string](#string)                                       |          | public_key is the public key of the node.                             |
-| primary_endpoint    | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.                 |
-| wireguard_endpoints | [string](#string)                                       | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.    |
-| zone_awareness_id   | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.               |
-| private_ipv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.                 |
-| private_ipv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.                 |
-| features            | [FeaturePort](#v1.FeaturePort)                          | repeated | features are a list of features and the ports they are advertised on. |
-| multiaddrs          | [string](#string)                                       | repeated | multiaddrs are the multiaddrs of the node.                            |
-| joined_at           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | joined_at is the time the node joined the cluster.                    |
+| Field              | Type                                                    | Label    | Description                                                           |
+|--------------------|---------------------------------------------------------|----------|-----------------------------------------------------------------------|
+| id                 | [string](#string)                                       |          | id is the ID of the node.                                             |
+| publicKey          | [string](#string)                                       |          | public_key is the public key of the node.                             |
+| primaryEndpoint    | [string](#string)                                       |          | primary_endpoint is the primary endpoint of the node.                 |
+| wireguardEndpoints | [string](#string)                                       | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.    |
+| zoneAwarenessID    | [string](#string)                                       |          | zone_awareness_id is the zone awareness ID of the node.               |
+| privateIPv4        | [string](#string)                                       |          | private_ipv4 is the private IPv4 address of the node.                 |
+| privateIPv6        | [string](#string)                                       |          | private_ipv6 is the private IPv6 address of the node.                 |
+| features           | [FeaturePort](#v1.FeaturePort)                          | repeated | features are a list of features and the ports they are advertised on. |
+| multiaddrs         | [string](#string)                                       | repeated | multiaddrs are the multiaddrs of the node.                            |
+| joinedAt           | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | joined_at is the time the node joined the cluster.                    |
 
 ### NodeList
 
@@ -238,33 +238,33 @@ NodeList is a list of nodes.
 
 PeerMetrics are the metrics for a node's peer.
 
-| Field                 | Type              | Label    | Description                                                                         |
-|-----------------------|-------------------|----------|-------------------------------------------------------------------------------------|
-| public_key            | [string](#string) |          | public_key is the public key of the peer.                                           |
-| endpoint              | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
-| persistent_keep_alive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
-| last_handshake_time   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
-| allowed_ips           | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
-| protocol_version      | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
-| receive_bytes         | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
-| transmit_bytes        | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
+| Field               | Type              | Label    | Description                                                                         |
+|---------------------|-------------------|----------|-------------------------------------------------------------------------------------|
+| publicKey           | [string](#string) |          | public_key is the public key of the peer.                                           |
+| endpoint            | [string](#string) |          | endpoint is the connected endpoint of the peer.                                     |
+| persistentKeepAlive | [string](#string) |          | persistent_keep_alive is the persistent keep alive interval for the peer.           |
+| lastHandshakeTime   | [string](#string) |          | last_handshake_time is the last handshake time for the peer.                        |
+| allowedIPs          | [string](#string) | repeated | allowed_ips is the list of allowed IPs for the peer.                                |
+| protocolVersion     | [int64](#int64)   |          | protocol_version is the version of the wireguard protocol negotiated with the peer. |
+| receiveBytes        | [uint64](#uint64) |          | receive_bytes is the bytes received from the peer.                                  |
+| transmitBytes       | [uint64](#uint64) |          | transmit_bytes is the bytes transmitted to the peer.                                |
 
 ### Status
 
 Status represents the status of a node.
 
-| Field             | Type                                                    | Label    | Description                                                  |
-|-------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
-| id                | [string](#string)                                       |          | id is the ID of the node.                                    |
-| version           | [string](#string)                                       |          | version is the version of the node.                          |
-| commit            | [string](#string)                                       |          | commit is the commit of the node.                            |
-| build_date        | [string](#string)                                       |          | build_date is the build date of the node.                    |
-| uptime            | [string](#string)                                       |          | uptime is the uptime of the node.                            |
-| started_at        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
-| features          | [FeaturePort](#v1.FeaturePort)                          | repeated | features is the list of features currently enabled.          |
-| cluster_status    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
-| current_leader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
-| interface_metrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
+| Field            | Type                                                    | Label    | Description                                                  |
+|------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
+| id               | [string](#string)                                       |          | id is the ID of the node.                                    |
+| version          | [string](#string)                                       |          | version is the version of the node.                          |
+| commit           | [string](#string)                                       |          | commit is the commit of the node.                            |
+| build_date       | [string](#string)                                       |          | build_date is the build date of the node.                    |
+| uptime           | [string](#string)                                       |          | uptime is the uptime of the node.                            |
+| startedAt        | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |          | started_at is the time the node started.                     |
+| features         | [FeaturePort](#v1.FeaturePort)                          | repeated | features is the list of features currently enabled.          |
+| clusterStatus    | [ClusterStatus](#v1.ClusterStatus)                      |          | cluster_status is the status of the node in the cluster.     |
+| currentLeader    | [string](#string)                                       |          | current_leader is the current leader of the cluster.         |
+| interfaceMetrics | [InterfaceMetrics](#v1.InterfaceMetrics)                |          | interface_metrics are the metrics for the node's interfaces. |
 
 ### WebRTCSignal
 
@@ -272,7 +272,7 @@ WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
 
 | Field       | Type              | Label | Description                                                                                                                                                                                                        |
 |-------------|-------------------|-------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| node_id     | [string](#string) |       | node_id is the ID of the node to send the signal to. This is set by the original sender. On the node that receives the ReceiveSignalChannel request, this will be set to the ID of the node that sent the request. |
+| nodeID      | [string](#string) |       | node_id is the ID of the node to send the signal to. This is set by the original sender. On the node that receives the ReceiveSignalChannel request, this will be set to the ID of the node that sent the request. |
 | candidate   | [string](#string) |       | candidate is an ICE candidate.                                                                                                                                                                                     |
 | description | [string](#string) |       | description is a session description.                                                                                                                                                                              |
 
@@ -423,15 +423,15 @@ interfacing with the webmesh from the outside.
 
 NetworkACL is a network ACL.
 
-| Field             | Type                       | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|-------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name              | [string](#string)          |          | name is the name of the ACL.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| priority          | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                                                                                                                                                                                                                                                                                                                                  |
-| action            | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                                                                                                                                                                                                                                                                                                                         |
-| source_nodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                              |
-| destination_nodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                    |
-| source_cidrs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched.                                                                                                                                                                                                                                                                                                |
-| destination_cidrs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched. // protocols is a list of protocols to match against. If empty, all protocols are matched. // Protocols can be specified by name or number. repeated string protocols = 8; // ports is a list of ports to match against. If empty, all ports are matched. repeated uint32 ports = 9; |
+| Field            | Type                       | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name             | [string](#string)          |          | name is the name of the ACL.                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| priority         | [int32](#int32)            |          | priority is the priority of the ACL. ACLs with higher priority are evaluated first.                                                                                                                                                                                                                                                                                                                                                                  |
+| action           | [ACLAction](#v1.ACLAction) |          | action is the action to take when a request matches the ACL.                                                                                                                                                                                                                                                                                                                                                                                         |
+| sourceNodes      | [string](#string)          | repeated | source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                              |
+| destinationNodes | [string](#string)          | repeated | destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched. Groups can be specified with the prefix "group:". If one or more of the nodes is '\*', all nodes are matched.                                                                                                                                                                                                                                    |
+| sourceCIDRs      | [string](#string)          | repeated | source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched.                                                                                                                                                                                                                                                                                                |
+| destinationCIDRs | [string](#string)          | repeated | destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched. If one or more of the CIDRs is '\*', all CIDRs are matched. // protocols is a list of protocols to match against. If empty, all protocols are matched. // Protocols can be specified by name or number. repeated string protocols = 8; // ports is a list of ports to match against. If empty, all ports are matched. repeated uint32 ports = 9; |
 
 ### NetworkACLs
 
@@ -448,23 +448,23 @@ It is used
 
 by implementations to evaluate network ACLs.
 
-| Field    | Type              | Label | Description                                                                                                                                                         |
-|----------|-------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| src_node | [string](#string) |       | src_node is the source node of the action.                                                                                                                          |
-| src_cidr | [string](#string) |       | src_cidr is the source CIDR of the action.                                                                                                                          |
-| dst_node | [string](#string) |       | dst_node is the destination node of the action.                                                                                                                     |
-| dst_cidr | [string](#string) |       | dst_cidr is the destination CIDR of the action. // protocol is the protocol of the action. string protocol = 5; // port is the port of the action. uint32 port = 6; |
+| Field   | Type              | Label | Description                                     |
+|---------|-------------------|-------|-------------------------------------------------|
+| srcNode | [string](#string) |       | src_node is the source node of the action.      |
+| srcCIDR | [string](#string) |       | src_cidr is the source CIDR of the action.      |
+| dstNode | [string](#string) |       | dst_node is the destination node of the action. |
+| dstCIDR | [string](#string) |       | dst_cidr is the destination CIDR of the action. |
 
 ### Route
 
 Route is a route that is broadcasted by one or more nodes.
 
-| Field             | Type              | Label    | Description                                                                                    |
-|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
-| name              | [string](#string) |          | name is the name of the route.                                                                 |
-| node              | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
-| destination_cidrs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
-| next_hop_node     | [string](#string) |          | next_hop_node is an optional node that is used as the next hop for the route.                  |
+| Field            | Type              | Label    | Description                                                                                    |
+|------------------|-------------------|----------|------------------------------------------------------------------------------------------------|
+| name             | [string](#string) |          | name is the name of the route.                                                                 |
+| node             | [string](#string) |          | node is the node that broadcasts the route. A group can be specified with the prefix "group:". |
+| destinationCIDRs | [string](#string) | repeated | destination_cidrs are the destination CIDRs of the route.                                      |
+| nextHopNode      | [string](#string) |          | nextHopNode is an optional node that is used as the next hop for the route.                    |
 
 ### Routes
 
@@ -516,11 +516,11 @@ by implementations
 
 to evaluate rules.
 
-| Field         | Type                             | Label | Description                                                                 |
-|---------------|----------------------------------|-------|-----------------------------------------------------------------------------|
-| resource      | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
-| resource_name | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
-| verb          | [RuleVerb](#v1.RuleVerb)         |       | verb is the verb that is performed on the resource.                         |
+| Field        | Type                             | Label | Description                                                                 |
+|--------------|----------------------------------|-------|-----------------------------------------------------------------------------|
+| resource     | [RuleResource](#v1.RuleResource) |       | resource is the resource on which the action is performed.                  |
+| resourceName | [string](#string)                |       | resource_name is the name of the resource on which the action is performed. |
+| verb         | [RuleVerb](#v1.RuleVerb)         |       | verb is the verb that is performed on the resource.                         |
 
 ### Role
 
@@ -561,11 +561,11 @@ Roles is a list of roles.
 
 Rule is a rule that applies to a resource.
 
-| Field          | Type                             | Label    | Description                                                             |
-|----------------|----------------------------------|----------|-------------------------------------------------------------------------|
-| resources      | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
-| resource_names | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
-| verbs          | [RuleVerb](#v1.RuleVerb)         | repeated | verbs is the list of verbs that apply to the resource.                  |
+| Field         | Type                             | Label    | Description                                                             |
+|---------------|----------------------------------|----------|-------------------------------------------------------------------------|
+| resources     | [RuleResource](#v1.RuleResource) | repeated | resources is the resources to which the rule applies.                   |
+| resourceNames | [string](#string)                | repeated | resource_names is the list of resource names to which the rule applies. |
+| verbs         | [RuleVerb](#v1.RuleVerb)         | repeated | verbs is the list of verbs that apply to the resource.                  |
 
 ### Subject
 
@@ -765,10 +765,10 @@ the
 
 node's presence on the Kademlia DHT for other nodes to discover.
 
-| Field             | Type              | Label    | Description                                                                                                                                          |
-|-------------------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| bootstrap_servers | [string](#string) | repeated | Bootstrap servers are optional bootstrap servers to use for bootstrapping the DHT. If not provided, the node will use the default bootstrap servers. |
-| psk               | [string](#string) |          | PSK is the pre-shared key to use for the DHT.                                                                                                        |
+| Field            | Type              | Label    | Description                                                                                                                                          |
+|------------------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| bootstrapServers | [string](#string) | repeated | Bootstrap servers are optional bootstrap servers to use for bootstrapping the DHT. If not provided, the node will use the default bootstrap servers. |
+| psk              | [string](#string) |          | PSK is the pre-shared key to use for the DHT.                                                                                                        |
 
 ### AnnounceDHTResponse
 
@@ -782,22 +782,22 @@ connection to a mesh. This message will eventually contain unique
 
 identifiers to allow creating connections to multiple meshes.
 
-| Field             | Type                                              | Label | Description                                                                                                    |
-|-------------------|---------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
-| config            | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                |
-| disable_bootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection. |
-| join_psk          | [string](#string)                                 |       | Join PSK is the pre-shared key to use for joining the mesh.                                                    |
+| Field            | Type                                              | Label | Description                                                                                                    |
+|------------------|---------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
+| config           | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                |
+| disableBootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection. |
+| joinPSK          | [string](#string)                                 |       | Join PSK is the pre-shared key to use for joining the mesh.                                                    |
 
 ### ConnectResponse
 
 ConnectResponse is returned by the Connect RPC.
 
-| Field       | Type              | Label | Description                                   |
-|-------------|-------------------|-------|-----------------------------------------------|
-| node_id     | [string](#string) |       | node id is the unique identifier of the node. |
-| mesh_domain | [string](#string) |       | mesh domain is the domain of the mesh.        |
-| ipv4        | [string](#string) |       | ipv4 is the IPv4 address of the node.         |
-| ipv6        | [string](#string) |       | ipv6 is the IPv6 address of the node.         |
+| Field      | Type              | Label | Description                                   |
+|------------|-------------------|-------|-----------------------------------------------|
+| nodeID     | [string](#string) |       | node id is the unique identifier of the node. |
+| meshDomain | [string](#string) |       | mesh domain is the domain of the mesh.        |
+| ipv4       | [string](#string) |       | ipv4 is the IPv4 address of the node.         |
+| ipv6       | [string](#string) |       | ipv6 is the IPv6 address of the node.         |
 
 ### DisconnectRequest
 
@@ -969,21 +969,21 @@ Raft log.
 
 JoinRequest is a request to join the cluster.
 
-| Field               | Type                                                             | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|---------------------|------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)                                                |          | id is the ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| public_key          | [string](#string)                                                |          | public_key is the public key of the node to broadcast to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| primary_endpoint    | [string](#string)                                                |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| wireguard_endpoints | [string](#string)                                                | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| zone_awareness_id   | [string](#string)                                                |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| assign_ipv4         | [bool](#bool)                                                    |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| prefer_storage_ipv6 | [bool](#bool)                                                    |          | prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication. This is only used if assign_ipv4 is true.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| as_voter            | [bool](#bool)                                                    |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| as_observer         | [bool](#bool)                                                    |          | as_observer is whether the node should be added as an observer. They will receive updates to the storage, but not be able to vote in elections.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| routes              | [string](#string)                                                | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| direct_peers        | [JoinRequest.DirectPeersEntry](#v1.JoinRequest.DirectPeersEntry) | repeated | direct_peers is a map of extra peers that should be connected to directly over relays. The provided edge attribute is the callers preference of how the relay should be created. The request will be denied if the node is not allowed to put data channels or edges. The default joining behavior creates direct links between the caller and the joiner. If the caller has a primary endpoint, the joiner will link the caller to all other nodes with a primary endpoint. If the caller has a zone awareness ID, the joiner will link the caller to all other nodes with the same zone awareness ID that also have a primary endpoint. |
-| features            | [FeaturePort](#v1.FeaturePort)                                   | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| multiaddrs          | [string](#string)                                                | repeated | multiaddrs are libp2p multiaddresses this node is listening on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Field              | Type                                                             | Label    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|--------------------|------------------------------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                 | [string](#string)                                                |          | id is the ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| publicKey          | [string](#string)                                                |          | public_key is the public key of the node to broadcast to peers.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| primaryEndpoint    | [string](#string)                                                |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| wireguardEndpoints | [string](#string)                                                | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| zoneAwarenessID    | [string](#string)                                                |          | zone_awareness_id is the zone awareness ID of the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| assignIPv4         | [bool](#bool)                                                    |          | assign_ipv4 is whether an IPv4 address should be assigned to the node.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| preferStorageIPv6  | [bool](#bool)                                                    |          | prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication. This is only used if assign_ipv4 is true.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| asVoter            | [bool](#bool)                                                    |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| asObserver         | [bool](#bool)                                                    |          | as_observer is whether the node should be added as an observer. They will receive updates to the storage, but not be able to vote in elections.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| routes             | [string](#string)                                                | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| directPeers        | [JoinRequest.DirectPeersEntry](#v1.JoinRequest.DirectPeersEntry) | repeated | direct_peers is a map of extra peers that should be connected to directly over relays. The provided edge attribute is the callers preference of how the relay should be created. The request will be denied if the node is not allowed to put data channels or edges. The default joining behavior creates direct links between the caller and the joiner. If the caller has a primary endpoint, the joiner will link the caller to all other nodes with a primary endpoint. If the caller has a zone awareness ID, the joiner will link the caller to all other nodes with the same zone awareness ID that also have a primary endpoint. |
+| features           | [FeaturePort](#v1.FeaturePort)                                   | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| multiaddrs         | [string](#string)                                                | repeated | multiaddrs are libp2p multiaddresses this node is listening on.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ### JoinRequest.DirectPeersEntry
 
@@ -996,16 +996,16 @@ JoinRequest is a request to join the cluster.
 
 JoinResponse is a response to a join request.
 
-| Field        | Type                               | Label    | Description                                                                                                                                                                                                                                                    |
-|--------------|------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| address_ipv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided. The bits are set to the network bits of the Mesh IPv4 network. |
-| address_ipv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                                                         |
-| network_ipv4 | [string](#string)                  |          | network_ipv4 is the IPv4 network of the Mesh.                                                                                                                                                                                                                  |
-| network_ipv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                                                  |
-| peers        | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                                              |
-| ice_servers  | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set. This must be set if the requestor specifies direct_peers.                              |
-| dns_servers  | [string](#string)                  | repeated | dns_servers is a list of peers offering DNS services.                                                                                                                                                                                                          |
-| mesh_domain  | [string](#string)                  |          | mesh_domain is the domain of the mesh.                                                                                                                                                                                                                         |
+| Field       | Type                               | Label    | Description                                                                                                                                                                                                                       |
+|-------------|------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| addressIPv4 | [string](#string)                  |          | address_ipv4 is the private IPv4 wireguard address of the node in CIDR format representing the network. This is only set if assign_ipv4 was set in the request or no network_ipv6 was provided.                                   |
+| addressIPv6 | [string](#string)                  |          | address_ipv6 is the IPv6 network assigned to the node.                                                                                                                                                                            |
+| networkIPv4 | [string](#string)                  |          | network_ipv4 is the IPv4 network of the Mesh.                                                                                                                                                                                     |
+| networkIPv6 | [string](#string)                  |          | network_ipv6 is the IPv6 network of the Mesh.                                                                                                                                                                                     |
+| peers       | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                                                                                 |
+| iceServers  | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set. This must be set if the requestor specifies direct_peers. |
+| dnsServers  | [string](#string)                  | repeated | dns_servers is a list of peers offering DNS services.                                                                                                                                                                             |
+| meshDomain  | [string](#string)                  |          | mesh_domain is the domain of the mesh.                                                                                                                                                                                            |
 
 ### LeaveRequest
 
@@ -1023,11 +1023,11 @@ LeaveResponse is a response to a leave request. It is currently empty.
 
 PeerConfigurations is a stream of peer configurations.
 
-| Field       | Type                               | Label    | Description                                                                                                                                                             |
-|-------------|------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| peers       | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                       |
-| ice_servers | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set. |
-| dns_servers | [string](#string)                  | repeated | dns_servers is a list of peers offering DNS services.                                                                                                                   |
+| Field      | Type                               | Label    | Description                                                                                                                                                             |
+|------------|------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| peers      | [WireGuardPeer](#v1.WireGuardPeer) | repeated | peers is a list of wireguard peers to connect to.                                                                                                                       |
+| iceServers | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set. |
+| dnsServers | [string](#string)                  | repeated | dns_servers is a list of peers offering DNS services.                                                                                                                   |
 
 ### StorageConfigurationRequest
 
@@ -1067,17 +1067,17 @@ UpdateRequest contains most of the same fields as JoinRequest, but is
 
 used to update the state of a node in the cluster.
 
-| Field               | Type                           | Label    | Description                                                                                                                             |
-|---------------------|--------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| id                  | [string](#string)              |          | id is the ID of the node.                                                                                                               |
-| public_key          | [string](#string)              |          | public_key is the public key of the node to broadcast to peers.                                                                         |
-| primary_endpoint    | [string](#string)              |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
-| wireguard_endpoints | [string](#string)              | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
-| zone_awareness_id   | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
-| as_voter            | [bool](#bool)                  |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.         |
-| routes              | [string](#string)              | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                  |
-| features            | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.             |
-| multiaddrs          | [string](#string)              | repeated | multiaddrs are libp2p multiaddresses this node is listening on.                                                                         |
+| Field              | Type                           | Label    | Description                                                                                                                             |
+|--------------------|--------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id                 | [string](#string)              |          | id is the ID of the node.                                                                                                               |
+| publicKey          | [string](#string)              |          | public_key is the public key of the node to broadcast to peers.                                                                         |
+| primaryEndpoint    | [string](#string)              |          | primary_endpoint is a routable address for the node. If left unset, the node is assumed to be behind a NAT and not directly accessible. |
+| wireguardEndpoints | [string](#string)              | repeated | wireguard_endpoints is a list of WireGuard endpoints for the node.                                                                      |
+| zoneAwarenessID    | [string](#string)              |          | zone_awareness_id is the zone awareness ID of the node.                                                                                 |
+| asVoter            | [bool](#bool)                  |          | as_voter is whether the node should receive a vote in elections. The request will be denied if the node is not allowed to vote.         |
+| routes             | [string](#string)              | repeated | routes is a list of routes to advertise to peers. The request will be denied if the node is not allowed to put routes.                  |
+| features           | [FeaturePort](#v1.FeaturePort) | repeated | features is a list of features supported by the node that should be advertised to peers and the port they are available on.             |
+| multiaddrs         | [string](#string)              | repeated | multiaddrs are libp2p multiaddresses this node is listening on.                                                                         |
 
 ### UpdateResponse
 
@@ -1088,12 +1088,12 @@ empty.
 
 WireGuardPeer is a peer in the Wireguard network.
 
-| Field          | Type                                   | Label    | Description                                                 |
-|----------------|----------------------------------------|----------|-------------------------------------------------------------|
-| node           | [MeshNode](#v1.MeshNode)               |          | Node is information about this node.                        |
-| allowed_ips    | [string](#string)                      | repeated | allowed_ips is the list of allowed IPs for the peer.        |
-| allowed_routes | [string](#string)                      | repeated | allowed_routes is the list of allowed routes for the peer.  |
-| proto          | [ConnectProtocol](#v1.ConnectProtocol) |          | proto indicates the protocol to use to connect to the peer. |
+| Field         | Type                                   | Label    | Description                                                 |
+|---------------|----------------------------------------|----------|-------------------------------------------------------------|
+| node          | [MeshNode](#v1.MeshNode)               |          | Node is information about this node.                        |
+| allowedIPs    | [string](#string)                      | repeated | allowed_ips is the list of allowed IPs for the peer.        |
+| allowedRoutes | [string](#string)                      | repeated | allowed_routes is the list of allowed routes for the peer.  |
+| proto         | [ConnectProtocol](#v1.ConnectProtocol) |          | proto indicates the protocol to use to connect to the peer. |
 
 ### ConnectProtocol
 
@@ -1137,10 +1137,10 @@ to allow people in from the outside.
 
 AllocateIPRequest is the message containing an IP allocation request.
 
-| Field   | Type              | Label | Description                                                |
-|---------|-------------------|-------|------------------------------------------------------------|
-| node_id | [string](#string) |       | node_id is the node that the IP should be allocated for.   |
-| subnet  | [string](#string) |       | subnet is the subnet that the IP should be allocated from. |
+| Field  | Type              | Label | Description                                                |
+|--------|-------------------|-------|------------------------------------------------------------|
+| nodeID | [string](#string) |       | node_id is the node that the IP should be allocated for.   |
+| subnet | [string](#string) |       | subnet is the subnet that the IP should be allocated from. |
 
 ### AllocatedIP
 
@@ -1235,10 +1235,10 @@ a request ID that is used to correlate the query with the result.
 
 ReleaseIPRequest is the message containing an IP release request.
 
-| Field   | Type              | Label | Description                                             |
-|---------|-------------------|-------|---------------------------------------------------------|
-| node_id | [string](#string) |       | node_id is the node that the IP should be released for. |
-| ip      | [string](#string) |       | ip is the IP that should be released.                   |
+| Field  | Type              | Label | Description                                             |
+|--------|-------------------|-------|---------------------------------------------------------|
+| nodeID | [string](#string) |       | node_id is the node that the IP should be released for. |
+| ip     | [string](#string) |       | ip is the IP that should be released.                   |
 
 ### Event.WatchEvent
 
@@ -1430,11 +1430,11 @@ PrefixEvent is an event that is emitted when a value is added or removed
 
 from the storage for a prefix.
 
-| Field      | Type                                               | Label | Description                                   |
-|------------|----------------------------------------------------|-------|-----------------------------------------------|
-| prefix     | [bytes](#bytes)                                    |       | Prefix is the prefix that the event is for.   |
-| value      | [StorageValue](#v1.StorageValue)                   |       | Value is the value that was added or removed. |
-| event_type | [PrefixEvent.EventType](#v1.PrefixEvent.EventType) |       | EventType is the type of event.               |
+| Field     | Type                                               | Label | Description                                   |
+|-----------|----------------------------------------------------|-------|-----------------------------------------------|
+| prefix    | [bytes](#bytes)                                    |       | Prefix is the prefix that the event is for.   |
+| value     | [StorageValue](#v1.StorageValue)                   |       | Value is the value that was added or removed. |
+| eventType | [PrefixEvent.EventType](#v1.PrefixEvent.EventType) |       | EventType is the type of event.               |
 
 ### PutValueRequest
 
@@ -1458,12 +1458,12 @@ RemoveServerResponse is the response object for the RemoveServer RPC.
 StoragePeer is a server that is currently recognized by the storage
 plugin.
 
-| Field          | Type                               | Label | Description                                                                                                                                          |
-|----------------|------------------------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id             | [string](#string)                  |       | ID is the id of the server.                                                                                                                          |
-| public_key     | [string](#string)                  |       | public_key is the encoded public key of the server. This is not required for demotion or removal RPCs. Not all implementations need to support this. |
-| address        | [string](#string)                  |       | Address is the address of the server. This is not required for demotion or removal RPCs.                                                             |
-| cluster_status | [ClusterStatus](#v1.ClusterStatus) |       | ClusterStatus is the status of the server. This is only applicable during a GetStatus RPC.                                                           |
+| Field         | Type                               | Label | Description                                                                                                                                          |
+|---------------|------------------------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id            | [string](#string)                  |       | ID is the id of the server.                                                                                                                          |
+| publicKey     | [string](#string)                  |       | public_key is the encoded public key of the server. This is not required for demotion or removal RPCs. Not all implementations need to support this. |
+| address       | [string](#string)                  |       | Address is the address of the server. This is not required for demotion or removal RPCs.                                                             |
+| clusterStatus | [ClusterStatus](#v1.ClusterStatus) |       | ClusterStatus is the status of the server. This is only applicable during a GetStatus RPC.                                                           |
 
 ### StoragePeers
 
@@ -1478,12 +1478,12 @@ storage plugin.
 
 StorageStatus is the response object for the StorageStatus RPC.
 
-| Field          | Type                               | Label    | Description                                                                                                                        |
-|----------------|------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
-| is_writable    | [bool](#bool)                      |          | IsWritable is true if the storage can currently be written to.                                                                     |
-| cluster_status | [ClusterStatus](#v1.ClusterStatus) |          | ClusterStatus is the status of the storage. The definitions applied to each status are implementation specific.                    |
-| peers          | [StoragePeer](#v1.StoragePeer)     | repeated | Peers is the list of servers that are currently recognized as peers by the storage plugin. This should include the current server. |
-| message        | [string](#string)                  |          | message is an implementation specific message that can be used to provide additional information about the storage status.         |
+| Field         | Type                               | Label    | Description                                                                                                                        |
+|---------------|------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
+| isWritable    | [bool](#bool)                      |          | IsWritable is true if the storage can currently be written to.                                                                     |
+| clusterStatus | [ClusterStatus](#v1.ClusterStatus) |          | ClusterStatus is the status of the storage. The definitions applied to each status are implementation specific.                    |
+| peers         | [StoragePeer](#v1.StoragePeer)     | repeated | Peers is the list of servers that are currently recognized as peers by the storage plugin. This should include the current server. |
+| message       | [string](#string)                  |          | message is an implementation specific message that can be used to provide additional information about the storage status.         |
 
 ### StorageStatusRequest
 
@@ -1551,11 +1551,11 @@ DataChannelOffer is an offer for a data channel. Candidates
 
 are sent after the offer is sent.
 
-| Field        | Type              | Label    | Description                                      |
-|--------------|-------------------|----------|--------------------------------------------------|
-| offer        | [string](#string) |          | offer is the offer.                              |
-| stun_servers | [string](#string) | repeated | stun_servers is the list of STUN servers to use. |
-| candidate    | [string](#string) |          | candidate is an ICE candidate.                   |
+| Field       | Type              | Label    | Description                                      |
+|-------------|-------------------|----------|--------------------------------------------------|
+| offer       | [string](#string) |          | offer is the offer.                              |
+| stunServers | [string](#string) | repeated | stun_servers is the list of STUN servers to use. |
+| candidate   | [string](#string) |          | candidate is an ICE candidate.                   |
 
 ### StartDataChannelRequest
 

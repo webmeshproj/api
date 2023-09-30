@@ -33,17 +33,17 @@ message ConnectRequest {
     google.protobuf.Struct config = 1;
     // Disable bootstrap tells a node that is otherwise configured to 
     // bootstrap to not bootstrap for this connection.
-    bool disable_bootstrap = 2;
+    bool disableBootstrap = 2;
     // Join PSK is the pre-shared key to use for joining the mesh.
-    string join_psk = 3;
+    string joinPSK = 3;
 }
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
     // node id is the unique identifier of the node.
-    string node_id = 1;
+    string nodeID = 1;
     // mesh domain is the domain of the mesh.
-    string mesh_domain = 2;
+    string meshDomain = 2;
     // ipv4 is the IPv4 address of the node.
     string ipv4 = 3;
     // ipv6 is the IPv6 address of the node.
@@ -94,7 +94,7 @@ message StatusResponse {
 message AnnounceDHTRequest {
     // Bootstrap servers are optional bootstrap servers to use for bootstrapping
     // the DHT. If not provided, the node will use the default bootstrap servers.
-    repeated string bootstrap_servers = 1;
+    repeated string bootstrapServers = 1;
     // PSK is the pre-shared key to use for the DHT.
     string psk = 2;
 }

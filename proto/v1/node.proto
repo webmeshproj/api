@@ -91,23 +91,23 @@ message MeshNode {
     // id is the ID of the node.
     string id = 1;
     // public_key is the public key of the node.
-    string public_key = 2;
+    string publicKey = 2;
     // primary_endpoint is the primary endpoint of the node.
-    string primary_endpoint = 4;
+    string primaryEndpoint = 4;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 5;
+    repeated string wireguardEndpoints = 5;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 6;
+    string zoneAwarenessID = 6;
     // private_ipv4 is the private IPv4 address of the node.
-    string private_ipv4 = 7;
+    string privateIPv4 = 7;
     // private_ipv6 is the private IPv6 address of the node.
-    string private_ipv6 = 8;
+    string privateIPv6 = 8;
     // features are a list of features and the ports they are advertised on.
     repeated FeaturePort features = 9;
     // multiaddrs are the multiaddrs of the node.
     repeated string multiaddrs = 10;
     // joined_at is the time the node joined the cluster.
-    google.protobuf.Timestamp joined_at = 11;
+    google.protobuf.Timestamp joinedAt = 11;
 }
 
 // NodeList is a list of nodes.
@@ -149,15 +149,15 @@ message Status {
     // uptime is the uptime of the node.
     string uptime = 5;
     // started_at is the time the node started.
-    google.protobuf.Timestamp started_at = 6;
+    google.protobuf.Timestamp startedAt = 6;
     // features is the list of features currently enabled.
     repeated FeaturePort features = 7;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus cluster_status = 8;
+    ClusterStatus clusterStatus = 8;
     // current_leader is the current leader of the cluster.
-    string current_leader = 9;
+    string currentLeader = 9;
     // interface_metrics are the metrics for the node's interfaces.
-    InterfaceMetrics interface_metrics = 10;
+    InterfaceMetrics interfaceMetrics = 10;
 }
 
 // DataChannelNegotiation is the message for communicating data channels to nodes.
@@ -177,29 +177,29 @@ message DataChannelNegotiation {
   // candidate is an ICE candidate.
   string candidate = 7;
   // stun_servers is the list of STUN servers to use.
-  repeated string stun_servers = 8;
+  repeated string stunServers = 8;
 }
 
 // InterfaceMetrics is the metrics for the WireGuard interface on a node.
 message InterfaceMetrics {
   // device_name is the name of the device.
-  string device_name = 1;
+  string deviceName = 1;
   // public_key is the public key of the node.
-  string public_key = 2;
+  string publicKey = 2;
   // address_v4 is the IPv4 address of the node.
-  string address_v4 = 3;
+  string addressV4 = 3;
   // address_v6 is the IPv6 address of the node.
-  string address_v6 = 4;
+  string addressV6 = 4;
   // type is the type of interface being used for wireguard.
   string type = 5;
   // listen_port is the port wireguard is listening on.
-  int32 listen_port = 6;
+  int32 listenPort = 6;
   // total_receive_bytes is the total number of bytes received.
-  uint64 total_receive_bytes = 7;
+  uint64 totalReceiveBytes = 7;
   // total_transmit_bytes is the total number of bytes transmitted.
-  uint64 total_transmit_bytes = 8;
+  uint64 totalTransmitBytes = 8;
   // num_peers is the number of peers connected to the node.
-  int32 num_peers = 9;
+  int32 numPeers = 9;
   // peers are the per-peer statistics.
   repeated PeerMetrics peers = 10;
 }
@@ -207,21 +207,21 @@ message InterfaceMetrics {
 // PeerMetrics are the metrics for a node's peer.
 message PeerMetrics {
   // public_key is the public key of the peer.
-  string public_key = 1;
+  string publicKey = 1;
   // endpoint is the connected endpoint of the peer.
   string endpoint = 2;
   // persistent_keep_alive is the persistent keep alive interval for the peer.
-  string persistent_keep_alive = 3;
+  string persistentKeepAlive = 3;
   // last_handshake_time is the last handshake time for the peer.
-  string last_handshake_time = 4;
+  string lastHandshakeTime = 4;
   // allowed_ips is the list of allowed IPs for the peer.
-  repeated string allowed_ips = 5;
+  repeated string allowedIPs = 5;
   // protocol_version is the version of the wireguard protocol negotiated with the peer.
-  int64 protocol_version = 6;
+  int64 protocolVersion = 6;
   // receive_bytes is the bytes received from the peer.
-  uint64 receive_bytes = 7;
+  uint64 receiveBytes = 7;
   // transmit_bytes is the bytes transmitted to the peer.
-  uint64 transmit_bytes = 8;
+  uint64 transmitBytes = 8;
 }
 
 // WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
@@ -230,7 +230,7 @@ message WebRTCSignal {
   // This is set by the original sender. On the node that
   // receives the ReceiveSignalChannel request, this will
   // be set to the ID of the node that sent the request.
-  string node_id = 1;
+  string nodeID = 1;
   // candidate is an ICE candidate.
   string candidate = 2;
   // description is a session description.

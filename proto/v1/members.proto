@@ -37,25 +37,25 @@ message JoinRequest {
     // id is the ID of the node.
     string id = 1;
     // public_key is the public key of the node to broadcast to peers.
-    string public_key = 2;
+    string publicKey = 2;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 4;
+    string primaryEndpoint = 4;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 5;
+    repeated string wireguardEndpoints = 5;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 6;
+    string zoneAwarenessID = 6;
     // assign_ipv4 is whether an IPv4 address should be assigned to the node.
-    bool assign_ipv4 = 7;
+    bool assignIPv4 = 7;
     // prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
     // This is only used if assign_ipv4 is true.
-    bool prefer_storage_ipv6 = 8;
+    bool preferStorageIPv6 = 8;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
-    bool as_voter = 9;
+    bool asVoter = 9;
     // as_observer is whether the node should be added as an observer. They will receive
     // updates to the storage, but not be able to vote in elections.
-    bool as_observer = 10;
+    bool asObserver = 10;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
     repeated string routes = 11;
@@ -67,7 +67,7 @@ message JoinRequest {
     // other nodes with a primary endpoint. If the caller has a zone awareness ID,
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
-    map<string, ConnectProtocol> direct_peers = 12;
+    map<string, ConnectProtocol> directPeers = 12;
     // features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 13;
@@ -80,25 +80,24 @@ message JoinResponse {
     // address_ipv4 is the private IPv4 wireguard address of the node
     // in CIDR format representing the network. This is only set if
     // assign_ipv4 was set in the request or no network_ipv6 was provided.
-    // The bits are set to the network bits of the Mesh IPv4 network.
-    string address_ipv4 = 1;
+    string addressIPv4 = 1;
     // address_ipv6 is the IPv6 network assigned to the node.
-    string address_ipv6 = 2;
+    string addressIPv6 = 2;
     // network_ipv4 is the IPv4 network of the Mesh.
-    string network_ipv4 = 3;
+    string networkIPv4 = 3;
     // network_ipv6 is the IPv6 network of the Mesh.
-    string network_ipv6 = 4;
+    string networkIPv6 = 4;
     // peers is a list of wireguard peers to connect to.
     repeated WireGuardPeer peers = 5;
     // ice_servers is a list of public nodes that can be used to negotiate
     // ICE connections if required. This may only be populated when one of
     // the peers has the ICE flag set. This must be set if the requestor
     // specifies direct_peers.
-    repeated string ice_servers = 6;
+    repeated string iceServers = 6;
     // dns_servers is a list of peers offering DNS services.
-    repeated string dns_servers = 7;
+    repeated string dnsServers = 7;
     // mesh_domain is the domain of the mesh.
-    string mesh_domain = 8;
+    string meshDomain = 8;
 }
 
 // UpdateRequest contains most of the same fields as JoinRequest, but is
@@ -107,17 +106,17 @@ message UpdateRequest {
     // id is the ID of the node.
     string id = 1;
     // public_key is the public key of the node to broadcast to peers.
-    string public_key = 2;
+    string publicKey = 2;
     // primary_endpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
-    string primary_endpoint = 3;
+    string primaryEndpoint = 3;
     // wireguard_endpoints is a list of WireGuard endpoints for the node.
-    repeated string wireguard_endpoints = 4;
+    repeated string wireguardEndpoints = 4;
     // zone_awareness_id is the zone awareness ID of the node.
-    string zone_awareness_id = 5;
+    string zoneAwarenessID = 5;
     // as_voter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
-    bool as_voter = 6;
+    bool asVoter = 6;
     // routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
     repeated string routes = 7;
@@ -136,9 +135,9 @@ message WireGuardPeer {
     // Node is information about this node.
     MeshNode node = 1;
     // allowed_ips is the list of allowed IPs for the peer.
-    repeated string allowed_ips = 2;
+    repeated string allowedIPs = 2;
     // allowed_routes is the list of allowed routes for the peer.
-    repeated string allowed_routes = 3;
+    repeated string allowedRoutes = 3;
     // proto indicates the protocol to use to connect to the peer.
     ConnectProtocol proto = 4;
 }
@@ -184,9 +183,9 @@ message PeerConfigurations {
     // ice_servers is a list of public nodes that can be used to negotiate
     // ICE connections if required. This may only be populated when one of
     // the peers has the ICE flag set.
-    repeated string ice_servers = 6;
+    repeated string iceServers = 6;
     // dns_servers is a list of peers offering DNS services.
-    repeated string dns_servers = 7;
+    repeated string dnsServers = 7;
 }
 
 // The membership service is exposed on storage-providing nodes to allow nodes to join

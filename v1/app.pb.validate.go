@@ -88,7 +88,7 @@ func (m *ConnectRequest) validate(all bool) error {
 
 	// no validation rules for DisableBootstrap
 
-	// no validation rules for JoinPsk
+	// no validation rules for JoinPSK
 
 	if len(errors) > 0 {
 		return ConnectRequestMultiError(errors)
@@ -190,7 +190,7 @@ func (m *ConnectResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for NodeId
+	// no validation rules for NodeID
 
 	// no validation rules for MeshDomain
 

@@ -43,10 +43,10 @@ message StorageStatusRequest {}
 // StorageStatus is the response object for the StorageStatus RPC.
 message StorageStatus {
     // IsWritable is true if the storage can currently be written to.
-    bool is_writable = 1;
+    bool isWritable = 1;
     // ClusterStatus is the status of the storage. The definitions applied
     // to each status are implementation specific.
-    ClusterStatus cluster_status = 2;
+    ClusterStatus clusterStatus = 2;
     // Peers is the list of servers that are currently recognized as peers 
     // by the storage plugin. This should include the current server.
     repeated StoragePeer peers = 3;
@@ -61,13 +61,13 @@ message StoragePeer {
     string id = 1;
     // public_key is the encoded public key of the server. This is not required
     // for demotion or removal RPCs. Not all implementations need to support this.
-    string public_key = 2;
+    string publicKey = 2;
     // Address is the address of the server. This is not required
     // for demotion or removal RPCs.
     string address = 3;
     // ClusterStatus is the status of the server. This is only
     // applicable during a GetStatus RPC.
-    ClusterStatus cluster_status = 4;
+    ClusterStatus clusterStatus = 4;
 }
 
 // StoragePeers is a list of servers that are currently recognized by the storage plugin.
@@ -177,7 +177,7 @@ message PrefixEvent {
     }
 
     // EventType is the type of event.
-    EventType event_type = 3;
+    EventType eventType = 3;
 }
 
 // StorageProviderPlugin is the service definition for a Webmesh storage provider.

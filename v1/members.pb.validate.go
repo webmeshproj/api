@@ -63,11 +63,11 @@ func (m *JoinRequest) validate(all bool) error {
 
 	// no validation rules for PrimaryEndpoint
 
-	// no validation rules for ZoneAwarenessId
+	// no validation rules for ZoneAwarenessID
 
-	// no validation rules for AssignIpv4
+	// no validation rules for AssignIPv4
 
-	// no validation rules for PreferStorageIpv6
+	// no validation rules for PreferStorageIPv6
 
 	// no validation rules for AsVoter
 
@@ -208,13 +208,13 @@ func (m *JoinResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for AddressIpv4
+	// no validation rules for AddressIPv4
 
-	// no validation rules for AddressIpv6
+	// no validation rules for AddressIPv6
 
-	// no validation rules for NetworkIpv4
+	// no validation rules for NetworkIPv4
 
-	// no validation rules for NetworkIpv6
+	// no validation rules for NetworkIPv6
 
 	for idx, item := range m.GetPeers() {
 		_, _ = idx, item
@@ -357,7 +357,7 @@ func (m *UpdateRequest) validate(all bool) error {
 
 	// no validation rules for PrimaryEndpoint
 
-	// no validation rules for ZoneAwarenessId
+	// no validation rules for ZoneAwarenessID
 
 	// no validation rules for AsVoter
 

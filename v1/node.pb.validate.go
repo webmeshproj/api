@@ -166,11 +166,11 @@ func (m *MeshNode) validate(all bool) error {
 
 	// no validation rules for PrimaryEndpoint
 
-	// no validation rules for ZoneAwarenessId
+	// no validation rules for ZoneAwarenessID
 
-	// no validation rules for PrivateIpv4
+	// no validation rules for PrivateIPv4
 
-	// no validation rules for PrivateIpv6
+	// no validation rules for PrivateIPv6
 
 	for idx, item := range m.GetFeatures() {
 		_, _ = idx, item
@@ -1154,7 +1154,7 @@ func (m *WebRTCSignal) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for NodeId
+	// no validation rules for NodeID
 
 	// no validation rules for Candidate
 

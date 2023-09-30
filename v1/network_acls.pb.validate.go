@@ -533,11 +533,11 @@ func (m *NetworkAction) validate(all bool) error {
 
 	// no validation rules for SrcNode
 
-	// no validation rules for SrcCidr
+	// no validation rules for SrcCIDR
 
 	// no validation rules for DstNode
 
-	// no validation rules for DstCidr
+	// no validation rules for DstCIDR
 
 	if len(errors) > 0 {
 		return NetworkActionMultiError(errors)

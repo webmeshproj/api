@@ -647,7 +647,7 @@ func (m *AllocateIPRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for NodeId
+	// no validation rules for NodeID
 
 	// no validation rules for Subnet
 
@@ -854,7 +854,7 @@ func (m *ReleaseIPRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for NodeId
+	// no validation rules for NodeID
 
 	// no validation rules for Ip
 

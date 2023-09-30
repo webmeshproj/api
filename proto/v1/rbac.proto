@@ -87,7 +87,7 @@ message Rule {
     // resources is the resources to which the rule applies.
     repeated RuleResource resources = 1;
     // resource_names is the list of resource names to which the rule applies.
-    repeated string resource_names = 2;
+    repeated string resourceNames = 2;
     // verbs is the list of verbs that apply to the resource.
     repeated RuleVerb verbs = 3;
 }
@@ -151,7 +151,7 @@ message RBACAction {
     RuleResource resource = 1;
     // resource_name is the name of the resource on which the action is
     // performed.
-    string resource_name = 2;
+    string resourceName = 2;
     // verb is the verb that is performed on the resource.
     RuleVerb verb = 3;
 }

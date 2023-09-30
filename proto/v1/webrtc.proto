@@ -45,7 +45,7 @@ message DataChannelOffer {
   // offer is the offer.
   string offer = 1;
   // stun_servers is the list of STUN servers to use.
-  repeated string stun_servers = 2;
+  repeated string stunServers = 2;
   // candidate is an ICE candidate.
   string candidate = 3;
 }

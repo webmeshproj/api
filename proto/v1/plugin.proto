@@ -121,7 +121,7 @@ service WatchPlugin {
 // AllocateIPRequest is the message containing an IP allocation request.
 message AllocateIPRequest {
     // node_id is the node that the IP should be allocated for.
-    string node_id = 1;
+    string nodeID = 1;
     // subnet is the subnet that the IP should be allocated from.
     string subnet = 2;
 }
@@ -135,7 +135,7 @@ message AllocatedIP {
 // ReleaseIPRequest is the message containing an IP release request.
 message ReleaseIPRequest {
     // node_id is the node that the IP should be released for.
-    string node_id = 1;
+    string nodeID = 1;
     // ip is the IP that should be released.
     string ip = 2;
 }
