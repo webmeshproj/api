@@ -5,7 +5,8 @@ BUF_VERSION  ?= 1.17.0
 generate: gen
 
 gen: buf ## Generate proto files.
-	$(BUF) generate proto
+	go install github.com/protobuf-tools/protoc-gen-deepcopy@latest
+	PATH="$(PATH):$(shell go env GOPATH)/bin" $(BUF) generate proto
 	pandoc -f html -t gfm -o README.md doc/index.html
 
 .PHONY: buf
