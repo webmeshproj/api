@@ -56,6 +56,7 @@
   - [<span class="badge">M</span>SubscribeRequest](#v1.SubscribeRequest)
   - [<span class="badge">M</span>SubscriptionEvent](#v1.SubscriptionEvent)
   - [<span class="badge">E</span>QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand)
+  - [<span class="badge">E</span>QueryRequest.QueryType](#v1.QueryRequest.QueryType)
   - [<span class="badge">S</span>StorageQueryService](#v1.StorageQueryService)
 - [v1/app.proto](#v1%2fapp.proto)
   - [<span class="badge">M</span>AnnounceDHTRequest](#v1.AnnounceDHTRequest)
@@ -104,12 +105,9 @@
   - [<span class="badge">M</span>Event](#v1.Event)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
-  - [<span class="badge">M</span>PluginQuery](#v1.PluginQuery)
-  - [<span class="badge">M</span>PluginQueryResult](#v1.PluginQueryResult)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
   - [<span class="badge">E</span>Event.WatchEvent](#v1.Event.WatchEvent)
   - [<span class="badge">E</span>PluginInfo.PluginCapability](#v1.PluginInfo.PluginCapability)
-  - [<span class="badge">E</span>PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand)
   - [<span class="badge">S</span>AuthPlugin](#v1.AuthPlugin)
   - [<span class="badge">S</span>IPAMPlugin](#v1.IPAMPlugin)
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
@@ -694,20 +692,19 @@ for
 
 information.
 
-| Field   | Type                                                       | Label | Description                              |
-|---------|------------------------------------------------------------|-------|------------------------------------------|
-| command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.     |
-| query   | [bytes](#bytes)                                            |       | query is the key or prefix of the query. |
+| Field   | Type                                                       | Label | Description                                                                                                                                                                                                                      |
+|---------|------------------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.                                                                                                                                                                                             |
+| type    | [QueryRequest.QueryType](#v1.QueryRequest.QueryType)       |       | type is the type of the query.                                                                                                                                                                                                   |
+| query   | [string](#string)                                          |       | query is the string of the query. This follows the format of a label selector and is only applicable for certain queries. For get queries this will usually be an ID. For list queries this will usually be one or more filters. |
 
 ### QueryResponse
 
 QueryResponse is the message containing a mesh query result.
 
-| Field | Type              | Label    | Description                                                                                                                                                            |
-|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| key   | [bytes](#bytes)   |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
-| value | [bytes](#bytes)   | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
-| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
+| Field | Type            | Label    | Description                                                                                                  |
+|-------|-----------------|----------|--------------------------------------------------------------------------------------------------------------|
+| items | [bytes](#bytes) | repeated | items contain the results of the query. These will be protobuf json-encoded objects of the given query type. |
 
 ### SubscribeRequest
 
@@ -732,12 +729,25 @@ SubscriptionEvent is a message containing a subscription event.
 
 QueryCommand is the type of the query.
 
-| Name    | Number | Description                                                       |
-|---------|--------|-------------------------------------------------------------------|
-| UNKNOWN | 0      | UNKNOWN is the default command.                                   |
-| GET     | 1      | GET is the command to get a value.                                |
-| LIST    | 2      | LIST is the command to list keys with an optional prefix.         |
-| ITER    | 3      | ITER is the command to iterate over keys with an optional prefix. |
+| Name | Number | Description                                               |
+|------|--------|-----------------------------------------------------------|
+| GET  | 0      | GET is the command to get a value.                        |
+| LIST | 1      | LIST is the command to list keys with an optional prefix. |
+
+### QueryRequest.QueryType
+
+QueryType is the type of object being queried.
+
+| Name          | Number | Description                                           |
+|---------------|--------|-------------------------------------------------------|
+| PEERS         | 0      | PEERS is the type for querying peers.                 |
+| EDGES         | 1      | EDGES is the type for querying edges.                 |
+| ROUTES        | 2      | ROUTES is the type for querying routes.               |
+| ACLS          | 3      | ACLS is the type for querying ACLs.                   |
+| ROLES         | 4      | ROLES is the type for querying roles.                 |
+| ROLEBINDINGS  | 5      | ROLEBINDINGS is the type for querying role bindings.  |
+| GROUPS        | 6      | GROUPS is the type for querying groups.               |
+| NETWORK_STATE | 7      | NETWORK_STATE is the type for querying network state. |
 
 ### StorageQueryService
 
@@ -746,9 +756,9 @@ mesh state.
 
 | Method Name | Request Type                             | Response Type                                     | Description                                                                                                                                                                        |
 |-------------|------------------------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Query       | [QueryRequest](#v1.QueryRequest)         | [QueryResponse](#v1.QueryResponse) stream         | Query is used to query the mesh for information.                                                                                                                                   |
+| Query       | [QueryRequest](#v1.QueryRequest)         | [QueryResponse](#v1.QueryResponse)                | Query is used to query the mesh for information.                                                                                                                                   |
 | Publish     | [PublishRequest](#v1.PublishRequest)     | [PublishResponse](#v1.PublishResponse)            | Publish is used to publish events to the mesh database. A restricted set of keys are allowed to be published to. This is only available on nodes that are able to provide storage. |
-| Subscribe   | [SubscribeRequest](#v1.SubscribeRequest) | [SubscriptionEvent](#v1.SubscriptionEvent) stream | Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only available on nodes that are able to provide storage.                           |
+| Subscribe   | [SubscribeRequest](#v1.SubscribeRequest) | [SubscriptionEvent](#v1.SubscriptionEvent) stream | Subscribe is used to subscribe to events at a particular prefix. This is only available on nodes that are able to provide storage.                                                 |
 
 <div class="file-heading">
 
@@ -1205,32 +1215,6 @@ PluginInfo is the information of a plugin.
 | description  | [string](#string)                                              |          | Description is the description of the plugin.   |
 | capabilities | [PluginInfo.PluginCapability](#v1.PluginInfo.PluginCapability) | repeated | Capabilities is the capabilities of the plugin. |
 
-### PluginQuery
-
-PluginQuery is the message containing a storage query. It contains
-
-a request ID that is used to correlate the query with the result.
-
-| Field   | Type                                                     | Label | Description                              |
-|---------|----------------------------------------------------------|-------|------------------------------------------|
-| id      | [string](#string)                                        |       | id is the ID of the query.               |
-| command | [PluginQuery.QueryCommand](#v1.PluginQuery.QueryCommand) |       | command is the command of the query.     |
-| query   | [bytes](#bytes)                                          |       | query is the key or prefix of the query. |
-
-### PluginQueryResult
-
-PluginQueryResult is the message containing a storage query result. It
-contains
-
-a request ID that is used to correlate the query with the result.
-
-| Field | Type              | Label    | Description                                                                                                                                                            |
-|-------|-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id    | [string](#string) |          | id is the ID of the query.                                                                                                                                             |
-| key   | [bytes](#bytes)   |          | key is the key of the query. For GET and ITER queries it will be the current key. For LIST queries it will be the prefix.                                              |
-| value | [bytes](#bytes)   | repeated | value is the value of the query. For GET and ITER queries it will be the value of the current key. For LIST queries it will be the list of keys that match the prefix. |
-| error | [string](#string) |          | error is an error that occurred during the query. At the end of an ITER query it will be set to "EOF" to indicate that the iteration is complete.                      |
-
 ### ReleaseIPRequest
 
 ReleaseIPRequest is the message containing an IP release request.
@@ -1263,20 +1247,6 @@ PluginCapability is the capabilities of a plugin.
 | WATCH            | 3      | WATCH indicates that the plugin wants to receive watch events.                             |
 | IPAMV4           | 4      | IPAMV4 indicates that the plugin is an IPv4 IPAM plugin.                                   |
 | STORAGE_QUERIER  | 5      | STORAGE_QUERIER indicates a plugin that wants to interact with storage.                    |
-
-### PluginQuery.QueryCommand
-
-QueryCommand is the type of the query.
-
-| Name      | Number | Description                                                       |
-|-----------|--------|-------------------------------------------------------------------|
-| UNKNOWN   | 0      | UNKNOWN is the default value of QueryCommand.                     |
-| GET       | 1      | GET is the command to get a value.                                |
-| LIST      | 2      | LIST is the command to list keys with an optional prefix.         |
-| ITER      | 3      | ITER is the command to iterate over keys with an optional prefix. |
-| PUT       | 4      | PUT is the command to put a value.                                |
-| DELETE    | 5      | DELETE is the command to delete a value.                          |
-| SUBSCRIBE | 6      | SUBSCRIBE is the command to subscribe to a prefix.                |
 
 ### AuthPlugin
 
@@ -1312,9 +1282,9 @@ It must be implemented by all plugins.
 StorageQuerierPlugin is the service definition for a Webmesh storage
 querier plugin.
 
-| Method Name   | Request Type                                      | Response Type                         | Description                                                                                                                                                                                                                                                                                                                          |
-|---------------|---------------------------------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| InjectQuerier | [PluginQueryResult](#v1.PluginQueryResult) stream | [PluginQuery](#v1.PluginQuery) stream | InjectQuerier is a stream opened by the node to faciliate read-write operations against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginSQLQueryResult message for every query that is received. |
+| Method Name   | Request Type                            | Response Type                             | Description                                                                                                                                                                                                                                                                                                                 |
+|---------------|-----------------------------------------|-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| InjectQuerier | [QueryRequest](#v1.QueryRequest) stream | [QueryResponse](#v1.QueryResponse) stream | InjectQuerier is a stream opened by the node to faciliate read operations against the mesh state. The signature is misleading, but it is required to be able to stream the query results back to the node. The node will open a stream to the plugin and send a PluginQueryResult message for every query that is received. |
 
 ### WatchPlugin
 

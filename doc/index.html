@@ -418,6 +418,10 @@
                   <a href="#v1.QueryRequest.QueryCommand"><span class="badge">E</span>QueryRequest.QueryCommand</a>
                 </li>
               
+                <li>
+                  <a href="#v1.QueryRequest.QueryType"><span class="badge">E</span>QueryRequest.QueryType</a>
+                </li>
+              
               
               
                 <li>
@@ -638,14 +642,6 @@
                 </li>
               
                 <li>
-                  <a href="#v1.PluginQuery"><span class="badge">M</span>PluginQuery</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.PluginQueryResult"><span class="badge">M</span>PluginQueryResult</a>
-                </li>
-              
-                <li>
                   <a href="#v1.ReleaseIPRequest"><span class="badge">M</span>ReleaseIPRequest</a>
                 </li>
               
@@ -656,10 +652,6 @@
               
                 <li>
                   <a href="#v1.PluginInfo.PluginCapability"><span class="badge">E</span>PluginInfo.PluginCapability</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.PluginQuery.QueryCommand"><span class="badge">E</span>PluginQuery.QueryCommand</a>
                 </li>
               
               
@@ -2804,10 +2796,20 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                 </tr>
               
                 <tr>
-                  <td>query</td>
-                  <td><a href="#bytes">bytes</a></td>
+                  <td>type</td>
+                  <td><a href="#v1.QueryRequest.QueryType">QueryRequest.QueryType</a></td>
                   <td></td>
-                  <td><p>query is the key or prefix of the query. </p></td>
+                  <td><p>type is the type of the query. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>query is the string of the query. This follows the format of a label
+selector and is only applicable for certain queries. For get queries
+this will usually be an ID. For list queries this will usually be one
+or more filters. </p></td>
                 </tr>
               
             </tbody>
@@ -2828,27 +2830,11 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
             <tbody>
               
                 <tr>
-                  <td>key</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
-For LIST queries it will be the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
+                  <td>items</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
-                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
-For LIST queries it will be the list of keys that match the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
-&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
+                  <td><p>items contain the results of the query. These will be protobuf
+json-encoded objects of the given query type. </p></td>
                 </tr>
               
             </tbody>
@@ -2924,27 +2910,74 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
           <tbody>
             
               <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the default command.</p></td>
-              </tr>
-            
-              <tr>
                 <td>GET</td>
-                <td>1</td>
+                <td>0</td>
                 <td><p>GET is the command to get a value.</p></td>
               </tr>
             
               <tr>
                 <td>LIST</td>
-                <td>2</td>
+                <td>1</td>
                 <td><p>LIST is the command to list keys with an optional prefix.</p></td>
               </tr>
             
+          </tbody>
+        </table>
+      
+        <h3 id="v1.QueryRequest.QueryType">QueryRequest.QueryType</h3>
+        <p>QueryType is the type of object being queried.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
               <tr>
-                <td>ITER</td>
+                <td>PEERS</td>
+                <td>0</td>
+                <td><p>PEERS is the type for querying peers.</p></td>
+              </tr>
+            
+              <tr>
+                <td>EDGES</td>
+                <td>1</td>
+                <td><p>EDGES is the type for querying edges.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ROUTES</td>
+                <td>2</td>
+                <td><p>ROUTES is the type for querying routes.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ACLS</td>
                 <td>3</td>
-                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
+                <td><p>ACLS is the type for querying ACLs.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ROLES</td>
+                <td>4</td>
+                <td><p>ROLES is the type for querying roles.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ROLEBINDINGS</td>
+                <td>5</td>
+                <td><p>ROLEBINDINGS is the type for querying role bindings.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GROUPS</td>
+                <td>6</td>
+                <td><p>GROUPS is the type for querying groups.</p></td>
+              </tr>
+            
+              <tr>
+                <td>NETWORK_STATE</td>
+                <td>7</td>
+                <td><p>NETWORK_STATE is the type for querying network state.</p></td>
               </tr>
             
           </tbody>
@@ -2965,7 +2998,7 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
               <tr>
                 <td>Query</td>
                 <td><a href="#v1.QueryRequest">QueryRequest</a></td>
-                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a></td>
                 <td><p>Query is used to query the mesh for information.</p></td>
               </tr>
             
@@ -2982,8 +3015,8 @@ that are able to provide storage.</p></td>
                 <td>Subscribe</td>
                 <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
                 <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
-                <td><p>Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
-available on nodes that are able to provide storage.</p></td>
+                <td><p>Subscribe is used to subscribe to events at a particular prefix. This is
+only available on nodes that are able to provide storage.</p></td>
               </tr>
             
           </tbody>
@@ -4445,92 +4478,6 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
 
         
       
-        <h3 id="v1.PluginQuery">PluginQuery</h3>
-        <p>PluginQuery is the message containing a storage query. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the query. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>command</td>
-                  <td><a href="#v1.PluginQuery.QueryCommand">PluginQuery.QueryCommand</a></td>
-                  <td></td>
-                  <td><p>command is the command of the query. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>query</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>query is the key or prefix of the query. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.PluginQueryResult">PluginQueryResult</h3>
-        <p>PluginQueryResult is the message containing a storage query result. It contains</p><p>a request ID that is used to correlate the query with the result.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>id is the ID of the query. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td></td>
-                  <td><p>key is the key of the query. For GET and ITER queries it will be the current key.
-For LIST queries it will be the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#bytes">bytes</a></td>
-                  <td>repeated</td>
-                  <td><p>value is the value of the query. For GET and ITER queries it will be the value of the current key.
-For LIST queries it will be the list of keys that match the prefix. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>error is an error that occurred during the query. At the end of an ITER query it will be set to
-&#34;EOF&#34; to indicate that the iteration is complete. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="v1.ReleaseIPRequest">ReleaseIPRequest</h3>
         <p>ReleaseIPRequest is the message containing an IP release request.</p>
 
@@ -4646,59 +4593,6 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
           </tbody>
         </table>
       
-        <h3 id="v1.PluginQuery.QueryCommand">PluginQuery.QueryCommand</h3>
-        <p>QueryCommand is the type of the query.</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>UNKNOWN</td>
-                <td>0</td>
-                <td><p>UNKNOWN is the default value of QueryCommand.</p></td>
-              </tr>
-            
-              <tr>
-                <td>GET</td>
-                <td>1</td>
-                <td><p>GET is the command to get a value.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LIST</td>
-                <td>2</td>
-                <td><p>LIST is the command to list keys with an optional prefix.</p></td>
-              </tr>
-            
-              <tr>
-                <td>ITER</td>
-                <td>3</td>
-                <td><p>ITER is the command to iterate over keys with an optional prefix.</p></td>
-              </tr>
-            
-              <tr>
-                <td>PUT</td>
-                <td>4</td>
-                <td><p>PUT is the command to put a value.</p></td>
-              </tr>
-            
-              <tr>
-                <td>DELETE</td>
-                <td>5</td>
-                <td><p>DELETE is the command to delete a value.</p></td>
-              </tr>
-            
-              <tr>
-                <td>SUBSCRIBE</td>
-                <td>6</td>
-                <td><p>SUBSCRIBE is the command to subscribe to a prefix.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
@@ -4791,12 +4685,12 @@ For LIST queries it will be the list of keys that match the prefix. </p></td>
             
               <tr>
                 <td>InjectQuerier</td>
-                <td><a href="#v1.PluginQueryResult">PluginQueryResult</a> stream</td>
-                <td><a href="#v1.PluginQuery">PluginQuery</a> stream</td>
-                <td><p>InjectQuerier is a stream opened by the node to faciliate read-write operations
+                <td><a href="#v1.QueryRequest">QueryRequest</a> stream</td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a> stream</td>
+                <td><p>InjectQuerier is a stream opened by the node to faciliate read operations
 against the mesh state. The signature is misleading, but it is required to be 
 able to stream the query results back to the node. The node will open a stream 
-to the plugin and send a PluginSQLQueryResult message for every query that is 
+to the plugin and send a PluginQueryResult message for every query that is 
 received.</p></td>
               </tr>
             

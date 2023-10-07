@@ -59,6 +59,8 @@ func (m *QueryRequest) validate(all bool) error {
 
 	// no validation rules for Command
 
+	// no validation rules for Type
+
 	// no validation rules for Query
 
 	if len(errors) > 0 {
@@ -159,10 +161,6 @@ func (m *QueryResponse) validate(all bool) error {
 	}
 
 	var errors []error
-
-	// no validation rules for Key
-
-	// no validation rules for Error
 
 	if len(errors) > 0 {
 		return QueryResponseMultiError(errors)

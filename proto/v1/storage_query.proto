@@ -25,32 +25,46 @@ import "google/protobuf/duration.proto";
 message QueryRequest {
     // QueryCommand is the type of the query.
     enum QueryCommand {
-        // UNKNOWN is the default command.
-        UNKNOWN = 0;
         // GET is the command to get a value.
-        GET = 1;
+        GET = 0;
         // LIST is the command to list keys with an optional prefix.
-        LIST = 2;
-        // ITER is the command to iterate over keys with an optional prefix.
-        ITER = 3;
+        LIST = 1;
+    };
+    // QueryType is the type of object being queried.
+    enum QueryType {
+        // PEERS is the type for querying peers.
+        PEERS = 0;
+        // EDGES is the type for querying edges.
+        EDGES = 1;
+        // ROUTES is the type for querying routes.
+        ROUTES = 2;
+        // ACLS is the type for querying ACLs.
+        ACLS = 3;
+        // ROLES is the type for querying roles.
+        ROLES = 4;
+        // ROLEBINDINGS is the type for querying role bindings.
+        ROLEBINDINGS = 5;
+        // GROUPS is the type for querying groups.
+        GROUPS = 6;
+        // NETWORK_STATE is the type for querying network state.
+        NETWORK_STATE = 7;
     };
     // command is the command of the query.
-    QueryCommand command = 2;
-    // query is the key or prefix of the query.
-    bytes query = 3;
+    QueryCommand command = 1;
+    // type is the type of the query.
+    QueryType type = 2;
+    // query is the string of the query. This follows the format of a label
+    // selector and is only applicable for certain queries. For get queries
+    // this will usually be an ID. For list queries this will usually be one
+    // or more filters.
+    string query = 3;
 }
 
 // QueryResponse is the message containing a mesh query result.
 message QueryResponse {
-    // key is the key of the query. For GET and ITER queries it will be the current key.
-    // For LIST queries it will be the prefix.
-    bytes key = 2;
-    // value is the value of the query. For GET and ITER queries it will be the value of the current key.
-    // For LIST queries it will be the list of keys that match the prefix.
-    repeated bytes value = 3;
-    // error is an error that occurred during the query. At the end of an ITER query it will be set to
-    // "EOF" to indicate that the iteration is complete.
-    string error = 4;
+    // items contain the results of the query. These will be protobuf
+    // json-encoded objects of the given query type.
+    repeated bytes items = 1;
 }
 
 // SubscribeRequest is sent by the application to the node to subscribe to
@@ -87,14 +101,14 @@ message PublishResponse {
 // StorageQueryService is the service for querying information about the mesh state.
 service StorageQueryService {
     // Query is used to query the mesh for information.
-    rpc Query(QueryRequest) returns (stream QueryResponse) {}
+    rpc Query(QueryRequest) returns (QueryResponse) {}
 
     // Publish is used to publish events to the mesh database. A restricted set
     // of keys are allowed to be published to. This is only available on nodes 
     // that are able to provide storage.
     rpc Publish(PublishRequest) returns (PublishResponse) {}
 
-    // Subscribe is used by non-storage-providing nodes to receive updates to the mesh state. This is only
-    // available on nodes that are able to provide storage.
+    // Subscribe is used to subscribe to events at a particular prefix. This is
+    // only available on nodes that are able to provide storage.
     rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
 }

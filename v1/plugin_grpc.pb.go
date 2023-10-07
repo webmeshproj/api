@@ -527,10 +527,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StorageQuerierPluginClient interface {
-	// InjectQuerier is a stream opened by the node to faciliate read-write operations
+	// InjectQuerier is a stream opened by the node to faciliate read operations
 	// against the mesh state. The signature is misleading, but it is required to be
 	// able to stream the query results back to the node. The node will open a stream
-	// to the plugin and send a PluginSQLQueryResult message for every query that is
+	// to the plugin and send a PluginQueryResult message for every query that is
 	// received.
 	InjectQuerier(ctx context.Context, opts ...grpc.CallOption) (StorageQuerierPlugin_InjectQuerierClient, error)
 }
@@ -553,8 +553,8 @@ func (c *storageQuerierPluginClient) InjectQuerier(ctx context.Context, opts ...
 }
 
 type StorageQuerierPlugin_InjectQuerierClient interface {
-	Send(*PluginQueryResult) error
-	Recv() (*PluginQuery, error)
+	Send(*QueryRequest) error
+	Recv() (*QueryResponse, error)
 	grpc.ClientStream
 }
 
@@ -562,12 +562,12 @@ type storageQuerierPluginInjectQuerierClient struct {
 	grpc.ClientStream
 }
 
-func (x *storageQuerierPluginInjectQuerierClient) Send(m *PluginQueryResult) error {
+func (x *storageQuerierPluginInjectQuerierClient) Send(m *QueryRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *storageQuerierPluginInjectQuerierClient) Recv() (*PluginQuery, error) {
-	m := new(PluginQuery)
+func (x *storageQuerierPluginInjectQuerierClient) Recv() (*QueryResponse, error) {
+	m := new(QueryResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -578,10 +578,10 @@ func (x *storageQuerierPluginInjectQuerierClient) Recv() (*PluginQuery, error) {
 // All implementations must embed UnimplementedStorageQuerierPluginServer
 // for forward compatibility
 type StorageQuerierPluginServer interface {
-	// InjectQuerier is a stream opened by the node to faciliate read-write operations
+	// InjectQuerier is a stream opened by the node to faciliate read operations
 	// against the mesh state. The signature is misleading, but it is required to be
 	// able to stream the query results back to the node. The node will open a stream
-	// to the plugin and send a PluginSQLQueryResult message for every query that is
+	// to the plugin and send a PluginQueryResult message for every query that is
 	// received.
 	InjectQuerier(StorageQuerierPlugin_InjectQuerierServer) error
 	mustEmbedUnimplementedStorageQuerierPluginServer()
@@ -612,8 +612,8 @@ func _StorageQuerierPlugin_InjectQuerier_Handler(srv interface{}, stream grpc.Se
 }
 
 type StorageQuerierPlugin_InjectQuerierServer interface {
-	Send(*PluginQuery) error
-	Recv() (*PluginQueryResult, error)
+	Send(*QueryResponse) error
+	Recv() (*QueryRequest, error)
 	grpc.ServerStream
 }
 
@@ -621,12 +621,12 @@ type storageQuerierPluginInjectQuerierServer struct {
 	grpc.ServerStream
 }
 
-func (x *storageQuerierPluginInjectQuerierServer) Send(m *PluginQuery) error {
+func (x *storageQuerierPluginInjectQuerierServer) Send(m *QueryResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *storageQuerierPluginInjectQuerierServer) Recv() (*PluginQueryResult, error) {
-	m := new(PluginQueryResult)
+func (x *storageQuerierPluginInjectQuerierServer) Recv() (*QueryRequest, error) {
+	m := new(QueryRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

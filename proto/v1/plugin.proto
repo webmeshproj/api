@@ -23,6 +23,7 @@ import "google/protobuf/struct.proto";
 
 import "v1/node.proto";
 import "v1/raft.proto";
+import "v1/storage_query.proto";
 
 // PluginConfiguration is the message containing the configuration of a plugin.
 message PluginConfiguration {
@@ -148,56 +149,12 @@ service IPAMPlugin {
     rpc Release (ReleaseIPRequest) returns (google.protobuf.Empty) {}
 }
 
-// PluginQuery is the message containing a storage query. It contains
-// a request ID that is used to correlate the query with the result.
-message PluginQuery {
-    // id is the ID of the query.
-    string id = 1;
-    // QueryCommand is the type of the query.
-    enum QueryCommand {
-        // UNKNOWN is the default value of QueryCommand.
-        UNKNOWN = 0;
-        // GET is the command to get a value.
-        GET = 1;
-        // LIST is the command to list keys with an optional prefix.
-        LIST = 2;
-        // ITER is the command to iterate over keys with an optional prefix.
-        ITER = 3;
-        // PUT is the command to put a value.
-        PUT = 4;
-        // DELETE is the command to delete a value.
-        DELETE = 5;
-        // SUBSCRIBE is the command to subscribe to a prefix.
-        SUBSCRIBE = 6;
-    };
-    // command is the command of the query.
-    QueryCommand command = 2;
-    // query is the key or prefix of the query.
-    bytes query = 3;
-}
-
-// PluginQueryResult is the message containing a storage query result. It contains
-// a request ID that is used to correlate the query with the result.
-message PluginQueryResult {
-    // id is the ID of the query.
-    string id = 1;
-    // key is the key of the query. For GET and ITER queries it will be the current key.
-    // For LIST queries it will be the prefix.
-    bytes key = 2;
-    // value is the value of the query. For GET and ITER queries it will be the value of the current key.
-    // For LIST queries it will be the list of keys that match the prefix.
-    repeated bytes value = 3;
-    // error is an error that occurred during the query. At the end of an ITER query it will be set to
-    // "EOF" to indicate that the iteration is complete.
-    string error = 4;
-}
-
 // StorageQuerierPlugin is the service definition for a Webmesh storage querier plugin.
 service StorageQuerierPlugin {
-    // InjectQuerier is a stream opened by the node to faciliate read-write operations
+    // InjectQuerier is a stream opened by the node to faciliate read operations
     // against the mesh state. The signature is misleading, but it is required to be 
     // able to stream the query results back to the node. The node will open a stream 
-    // to the plugin and send a PluginSQLQueryResult message for every query that is 
+    // to the plugin and send a PluginQueryResult message for every query that is 
     // received.
-    rpc InjectQuerier (stream PluginQueryResult) returns (stream PluginQuery) {}
+    rpc InjectQuerier (stream QueryRequest) returns (stream QueryResponse) {}
 }
