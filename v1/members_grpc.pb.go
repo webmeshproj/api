@@ -34,12 +34,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Membership_Join_FullMethodName                    = "/v1.Membership/Join"
-	Membership_Update_FullMethodName                  = "/v1.Membership/Update"
-	Membership_Leave_FullMethodName                   = "/v1.Membership/Leave"
-	Membership_SubscribePeers_FullMethodName          = "/v1.Membership/SubscribePeers"
-	Membership_Apply_FullMethodName                   = "/v1.Membership/Apply"
-	Membership_GetStorageConfiguration_FullMethodName = "/v1.Membership/GetStorageConfiguration"
+	Membership_Join_FullMethodName                = "/v1.Membership/Join"
+	Membership_Update_FullMethodName              = "/v1.Membership/Update"
+	Membership_Leave_FullMethodName               = "/v1.Membership/Leave"
+	Membership_SubscribePeers_FullMethodName      = "/v1.Membership/SubscribePeers"
+	Membership_Apply_FullMethodName               = "/v1.Membership/Apply"
+	Membership_GetCurrentConsensus_FullMethodName = "/v1.Membership/GetCurrentConsensus"
 )
 
 // MembershipClient is the client API for Membership service.
@@ -63,8 +63,8 @@ type MembershipClient interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote. This is only used by the built-in raft storage implementation.
 	Apply(ctx context.Context, in *RaftLogEntry, opts ...grpc.CallOption) (*RaftApplyResponse, error)
-	// GetStorageConfiguration returns the current Storage configuration.
-	GetStorageConfiguration(ctx context.Context, in *StorageConfigurationRequest, opts ...grpc.CallOption) (*StorageConfigurationResponse, error)
+	// GetCurrentConsensus returns the current Storage consensus configuration.
+	GetCurrentConsensus(ctx context.Context, in *StorageConsensusRequest, opts ...grpc.CallOption) (*StorageConsensusResponse, error)
 }
 
 type membershipClient struct {
@@ -143,9 +143,9 @@ func (c *membershipClient) Apply(ctx context.Context, in *RaftLogEntry, opts ...
 	return out, nil
 }
 
-func (c *membershipClient) GetStorageConfiguration(ctx context.Context, in *StorageConfigurationRequest, opts ...grpc.CallOption) (*StorageConfigurationResponse, error) {
-	out := new(StorageConfigurationResponse)
-	err := c.cc.Invoke(ctx, Membership_GetStorageConfiguration_FullMethodName, in, out, opts...)
+func (c *membershipClient) GetCurrentConsensus(ctx context.Context, in *StorageConsensusRequest, opts ...grpc.CallOption) (*StorageConsensusResponse, error) {
+	out := new(StorageConsensusResponse)
+	err := c.cc.Invoke(ctx, Membership_GetCurrentConsensus_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -173,8 +173,8 @@ type MembershipServer interface {
 	// This is only available on the leader, and can only be called by nodes that are allowed
 	// to vote. This is only used by the built-in raft storage implementation.
 	Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error)
-	// GetStorageConfiguration returns the current Storage configuration.
-	GetStorageConfiguration(context.Context, *StorageConfigurationRequest) (*StorageConfigurationResponse, error)
+	// GetCurrentConsensus returns the current Storage consensus configuration.
+	GetCurrentConsensus(context.Context, *StorageConsensusRequest) (*StorageConsensusResponse, error)
 	mustEmbedUnimplementedMembershipServer()
 }
 
@@ -197,8 +197,8 @@ func (UnimplementedMembershipServer) SubscribePeers(*SubscribePeersRequest, Memb
 func (UnimplementedMembershipServer) Apply(context.Context, *RaftLogEntry) (*RaftApplyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
 }
-func (UnimplementedMembershipServer) GetStorageConfiguration(context.Context, *StorageConfigurationRequest) (*StorageConfigurationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetStorageConfiguration not implemented")
+func (UnimplementedMembershipServer) GetCurrentConsensus(context.Context, *StorageConsensusRequest) (*StorageConsensusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCurrentConsensus not implemented")
 }
 func (UnimplementedMembershipServer) mustEmbedUnimplementedMembershipServer() {}
 
@@ -306,20 +306,20 @@ func _Membership_Apply_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Membership_GetStorageConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StorageConfigurationRequest)
+func _Membership_GetCurrentConsensus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StorageConsensusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MembershipServer).GetStorageConfiguration(ctx, in)
+		return srv.(MembershipServer).GetCurrentConsensus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Membership_GetStorageConfiguration_FullMethodName,
+		FullMethod: Membership_GetCurrentConsensus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MembershipServer).GetStorageConfiguration(ctx, req.(*StorageConfigurationRequest))
+		return srv.(MembershipServer).GetCurrentConsensus(ctx, req.(*StorageConsensusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -348,8 +348,8 @@ var Membership_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Membership_Apply_Handler,
 		},
 		{
-			MethodName: "GetStorageConfiguration",
-			Handler:    _Membership_GetStorageConfiguration_Handler,
+			MethodName: "GetCurrentConsensus",
+			Handler:    _Membership_GetCurrentConsensus_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

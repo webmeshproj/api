@@ -88,8 +88,8 @@
   - [<span class="badge">M</span>LeaveRequest](#v1.LeaveRequest)
   - [<span class="badge">M</span>LeaveResponse](#v1.LeaveResponse)
   - [<span class="badge">M</span>PeerConfigurations](#v1.PeerConfigurations)
-  - [<span class="badge">M</span>StorageConfigurationRequest](#v1.StorageConfigurationRequest)
-  - [<span class="badge">M</span>StorageConfigurationResponse](#v1.StorageConfigurationResponse)
+  - [<span class="badge">M</span>StorageConsensusRequest](#v1.StorageConsensusRequest)
+  - [<span class="badge">M</span>StorageConsensusResponse](#v1.StorageConsensusResponse)
   - [<span class="badge">M</span>StorageServer](#v1.StorageServer)
   - [<span class="badge">M</span>SubscribePeersRequest](#v1.SubscribePeersRequest)
   - [<span class="badge">M</span>UpdateRequest](#v1.UpdateRequest)
@@ -1055,15 +1055,14 @@ PeerConfigurations is a stream of peer configurations.
 | iceServers | [string](#string)                  | repeated | ice_servers is a list of public nodes that can be used to negotiate ICE connections if required. This may only be populated when one of the peers has the ICE flag set. |
 | dnsServers | [string](#string)                  | repeated | dns_servers is a list of peers offering DNS services.                                                                                                                   |
 
-### StorageConfigurationRequest
+### StorageConsensusRequest
 
-StorageConfigurationRequest is a request to get the current Storage
+StorageConsensusRequest is a request to get the current Storage
 configuration.
 
-### StorageConfigurationResponse
+### StorageConsensusResponse
 
-StorageConfigurationResponse is a response to a Storage configuration
-request.
+StorageConsensusResponse is a response to a Storage consensus request.
 
 | Field   | Type                               | Label    | Description                                                  |
 |---------|------------------------------------|----------|--------------------------------------------------------------|
@@ -1142,14 +1141,14 @@ publicly
 
 to allow people in from the outside.
 
-| Method Name             | Request Type                                                   | Response Type                                                    | Description                                                                                                                                                                                                                                                                                                                                |
-|-------------------------|----------------------------------------------------------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Join                    | [JoinRequest](#v1.JoinRequest)                                 | [JoinResponse](#v1.JoinResponse)                                 | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
-| Update                  | [UpdateRequest](#v1.UpdateRequest)                             | [UpdateResponse](#v1.UpdateResponse)                             | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
-| Leave                   | [LeaveRequest](#v1.LeaveRequest)                               | [LeaveResponse](#v1.LeaveResponse)                               | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
-| SubscribePeers          | [SubscribePeersRequest](#v1.SubscribePeersRequest)             | [PeerConfigurations](#v1.PeerConfigurations) stream              | SubscribePeers subscribes to the peer configuration for the given node. The node will receive updates to the peer configuration as it changes.                                                                                                                                                                                             |
-| Apply                   | [RaftLogEntry](#v1.RaftLogEntry)                               | [RaftApplyResponse](#v1.RaftApplyResponse)                       | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote. This is only used by the built-in raft storage implementation.                                                                                       |
-| GetStorageConfiguration | [StorageConfigurationRequest](#v1.StorageConfigurationRequest) | [StorageConfigurationResponse](#v1.StorageConfigurationResponse) | GetStorageConfiguration returns the current Storage configuration.                                                                                                                                                                                                                                                                         |
+| Method Name         | Request Type                                           | Response Type                                            | Description                                                                                                                                                                                                                                                                                                                                |
+|---------------------|--------------------------------------------------------|----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Join                | [JoinRequest](#v1.JoinRequest)                         | [JoinResponse](#v1.JoinResponse)                         | Join is used to join a node to the mesh.                                                                                                                                                                                                                                                                                                   |
+| Update              | [UpdateRequest](#v1.UpdateRequest)                     | [UpdateResponse](#v1.UpdateResponse)                     | Update is used by a node to update its state in the mesh. The node will be updated in the mesh and will be able to query the mesh state or vote in elections. Only non-empty fields will be updated. It is almost semantically equivalent to a join request with the same ID, but redefined to avoid confusion and to allow for expansion. |
+| Leave               | [LeaveRequest](#v1.LeaveRequest)                       | [LeaveResponse](#v1.LeaveResponse)                       | Leave is used to remove a node from the mesh. The node will be removed from the mesh and will no longer be able to query the mesh state or vote in elections.                                                                                                                                                                              |
+| SubscribePeers      | [SubscribePeersRequest](#v1.SubscribePeersRequest)     | [PeerConfigurations](#v1.PeerConfigurations) stream      | SubscribePeers subscribes to the peer configuration for the given node. The node will receive updates to the peer configuration as it changes.                                                                                                                                                                                             |
+| Apply               | [RaftLogEntry](#v1.RaftLogEntry)                       | [RaftApplyResponse](#v1.RaftApplyResponse)               | Apply is used by voting nodes to request a log entry be applied to the state machine. This is only available on the leader, and can only be called by nodes that are allowed to vote. This is only used by the built-in raft storage implementation.                                                                                       |
+| GetCurrentConsensus | [StorageConsensusRequest](#v1.StorageConsensusRequest) | [StorageConsensusResponse](#v1.StorageConsensusResponse) | GetCurrentConsensus returns the current Storage consensus configuration.                                                                                                                                                                                                                                                                   |
 
 <div class="file-heading">
 

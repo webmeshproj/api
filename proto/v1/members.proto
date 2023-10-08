@@ -151,11 +151,11 @@ message LeaveRequest {
 // LeaveResponse is a response to a leave request. It is currently empty.
 message LeaveResponse {}
 
-// StorageConfigurationRequest is a request to get the current Storage configuration.
-message StorageConfigurationRequest {}
+// StorageConsensusRequest is a request to get the current Storage configuration.
+message StorageConsensusRequest {}
 
-// StorageConfigurationResponse is a response to a Storage configuration request.
-message StorageConfigurationResponse {
+// StorageConsensusResponse is a response to a Storage consensus request.
+message StorageConsensusResponse {
     // servers is the list of servers in the storage configuration.
     repeated StorageServer servers = 1;
 }
@@ -194,26 +194,21 @@ message PeerConfigurations {
 service Membership {
     // Join is used to join a node to the mesh.
     rpc Join(JoinRequest) returns (JoinResponse) {}
-
     // Update is used by a node to update its state in the mesh. The node will be updated
     // in the mesh and will be able to query the mesh state or vote in elections. Only
     // non-empty fields will be updated. It is almost semantically equivalent to a join request
     // with the same ID, but redefined to avoid confusion and to allow for expansion.
     rpc Update(UpdateRequest) returns (UpdateResponse) {}
-
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.
     rpc Leave(LeaveRequest) returns (LeaveResponse) {}
-
     // SubscribePeers subscribes to the peer configuration for the given node. The node
     // will receive updates to the peer configuration as it changes.
     rpc SubscribePeers(SubscribePeersRequest) returns (stream PeerConfigurations) {}
-
     // Apply is used by voting nodes to request a log entry be applied to the state machine.
     // This is only available on the leader, and can only be called by nodes that are allowed
     // to vote. This is only used by the built-in raft storage implementation.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
-
-    // GetStorageConfiguration returns the current Storage configuration.
-    rpc GetStorageConfiguration(StorageConfigurationRequest) returns (StorageConfigurationResponse) {}
+    // GetCurrentConsensus returns the current Storage consensus configuration.
+    rpc GetCurrentConsensus(StorageConsensusRequest) returns (StorageConsensusResponse) {}
 }

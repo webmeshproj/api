@@ -567,11 +567,11 @@
                 </li>
               
                 <li>
-                  <a href="#v1.StorageConfigurationRequest"><span class="badge">M</span>StorageConfigurationRequest</a>
+                  <a href="#v1.StorageConsensusRequest"><span class="badge">M</span>StorageConsensusRequest</a>
                 </li>
               
                 <li>
-                  <a href="#v1.StorageConfigurationResponse"><span class="badge">M</span>StorageConfigurationResponse</a>
+                  <a href="#v1.StorageConsensusResponse"><span class="badge">M</span>StorageConsensusResponse</a>
                 </li>
               
                 <li>
@@ -3966,15 +3966,15 @@ the peers has the ICE flag set. </p></td>
 
         
       
-        <h3 id="v1.StorageConfigurationRequest">StorageConfigurationRequest</h3>
-        <p>StorageConfigurationRequest is a request to get the current Storage configuration.</p>
+        <h3 id="v1.StorageConsensusRequest">StorageConsensusRequest</h3>
+        <p>StorageConsensusRequest is a request to get the current Storage configuration.</p>
 
         
 
         
       
-        <h3 id="v1.StorageConfigurationResponse">StorageConfigurationResponse</h3>
-        <p>StorageConfigurationResponse is a response to a Storage configuration request.</p>
+        <h3 id="v1.StorageConsensusResponse">StorageConsensusResponse</h3>
+        <p>StorageConsensusResponse is a response to a Storage consensus request.</p>
 
         
           <table class="field-table">
@@ -4282,10 +4282,10 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
               </tr>
             
               <tr>
-                <td>GetStorageConfiguration</td>
-                <td><a href="#v1.StorageConfigurationRequest">StorageConfigurationRequest</a></td>
-                <td><a href="#v1.StorageConfigurationResponse">StorageConfigurationResponse</a></td>
-                <td><p>GetStorageConfiguration returns the current Storage configuration.</p></td>
+                <td>GetCurrentConsensus</td>
+                <td><a href="#v1.StorageConsensusRequest">StorageConsensusRequest</a></td>
+                <td><a href="#v1.StorageConsensusResponse">StorageConsensusResponse</a></td>
+                <td><p>GetCurrentConsensus returns the current Storage consensus configuration.</p></td>
               </tr>
             
           </tbody>

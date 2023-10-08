@@ -905,22 +905,22 @@ var _ interface {
 	ErrorName() string
 } = LeaveResponseValidationError{}
 
-// Validate checks the field values on StorageConfigurationRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on StorageConsensusRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StorageConfigurationRequest) Validate() error {
+func (m *StorageConsensusRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StorageConfigurationRequest with the
+// ValidateAll checks the field values on StorageConsensusRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StorageConfigurationRequestMultiError, or nil if none found.
-func (m *StorageConfigurationRequest) ValidateAll() error {
+// StorageConsensusRequestMultiError, or nil if none found.
+func (m *StorageConsensusRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StorageConfigurationRequest) validate(all bool) error {
+func (m *StorageConsensusRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -928,19 +928,19 @@ func (m *StorageConfigurationRequest) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return StorageConfigurationRequestMultiError(errors)
+		return StorageConsensusRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// StorageConfigurationRequestMultiError is an error wrapping multiple
-// validation errors returned by StorageConfigurationRequest.ValidateAll() if
-// the designated constraints aren't met.
-type StorageConfigurationRequestMultiError []error
+// StorageConsensusRequestMultiError is an error wrapping multiple validation
+// errors returned by StorageConsensusRequest.ValidateAll() if the designated
+// constraints aren't met.
+type StorageConsensusRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StorageConfigurationRequestMultiError) Error() string {
+func (m StorageConsensusRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -949,12 +949,11 @@ func (m StorageConfigurationRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StorageConfigurationRequestMultiError) AllErrors() []error { return m }
+func (m StorageConsensusRequestMultiError) AllErrors() []error { return m }
 
-// StorageConfigurationRequestValidationError is the validation error returned
-// by StorageConfigurationRequest.Validate if the designated constraints
-// aren't met.
-type StorageConfigurationRequestValidationError struct {
+// StorageConsensusRequestValidationError is the validation error returned by
+// StorageConsensusRequest.Validate if the designated constraints aren't met.
+type StorageConsensusRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -962,24 +961,24 @@ type StorageConfigurationRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e StorageConfigurationRequestValidationError) Field() string { return e.field }
+func (e StorageConsensusRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StorageConfigurationRequestValidationError) Reason() string { return e.reason }
+func (e StorageConsensusRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StorageConfigurationRequestValidationError) Cause() error { return e.cause }
+func (e StorageConsensusRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StorageConfigurationRequestValidationError) Key() bool { return e.key }
+func (e StorageConsensusRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StorageConfigurationRequestValidationError) ErrorName() string {
-	return "StorageConfigurationRequestValidationError"
+func (e StorageConsensusRequestValidationError) ErrorName() string {
+	return "StorageConsensusRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StorageConfigurationRequestValidationError) Error() string {
+func (e StorageConsensusRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -991,14 +990,14 @@ func (e StorageConfigurationRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStorageConfigurationRequest.%s: %s%s",
+		"invalid %sStorageConsensusRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StorageConfigurationRequestValidationError{}
+var _ error = StorageConsensusRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1006,24 +1005,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StorageConfigurationRequestValidationError{}
+} = StorageConsensusRequestValidationError{}
 
-// Validate checks the field values on StorageConfigurationResponse with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on StorageConsensusResponse with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StorageConfigurationResponse) Validate() error {
+func (m *StorageConsensusResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StorageConfigurationResponse with the
+// ValidateAll checks the field values on StorageConsensusResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StorageConfigurationResponseMultiError, or nil if none found.
-func (m *StorageConfigurationResponse) ValidateAll() error {
+// StorageConsensusResponseMultiError, or nil if none found.
+func (m *StorageConsensusResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StorageConfigurationResponse) validate(all bool) error {
+func (m *StorageConsensusResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1037,7 +1036,7 @@ func (m *StorageConfigurationResponse) validate(all bool) error {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, StorageConfigurationResponseValidationError{
+					errors = append(errors, StorageConsensusResponseValidationError{
 						field:  fmt.Sprintf("Servers[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1045,7 +1044,7 @@ func (m *StorageConfigurationResponse) validate(all bool) error {
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, StorageConfigurationResponseValidationError{
+					errors = append(errors, StorageConsensusResponseValidationError{
 						field:  fmt.Sprintf("Servers[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1054,7 +1053,7 @@ func (m *StorageConfigurationResponse) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return StorageConfigurationResponseValidationError{
+				return StorageConsensusResponseValidationError{
 					field:  fmt.Sprintf("Servers[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1065,19 +1064,19 @@ func (m *StorageConfigurationResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return StorageConfigurationResponseMultiError(errors)
+		return StorageConsensusResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// StorageConfigurationResponseMultiError is an error wrapping multiple
-// validation errors returned by StorageConfigurationResponse.ValidateAll() if
-// the designated constraints aren't met.
-type StorageConfigurationResponseMultiError []error
+// StorageConsensusResponseMultiError is an error wrapping multiple validation
+// errors returned by StorageConsensusResponse.ValidateAll() if the designated
+// constraints aren't met.
+type StorageConsensusResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StorageConfigurationResponseMultiError) Error() string {
+func (m StorageConsensusResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1086,12 +1085,11 @@ func (m StorageConfigurationResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StorageConfigurationResponseMultiError) AllErrors() []error { return m }
+func (m StorageConsensusResponseMultiError) AllErrors() []error { return m }
 
-// StorageConfigurationResponseValidationError is the validation error returned
-// by StorageConfigurationResponse.Validate if the designated constraints
-// aren't met.
-type StorageConfigurationResponseValidationError struct {
+// StorageConsensusResponseValidationError is the validation error returned by
+// StorageConsensusResponse.Validate if the designated constraints aren't met.
+type StorageConsensusResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1099,24 +1097,24 @@ type StorageConfigurationResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e StorageConfigurationResponseValidationError) Field() string { return e.field }
+func (e StorageConsensusResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StorageConfigurationResponseValidationError) Reason() string { return e.reason }
+func (e StorageConsensusResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StorageConfigurationResponseValidationError) Cause() error { return e.cause }
+func (e StorageConsensusResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StorageConfigurationResponseValidationError) Key() bool { return e.key }
+func (e StorageConsensusResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StorageConfigurationResponseValidationError) ErrorName() string {
-	return "StorageConfigurationResponseValidationError"
+func (e StorageConsensusResponseValidationError) ErrorName() string {
+	return "StorageConsensusResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StorageConfigurationResponseValidationError) Error() string {
+func (e StorageConsensusResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1128,14 +1126,14 @@ func (e StorageConfigurationResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStorageConfigurationResponse.%s: %s%s",
+		"invalid %sStorageConsensusResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StorageConfigurationResponseValidationError{}
+var _ error = StorageConsensusResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1143,7 +1141,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StorageConfigurationResponseValidationError{}
+} = StorageConsensusResponseValidationError{}
 
 // Validate checks the field values on StorageServer with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
