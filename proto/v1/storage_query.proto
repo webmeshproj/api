@@ -32,22 +32,24 @@ message QueryRequest {
     };
     // QueryType is the type of object being queried.
     enum QueryType {
+        // VALUE represents a raw value query at a supplied key.
+        VALUE = 0;
         // PEERS is the type for querying peers.
-        PEERS = 0;
+        PEERS = 1;
         // EDGES is the type for querying edges.
-        EDGES = 1;
+        EDGES = 2;
         // ROUTES is the type for querying routes.
-        ROUTES = 2;
+        ROUTES = 3;
         // ACLS is the type for querying ACLs.
-        ACLS = 3;
+        ACLS = 4;
         // ROLES is the type for querying roles.
-        ROLES = 4;
+        ROLES = 5;
         // ROLEBINDINGS is the type for querying role bindings.
-        ROLEBINDINGS = 5;
+        ROLEBINDINGS = 6;
         // GROUPS is the type for querying groups.
-        GROUPS = 6;
+        GROUPS = 7;
         // NETWORK_STATE is the type for querying network state.
-        NETWORK_STATE = 7;
+        NETWORK_STATE = 8;
     };
     // command is the command of the query.
     QueryCommand command = 1;
