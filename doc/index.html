@@ -390,6 +390,10 @@
             <ul>
               
                 <li>
+                  <a href="#v1.NetworkState"><span class="badge">M</span>NetworkState</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PublishRequest"><span class="badge">M</span>PublishRequest</a>
                 </li>
               
@@ -2732,6 +2736,44 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
       </div>
       <p></p>
 
+      
+        <h3 id="v1.NetworkState">NetworkState</h3>
+        <p>NetworkState represents the full network state as returned by</p><p>a network state query.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>networkV4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>networkV6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
       
         <h3 id="v1.PublishRequest">PublishRequest</h3>
         <p>PublishRequest is sent by the application to the node to publish events.</p><p>This currently only supports database events.</p>

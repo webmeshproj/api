@@ -20,6 +20,14 @@ package v1;
 
 import "google/protobuf/duration.proto";
 
+// NetworkState represents the full network state as returned by
+// a network state query.
+message NetworkState {
+    string networkV4 = 1;
+    string networkV6 = 2;
+    string domain = 3;
+}
+
 // QueryRequest is sent by the application to the node to query the mesh for
 // information.
 message QueryRequest {

@@ -49,6 +49,7 @@
 - [v1/admin.proto](#v1%2fadmin.proto)
   - [<span class="badge">S</span>Admin](#v1.Admin)
 - [v1/storage_query.proto](#v1%2fstorage_query.proto)
+  - [<span class="badge">M</span>NetworkState](#v1.NetworkState)
   - [<span class="badge">M</span>PublishRequest](#v1.PublishRequest)
   - [<span class="badge">M</span>PublishResponse](#v1.PublishResponse)
   - [<span class="badge">M</span>QueryRequest](#v1.QueryRequest)
@@ -666,6 +667,18 @@ require the leader to be contacted.
 [Top](#title)
 
 </div>
+
+### NetworkState
+
+NetworkState represents the full network state as returned by
+
+a network state query.
+
+| Field     | Type              | Label | Description |
+|-----------|-------------------|-------|-------------|
+| networkV4 | [string](#string) |       |             |
+| networkV6 | [string](#string) |       |             |
+| domain    | [string](#string) |       |             |
 
 ### PublishRequest
 
