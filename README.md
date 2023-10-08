@@ -710,6 +710,7 @@ information.
 | command | [QueryRequest.QueryCommand](#v1.QueryRequest.QueryCommand) |       | command is the command of the query.                                                                                                                                                                                             |
 | type    | [QueryRequest.QueryType](#v1.QueryRequest.QueryType)       |       | type is the type of the query.                                                                                                                                                                                                   |
 | query   | [string](#string)                                          |       | query is the string of the query. This follows the format of a label selector and is only applicable for certain queries. For get queries this will usually be an ID. For list queries this will usually be one or more filters. |
+| error   | [string](#string)                                          |       | error is an error that happened during the query. This will always be populated on errors, but single-flight queries will return a coded error instead.                                                                          |
 
 ### QueryResponse
 
