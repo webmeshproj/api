@@ -1169,6 +1169,8 @@ func (m *StorageServer) validate(all bool) error {
 
 	// no validation rules for Suffrage
 
+	// no validation rules for PublicKey
+
 	// no validation rules for Address
 
 	if len(errors) > 0 {

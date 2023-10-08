@@ -166,8 +166,10 @@ message StorageServer {
     string id = 1;
     // Suffrage is the suffrage of the server.
     ClusterStatus suffrage = 2;
+    // PublicKey is the public key of this server. Not all storage providers track this field.
+    string publicKey = 3;
     // Address is the mesh address of the server.
-    string address = 3;
+    string address = 4;
 }
 
 // SubscribePeersRequest is a request to subscribe to peer updates.

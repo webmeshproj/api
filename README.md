@@ -1072,11 +1072,12 @@ StorageConsensusResponse is a response to a Storage consensus request.
 
 StorageServer is a server in the Storage configuration.
 
-| Field    | Type                               | Label | Description                                |
-|----------|------------------------------------|-------|--------------------------------------------|
-| id       | [string](#string)                  |       | ID is the ID of the server.                |
-| suffrage | [ClusterStatus](#v1.ClusterStatus) |       | Suffrage is the suffrage of the server.    |
-| address  | [string](#string)                  |       | Address is the mesh address of the server. |
+| Field     | Type                               | Label | Description                                                                             |
+|-----------|------------------------------------|-------|-----------------------------------------------------------------------------------------|
+| id        | [string](#string)                  |       | ID is the ID of the server.                                                             |
+| suffrage  | [ClusterStatus](#v1.ClusterStatus) |       | Suffrage is the suffrage of the server.                                                 |
+| publicKey | [string](#string)                  |       | PublicKey is the public key of this server. Not all storage providers track this field. |
+| address   | [string](#string)                  |       | Address is the mesh address of the server.                                              |
 
 ### SubscribePeersRequest
 
