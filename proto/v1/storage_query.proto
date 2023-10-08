@@ -58,8 +58,11 @@ message QueryRequest {
         ROLEBINDINGS = 7;
         // GROUPS is the type for querying groups.
         GROUPS = 8;
-        // NETWORK_STATE is the type for querying network state.
+        // NETWORK_STATE is the type for querying network configuration.
         NETWORK_STATE = 9;
+        // RBAC_STATE is the type for querying RBAC configuration.
+        // This will return a single item of true or false.
+        RBAC_STATE = 10;
     };
     // command is the command of the query.
     QueryCommand command = 1;

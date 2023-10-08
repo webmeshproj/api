@@ -752,18 +752,19 @@ QueryCommand is the type of the query.
 
 QueryType is the type of object being queried.
 
-| Name          | Number | Description                                           |
-|---------------|--------|-------------------------------------------------------|
-| VALUE         | 0      | VALUE represents a raw value query at a supplied key. |
-| KEYS          | 1      | KEYS is the type for querying keys.                   |
-| PEERS         | 2      | PEERS is the type for querying peers.                 |
-| EDGES         | 3      | EDGES is the type for querying edges.                 |
-| ROUTES        | 4      | ROUTES is the type for querying routes.               |
-| ACLS          | 5      | ACLS is the type for querying ACLs.                   |
-| ROLES         | 6      | ROLES is the type for querying roles.                 |
-| ROLEBINDINGS  | 7      | ROLEBINDINGS is the type for querying role bindings.  |
-| GROUPS        | 8      | GROUPS is the type for querying groups.               |
-| NETWORK_STATE | 9      | NETWORK_STATE is the type for querying network state. |
+| Name          | Number | Description                                                                                              |
+|---------------|--------|----------------------------------------------------------------------------------------------------------|
+| VALUE         | 0      | VALUE represents a raw value query at a supplied key.                                                    |
+| KEYS          | 1      | KEYS is the type for querying keys.                                                                      |
+| PEERS         | 2      | PEERS is the type for querying peers.                                                                    |
+| EDGES         | 3      | EDGES is the type for querying edges.                                                                    |
+| ROUTES        | 4      | ROUTES is the type for querying routes.                                                                  |
+| ACLS          | 5      | ACLS is the type for querying ACLs.                                                                      |
+| ROLES         | 6      | ROLES is the type for querying roles.                                                                    |
+| ROLEBINDINGS  | 7      | ROLEBINDINGS is the type for querying role bindings.                                                     |
+| GROUPS        | 8      | GROUPS is the type for querying groups.                                                                  |
+| NETWORK_STATE | 9      | NETWORK_STATE is the type for querying network configuration.                                            |
+| RBAC_STATE    | 10     | RBAC_STATE is the type for querying RBAC configuration. This will return a single item of true or false. |
 
 ### StorageQueryService
 
