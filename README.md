@@ -754,14 +754,15 @@ QueryType is the type of object being queried.
 | Name          | Number | Description                                           |
 |---------------|--------|-------------------------------------------------------|
 | VALUE         | 0      | VALUE represents a raw value query at a supplied key. |
-| PEERS         | 1      | PEERS is the type for querying peers.                 |
-| EDGES         | 2      | EDGES is the type for querying edges.                 |
-| ROUTES        | 3      | ROUTES is the type for querying routes.               |
-| ACLS          | 4      | ACLS is the type for querying ACLs.                   |
-| ROLES         | 5      | ROLES is the type for querying roles.                 |
-| ROLEBINDINGS  | 6      | ROLEBINDINGS is the type for querying role bindings.  |
-| GROUPS        | 7      | GROUPS is the type for querying groups.               |
-| NETWORK_STATE | 8      | NETWORK_STATE is the type for querying network state. |
+| KEYS          | 1      | KEYS is the type for querying keys.                   |
+| PEERS         | 2      | PEERS is the type for querying peers.                 |
+| EDGES         | 3      | EDGES is the type for querying edges.                 |
+| ROUTES        | 4      | ROUTES is the type for querying routes.               |
+| ACLS          | 5      | ACLS is the type for querying ACLs.                   |
+| ROLES         | 6      | ROLES is the type for querying roles.                 |
+| ROLEBINDINGS  | 7      | ROLEBINDINGS is the type for querying role bindings.  |
+| GROUPS        | 8      | GROUPS is the type for querying groups.               |
+| NETWORK_STATE | 9      | NETWORK_STATE is the type for querying network state. |
 
 ### StorageQueryService
 
