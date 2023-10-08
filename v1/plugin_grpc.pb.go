@@ -553,8 +553,8 @@ func (c *storageQuerierPluginClient) InjectQuerier(ctx context.Context, opts ...
 }
 
 type StorageQuerierPlugin_InjectQuerierClient interface {
-	Send(*QueryRequest) error
-	Recv() (*QueryResponse, error)
+	Send(*QueryResponse) error
+	Recv() (*QueryRequest, error)
 	grpc.ClientStream
 }
 
@@ -562,12 +562,12 @@ type storageQuerierPluginInjectQuerierClient struct {
 	grpc.ClientStream
 }
 
-func (x *storageQuerierPluginInjectQuerierClient) Send(m *QueryRequest) error {
+func (x *storageQuerierPluginInjectQuerierClient) Send(m *QueryResponse) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *storageQuerierPluginInjectQuerierClient) Recv() (*QueryResponse, error) {
-	m := new(QueryResponse)
+func (x *storageQuerierPluginInjectQuerierClient) Recv() (*QueryRequest, error) {
+	m := new(QueryRequest)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -612,8 +612,8 @@ func _StorageQuerierPlugin_InjectQuerier_Handler(srv interface{}, stream grpc.Se
 }
 
 type StorageQuerierPlugin_InjectQuerierServer interface {
-	Send(*QueryResponse) error
-	Recv() (*QueryRequest, error)
+	Send(*QueryRequest) error
+	Recv() (*QueryResponse, error)
 	grpc.ServerStream
 }
 
@@ -621,12 +621,12 @@ type storageQuerierPluginInjectQuerierServer struct {
 	grpc.ServerStream
 }
 
-func (x *storageQuerierPluginInjectQuerierServer) Send(m *QueryResponse) error {
+func (x *storageQuerierPluginInjectQuerierServer) Send(m *QueryRequest) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *storageQuerierPluginInjectQuerierServer) Recv() (*QueryRequest, error) {
-	m := new(QueryRequest)
+func (x *storageQuerierPluginInjectQuerierServer) Recv() (*QueryResponse, error) {
+	m := new(QueryResponse)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

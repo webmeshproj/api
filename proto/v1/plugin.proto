@@ -156,5 +156,5 @@ service StorageQuerierPlugin {
     // able to stream the query results back to the node. The node will open a stream 
     // to the plugin and send a PluginQueryResult message for every query that is 
     // received.
-    rpc InjectQuerier (stream QueryRequest) returns (stream QueryResponse) {}
+    rpc InjectQuerier (stream QueryResponse) returns (stream QueryRequest) {}
 }
