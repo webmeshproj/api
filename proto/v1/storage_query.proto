@@ -70,10 +70,6 @@ message QueryRequest {
     // this will usually be an ID. For list queries this will usually be one
     // or more filters.
     string query = 3;
-    // error is an error that happened during the query. This will always
-    // be populated on errors, but single-flight queries will return
-    // a coded error instead.
-    string error = 4;
 }
 
 // QueryResponse is the message containing a mesh query result.
@@ -81,6 +77,10 @@ message QueryResponse {
     // items contain the results of the query. These will be protobuf
     // json-encoded objects of the given query type.
     repeated bytes items = 1;
+    // error is an error that happened during the query. This will always
+    // be populated on errors, but single-flight queries will return
+    // a coded error instead.
+    string error = 4;
 }
 
 // SubscribeRequest is sent by the application to the node to subscribe to
