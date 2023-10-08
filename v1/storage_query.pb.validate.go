@@ -168,8 +168,6 @@ func (m *QueryRequest) validate(all bool) error {
 
 	// no validation rules for Query
 
-	// no validation rules for Error
-
 	if len(errors) > 0 {
 		return QueryRequestMultiError(errors)
 	}
@@ -268,6 +266,8 @@ func (m *QueryResponse) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for Error
 
 	if len(errors) > 0 {
 		return QueryResponseMultiError(errors)
