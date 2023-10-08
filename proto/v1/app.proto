@@ -126,7 +126,7 @@ service AppDaemon {
     rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
 
     // Query is used to query the mesh for information.
-    rpc Query(QueryRequest) returns (stream QueryResponse) {}
+    rpc Query(QueryRequest) returns (QueryResponse) {}
 
     // Metrics is used to retrieve interface metrics from the node.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}

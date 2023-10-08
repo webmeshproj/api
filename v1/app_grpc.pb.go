@@ -56,7 +56,7 @@ type AppDaemonClient interface {
 	// Disconnect is used to disconnect the node from the mesh.
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
 	// Query is used to query the mesh for information.
-	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (AppDaemon_QueryClient, error)
+	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 	// Metrics is used to retrieve interface metrics from the node.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
 	// Status is used to retrieve the status of the node.
@@ -99,36 +99,13 @@ func (c *appDaemonClient) Disconnect(ctx context.Context, in *DisconnectRequest,
 	return out, nil
 }
 
-func (c *appDaemonClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (AppDaemon_QueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[0], AppDaemon_Query_FullMethodName, opts...)
+func (c *appDaemonClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
+	out := new(QueryResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_Query_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &appDaemonQueryClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type AppDaemon_QueryClient interface {
-	Recv() (*QueryResponse, error)
-	grpc.ClientStream
-}
-
-type appDaemonQueryClient struct {
-	grpc.ClientStream
-}
-
-func (x *appDaemonQueryClient) Recv() (*QueryResponse, error) {
-	m := new(QueryResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 func (c *appDaemonClient) Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error) {
@@ -150,7 +127,7 @@ func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ..
 }
 
 func (c *appDaemonClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[1], AppDaemon_Subscribe_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[0], AppDaemon_Subscribe_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +196,7 @@ type AppDaemonServer interface {
 	// Disconnect is used to disconnect the node from the mesh.
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
 	// Query is used to query the mesh for information.
-	Query(*QueryRequest, AppDaemon_QueryServer) error
+	Query(context.Context, *QueryRequest) (*QueryResponse, error)
 	// Metrics is used to retrieve interface metrics from the node.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
 	// Status is used to retrieve the status of the node.
@@ -247,8 +224,8 @@ func (UnimplementedAppDaemonServer) Connect(context.Context, *ConnectRequest) (*
 func (UnimplementedAppDaemonServer) Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Disconnect not implemented")
 }
-func (UnimplementedAppDaemonServer) Query(*QueryRequest, AppDaemon_QueryServer) error {
-	return status.Errorf(codes.Unimplemented, "method Query not implemented")
+func (UnimplementedAppDaemonServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
 func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
@@ -317,25 +294,22 @@ func _AppDaemon_Disconnect_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppDaemon_Query_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(QueryRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _AppDaemon_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(AppDaemonServer).Query(m, &appDaemonQueryServer{stream})
-}
-
-type AppDaemon_QueryServer interface {
-	Send(*QueryResponse) error
-	grpc.ServerStream
-}
-
-type appDaemonQueryServer struct {
-	grpc.ServerStream
-}
-
-func (x *appDaemonQueryServer) Send(m *QueryResponse) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Query(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Query_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Query(ctx, req.(*QueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _AppDaemon_Metrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -465,6 +439,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppDaemon_Disconnect_Handler,
 		},
 		{
+			MethodName: "Query",
+			Handler:    _AppDaemon_Query_Handler,
+		},
+		{
 			MethodName: "Metrics",
 			Handler:    _AppDaemon_Metrics_Handler,
 		},
@@ -486,11 +464,6 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Query",
-			Handler:       _AppDaemon_Query_Handler,
-			ServerStreams: true,
-		},
 		{
 			StreamName:    "Subscribe",
 			Handler:       _AppDaemon_Subscribe_Handler,
