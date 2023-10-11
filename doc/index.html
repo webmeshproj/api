@@ -5405,7 +5405,9 @@ track of the observer in the GetStatus RPC if possible.</p></td>
                 <td><a href="#v1.RemoveServerResponse">RemoveServerResponse</a></td>
                 <td><p>RemovePeer removes a peer from the storage. The underlying implementation
 should ensure that the server is removed and that the storage is in a
-consistent state before returning.</p></td>
+consistent state before returning. When called with the current ID of the
+leader, the underlying implementation should relinquish leadership to another
+peer if possible.</p></td>
               </tr>
             
               <tr>

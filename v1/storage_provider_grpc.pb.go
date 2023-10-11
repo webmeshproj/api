@@ -78,7 +78,9 @@ type StorageProviderPluginClient interface {
 	DemoteVoter(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*DemoteVoterResponse, error)
 	// RemovePeer removes a peer from the storage. The underlying implementation
 	// should ensure that the server is removed and that the storage is in a
-	// consistent state before returning.
+	// consistent state before returning. When called with the current ID of the
+	// leader, the underlying implementation should relinquish leadership to another
+	// peer if possible.
 	RemovePeer(ctx context.Context, in *StoragePeer, opts ...grpc.CallOption) (*RemoveServerResponse, error)
 	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
@@ -287,7 +289,9 @@ type StorageProviderPluginServer interface {
 	DemoteVoter(context.Context, *StoragePeer) (*DemoteVoterResponse, error)
 	// RemovePeer removes a peer from the storage. The underlying implementation
 	// should ensure that the server is removed and that the storage is in a
-	// consistent state before returning.
+	// consistent state before returning. When called with the current ID of the
+	// leader, the underlying implementation should relinquish leadership to another
+	// peer if possible.
 	RemovePeer(context.Context, *StoragePeer) (*RemoveServerResponse, error)
 	// GetLeader returns the leader of the storage. Leader may be loosely defined
 	// by the implementation, but must be a node that can reliably be used to
