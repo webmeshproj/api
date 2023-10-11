@@ -49,7 +49,7 @@ type RegisterRequest struct {
 	Alias string `protobuf:"bytes,2,opt,name=alias,proto3" json:"alias,omitempty"`
 	// Expiry is the time at which the public key and its associated aliases
 	// should be removed from the registrar. If not provided, a default value
-	// of 1 year from the time of registration will be used.
+	// of 1 day from the time of registration will be used.
 	Expiry *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expiry,proto3" json:"expiry,omitempty"`
 }
 
