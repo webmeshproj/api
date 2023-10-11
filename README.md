@@ -1352,10 +1352,11 @@ LookupResponse is the response object for the Lookup RPC.
 
 RegisterRequest is the request object for the Register RPC.
 
-| Field     | Type              | Label | Description                                                                                 |
-|-----------|-------------------|-------|---------------------------------------------------------------------------------------------|
-| publicKey | [string](#string) |       | The encoded public key to register.                                                         |
-| alias     | [string](#string) |       | An alias to associate with the public key. This can be used to lookup the public key later. |
+| Field     | Type                                                    | Label | Description                                                                                                                                                                                        |
+|-----------|---------------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| publicKey | [string](#string)                                       |       | The encoded public key to register.                                                                                                                                                                |
+| alias     | [string](#string)                                       |       | An alias to associate with the public key. This can be used to lookup the public key later.                                                                                                        |
+| expiry    | [google.protobuf.Timestamp](#google.protobuf.Timestamp) |       | Expiry is the time at which the public key and its associated aliases should be removed from the registrar. If not provided, a default value of 1 year from the time of registration will be used. |
 
 ### RegisterResponse
 

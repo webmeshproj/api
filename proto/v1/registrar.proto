@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/timestamp.proto";
+
 // RegisterRequest is the request object for the Register RPC.
 message RegisterRequest {
     // The encoded public key to register.
@@ -25,6 +27,10 @@ message RegisterRequest {
     // An alias to associate with the public key. This can be used to lookup
     // the public key later.
     string alias = 2;
+    // Expiry is the time at which the public key and its associated aliases
+    // should be removed from the registrar. If not provided, a default value
+    // of 1 year from the time of registration will be used.
+    google.protobuf.Timestamp expiry = 3;
 }
 
 // RegisterResponse is the response object for the Register RPC.
