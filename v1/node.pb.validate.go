@@ -570,6 +570,8 @@ func (m *Status) validate(all bool) error {
 
 	// no validation rules for Id
 
+	// no validation rules for Description
+
 	// no validation rules for Version
 
 	// no validation rules for Commit

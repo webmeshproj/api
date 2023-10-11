@@ -142,24 +142,27 @@ message GetStatusRequest {
 message Status {
     // id is the ID of the node.
     string id = 1;
+    // description is an optional description provided
+    // by the node.
+    string description = 2;
     // version is the version of the node.
-    string version = 2;
+    string version = 3;
     // commit is the commit of the node.
-    string commit = 3;
+    string commit = 4;
     // build_date is the build date of the node.
-    string build_date = 4;
+    string build_date = 5;
     // uptime is the uptime of the node.
-    string uptime = 5;
+    string uptime = 6;
     // started_at is the time the node started.
-    google.protobuf.Timestamp startedAt = 6;
+    google.protobuf.Timestamp startedAt = 7;
     // features is the list of features currently enabled.
-    repeated FeaturePort features = 7;
+    repeated FeaturePort features = 8;
     // cluster_status is the status of the node in the cluster.
-    ClusterStatus clusterStatus = 8;
+    ClusterStatus clusterStatus = 9;
     // current_leader is the current leader of the cluster.
-    string currentLeader = 9;
+    string currentLeader = 10;
     // interface_metrics are the metrics for the node's interfaces.
-    InterfaceMetrics interfaceMetrics = 10;
+    InterfaceMetrics interfaceMetrics = 11;
 }
 
 // DataChannelNegotiation is the message for communicating data channels to nodes.

@@ -261,6 +261,7 @@ Status represents the status of a node.
 | Field            | Type                                                    | Label    | Description                                                  |
 |------------------|---------------------------------------------------------|----------|--------------------------------------------------------------|
 | id               | [string](#string)                                       |          | id is the ID of the node.                                    |
+| description      | [string](#string)                                       |          | description is an optional description provided by the node. |
 | version          | [string](#string)                                       |          | version is the version of the node.                          |
 | commit           | [string](#string)                                       |          | commit is the commit of the node.                            |
 | build_date       | [string](#string)                                       |          | build_date is the build date of the node.                    |
