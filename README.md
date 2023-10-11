@@ -336,6 +336,7 @@ Feature is a list of features supported by a node.
 | FORWARD_MESH_DNS | 10     | FORWARD_MESH_DNS is the feature for forwarding mesh DNS lookups to other meshes.                      |
 | STORAGE_QUERIER  | 11     | STORAGE_QUERIER is the feature for querying, publishing, and subscribing to mesh state.               |
 | STORAGE_PROVIDER | 12     | STORAGE_PROVIDER is the feature for being able to provide distributed storage.                        |
+| REGISTRAR        | 13     | REGISTRAR is the feature for being able to register aliases to node IDs and/or public keys.           |
 
 ### Node
 

@@ -63,6 +63,8 @@ enum Feature {
     STORAGE_QUERIER = 11;
     // STORAGE_PROVIDER is the feature for being able to provide distributed storage.
     STORAGE_PROVIDER = 12;
+    // REGISTRAR is the feature for being able to register aliases to node IDs and/or public keys.
+    REGISTRAR = 13;
 }
 
 // EdgeAttribute are pre-defined edge attributes. They should
