@@ -114,6 +114,12 @@
   - [<span class="badge">S</span>Plugin](#v1.Plugin)
   - [<span class="badge">S</span>StorageQuerierPlugin](#v1.StorageQuerierPlugin)
   - [<span class="badge">S</span>WatchPlugin](#v1.WatchPlugin)
+- [v1/registrar.proto](#v1%2fregistrar.proto)
+  - [<span class="badge">M</span>LookupRequest](#v1.LookupRequest)
+  - [<span class="badge">M</span>LookupResponse](#v1.LookupResponse)
+  - [<span class="badge">M</span>RegisterRequest](#v1.RegisterRequest)
+  - [<span class="badge">M</span>RegisterResponse](#v1.RegisterResponse)
+  - [<span class="badge">S</span>Registrar](#v1.Registrar)
 - [v1/storage_provider.proto](#v1%2fstorage_provider.proto)
   - [<span class="badge">M</span>AddObserverResponse](#v1.AddObserverResponse)
   - [<span class="badge">M</span>AddVoterResponse](#v1.AddVoterResponse)
@@ -1310,6 +1316,75 @@ WatchPlugin is the service definition for a Webmesh watch plugin.
 | Method Name | Request Type       | Response Type                                    | Description                 |
 |-------------|--------------------|--------------------------------------------------|-----------------------------|
 | Emit        | [Event](#v1.Event) | [.google.protobuf.Empty](#google.protobuf.Empty) | Emit handles a watch event. |
+
+<div class="file-heading">
+
+## v1/registrar.proto
+
+[Top](#title)
+
+</div>
+
+### LookupRequest
+
+LookupRequest is the request object for the Lookup RPC. One of the
+fields
+
+must be provided.
+
+| Field     | Type              | Label | Description                                   |
+|-----------|-------------------|-------|-----------------------------------------------|
+| id        | [string](#string) |       | The ID derived from the public key to lookup. |
+| publicKey | [string](#string) |       | The public key to lookup.                     |
+| alias     | [string](#string) |       | The alias of the public key to lookup.        |
+
+### LookupResponse
+
+LookupResponse is the response object for the Lookup RPC.
+
+| Field     | Type              | Label | Description                                  |
+|-----------|-------------------|-------|----------------------------------------------|
+| id        | [string](#string) |       | The ID of the public key that was looked up. |
+| publicKey | [string](#string) |       | The encoded public key that was looked up.   |
+| alias     | [string](#string) |       | Any alias associated with the public key.    |
+
+### RegisterRequest
+
+RegisterRequest is the request object for the Register RPC.
+
+| Field     | Type              | Label | Description                                                                                 |
+|-----------|-------------------|-------|---------------------------------------------------------------------------------------------|
+| publicKey | [string](#string) |       | The encoded public key to register.                                                         |
+| alias     | [string](#string) |       | An alias to associate with the public key. This can be used to lookup the public key later. |
+
+### RegisterResponse
+
+RegisterResponse is the response object for the Register RPC.
+
+| Field | Type              | Label | Description                               |
+|-------|-------------------|-------|-------------------------------------------|
+| id    | [string](#string) |       | ID of the public key that was registered. |
+
+### Registrar
+
+The registrar service can be used as a means of providing off-network
+storage of public
+
+keys and other information. This is useful for (and should only be used
+with) public-key
+
+derived ID authentication where one might want to register simpler
+aliases for a public key.
+
+This service could eventually evolve into a full key-server, but for now
+it is just a simple
+
+registrar.
+
+| Method Name | Request Type                           | Response Type                            | Description                                                                                                                                                                                                                                                                                      |
+|-------------|----------------------------------------|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Register    | [RegisterRequest](#v1.RegisterRequest) | [RegisterResponse](#v1.RegisterResponse) | Register a public key with the registrar. An alias can be provided to make it easier to lookup the public key later. If the alias is already in use, the request will fail. This method can be used to change the alias of a public key by providing the same public key with a different alias. |
+| Lookup      | [LookupRequest](#v1.LookupRequest)     | [LookupResponse](#v1.LookupResponse)     | Lookup a public key by ID or alias. If the ID is not found, the request will fail.                                                                                                                                                                                                               |
 
 <div class="file-heading">
 

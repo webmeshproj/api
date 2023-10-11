@@ -1,0 +1,72 @@
+/*
+Copyright 2023 Avi Zimmerman <avi.zimmerman@gmail.com>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+package v1;
+
+// RegisterRequest is the request object for the Register RPC.
+message RegisterRequest {
+    // The encoded public key to register.
+    string publicKey = 1;
+    // An alias to associate with the public key. This can be used to lookup
+    // the public key later.
+    string alias = 2;
+}
+
+// RegisterResponse is the response object for the Register RPC.
+message RegisterResponse {
+    // ID of the public key that was registered.
+    string id = 1;
+}
+
+// LookupRequest is the request object for the Lookup RPC. One of the fields
+// must be provided.
+message LookupRequest {
+    // The ID derived from the public key to lookup.
+    string id = 1;
+    // The public key to lookup.
+    string publicKey = 2;
+    // The alias of the public key to lookup.
+    string alias = 3;
+}
+
+// LookupResponse is the response object for the Lookup RPC.
+message LookupResponse {
+    // The ID of the public key that was looked up.
+    string id = 1;
+    // The encoded public key that was looked up.
+    string publicKey = 2;
+    // Any alias associated with the public key.
+    string alias = 3;
+}
+
+// The registrar service can be used as a means of providing off-network storage of public 
+// keys and other information. This is useful for (and should only be used with) public-key
+// derived ID authentication where one might want to register simpler aliases for a public key. 
+// This service could eventually evolve into a full key-server, but for now it is just a simple
+// registrar.
+service Registrar {
+    // Register a public key with the registrar. An alias can be provided to make it easier 
+    // to lookup the public key later. If the alias is already in use, the request will fail.
+    // This method can be used to change the alias of a public key by providing the same
+    // public key with a different alias.
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+
+    // Lookup a public key by ID or alias. If the ID is not found, the
+    // request will fail.
+    rpc Lookup(LookupRequest) returns (LookupResponse) {}
+}

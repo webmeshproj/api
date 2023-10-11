@@ -685,6 +685,37 @@
         
           
           <li>
+            <a href="#v1%2fregistrar.proto">v1/registrar.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#v1.LookupRequest"><span class="badge">M</span>LookupRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.LookupResponse"><span class="badge">M</span>LookupResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RegisterRequest"><span class="badge">M</span>RegisterRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.RegisterResponse"><span class="badge">M</span>RegisterResponse</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#v1.Registrar"><span class="badge">S</span>Registrar</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#v1%2fstorage_provider.proto">v1/storage_provider.proto</a>
             <ul>
               
@@ -4788,6 +4819,182 @@ received.</p></td>
                 <td><a href="#v1.Event">Event</a></td>
                 <td><a href="#google.protobuf.Empty">.google.protobuf.Empty</a></td>
                 <td><p>Emit handles a watch event.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="v1/registrar.proto">v1/registrar.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="v1.LookupRequest">LookupRequest</h3>
+        <p>LookupRequest is the request object for the Lookup RPC. One of the fields</p><p>must be provided.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID derived from the public key to lookup. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>publicKey</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The public key to lookup. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alias</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The alias of the public key to lookup. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.LookupResponse">LookupResponse</h3>
+        <p>LookupResponse is the response object for the Lookup RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The ID of the public key that was looked up. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>publicKey</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The encoded public key that was looked up. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alias</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Any alias associated with the public key. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RegisterRequest">RegisterRequest</h3>
+        <p>RegisterRequest is the request object for the Register RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>publicKey</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The encoded public key to register. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>alias</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>An alias to associate with the public key. This can be used to lookup
+the public key later. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.RegisterResponse">RegisterResponse</h3>
+        <p>RegisterResponse is the response object for the Register RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID of the public key that was registered. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="v1.Registrar">Registrar</h3>
+        <p>The registrar service can be used as a means of providing off-network storage of public </p><p>keys and other information. This is useful for (and should only be used with) public-key</p><p>derived ID authentication where one might want to register simpler aliases for a public key. </p><p>This service could eventually evolve into a full key-server, but for now it is just a simple</p><p>registrar.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Register</td>
+                <td><a href="#v1.RegisterRequest">RegisterRequest</a></td>
+                <td><a href="#v1.RegisterResponse">RegisterResponse</a></td>
+                <td><p>Register a public key with the registrar. An alias can be provided to make it easier 
+to lookup the public key later. If the alias is already in use, the request will fail.
+This method can be used to change the alias of a public key by providing the same
+public key with a different alias.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Lookup</td>
+                <td><a href="#v1.LookupRequest">LookupRequest</a></td>
+                <td><a href="#v1.LookupResponse">LookupResponse</a></td>
+                <td><p>Lookup a public key by ID or alias. If the ID is not found, the
+request will fail.</p></td>
               </tr>
             
           </tbody>
