@@ -27,8 +27,28 @@ import "v1/storage_query.proto";
 
 // PluginConfiguration is the message containing the configuration of a plugin.
 message PluginConfiguration {
-    // Config is the configuration of the plugin.
+    // Config is the configuration for the plugin. This will be specific
+    // for each plugin.
     google.protobuf.Struct config = 1;
+    // NodeConfig is the configuration of the node and the network that it is a part of.
+    NodeConfiguration nodeConfig = 2;
+}
+
+// NodeConfiguration is the message containing the configuration of the
+// node and the network that it is a part of.
+message NodeConfiguration {
+    // NetworkIPv4 is the IPv4 network that the node is a part of.
+    string networkIPv4 = 1;
+    // NetworkIPv6 is the IPv6 network that the node is a part of.
+    string networkIPv6 = 2;
+    // AddressIPv4 is the IPv4 address of the node.
+    string addressIPv4 = 3;
+    // AddressIPv6 is the IPv6 address of the node.
+    string addressIPv6 = 4;
+    // Domain is the domain of the network.
+    string domain = 5;
+    // PrivateKey is the private key of the node.
+    bytes privateKey = 6;
 }
 
 // PluginInfo is the information of a plugin.

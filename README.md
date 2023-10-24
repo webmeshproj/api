@@ -104,6 +104,7 @@
   - [<span class="badge">M</span>AuthenticationRequest.HeadersEntry](#v1.AuthenticationRequest.HeadersEntry)
   - [<span class="badge">M</span>AuthenticationResponse](#v1.AuthenticationResponse)
   - [<span class="badge">M</span>Event](#v1.Event)
+  - [<span class="badge">M</span>NodeConfiguration](#v1.NodeConfiguration)
   - [<span class="badge">M</span>PluginConfiguration](#v1.PluginConfiguration)
   - [<span class="badge">M</span>PluginInfo](#v1.PluginInfo)
   - [<span class="badge">M</span>ReleaseIPRequest](#v1.ReleaseIPRequest)
@@ -1220,14 +1221,30 @@ Event is the message containing a watch event.
 | type  | [Event.WatchEvent](#v1.Event.WatchEvent) |       | type is the type of the watch event.      |
 | node  | [MeshNode](#v1.MeshNode)                 |       | node is the node that the event is about. |
 
+### NodeConfiguration
+
+NodeConfiguration is the message containing the configuration of the
+
+node and the network that it is a part of.
+
+| Field       | Type              | Label | Description                                                 |
+|-------------|-------------------|-------|-------------------------------------------------------------|
+| networkIPv4 | [string](#string) |       | NetworkIPv4 is the IPv4 network that the node is a part of. |
+| networkIPv6 | [string](#string) |       | NetworkIPv6 is the IPv6 network that the node is a part of. |
+| addressIPv4 | [string](#string) |       | AddressIPv4 is the IPv4 address of the node.                |
+| addressIPv6 | [string](#string) |       | AddressIPv6 is the IPv6 address of the node.                |
+| domain      | [string](#string) |       | Domain is the domain of the network.                        |
+| privateKey  | [bytes](#bytes)   |       | PrivateKey is the private key of the node.                  |
+
 ### PluginConfiguration
 
 PluginConfiguration is the message containing the configuration of a
 plugin.
 
-| Field  | Type                                              | Label | Description                                |
-|--------|---------------------------------------------------|-------|--------------------------------------------|
-| config | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is the configuration of the plugin. |
+| Field      | Type                                              | Label | Description                                                                        |
+|------------|---------------------------------------------------|-------|------------------------------------------------------------------------------------|
+| config     | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is the configuration for the plugin. This will be specific for each plugin. |
+| nodeConfig | [NodeConfiguration](#v1.NodeConfiguration)        |       | NodeConfig is the configuration of the node and the network that it is a part of.  |
 
 ### PluginInfo
 

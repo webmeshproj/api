@@ -638,6 +638,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.NodeConfiguration"><span class="badge">M</span>NodeConfiguration</a>
+                </li>
+              
+                <li>
                   <a href="#v1.PluginConfiguration"><span class="badge">M</span>PluginConfiguration</a>
                 </li>
               
@@ -4531,6 +4535,65 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
 
         
       
+        <h3 id="v1.NodeConfiguration">NodeConfiguration</h3>
+        <p>NodeConfiguration is the message containing the configuration of the</p><p>node and the network that it is a part of.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>networkIPv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>NetworkIPv4 is the IPv4 network that the node is a part of. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>networkIPv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>NetworkIPv6 is the IPv6 network that the node is a part of. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addressIPv4</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>AddressIPv4 is the IPv4 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addressIPv6</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>AddressIPv6 is the IPv6 address of the node. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Domain is the domain of the network. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>privateKey</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>PrivateKey is the private key of the node. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.PluginConfiguration">PluginConfiguration</h3>
         <p>PluginConfiguration is the message containing the configuration of a plugin.</p>
 
@@ -4545,7 +4608,15 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>config</td>
                   <td><a href="#google.protobuf.Struct">google.protobuf.Struct</a></td>
                   <td></td>
-                  <td><p>Config is the configuration of the plugin. </p></td>
+                  <td><p>Config is the configuration for the plugin. This will be specific
+for each plugin. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>nodeConfig</td>
+                  <td><a href="#v1.NodeConfiguration">NodeConfiguration</a></td>
+                  <td></td>
+                  <td><p>NodeConfig is the configuration of the node and the network that it is a part of. </p></td>
                 </tr>
               
             </tbody>
