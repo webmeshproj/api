@@ -37,18 +37,20 @@ message PluginConfiguration {
 // NodeConfiguration is the message containing the configuration of the
 // node and the network that it is a part of.
 message NodeConfiguration {
+    // ID is the ID of the node.
+    string id = 1;
     // NetworkIPv4 is the IPv4 network that the node is a part of.
-    string networkIPv4 = 1;
+    string networkIPv4 = 2;
     // NetworkIPv6 is the IPv6 network that the node is a part of.
-    string networkIPv6 = 2;
+    string networkIPv6 = 3;
     // AddressIPv4 is the IPv4 address of the node.
-    string addressIPv4 = 3;
+    string addressIPv4 = 4;
     // AddressIPv6 is the IPv6 address of the node.
-    string addressIPv6 = 4;
+    string addressIPv6 = 5;
     // Domain is the domain of the network.
-    string domain = 5;
+    string domain = 6;
     // PrivateKey is the private key of the node.
-    bytes privateKey = 6;
+    bytes privateKey = 7;
 }
 
 // PluginInfo is the information of a plugin.

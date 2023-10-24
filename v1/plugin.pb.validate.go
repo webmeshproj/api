@@ -217,6 +217,8 @@ func (m *NodeConfiguration) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Id
+
 	// no validation rules for NetworkIPv4
 
 	// no validation rules for NetworkIPv6

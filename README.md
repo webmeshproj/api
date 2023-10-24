@@ -1229,6 +1229,7 @@ node and the network that it is a part of.
 
 | Field       | Type              | Label | Description                                                 |
 |-------------|-------------------|-------|-------------------------------------------------------------|
+| id          | [string](#string) |       | ID is the ID of the node.                                   |
 | networkIPv4 | [string](#string) |       | NetworkIPv4 is the IPv4 network that the node is a part of. |
 | networkIPv6 | [string](#string) |       | NetworkIPv6 is the IPv6 network that the node is a part of. |
 | addressIPv4 | [string](#string) |       | AddressIPv4 is the IPv4 address of the node.                |
