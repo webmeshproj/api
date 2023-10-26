@@ -30,8 +30,11 @@ export const ConnectRequest = proto3.makeMessageType(
   "v1.ConnectRequest",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
-    { no: 3, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 2, name: "authType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AuthMethod) },
+    { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 12 /* ScalarType.BYTES */} },
+    { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
+    { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 6, name: "services", kind: "message", T: MeshServices },
   ],
 );
 
@@ -47,6 +50,32 @@ export const ConnectRequest_AddrType = proto3.makeEnum(
     {no: 1, name: "DNS"},
     {no: 2, name: "MULTIADDR"},
   ],
+);
+
+/**
+ * AuthMethod are types of RPC credentials to supply to the connection.
+ *
+ * @generated from enum v1.ConnectRequest.AuthMethod
+ */
+export const ConnectRequest_AuthMethod = proto3.makeEnum(
+  "v1.ConnectRequest.AuthMethod",
+  [
+    {no: 0, name: "NO_AUTH"},
+    {no: 1, name: "BASIC"},
+    {no: 2, name: "LDAP"},
+    {no: 3, name: "ID"},
+    {no: 4, name: "MTLS"},
+  ],
+);
+
+/**
+ * MeshServices are configurations for exposing services to other nodes on a mesh.
+ *
+ * @generated from message v1.MeshServices
+ */
+export const MeshServices = proto3.makeMessageType(
+  "v1.MeshServices",
+  [],
 );
 
 /**

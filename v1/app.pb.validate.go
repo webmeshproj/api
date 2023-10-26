@@ -59,7 +59,40 @@ func (m *ConnectRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
+	// no validation rules for AuthType
+
+	// no validation rules for AuthCredentials
+
 	// no validation rules for AddrType
+
+	if all {
+		switch v := interface{}(m.GetServices()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Services",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Services",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetServices()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectRequestValidationError{
+				field:  "Services",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	if len(errors) > 0 {
 		return ConnectRequestMultiError(errors)
@@ -138,6 +171,105 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ConnectRequestValidationError{}
+
+// Validate checks the field values on MeshServices with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MeshServices) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MeshServices with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MeshServicesMultiError, or
+// nil if none found.
+func (m *MeshServices) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MeshServices) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return MeshServicesMultiError(errors)
+	}
+
+	return nil
+}
+
+// MeshServicesMultiError is an error wrapping multiple validation errors
+// returned by MeshServices.ValidateAll() if the designated constraints aren't met.
+type MeshServicesMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MeshServicesMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MeshServicesMultiError) AllErrors() []error { return m }
+
+// MeshServicesValidationError is the validation error returned by
+// MeshServices.Validate if the designated constraints aren't met.
+type MeshServicesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MeshServicesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MeshServicesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MeshServicesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MeshServicesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MeshServicesValidationError) ErrorName() string { return "MeshServicesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MeshServicesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMeshServices.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MeshServicesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MeshServicesValidationError{}
 
 // Validate checks the field values on ConnectResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the

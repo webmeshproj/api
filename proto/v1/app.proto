@@ -36,15 +36,36 @@ message ConnectRequest {
         // MULTIADDR is used to join a mesh using a multiaddr.
         MULTIADDR = 2;
     };
+    // AuthMethod are types of RPC credentials to supply to the connection.
+    enum AuthMethod {
+        // NO_AUTH is used to indicate that no authentication is required.
+        NO_AUTH = 0;
+        // BASIC is used to indicate that basic authentication is required.
+        BASIC = 1;
+        // LDAP is used to indicate that LDAP authentication is required.
+        LDAP = 2;
+        // ID is used to indicate that an identity is required.
+        ID = 3;
+        // MTLS is used to indicate that mutual TLS authentication is required.
+        MTLS = 4;
+    };
     // id is the unique identifier of this connection. If not provided
     // one will be generated.
     string id = 1;
+    // authType is the type of authentication to use.
+    AuthMethod authType = 2;
+    // authCredentials are additional credentials as required by the authType. 
+    map<string, bytes> authCredentials = 3;
     // addrType is the type of join addresses in the addrs list.
-    AddrType addrType = 2;
+    AddrType addrType = 4;
     // addrs are the join addresses to use to connect to the mesh.
-    repeated string addrs = 3;
-    // Service exposing options?
+    repeated string addrs = 5;
+    // services are the services to expose to other nodes on the mesh.
+    MeshServices services = 6;
 }
+
+// MeshServices are configurations for exposing services to other nodes on a mesh.
+message MeshServices {}
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
@@ -58,7 +79,6 @@ message ConnectResponse {
     string ipv4 = 4;
     // ipv6 is the IPv6 address of the node.
     string ipv6 = 5;
-    // Anything else?
 }
 
 // DisconnectRequest is sent by an application to a daemon to disconnect

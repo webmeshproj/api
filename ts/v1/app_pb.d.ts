@@ -37,20 +37,39 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
   id: string;
 
   /**
+   * authType is the type of authentication to use.
+   *
+   * @generated from field: v1.ConnectRequest.AuthMethod authType = 2;
+   */
+  authType: ConnectRequest_AuthMethod;
+
+  /**
+   * authCredentials are additional credentials as required by the authType. 
+   *
+   * @generated from field: map<string, bytes> authCredentials = 3;
+   */
+  authCredentials: { [key: string]: Uint8Array };
+
+  /**
    * addrType is the type of join addresses in the addrs list.
    *
-   * @generated from field: v1.ConnectRequest.AddrType addrType = 2;
+   * @generated from field: v1.ConnectRequest.AddrType addrType = 4;
    */
   addrType: ConnectRequest_AddrType;
 
   /**
    * addrs are the join addresses to use to connect to the mesh.
    *
-   * Service exposing options?
-   *
-   * @generated from field: repeated string addrs = 3;
+   * @generated from field: repeated string addrs = 5;
    */
   addrs: string[];
+
+  /**
+   * services are the services to expose to other nodes on the mesh.
+   *
+   * @generated from field: v1.MeshServices services = 6;
+   */
+  services?: MeshServices;
 
   constructor(data?: PartialMessage<ConnectRequest>);
 
@@ -96,6 +115,69 @@ export declare enum ConnectRequest_AddrType {
 }
 
 /**
+ * AuthMethod are types of RPC credentials to supply to the connection.
+ *
+ * @generated from enum v1.ConnectRequest.AuthMethod
+ */
+export declare enum ConnectRequest_AuthMethod {
+  /**
+   * NO_AUTH is used to indicate that no authentication is required.
+   *
+   * @generated from enum value: NO_AUTH = 0;
+   */
+  NO_AUTH = 0,
+
+  /**
+   * BASIC is used to indicate that basic authentication is required.
+   *
+   * @generated from enum value: BASIC = 1;
+   */
+  BASIC = 1,
+
+  /**
+   * LDAP is used to indicate that LDAP authentication is required.
+   *
+   * @generated from enum value: LDAP = 2;
+   */
+  LDAP = 2,
+
+  /**
+   * ID is used to indicate that an identity is required.
+   *
+   * @generated from enum value: ID = 3;
+   */
+  ID = 3,
+
+  /**
+   * MTLS is used to indicate that mutual TLS authentication is required.
+   *
+   * @generated from enum value: MTLS = 4;
+   */
+  MTLS = 4,
+}
+
+/**
+ * MeshServices are configurations for exposing services to other nodes on a mesh.
+ *
+ * @generated from message v1.MeshServices
+ */
+export declare class MeshServices extends Message<MeshServices> {
+  constructor(data?: PartialMessage<MeshServices>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.MeshServices";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshServices;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshServices;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshServices;
+
+  static equals(a: MeshServices | PlainMessage<MeshServices> | undefined, b: MeshServices | PlainMessage<MeshServices> | undefined): boolean;
+}
+
+/**
  * ConnectResponse is returned by the Connect RPC.
  *
  * @generated from message v1.ConnectResponse
@@ -131,8 +213,6 @@ export declare class ConnectResponse extends Message<ConnectResponse> {
 
   /**
    * ipv6 is the IPv6 address of the node.
-   *
-   * Anything else?
    *
    * @generated from field: string ipv6 = 5;
    */

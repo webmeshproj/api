@@ -445,6 +445,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ConnectRequest.AuthCredentialsEntry"><span class="badge">M</span>ConnectRequest.AuthCredentialsEntry</a>
+                </li>
+              
+                <li>
                   <a href="#v1.ConnectResponse"><span class="badge">M</span>ConnectResponse</a>
                 </li>
               
@@ -454,6 +458,10 @@
               
                 <li>
                   <a href="#v1.DisconnectResponse"><span class="badge">M</span>DisconnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MeshServices"><span class="badge">M</span>MeshServices</a>
                 </li>
               
                 <li>
@@ -479,6 +487,10 @@
               
                 <li>
                   <a href="#v1.ConnectRequest.AddrType"><span class="badge">E</span>ConnectRequest.AddrType</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ConnectRequest.AuthMethod"><span class="badge">E</span>ConnectRequest.AuthMethod</a>
                 </li>
               
                 <li>
@@ -3157,6 +3169,20 @@ one will be generated. </p></td>
                 </tr>
               
                 <tr>
+                  <td>authType</td>
+                  <td><a href="#v1.ConnectRequest.AuthMethod">ConnectRequest.AuthMethod</a></td>
+                  <td></td>
+                  <td><p>authType is the type of authentication to use. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>authCredentials</td>
+                  <td><a href="#v1.ConnectRequest.AuthCredentialsEntry">ConnectRequest.AuthCredentialsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>authCredentials are additional credentials as required by the authType. </p></td>
+                </tr>
+              
+                <tr>
                   <td>addrType</td>
                   <td><a href="#v1.ConnectRequest.AddrType">ConnectRequest.AddrType</a></td>
                   <td></td>
@@ -3167,9 +3193,45 @@ one will be generated. </p></td>
                   <td>addrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>addrs are the join addresses to use to connect to the mesh.
+                  <td><p>addrs are the join addresses to use to connect to the mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>services</td>
+                  <td><a href="#v1.MeshServices">MeshServices</a></td>
+                  <td></td>
+                  <td><p>services are the services to expose to other nodes on the mesh. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
 
-Service exposing options? </p></td>
+          
+
+        
+      
+        <h3 id="v1.ConnectRequest.AuthCredentialsEntry">ConnectRequest.AuthCredentialsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -3221,9 +3283,7 @@ Service exposing options? </p></td>
                   <td>ipv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ipv6 is the IPv6 address of the node.
-
-Anything else? </p></td>
+                  <td><p>ipv6 is the IPv6 address of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -3259,6 +3319,13 @@ Anything else? </p></td>
       
         <h3 id="v1.DisconnectResponse">DisconnectResponse</h3>
         <p>DisconnectResponse is returned by the Disconnect RPC.</p>
+
+        
+
+        
+      
+        <h3 id="v1.MeshServices">MeshServices</h3>
+        <p>MeshServices are configurations for exposing services to other nodes on a mesh.</p>
 
         
 
@@ -3424,6 +3491,47 @@ Anything else? </p></td>
                 <td>MULTIADDR</td>
                 <td>2</td>
                 <td><p>MULTIADDR is used to join a mesh using a multiaddr.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.ConnectRequest.AuthMethod">ConnectRequest.AuthMethod</h3>
+        <p>AuthMethod are types of RPC credentials to supply to the connection.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NO_AUTH</td>
+                <td>0</td>
+                <td><p>NO_AUTH is used to indicate that no authentication is required.</p></td>
+              </tr>
+            
+              <tr>
+                <td>BASIC</td>
+                <td>1</td>
+                <td><p>BASIC is used to indicate that basic authentication is required.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LDAP</td>
+                <td>2</td>
+                <td><p>LDAP is used to indicate that LDAP authentication is required.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ID</td>
+                <td>3</td>
+                <td><p>ID is used to indicate that an identity is required.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MTLS</td>
+                <td>4</td>
+                <td><p>MTLS is used to indicate that mutual TLS authentication is required.</p></td>
               </tr>
             
           </tbody>
