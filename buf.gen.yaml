@@ -26,6 +26,6 @@ plugins:
   # Javascript/Typescript gRPC
   - plugin: buf.build/connectrpc/es:v1.1.2
     out: ts
-  # Docs
+  # Go Docs
   - plugin: buf.build/community/pseudomuto-doc:v1.5.1
-    out: docs
+    out: docs/go
