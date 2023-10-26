@@ -23,9 +23,7 @@ import { Message, proto3 } from "@bufbuild/protobuf";
 import type { InterfaceMetrics, MeshNode } from "./node_pb.js";
 
 /**
- * ConnectRequest is sent by the application to the node to establish a
- * connection to a mesh. This message will eventually contain unique
- * identifiers to allow creating connections to multiple meshes.
+ * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
  *
  * @generated from message v1.ConnectRequest
  */
@@ -156,13 +154,20 @@ export declare class ConnectResponse extends Message<ConnectResponse> {
 }
 
 /**
- * DisconnectRequest is sent by the application to the node to disconnect
+ * DisconnectRequest is sent by an application to a daemon to disconnect
  * from a mesh. This message will eventually contain unique identifiers
  * for allowing the application to disconnect from a specific mesh.
  *
  * @generated from message v1.DisconnectRequest
  */
 export declare class DisconnectRequest extends Message<DisconnectRequest> {
+  /**
+   * id is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
   constructor(data?: PartialMessage<DisconnectRequest>);
 
   static readonly runtime: typeof proto3;
@@ -200,13 +205,19 @@ export declare class DisconnectResponse extends Message<DisconnectResponse> {
 }
 
 /**
- * MetricsRequest is sent by the application to the node to retrieve interface
- * metrics. It is intentionally empty for now, but can eventually be used to 
- * query specific interfaces/metrics.
+ * MetricsRequest is sent by the application to a daemon to retrieve interface
+ * metrics for a mesh connection.
  *
  * @generated from message v1.MetricsRequest
  */
 export declare class MetricsRequest extends Message<MetricsRequest> {
+  /**
+   * id is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
   constructor(data?: PartialMessage<MetricsRequest>);
 
   static readonly runtime: typeof proto3;
@@ -251,12 +262,19 @@ export declare class MetricsResponse extends Message<MetricsResponse> {
 }
 
 /**
- * StatusRequest is sent by the application to the node to retrieve the status
- * of the node.
+ * StatusRequest is sent by the application to a daemon to retrieve the status
+ * of a mesh connection.
  *
  * @generated from message v1.StatusRequest
  */
 export declare class StatusRequest extends Message<StatusRequest> {
+  /**
+   * id is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
   constructor(data?: PartialMessage<StatusRequest>);
 
   static readonly runtime: typeof proto3;
@@ -331,113 +349,5 @@ export declare enum StatusResponse_ConnectionStatus {
    * @generated from enum value: CONNECTED = 2;
    */
   CONNECTED = 2,
-}
-
-/**
- * AnnounceDHTRequest is sent by the application to the node to announce the
- * node's presence on the Kademlia DHT for other nodes to discover.
- *
- * @generated from message v1.AnnounceDHTRequest
- */
-export declare class AnnounceDHTRequest extends Message<AnnounceDHTRequest> {
-  /**
-   * Bootstrap servers are optional bootstrap servers to use for bootstrapping
-   * the DHT. If not provided, the node will use the default bootstrap servers.
-   *
-   * @generated from field: repeated string bootstrapServers = 1;
-   */
-  bootstrapServers: string[];
-
-  /**
-   * PSK is the pre-shared key to use for the DHT.
-   *
-   * @generated from field: string psk = 2;
-   */
-  psk: string;
-
-  constructor(data?: PartialMessage<AnnounceDHTRequest>);
-
-  static readonly runtime: typeof proto3;
-  static readonly typeName = "v1.AnnounceDHTRequest";
-  static readonly fields: FieldList;
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AnnounceDHTRequest;
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AnnounceDHTRequest;
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AnnounceDHTRequest;
-
-  static equals(a: AnnounceDHTRequest | PlainMessage<AnnounceDHTRequest> | undefined, b: AnnounceDHTRequest | PlainMessage<AnnounceDHTRequest> | undefined): boolean;
-}
-
-/**
- * AnnounceDHTResponse is returned by the AnnounceDHT RPC.
- *
- * @generated from message v1.AnnounceDHTResponse
- */
-export declare class AnnounceDHTResponse extends Message<AnnounceDHTResponse> {
-  constructor(data?: PartialMessage<AnnounceDHTResponse>);
-
-  static readonly runtime: typeof proto3;
-  static readonly typeName = "v1.AnnounceDHTResponse";
-  static readonly fields: FieldList;
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AnnounceDHTResponse;
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AnnounceDHTResponse;
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AnnounceDHTResponse;
-
-  static equals(a: AnnounceDHTResponse | PlainMessage<AnnounceDHTResponse> | undefined, b: AnnounceDHTResponse | PlainMessage<AnnounceDHTResponse> | undefined): boolean;
-}
-
-/**
- * LeaveDHTRequest is sent by the application to the node to leave the Kademlia
- * DHT.
- *
- * @generated from message v1.LeaveDHTRequest
- */
-export declare class LeaveDHTRequest extends Message<LeaveDHTRequest> {
-  /**
-   * PSK is the pre-shared key that was used to join the DHT.
-   *
-   * @generated from field: string psk = 1;
-   */
-  psk: string;
-
-  constructor(data?: PartialMessage<LeaveDHTRequest>);
-
-  static readonly runtime: typeof proto3;
-  static readonly typeName = "v1.LeaveDHTRequest";
-  static readonly fields: FieldList;
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LeaveDHTRequest;
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LeaveDHTRequest;
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LeaveDHTRequest;
-
-  static equals(a: LeaveDHTRequest | PlainMessage<LeaveDHTRequest> | undefined, b: LeaveDHTRequest | PlainMessage<LeaveDHTRequest> | undefined): boolean;
-}
-
-/**
- * LeaveDHTResponse is returned by the LeaveDHT RPC.
- *
- * @generated from message v1.LeaveDHTResponse
- */
-export declare class LeaveDHTResponse extends Message<LeaveDHTResponse> {
-  constructor(data?: PartialMessage<LeaveDHTResponse>);
-
-  static readonly runtime: typeof proto3;
-  static readonly typeName = "v1.LeaveDHTResponse";
-  static readonly fields: FieldList;
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LeaveDHTResponse;
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LeaveDHTResponse;
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LeaveDHTResponse;
-
-  static equals(a: LeaveDHTResponse | PlainMessage<LeaveDHTResponse> | undefined, b: LeaveDHTResponse | PlainMessage<LeaveDHTResponse> | undefined): boolean;
 }
 

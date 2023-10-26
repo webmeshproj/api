@@ -18,15 +18,15 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AnnounceDHTRequest, AnnounceDHTResponse, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, LeaveDHTRequest, LeaveDHTResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
+import { ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { PublishRequest, PublishResponse, QueryRequest, QueryResponse, SubscribeRequest, SubscriptionEvent } from "./storage_query_pb.js";
 
 /**
  * AppDaemon is exposed by nodes running in the app-daemon mode. This mode
- * allows the node to run in an idle state and be controlled by the
- * application. The application can send commands to the node to execute
- * tasks and receive responses.
+ * allows the node to run in an idle state and be controlled by an application.
+ * The application can send commands to the node to execute tasks and receive 
+ * responses.
  *
  * @generated from service v1.AppDaemon
  */
@@ -34,9 +34,7 @@ export const AppDaemon = {
   typeName: "v1.AppDaemon",
   methods: {
     /**
-     * Connect is used to establish a connection between the node and a
-     * mesh. The provided struct is used to override any defaults configured
-     * on the node.
+     * Connect is used to establish a connection between the node and a mesh.
      *
      * @generated from rpc v1.AppDaemon.Connect
      */
@@ -47,7 +45,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Disconnect is used to disconnect the node from the mesh.
+     * Disconnect is used to disconnect the node from a mesh.
      *
      * @generated from rpc v1.AppDaemon.Disconnect
      */
@@ -58,7 +56,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Query is used to query the mesh for information.
+     * Query is used to query a mesh for information.
      *
      * @generated from rpc v1.AppDaemon.Query
      */
@@ -69,7 +67,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Metrics is used to retrieve interface metrics from the node.
+     * Metrics is used to retrieve interface metrics for a mesh connection.
      *
      * @generated from rpc v1.AppDaemon.Metrics
      */
@@ -80,7 +78,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Status is used to retrieve the status of the node.
+     * Status is used to retrieve the status a mesh connection.
      *
      * @generated from rpc v1.AppDaemon.Status
      */
@@ -91,7 +89,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Subscribe is used to subscribe to events in the mesh database.
+     * Subscribe is used to subscribe to events in a mesh database.
      *
      * @generated from rpc v1.AppDaemon.Subscribe
      */
@@ -102,8 +100,7 @@ export const AppDaemon = {
       kind: MethodKind.ServerStreaming,
     },
     /**
-     * Publish is used to publish events to the mesh database. A restricted set
-     * of keys are allowed to be published to.
+     * Publish is used to publish events to a mesh database.
      *
      * @generated from rpc v1.AppDaemon.Publish
      */
@@ -111,29 +108,6 @@ export const AppDaemon = {
       name: "Publish",
       I: PublishRequest,
       O: PublishResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * AnnounceDHT is used to announce the node's presence on the Kademlia DHT
-     * for other nodes to discover.
-     *
-     * @generated from rpc v1.AppDaemon.AnnounceDHT
-     */
-    announceDHT: {
-      name: "AnnounceDHT",
-      I: AnnounceDHTRequest,
-      O: AnnounceDHTResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * LeaveDHT is used to leave the Kademlia DHT.
-     *
-     * @generated from rpc v1.AppDaemon.LeaveDHT
-     */
-    leaveDHT: {
-      name: "LeaveDHT",
-      I: LeaveDHTRequest,
-      O: LeaveDHTResponse,
       kind: MethodKind.Unary,
     },
   }

@@ -25,9 +25,7 @@ import "v1/mesh.proto";
 import "v1/node.proto";
 import "v1/storage_query.proto";
 
-// ConnectRequest is sent by the application to the node to establish a
-// connection to a mesh. This message will eventually contain unique
-// identifiers to allow creating connections to multiple meshes.
+// ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
 message ConnectRequest {
     // AddrType is the type of join addresses included in the request.
     enum AddrType {
@@ -63,18 +61,23 @@ message ConnectResponse {
     // Anything else?
 }
 
-// DisconnectRequest is sent by the application to the node to disconnect
+// DisconnectRequest is sent by an application to a daemon to disconnect
 // from a mesh. This message will eventually contain unique identifiers
 // for allowing the application to disconnect from a specific mesh.
-message DisconnectRequest {}
+message DisconnectRequest {
+    // id is the unique identifier of this connection.
+    string id = 1;
+}
 
 // DisconnectResponse is returned by the Disconnect RPC.
 message DisconnectResponse {}
 
-// MetricsRequest is sent by the application to the node to retrieve interface
-// metrics. It is intentionally empty for now, but can eventually be used to 
-// query specific interfaces/metrics.
-message MetricsRequest {}
+// MetricsRequest is sent by the application to a daemon to retrieve interface
+// metrics for a mesh connection.
+message MetricsRequest {
+    // id is the unique identifier of this connection.
+    string id = 1;
+}
 
 // MetricsResponse is a message containing interface metrics.
 message MetricsResponse {
@@ -82,9 +85,12 @@ message MetricsResponse {
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
-// StatusRequest is sent by the application to the node to retrieve the status
-// of the node.
-message StatusRequest {}
+// StatusRequest is sent by the application to a daemon to retrieve the status
+// of a mesh connection.
+message StatusRequest {
+    // id is the unique identifier of this connection.
+    string id = 1;
+}
 
 // StatusResponse is a message containing the status of the node.
 message StatusResponse {
@@ -102,62 +108,29 @@ message StatusResponse {
     MeshNode node = 2;
 }
 
-// AnnounceDHTRequest is sent by the application to the node to announce the
-// node's presence on the Kademlia DHT for other nodes to discover.
-message AnnounceDHTRequest {
-    // Bootstrap servers are optional bootstrap servers to use for bootstrapping
-    // the DHT. If not provided, the node will use the default bootstrap servers.
-    repeated string bootstrapServers = 1;
-    // PSK is the pre-shared key to use for the DHT.
-    string psk = 2;
-}
-
-// AnnounceDHTResponse is returned by the AnnounceDHT RPC.
-message AnnounceDHTResponse {}
-
-// LeaveDHTRequest is sent by the application to the node to leave the Kademlia
-// DHT.
-message LeaveDHTRequest {
-    // PSK is the pre-shared key that was used to join the DHT.
-    string psk = 1;
-}
-
-// LeaveDHTResponse is returned by the LeaveDHT RPC.
-message LeaveDHTResponse {}
-
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
-// allows the node to run in an idle state and be controlled by the
-// application. The application can send commands to the node to execute
-// tasks and receive responses.
+// allows the node to run in an idle state and be controlled by an application.
+// The application can send commands to the node to execute tasks and receive 
+// responses.
 service AppDaemon {
-    // Connect is used to establish a connection between the node and a
-    // mesh. The provided struct is used to override any defaults configured
-    // on the node.
+    // Connect is used to establish a connection between the node and a mesh.
     rpc Connect(ConnectRequest) returns (ConnectResponse) {}
 
-    // Disconnect is used to disconnect the node from the mesh.
+    // Disconnect is used to disconnect the node from a mesh.
     rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
 
-    // Query is used to query the mesh for information.
+    // Query is used to query a mesh for information.
     rpc Query(QueryRequest) returns (QueryResponse) {}
 
-    // Metrics is used to retrieve interface metrics from the node.
+    // Metrics is used to retrieve interface metrics for a mesh connection.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
 
-    // Status is used to retrieve the status of the node.
+    // Status is used to retrieve the status a mesh connection.
     rpc Status(StatusRequest) returns (StatusResponse) {}
 
-    // Subscribe is used to subscribe to events in the mesh database.
+    // Subscribe is used to subscribe to events in a mesh database.
     rpc Subscribe(SubscribeRequest) returns (stream SubscriptionEvent) {}
 
-    // Publish is used to publish events to the mesh database. A restricted set
-    // of keys are allowed to be published to.
+    // Publish is used to publish events to a mesh database.
     rpc Publish(PublishRequest) returns (PublishResponse) {}
-
-    // AnnounceDHT is used to announce the node's presence on the Kademlia DHT
-    // for other nodes to discover.
-    rpc AnnounceDHT(AnnounceDHTRequest) returns (AnnounceDHTResponse) {}
-
-    // LeaveDHT is used to leave the Kademlia DHT.
-    rpc LeaveDHT(LeaveDHTRequest) returns (LeaveDHTResponse) {}
 }

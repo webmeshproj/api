@@ -22,9 +22,7 @@ import { proto3 } from "@bufbuild/protobuf";
 import { InterfaceMetrics, MeshNode } from "./node_pb.js";
 
 /**
- * ConnectRequest is sent by the application to the node to establish a
- * connection to a mesh. This message will eventually contain unique
- * identifiers to allow creating connections to multiple meshes.
+ * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
  *
  * @generated from message v1.ConnectRequest
  */
@@ -68,7 +66,7 @@ export const ConnectResponse = proto3.makeMessageType(
 );
 
 /**
- * DisconnectRequest is sent by the application to the node to disconnect
+ * DisconnectRequest is sent by an application to a daemon to disconnect
  * from a mesh. This message will eventually contain unique identifiers
  * for allowing the application to disconnect from a specific mesh.
  *
@@ -76,7 +74,9 @@ export const ConnectResponse = proto3.makeMessageType(
  */
 export const DisconnectRequest = proto3.makeMessageType(
   "v1.DisconnectRequest",
-  [],
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
 );
 
 /**
@@ -90,15 +90,16 @@ export const DisconnectResponse = proto3.makeMessageType(
 );
 
 /**
- * MetricsRequest is sent by the application to the node to retrieve interface
- * metrics. It is intentionally empty for now, but can eventually be used to 
- * query specific interfaces/metrics.
+ * MetricsRequest is sent by the application to a daemon to retrieve interface
+ * metrics for a mesh connection.
  *
  * @generated from message v1.MetricsRequest
  */
 export const MetricsRequest = proto3.makeMessageType(
   "v1.MetricsRequest",
-  [],
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
 );
 
 /**
@@ -114,14 +115,16 @@ export const MetricsResponse = proto3.makeMessageType(
 );
 
 /**
- * StatusRequest is sent by the application to the node to retrieve the status
- * of the node.
+ * StatusRequest is sent by the application to a daemon to retrieve the status
+ * of a mesh connection.
  *
  * @generated from message v1.StatusRequest
  */
 export const StatusRequest = proto3.makeMessageType(
   "v1.StatusRequest",
-  [],
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
 );
 
 /**
@@ -147,52 +150,5 @@ export const StatusResponse_ConnectionStatus = proto3.makeEnum(
     {no: 1, name: "CONNECTING"},
     {no: 2, name: "CONNECTED"},
   ],
-);
-
-/**
- * AnnounceDHTRequest is sent by the application to the node to announce the
- * node's presence on the Kademlia DHT for other nodes to discover.
- *
- * @generated from message v1.AnnounceDHTRequest
- */
-export const AnnounceDHTRequest = proto3.makeMessageType(
-  "v1.AnnounceDHTRequest",
-  () => [
-    { no: 1, name: "bootstrapServers", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-    { no: 2, name: "psk", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-  ],
-);
-
-/**
- * AnnounceDHTResponse is returned by the AnnounceDHT RPC.
- *
- * @generated from message v1.AnnounceDHTResponse
- */
-export const AnnounceDHTResponse = proto3.makeMessageType(
-  "v1.AnnounceDHTResponse",
-  [],
-);
-
-/**
- * LeaveDHTRequest is sent by the application to the node to leave the Kademlia
- * DHT.
- *
- * @generated from message v1.LeaveDHTRequest
- */
-export const LeaveDHTRequest = proto3.makeMessageType(
-  "v1.LeaveDHTRequest",
-  () => [
-    { no: 1, name: "psk", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-  ],
-);
-
-/**
- * LeaveDHTResponse is returned by the LeaveDHT RPC.
- *
- * @generated from message v1.LeaveDHTResponse
- */
-export const LeaveDHTResponse = proto3.makeMessageType(
-  "v1.LeaveDHTResponse",
-  [],
 );
 

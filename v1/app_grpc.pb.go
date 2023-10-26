@@ -34,43 +34,33 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AppDaemon_Connect_FullMethodName     = "/v1.AppDaemon/Connect"
-	AppDaemon_Disconnect_FullMethodName  = "/v1.AppDaemon/Disconnect"
-	AppDaemon_Query_FullMethodName       = "/v1.AppDaemon/Query"
-	AppDaemon_Metrics_FullMethodName     = "/v1.AppDaemon/Metrics"
-	AppDaemon_Status_FullMethodName      = "/v1.AppDaemon/Status"
-	AppDaemon_Subscribe_FullMethodName   = "/v1.AppDaemon/Subscribe"
-	AppDaemon_Publish_FullMethodName     = "/v1.AppDaemon/Publish"
-	AppDaemon_AnnounceDHT_FullMethodName = "/v1.AppDaemon/AnnounceDHT"
-	AppDaemon_LeaveDHT_FullMethodName    = "/v1.AppDaemon/LeaveDHT"
+	AppDaemon_Connect_FullMethodName    = "/v1.AppDaemon/Connect"
+	AppDaemon_Disconnect_FullMethodName = "/v1.AppDaemon/Disconnect"
+	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
+	AppDaemon_Metrics_FullMethodName    = "/v1.AppDaemon/Metrics"
+	AppDaemon_Status_FullMethodName     = "/v1.AppDaemon/Status"
+	AppDaemon_Subscribe_FullMethodName  = "/v1.AppDaemon/Subscribe"
+	AppDaemon_Publish_FullMethodName    = "/v1.AppDaemon/Publish"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppDaemonClient interface {
-	// Connect is used to establish a connection between the node and a
-	// mesh. The provided struct is used to override any defaults configured
-	// on the node.
+	// Connect is used to establish a connection between the node and a mesh.
 	Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (*ConnectResponse, error)
-	// Disconnect is used to disconnect the node from the mesh.
+	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
-	// Query is used to query the mesh for information.
+	// Query is used to query a mesh for information.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
-	// Metrics is used to retrieve interface metrics from the node.
+	// Metrics is used to retrieve interface metrics for a mesh connection.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
-	// Status is used to retrieve the status of the node.
+	// Status is used to retrieve the status a mesh connection.
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	// Subscribe is used to subscribe to events in the mesh database.
+	// Subscribe is used to subscribe to events in a mesh database.
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
-	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
+	// Publish is used to publish events to a mesh database.
 	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
-	// AnnounceDHT is used to announce the node's presence on the Kademlia DHT
-	// for other nodes to discover.
-	AnnounceDHT(ctx context.Context, in *AnnounceDHTRequest, opts ...grpc.CallOption) (*AnnounceDHTResponse, error)
-	// LeaveDHT is used to leave the Kademlia DHT.
-	LeaveDHT(ctx context.Context, in *LeaveDHTRequest, opts ...grpc.CallOption) (*LeaveDHTResponse, error)
 }
 
 type appDaemonClient struct {
@@ -167,50 +157,24 @@ func (c *appDaemonClient) Publish(ctx context.Context, in *PublishRequest, opts 
 	return out, nil
 }
 
-func (c *appDaemonClient) AnnounceDHT(ctx context.Context, in *AnnounceDHTRequest, opts ...grpc.CallOption) (*AnnounceDHTResponse, error) {
-	out := new(AnnounceDHTResponse)
-	err := c.cc.Invoke(ctx, AppDaemon_AnnounceDHT_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *appDaemonClient) LeaveDHT(ctx context.Context, in *LeaveDHTRequest, opts ...grpc.CallOption) (*LeaveDHTResponse, error) {
-	out := new(LeaveDHTResponse)
-	err := c.cc.Invoke(ctx, AppDaemon_LeaveDHT_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
 type AppDaemonServer interface {
-	// Connect is used to establish a connection between the node and a
-	// mesh. The provided struct is used to override any defaults configured
-	// on the node.
+	// Connect is used to establish a connection between the node and a mesh.
 	Connect(context.Context, *ConnectRequest) (*ConnectResponse, error)
-	// Disconnect is used to disconnect the node from the mesh.
+	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
-	// Query is used to query the mesh for information.
+	// Query is used to query a mesh for information.
 	Query(context.Context, *QueryRequest) (*QueryResponse, error)
-	// Metrics is used to retrieve interface metrics from the node.
+	// Metrics is used to retrieve interface metrics for a mesh connection.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
-	// Status is used to retrieve the status of the node.
+	// Status is used to retrieve the status a mesh connection.
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
-	// Subscribe is used to subscribe to events in the mesh database.
+	// Subscribe is used to subscribe to events in a mesh database.
 	Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error
-	// Publish is used to publish events to the mesh database. A restricted set
-	// of keys are allowed to be published to.
+	// Publish is used to publish events to a mesh database.
 	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
-	// AnnounceDHT is used to announce the node's presence on the Kademlia DHT
-	// for other nodes to discover.
-	AnnounceDHT(context.Context, *AnnounceDHTRequest) (*AnnounceDHTResponse, error)
-	// LeaveDHT is used to leave the Kademlia DHT.
-	LeaveDHT(context.Context, *LeaveDHTRequest) (*LeaveDHTResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -238,12 +202,6 @@ func (UnimplementedAppDaemonServer) Subscribe(*SubscribeRequest, AppDaemon_Subsc
 }
 func (UnimplementedAppDaemonServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
-}
-func (UnimplementedAppDaemonServer) AnnounceDHT(context.Context, *AnnounceDHTRequest) (*AnnounceDHTResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AnnounceDHT not implemented")
-}
-func (UnimplementedAppDaemonServer) LeaveDHT(context.Context, *LeaveDHTRequest) (*LeaveDHTResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LeaveDHT not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -387,42 +345,6 @@ func _AppDaemon_Publish_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppDaemon_AnnounceDHT_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AnnounceDHTRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppDaemonServer).AnnounceDHT(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppDaemon_AnnounceDHT_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).AnnounceDHT(ctx, req.(*AnnounceDHTRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AppDaemon_LeaveDHT_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveDHTRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppDaemonServer).LeaveDHT(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppDaemon_LeaveDHT_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).LeaveDHT(ctx, req.(*LeaveDHTRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -453,14 +375,6 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Publish",
 			Handler:    _AppDaemon_Publish_Handler,
-		},
-		{
-			MethodName: "AnnounceDHT",
-			Handler:    _AppDaemon_AnnounceDHT_Handler,
-		},
-		{
-			MethodName: "LeaveDHT",
-			Handler:    _AppDaemon_LeaveDHT_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

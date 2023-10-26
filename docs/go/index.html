@@ -441,14 +441,6 @@
             <ul>
               
                 <li>
-                  <a href="#v1.AnnounceDHTRequest"><span class="badge">M</span>AnnounceDHTRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.AnnounceDHTResponse"><span class="badge">M</span>AnnounceDHTResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.ConnectRequest"><span class="badge">M</span>ConnectRequest</a>
                 </li>
               
@@ -462,14 +454,6 @@
               
                 <li>
                   <a href="#v1.DisconnectResponse"><span class="badge">M</span>DisconnectResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.LeaveDHTRequest"><span class="badge">M</span>LeaveDHTRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.LeaveDHTResponse"><span class="badge">M</span>LeaveDHTResponse</a>
                 </li>
               
                 <li>
@@ -3154,47 +3138,8 @@ only available on nodes that are able to provide storage.</p></td>
       <p></p>
 
       
-        <h3 id="v1.AnnounceDHTRequest">AnnounceDHTRequest</h3>
-        <p>AnnounceDHTRequest is sent by the application to the node to announce the</p><p>node's presence on the Kademlia DHT for other nodes to discover.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>bootstrapServers</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Bootstrap servers are optional bootstrap servers to use for bootstrapping
-the DHT. If not provided, the node will use the default bootstrap servers. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>psk</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>PSK is the pre-shared key to use for the DHT. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.AnnounceDHTResponse">AnnounceDHTResponse</h3>
-        <p>AnnounceDHTResponse is returned by the AnnounceDHT RPC.</p>
-
-        
-
-        
-      
         <h3 id="v1.ConnectRequest">ConnectRequest</h3>
-        <p>ConnectRequest is sent by the application to the node to establish a</p><p>connection to a mesh. This message will eventually contain unique</p><p>identifiers to allow creating connections to multiple meshes.</p>
+        <p>ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.</p>
 
         
           <table class="field-table">
@@ -3289,9 +3234,26 @@ Anything else? </p></td>
         
       
         <h3 id="v1.DisconnectRequest">DisconnectRequest</h3>
-        <p>DisconnectRequest is sent by the application to the node to disconnect</p><p>from a mesh. This message will eventually contain unique identifiers</p><p>for allowing the application to disconnect from a specific mesh.</p>
+        <p>DisconnectRequest is sent by an application to a daemon to disconnect</p><p>from a mesh. This message will eventually contain unique identifiers</p><p>for allowing the application to disconnect from a specific mesh.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the unique identifier of this connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -3302,8 +3264,8 @@ Anything else? </p></td>
 
         
       
-        <h3 id="v1.LeaveDHTRequest">LeaveDHTRequest</h3>
-        <p>LeaveDHTRequest is sent by the application to the node to leave the Kademlia</p><p>DHT.</p>
+        <h3 id="v1.MetricsRequest">MetricsRequest</h3>
+        <p>MetricsRequest is sent by the application to a daemon to retrieve interface</p><p>metrics for a mesh connection.</p>
 
         
           <table class="field-table">
@@ -3313,30 +3275,16 @@ Anything else? </p></td>
             <tbody>
               
                 <tr>
-                  <td>psk</td>
+                  <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>PSK is the pre-shared key that was used to join the DHT. </p></td>
+                  <td><p>id is the unique identifier of this connection. </p></td>
                 </tr>
               
             </tbody>
           </table>
 
           
-
-        
-      
-        <h3 id="v1.LeaveDHTResponse">LeaveDHTResponse</h3>
-        <p>LeaveDHTResponse is returned by the LeaveDHT RPC.</p>
-
-        
-
-        
-      
-        <h3 id="v1.MetricsRequest">MetricsRequest</h3>
-        <p>MetricsRequest is sent by the application to the node to retrieve interface</p><p>metrics. It is intentionally empty for now, but can eventually be used to </p><p>query specific interfaces/metrics.</p>
-
-        
 
         
       
@@ -3396,9 +3344,26 @@ Anything else? </p></td>
         
       
         <h3 id="v1.StatusRequest">StatusRequest</h3>
-        <p>StatusRequest is sent by the application to the node to retrieve the status</p><p>of the node.</p>
+        <p>StatusRequest is sent by the application to a daemon to retrieve the status</p><p>of a mesh connection.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the unique identifier of this connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -3498,7 +3463,7 @@ Anything else? </p></td>
 
       
         <h3 id="v1.AppDaemon">AppDaemon</h3>
-        <p>AppDaemon is exposed by nodes running in the app-daemon mode. This mode</p><p>allows the node to run in an idle state and be controlled by the</p><p>application. The application can send commands to the node to execute</p><p>tasks and receive responses.</p>
+        <p>AppDaemon is exposed by nodes running in the app-daemon mode. This mode</p><p>allows the node to run in an idle state and be controlled by an application.</p><p>The application can send commands to the node to execute tasks and receive </p><p>responses.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -3509,67 +3474,49 @@ Anything else? </p></td>
                 <td>Connect</td>
                 <td><a href="#v1.ConnectRequest">ConnectRequest</a></td>
                 <td><a href="#v1.ConnectResponse">ConnectResponse</a></td>
-                <td><p>Connect is used to establish a connection between the node and a
-mesh. The provided struct is used to override any defaults configured
-on the node.</p></td>
+                <td><p>Connect is used to establish a connection between the node and a mesh.</p></td>
               </tr>
             
               <tr>
                 <td>Disconnect</td>
                 <td><a href="#v1.DisconnectRequest">DisconnectRequest</a></td>
                 <td><a href="#v1.DisconnectResponse">DisconnectResponse</a></td>
-                <td><p>Disconnect is used to disconnect the node from the mesh.</p></td>
+                <td><p>Disconnect is used to disconnect the node from a mesh.</p></td>
               </tr>
             
               <tr>
                 <td>Query</td>
                 <td><a href="#v1.QueryRequest">QueryRequest</a></td>
                 <td><a href="#v1.QueryResponse">QueryResponse</a></td>
-                <td><p>Query is used to query the mesh for information.</p></td>
+                <td><p>Query is used to query a mesh for information.</p></td>
               </tr>
             
               <tr>
                 <td>Metrics</td>
                 <td><a href="#v1.MetricsRequest">MetricsRequest</a></td>
                 <td><a href="#v1.MetricsResponse">MetricsResponse</a></td>
-                <td><p>Metrics is used to retrieve interface metrics from the node.</p></td>
+                <td><p>Metrics is used to retrieve interface metrics for a mesh connection.</p></td>
               </tr>
             
               <tr>
                 <td>Status</td>
                 <td><a href="#v1.StatusRequest">StatusRequest</a></td>
                 <td><a href="#v1.StatusResponse">StatusResponse</a></td>
-                <td><p>Status is used to retrieve the status of the node.</p></td>
+                <td><p>Status is used to retrieve the status a mesh connection.</p></td>
               </tr>
             
               <tr>
                 <td>Subscribe</td>
                 <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
                 <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
-                <td><p>Subscribe is used to subscribe to events in the mesh database.</p></td>
+                <td><p>Subscribe is used to subscribe to events in a mesh database.</p></td>
               </tr>
             
               <tr>
                 <td>Publish</td>
                 <td><a href="#v1.PublishRequest">PublishRequest</a></td>
                 <td><a href="#v1.PublishResponse">PublishResponse</a></td>
-                <td><p>Publish is used to publish events to the mesh database. A restricted set
-of keys are allowed to be published to.</p></td>
-              </tr>
-            
-              <tr>
-                <td>AnnounceDHT</td>
-                <td><a href="#v1.AnnounceDHTRequest">AnnounceDHTRequest</a></td>
-                <td><a href="#v1.AnnounceDHTResponse">AnnounceDHTResponse</a></td>
-                <td><p>AnnounceDHT is used to announce the node&#39;s presence on the Kademlia DHT
-for other nodes to discover.</p></td>
-              </tr>
-            
-              <tr>
-                <td>LeaveDHT</td>
-                <td><a href="#v1.LeaveDHTRequest">LeaveDHTRequest</a></td>
-                <td><a href="#v1.LeaveDHTResponse">LeaveDHTResponse</a></td>
-                <td><p>LeaveDHT is used to leave the Kademlia DHT.</p></td>
+                <td><p>Publish is used to publish events to a mesh database.</p></td>
               </tr>
             
           </tbody>
