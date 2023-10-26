@@ -66,6 +66,35 @@ func (m *ConnectRequest) validate(all bool) error {
 	// no validation rules for AddrType
 
 	if all {
+		switch v := interface{}(m.GetNetworking()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Networking",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Networking",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetNetworking()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectRequestValidationError{
+				field:  "Networking",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
 		switch v := interface{}(m.GetServices()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
@@ -172,22 +201,22 @@ var _ interface {
 	ErrorName() string
 } = ConnectRequestValidationError{}
 
-// Validate checks the field values on MeshServices with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *MeshServices) Validate() error {
+// Validate checks the field values on MeshConnNetworking with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *MeshConnNetworking) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on MeshServices with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in MeshServicesMultiError, or
-// nil if none found.
-func (m *MeshServices) ValidateAll() error {
+// ValidateAll checks the field values on MeshConnNetworking with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// MeshConnNetworkingMultiError, or nil if none found.
+func (m *MeshConnNetworking) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *MeshServices) validate(all bool) error {
+func (m *MeshConnNetworking) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -195,18 +224,19 @@ func (m *MeshServices) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return MeshServicesMultiError(errors)
+		return MeshConnNetworkingMultiError(errors)
 	}
 
 	return nil
 }
 
-// MeshServicesMultiError is an error wrapping multiple validation errors
-// returned by MeshServices.ValidateAll() if the designated constraints aren't met.
-type MeshServicesMultiError []error
+// MeshConnNetworkingMultiError is an error wrapping multiple validation errors
+// returned by MeshConnNetworking.ValidateAll() if the designated constraints
+// aren't met.
+type MeshConnNetworkingMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MeshServicesMultiError) Error() string {
+func (m MeshConnNetworkingMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -215,11 +245,11 @@ func (m MeshServicesMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MeshServicesMultiError) AllErrors() []error { return m }
+func (m MeshConnNetworkingMultiError) AllErrors() []error { return m }
 
-// MeshServicesValidationError is the validation error returned by
-// MeshServices.Validate if the designated constraints aren't met.
-type MeshServicesValidationError struct {
+// MeshConnNetworkingValidationError is the validation error returned by
+// MeshConnNetworking.Validate if the designated constraints aren't met.
+type MeshConnNetworkingValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -227,22 +257,24 @@ type MeshServicesValidationError struct {
 }
 
 // Field function returns field value.
-func (e MeshServicesValidationError) Field() string { return e.field }
+func (e MeshConnNetworkingValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MeshServicesValidationError) Reason() string { return e.reason }
+func (e MeshConnNetworkingValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MeshServicesValidationError) Cause() error { return e.cause }
+func (e MeshConnNetworkingValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MeshServicesValidationError) Key() bool { return e.key }
+func (e MeshConnNetworkingValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MeshServicesValidationError) ErrorName() string { return "MeshServicesValidationError" }
+func (e MeshConnNetworkingValidationError) ErrorName() string {
+	return "MeshConnNetworkingValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e MeshServicesValidationError) Error() string {
+func (e MeshConnNetworkingValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -254,14 +286,14 @@ func (e MeshServicesValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMeshServices.%s: %s%s",
+		"invalid %sMeshConnNetworking.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MeshServicesValidationError{}
+var _ error = MeshConnNetworkingValidationError{}
 
 var _ interface {
 	Field() string
@@ -269,7 +301,107 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MeshServicesValidationError{}
+} = MeshConnNetworkingValidationError{}
+
+// Validate checks the field values on MeshConnServices with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *MeshConnServices) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MeshConnServices with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// MeshConnServicesMultiError, or nil if none found.
+func (m *MeshConnServices) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MeshConnServices) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return MeshConnServicesMultiError(errors)
+	}
+
+	return nil
+}
+
+// MeshConnServicesMultiError is an error wrapping multiple validation errors
+// returned by MeshConnServices.ValidateAll() if the designated constraints
+// aren't met.
+type MeshConnServicesMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MeshConnServicesMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MeshConnServicesMultiError) AllErrors() []error { return m }
+
+// MeshConnServicesValidationError is the validation error returned by
+// MeshConnServices.Validate if the designated constraints aren't met.
+type MeshConnServicesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MeshConnServicesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MeshConnServicesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MeshConnServicesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MeshConnServicesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MeshConnServicesValidationError) ErrorName() string { return "MeshConnServicesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MeshConnServicesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMeshConnServices.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MeshConnServicesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MeshConnServicesValidationError{}
 
 // Validate checks the field values on ConnectResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the

@@ -65,11 +65,18 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
   addrs: string[];
 
   /**
+   * networking is the networking configuration to use.
+   *
+   * @generated from field: v1.MeshConnNetworking networking = 6;
+   */
+  networking?: MeshConnNetworking;
+
+  /**
    * services are the services to expose to other nodes on the mesh.
    *
-   * @generated from field: v1.MeshServices services = 6;
+   * @generated from field: v1.MeshConnServices services = 7;
    */
-  services?: MeshServices;
+  services?: MeshConnServices;
 
   constructor(data?: PartialMessage<ConnectRequest>);
 
@@ -157,24 +164,45 @@ export declare enum ConnectRequest_AuthMethod {
 }
 
 /**
- * MeshServices are configurations for exposing services to other nodes on a mesh.
+ * MeshConnNetworking is a configuration for networking on a mesh.
  *
- * @generated from message v1.MeshServices
+ * @generated from message v1.MeshConnNetworking
  */
-export declare class MeshServices extends Message<MeshServices> {
-  constructor(data?: PartialMessage<MeshServices>);
+export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
+  constructor(data?: PartialMessage<MeshConnNetworking>);
 
   static readonly runtime: typeof proto3;
-  static readonly typeName = "v1.MeshServices";
+  static readonly typeName = "v1.MeshConnNetworking";
   static readonly fields: FieldList;
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshServices;
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshConnNetworking;
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshServices;
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshConnNetworking;
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshServices;
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnNetworking;
 
-  static equals(a: MeshServices | PlainMessage<MeshServices> | undefined, b: MeshServices | PlainMessage<MeshServices> | undefined): boolean;
+  static equals(a: MeshConnNetworking | PlainMessage<MeshConnNetworking> | undefined, b: MeshConnNetworking | PlainMessage<MeshConnNetworking> | undefined): boolean;
+}
+
+/**
+ * MeshConnServices are configurations for exposing services to other nodes on a mesh.
+ *
+ * @generated from message v1.MeshConnServices
+ */
+export declare class MeshConnServices extends Message<MeshConnServices> {
+  constructor(data?: PartialMessage<MeshConnServices>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.MeshConnServices";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshConnServices;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshConnServices;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnServices;
+
+  static equals(a: MeshConnServices | PlainMessage<MeshConnServices> | undefined, b: MeshConnServices | PlainMessage<MeshConnServices> | undefined): boolean;
 }
 
 /**

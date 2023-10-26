@@ -34,7 +34,8 @@ export const ConnectRequest = proto3.makeMessageType(
     { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 12 /* ScalarType.BYTES */} },
     { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-    { no: 6, name: "services", kind: "message", T: MeshServices },
+    { no: 6, name: "networking", kind: "message", T: MeshConnNetworking },
+    { no: 7, name: "services", kind: "message", T: MeshConnServices },
   ],
 );
 
@@ -69,12 +70,22 @@ export const ConnectRequest_AuthMethod = proto3.makeEnum(
 );
 
 /**
- * MeshServices are configurations for exposing services to other nodes on a mesh.
+ * MeshConnNetworking is a configuration for networking on a mesh.
  *
- * @generated from message v1.MeshServices
+ * @generated from message v1.MeshConnNetworking
  */
-export const MeshServices = proto3.makeMessageType(
-  "v1.MeshServices",
+export const MeshConnNetworking = proto3.makeMessageType(
+  "v1.MeshConnNetworking",
+  [],
+);
+
+/**
+ * MeshConnServices are configurations for exposing services to other nodes on a mesh.
+ *
+ * @generated from message v1.MeshConnServices
+ */
+export const MeshConnServices = proto3.makeMessageType(
+  "v1.MeshConnServices",
   [],
 );
 

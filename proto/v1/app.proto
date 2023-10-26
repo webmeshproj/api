@@ -60,12 +60,17 @@ message ConnectRequest {
     AddrType addrType = 4;
     // addrs are the join addresses to use to connect to the mesh.
     repeated string addrs = 5;
+    // networking is the networking configuration to use.
+    MeshConnNetworking networking = 6;
     // services are the services to expose to other nodes on the mesh.
-    MeshServices services = 6;
+    MeshConnServices services = 7;
 }
 
-// MeshServices are configurations for exposing services to other nodes on a mesh.
-message MeshServices {}
+// MeshConnNetworking is a configuration for networking on a mesh.
+message MeshConnNetworking {}
+
+// MeshConnServices are configurations for exposing services to other nodes on a mesh.
+message MeshConnServices {}
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
