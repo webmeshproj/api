@@ -29,25 +29,38 @@ import "v1/storage_query.proto";
 // connection to a mesh. This message will eventually contain unique
 // identifiers to allow creating connections to multiple meshes.
 message ConnectRequest {
-    // Config is used to override any defaults configured on the node.
-    google.protobuf.Struct config = 1;
-    // Disable bootstrap tells a node that is otherwise configured to 
-    // bootstrap to not bootstrap for this connection.
-    bool disableBootstrap = 2;
-    // Join PSK is the pre-shared key to use for joining the mesh.
-    string joinPSK = 3;
+    // AddrType is the type of join addresses included in the request.
+    enum AddrType {
+        // IP is used to join a mesh using an IP address.
+        IP = 0;
+        // DNS is used to join a mesh using a DNS name.
+        DNS = 1;
+        // MULTIADDR is used to join a mesh using a multiaddr.
+        MULTIADDR = 2;
+    };
+    // id is the unique identifier of this connection. If not provided
+    // one will be generated.
+    string id = 1;
+    // addrType is the type of join addresses in the addrs list.
+    AddrType addrType = 2;
+    // addrs are the join addresses to use to connect to the mesh.
+    repeated string addrs = 3;
+    // Service exposing options?
 }
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
+    // id is the unique identifier of this connection.
+    string id = 1;
     // node id is the unique identifier of the node.
-    string nodeID = 1;
+    string nodeID = 2;
     // mesh domain is the domain of the mesh.
-    string meshDomain = 2;
+    string meshDomain = 3;
     // ipv4 is the IPv4 address of the node.
-    string ipv4 = 3;
+    string ipv4 = 4;
     // ipv6 is the IPv6 address of the node.
-    string ipv6 = 4;
+    string ipv6 = 5;
+    // Anything else?
 }
 
 // DisconnectRequest is sent by the application to the node to disconnect

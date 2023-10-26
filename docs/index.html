@@ -494,6 +494,10 @@
               
               
                 <li>
+                  <a href="#v1.ConnectRequest.AddrType"><span class="badge">E</span>ConnectRequest.AddrType</a>
+                </li>
+              
+                <li>
                   <a href="#v1.StatusResponse.ConnectionStatus"><span class="badge">E</span>StatusResponse.ConnectionStatus</a>
                 </li>
               
@@ -3200,25 +3204,27 @@ the DHT. If not provided, the node will use the default bootstrap servers. </p><
             <tbody>
               
                 <tr>
-                  <td>config</td>
-                  <td><a href="#google.protobuf.Struct">google.protobuf.Struct</a></td>
-                  <td></td>
-                  <td><p>Config is used to override any defaults configured on the node. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>disableBootstrap</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>Disable bootstrap tells a node that is otherwise configured to 
-bootstrap to not bootstrap for this connection. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>joinPSK</td>
+                  <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Join PSK is the pre-shared key to use for joining the mesh. </p></td>
+                  <td><p>id is the unique identifier of this connection. If not provided
+one will be generated. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addrType</td>
+                  <td><a href="#v1.ConnectRequest.AddrType">ConnectRequest.AddrType</a></td>
+                  <td></td>
+                  <td><p>addrType is the type of join addresses in the addrs list. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>addrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>addrs are the join addresses to use to connect to the mesh.
+
+Service exposing options? </p></td>
                 </tr>
               
             </tbody>
@@ -3237,6 +3243,13 @@ bootstrap to not bootstrap for this connection. </p></td>
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>id is the unique identifier of this connection. </p></td>
+                </tr>
               
                 <tr>
                   <td>nodeID</td>
@@ -3263,7 +3276,9 @@ bootstrap to not bootstrap for this connection. </p></td>
                   <td>ipv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ipv6 is the IPv6 address of the node. </p></td>
+                  <td><p>ipv6 is the IPv6 address of the node.
+
+Anything else? </p></td>
                 </tr>
               
             </tbody>
@@ -3419,6 +3434,35 @@ bootstrap to not bootstrap for this connection. </p></td>
         
       
 
+      
+        <h3 id="v1.ConnectRequest.AddrType">ConnectRequest.AddrType</h3>
+        <p>AddrType is the type of join addresses included in the request.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>IP</td>
+                <td>0</td>
+                <td><p>IP is used to join a mesh using an IP address.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DNS</td>
+                <td>1</td>
+                <td><p>DNS is used to join a mesh using a DNS name.</p></td>
+              </tr>
+            
+              <tr>
+                <td>MULTIADDR</td>
+                <td>2</td>
+                <td><p>MULTIADDR is used to join a mesh using a multiaddr.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
         <h3 id="v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</h3>
         <p></p>

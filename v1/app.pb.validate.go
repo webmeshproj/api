@@ -57,38 +57,9 @@ func (m *ConnectRequest) validate(all bool) error {
 
 	var errors []error
 
-	if all {
-		switch v := interface{}(m.GetConfig()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Config",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Config",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetConfig()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ConnectRequestValidationError{
-				field:  "Config",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Id
 
-	// no validation rules for DisableBootstrap
-
-	// no validation rules for JoinPSK
+	// no validation rules for AddrType
 
 	if len(errors) > 0 {
 		return ConnectRequestMultiError(errors)
@@ -189,6 +160,8 @@ func (m *ConnectResponse) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for Id
 
 	// no validation rules for NodeID
 

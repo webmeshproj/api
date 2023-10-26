@@ -7,7 +7,7 @@ generate: gen
 gen: buf ## Generate proto files.
 	go install github.com/protobuf-tools/protoc-gen-deepcopy@latest
 	$(BUF) generate proto
-	pandoc -f html -t gfm -o README.md doc/index.html
+	pandoc -f html -t gfm -o README.md docs/index.html
 
 .PHONY: buf
 buf: $(BUF) ## Download buf locally if necessary.

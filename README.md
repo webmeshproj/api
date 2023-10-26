@@ -73,6 +73,7 @@
   - [<span class="badge">M</span>MetricsResponse.InterfacesEntry](#v1.MetricsResponse.InterfacesEntry)
   - [<span class="badge">M</span>StatusRequest](#v1.StatusRequest)
   - [<span class="badge">M</span>StatusResponse](#v1.StatusResponse)
+  - [<span class="badge">E</span>ConnectRequest.AddrType](#v1.ConnectRequest.AddrType)
   - [<span class="badge">E</span>StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus)
   - [<span class="badge">S</span>AppDaemon](#v1.AppDaemon)
 - [v1/raft.proto](#v1%2fraft.proto)
@@ -818,22 +819,23 @@ connection to a mesh. This message will eventually contain unique
 
 identifiers to allow creating connections to multiple meshes.
 
-| Field            | Type                                              | Label | Description                                                                                                    |
-|------------------|---------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------|
-| config           | [google.protobuf.Struct](#google.protobuf.Struct) |       | Config is used to override any defaults configured on the node.                                                |
-| disableBootstrap | [bool](#bool)                                     |       | Disable bootstrap tells a node that is otherwise configured to bootstrap to not bootstrap for this connection. |
-| joinPSK          | [string](#string)                                 |       | Join PSK is the pre-shared key to use for joining the mesh.                                                    |
+| Field    | Type                                                   | Label    | Description                                                                            |
+|----------|--------------------------------------------------------|----------|----------------------------------------------------------------------------------------|
+| id       | [string](#string)                                      |          | id is the unique identifier of this connection. If not provided one will be generated. |
+| addrType | [ConnectRequest.AddrType](#v1.ConnectRequest.AddrType) |          | addrType is the type of join addresses in the addrs list.                              |
+| addrs    | [string](#string)                                      | repeated | addrs are the join addresses to use to connect to the mesh. Service exposing options?  |
 
 ### ConnectResponse
 
 ConnectResponse is returned by the Connect RPC.
 
-| Field      | Type              | Label | Description                                   |
-|------------|-------------------|-------|-----------------------------------------------|
-| nodeID     | [string](#string) |       | node id is the unique identifier of the node. |
-| meshDomain | [string](#string) |       | mesh domain is the domain of the mesh.        |
-| ipv4       | [string](#string) |       | ipv4 is the IPv4 address of the node.         |
-| ipv6       | [string](#string) |       | ipv6 is the IPv6 address of the node.         |
+| Field      | Type              | Label | Description                                          |
+|------------|-------------------|-------|------------------------------------------------------|
+| id         | [string](#string) |       | id is the unique identifier of this connection.      |
+| nodeID     | [string](#string) |       | node id is the unique identifier of the node.        |
+| meshDomain | [string](#string) |       | mesh domain is the domain of the mesh.               |
+| ipv4       | [string](#string) |       | ipv4 is the IPv4 address of the node.                |
+| ipv6       | [string](#string) |       | ipv6 is the IPv6 address of the node. Anything else? |
 
 ### DisconnectRequest
 
@@ -902,6 +904,16 @@ StatusResponse is a message containing the status of the node.
 |-------------------|------------------------------------------------------------------------|-------|---------------------------------------------------------------------------|
 | connection_status | [StatusResponse.ConnectionStatus](#v1.StatusResponse.ConnectionStatus) |       | connection status is the status of the connection.                        |
 | node              | [MeshNode](#v1.MeshNode)                                               |       | node is the node status. This is only populated if the node is connected. |
+
+### ConnectRequest.AddrType
+
+AddrType is the type of join addresses included in the request.
+
+| Name      | Number | Description                                         |
+|-----------|--------|-----------------------------------------------------|
+| IP        | 0      | IP is used to join a mesh using an IP address.      |
+| DNS       | 1      | DNS is used to join a mesh using a DNS name.        |
+| MULTIADDR | 2      | MULTIADDR is used to join a mesh using a multiaddr. |
 
 ### StatusResponse.ConnectionStatus
 
