@@ -85,7 +85,8 @@ export const ConnectRequest_AuthHeader = proto3.makeEnum(
     {no: 1, name: "BASIC_PASSWORD"},
     {no: 2, name: "LDAP_USERNAME"},
     {no: 3, name: "LDAP_PASSWORD"},
-    {no: 4, name: "ID_TOKEN"},
+    {no: 4, name: "ID_KEY"},
+    {no: 5, name: "ADDRS_ENVELOPE"},
   ],
 );
 

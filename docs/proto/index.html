@@ -3693,10 +3693,17 @@ If not provided, metrics for all connections will be returned. </p></td>
               </tr>
             
               <tr>
-                <td>ID_TOKEN</td>
+                <td>ID_KEY</td>
                 <td>4</td>
-                <td><p>ID_TOKEN is the identity token for identity authentication.
+                <td><p>ID_KEY is the identity key for identity authentication.
 If not provided the configured key on the host will be used.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ADDRS_ENVELOPE</td>
+                <td>5</td>
+                <td><p>ADDRS_ENVELOPE is the header for a signed envelope containing
+the join addresses to use to connect to the mesh.</p></td>
               </tr>
             
           </tbody>

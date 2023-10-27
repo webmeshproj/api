@@ -25,7 +25,7 @@ cannot be used as map keys, so their string values are used instead.</p>
 <h4>Generated</h4><p>from enum v1.ConnectRequest.AuthHeader</p>
 </div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L188">app_pb.d.ts:188</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L188">app_pb.d.ts:188</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -33,14 +33,26 @@ cannot be used as map keys, so their string values are used instead.</p>
 <div class="tsd-accordion-details">
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Enumeration Members</h3>
-<div class="tsd-index-list"><a href="app_pb.ConnectRequest_AuthHeader.html#BASIC_PASSWORD" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>BASIC_<wbr/>PASSWORD</span></a>
+<div class="tsd-index-list"><a href="app_pb.ConnectRequest_AuthHeader.html#ADDRS_ENVELOPE" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ADDRS_<wbr/>ENVELOPE</span></a>
+<a href="app_pb.ConnectRequest_AuthHeader.html#BASIC_PASSWORD" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>BASIC_<wbr/>PASSWORD</span></a>
 <a href="app_pb.ConnectRequest_AuthHeader.html#BASIC_USERNAME" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>BASIC_<wbr/>USERNAME</span></a>
-<a href="app_pb.ConnectRequest_AuthHeader.html#ID_TOKEN" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ID_<wbr/>TOKEN</span></a>
+<a href="app_pb.ConnectRequest_AuthHeader.html#ID_KEY" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ID_<wbr/>KEY</span></a>
 <a href="app_pb.ConnectRequest_AuthHeader.html#LDAP_PASSWORD" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>LDAP_<wbr/>PASSWORD</span></a>
 <a href="app_pb.ConnectRequest_AuthHeader.html#LDAP_USERNAME" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>LDAP_<wbr/>USERNAME</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Enumeration Members</h2>
+<section class="tsd-panel tsd-member"><a id="ADDRS_ENVELOPE" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ADDRS_<wbr/>ENVELOPE</span><a href="#ADDRS_ENVELOPE" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ADDRS_<wbr/>ENVELOPE</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">5</span></div>
+<div class="tsd-comment tsd-typography"><p>ADDRS_ENVELOPE is the header for a signed envelope containing
+the join addresses to use to connect to the mesh.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from enum value: ADDRS_ENVELOPE = 5;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L231">app_pb.d.ts:231</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="BASIC_PASSWORD" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>BASIC_<wbr/>PASSWORD</span><a href="#BASIC_PASSWORD" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-enum-member">BASIC_<wbr/>PASSWORD</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div>
@@ -50,7 +62,7 @@ cannot be used as map keys, so their string values are used instead.</p>
 <h4>Generated</h4><p>from enum value: BASIC_PASSWORD = 1;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L201">app_pb.d.ts:201</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L201">app_pb.d.ts:201</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="BASIC_USERNAME" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>BASIC_<wbr/>USERNAME</span><a href="#BASIC_USERNAME" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-enum-member">BASIC_<wbr/>USERNAME</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span></div>
@@ -60,18 +72,18 @@ cannot be used as map keys, so their string values are used instead.</p>
 <h4>Generated</h4><p>from enum value: BASIC_USERNAME = 0;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L194">app_pb.d.ts:194</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member"><a id="ID_TOKEN" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>ID_<wbr/>TOKEN</span><a href="#ID_TOKEN" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">ID_<wbr/>TOKEN</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">4</span></div>
-<div class="tsd-comment tsd-typography"><p>ID_TOKEN is the identity token for identity authentication.
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L194">app_pb.d.ts:194</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="ID_KEY" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ID_<wbr/>KEY</span><a href="#ID_KEY" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ID_<wbr/>KEY</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">4</span></div>
+<div class="tsd-comment tsd-typography"><p>ID_KEY is the identity key for identity authentication.
 If not provided the configured key on the host will be used.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Generated</h4><p>from enum value: ID_TOKEN = 4;</p>
+<h4>Generated</h4><p>from enum value: ID_KEY = 4;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L223">app_pb.d.ts:223</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L223">app_pb.d.ts:223</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="LDAP_PASSWORD" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>LDAP_<wbr/>PASSWORD</span><a href="#LDAP_PASSWORD" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-enum-member">LDAP_<wbr/>PASSWORD</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">3</span></div>
@@ -81,7 +93,7 @@ If not provided the configured key on the host will be used.</p>
 <h4>Generated</h4><p>from enum value: LDAP_PASSWORD = 3;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L215">app_pb.d.ts:215</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L215">app_pb.d.ts:215</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="LDAP_USERNAME" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>LDAP_<wbr/>USERNAME</span><a href="#LDAP_USERNAME" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-enum-member">LDAP_<wbr/>USERNAME</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span></div>
@@ -91,7 +103,7 @@ If not provided the configured key on the host will be used.</p>
 <h4>Generated</h4><p>from enum value: LDAP_USERNAME = 2;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/192c21b/ts/v1/app_pb.d.ts#L208">app_pb.d.ts:208</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/22da7f6/ts/v1/app_pb.d.ts#L208">app_pb.d.ts:208</a></li></ul></aside></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -111,9 +123,10 @@ If not provided the configured key on the host will be used.</p>
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
 <div class="tsd-accordion-details">
 <ul>
+<li><a href="#ADDRS_ENVELOPE" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ADDRS_<wbr/>ENVELOPE</span></a></li>
 <li><a href="#BASIC_PASSWORD" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>BASIC_<wbr/>PASSWORD</span></a></li>
 <li><a href="#BASIC_USERNAME" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>BASIC_<wbr/>USERNAME</span></a></li>
-<li><a href="#ID_TOKEN" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ID_<wbr/>TOKEN</span></a></li>
+<li><a href="#ID_KEY" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ID_<wbr/>KEY</span></a></li>
 <li><a href="#LDAP_PASSWORD" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>LDAP_<wbr/>PASSWORD</span></a></li>
 <li><a href="#LDAP_USERNAME" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>LDAP_<wbr/>USERNAME</span></a></li></ul></div></details></div>
 <div class="site-menu">

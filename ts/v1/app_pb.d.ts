@@ -215,12 +215,20 @@ export declare enum ConnectRequest_AuthHeader {
   LDAP_PASSWORD = 3,
 
   /**
-   * ID_TOKEN is the identity token for identity authentication.
+   * ID_KEY is the identity key for identity authentication.
    * If not provided the configured key on the host will be used.
    *
-   * @generated from enum value: ID_TOKEN = 4;
+   * @generated from enum value: ID_KEY = 4;
    */
-  ID_TOKEN = 4,
+  ID_KEY = 4,
+
+  /**
+   * ADDRS_ENVELOPE is the header for a signed envelope containing
+   * the join addresses to use to connect to the mesh.
+   *
+   * @generated from enum value: ADDRS_ENVELOPE = 5;
+   */
+  ADDRS_ENVELOPE = 5,
 }
 
 /**
