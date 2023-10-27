@@ -49,10 +49,9 @@ export const ConnectRequest = proto3.makeMessageType(
 export const ConnectRequest_AddrType = proto3.makeEnum(
   "v1.ConnectRequest.AddrType",
   [
-    {no: 0, name: "IP"},
-    {no: 1, name: "DNS"},
-    {no: 2, name: "MULTIADDR"},
-    {no: 3, name: "RENDEZVOUS"},
+    {no: 0, name: "ADDR"},
+    {no: 1, name: "MULTIADDR"},
+    {no: 2, name: "RENDEZVOUS"},
   ],
 );
 

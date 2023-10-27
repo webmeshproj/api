@@ -23,7 +23,7 @@
 <h4>Generated</h4><p>from enum v1.ConnectRequest.AddrType</p>
 </div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/62eecff/ts/v1/app_pb.d.ts#L115">app_pb.d.ts:115</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/0c85733/ts/v1/app_pb.d.ts#L115">app_pb.d.ts:115</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -31,53 +31,42 @@
 <div class="tsd-accordion-details">
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Enumeration Members</h3>
-<div class="tsd-index-list"><a href="app_pb.ConnectRequest_AddrType.html#DNS" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>DNS</span></a>
-<a href="app_pb.ConnectRequest_AddrType.html#IP" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>IP</span></a>
+<div class="tsd-index-list"><a href="app_pb.ConnectRequest_AddrType.html#ADDR" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ADDR</span></a>
 <a href="app_pb.ConnectRequest_AddrType.html#MULTIADDR" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>MULTIADDR</span></a>
 <a href="app_pb.ConnectRequest_AddrType.html#RENDEZVOUS" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>RENDEZVOUS</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Enumeration Members</h2>
-<section class="tsd-panel tsd-member"><a id="DNS" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>DNS</span><a href="#DNS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">DNS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div>
-<div class="tsd-comment tsd-typography"><p>DNS is used to join a mesh using a DNS name.</p>
+<section class="tsd-panel tsd-member"><a id="ADDR" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ADDR</span><a href="#ADDR" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">ADDR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span></div>
+<div class="tsd-comment tsd-typography"><p>ADDR is used to join a mesh using an IP or DNS address.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Generated</h4><p>from enum value: DNS = 1;</p>
+<h4>Generated</h4><p>from enum value: ADDR = 0;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/62eecff/ts/v1/app_pb.d.ts#L128">app_pb.d.ts:128</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member"><a id="IP" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>IP</span><a href="#IP" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">IP</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0</span></div>
-<div class="tsd-comment tsd-typography"><p>IP is used to join a mesh using an IP address.</p>
-</div>
-<div class="tsd-comment tsd-typography">
-<h4>Generated</h4><p>from enum value: IP = 0;</p>
-</div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/62eecff/ts/v1/app_pb.d.ts#L121">app_pb.d.ts:121</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/0c85733/ts/v1/app_pb.d.ts#L121">app_pb.d.ts:121</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="MULTIADDR" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>MULTIADDR</span><a href="#MULTIADDR" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">MULTIADDR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span></div>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">MULTIADDR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span></div>
 <div class="tsd-comment tsd-typography"><p>MULTIADDR is used to join a mesh using a multiaddr.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Generated</h4><p>from enum value: MULTIADDR = 2;</p>
+<h4>Generated</h4><p>from enum value: MULTIADDR = 1;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/62eecff/ts/v1/app_pb.d.ts#L135">app_pb.d.ts:135</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/0c85733/ts/v1/app_pb.d.ts#L128">app_pb.d.ts:128</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="RENDEZVOUS" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>RENDEZVOUS</span><a href="#RENDEZVOUS" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-enum-member">RENDEZVOUS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">3</span></div>
+<div class="tsd-signature"><span class="tsd-kind-enum-member">RENDEZVOUS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span></div>
 <div class="tsd-comment tsd-typography"><p>RENDEZVOUS is used to join a mesh using a rendezvous string.</p>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Generated</h4><p>from enum value: RENDEZVOUS = 3;</p>
+<h4>Generated</h4><p>from enum value: RENDEZVOUS = 2;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/62eecff/ts/v1/app_pb.d.ts#L142">app_pb.d.ts:142</a></li></ul></aside></section></section></div>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/0c85733/ts/v1/app_pb.d.ts#L135">app_pb.d.ts:135</a></li></ul></aside></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -97,8 +86,7 @@
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
 <div class="tsd-accordion-details">
 <ul>
-<li><a href="#DNS" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>DNS</span></a></li>
-<li><a href="#IP" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>IP</span></a></li>
+<li><a href="#ADDR" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>ADDR</span></a></li>
 <li><a href="#MULTIADDR" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>MULTIADDR</span></a></li>
 <li><a href="#RENDEZVOUS" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-16"></use></svg><span>RENDEZVOUS</span></a></li></ul></div></details></div>
 <div class="site-menu">

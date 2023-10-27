@@ -30,14 +30,12 @@ import "v1/storage_query.proto";
 message ConnectRequest {
     // AddrType is the type of join addresses included in the request.
     enum AddrType {
-        // IP is used to join a mesh using an IP address.
-        IP = 0;
-        // DNS is used to join a mesh using a DNS name.
-        DNS = 1;
+        // ADDR is used to join a mesh using an IP or DNS address.
+        ADDR = 0;
         // MULTIADDR is used to join a mesh using a multiaddr.
-        MULTIADDR = 2;
+        MULTIADDR = 1;
         // RENDEZVOUS is used to join a mesh using a rendezvous string.
-        RENDEZVOUS = 3;
+        RENDEZVOUS = 2;
     };
     // AuthMethod are types of RPC credentials to supply to the connection.
     enum AuthMethod {

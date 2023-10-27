@@ -114,32 +114,25 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
  */
 export declare enum ConnectRequest_AddrType {
   /**
-   * IP is used to join a mesh using an IP address.
+   * ADDR is used to join a mesh using an IP or DNS address.
    *
-   * @generated from enum value: IP = 0;
+   * @generated from enum value: ADDR = 0;
    */
-  IP = 0,
-
-  /**
-   * DNS is used to join a mesh using a DNS name.
-   *
-   * @generated from enum value: DNS = 1;
-   */
-  DNS = 1,
+  ADDR = 0,
 
   /**
    * MULTIADDR is used to join a mesh using a multiaddr.
    *
-   * @generated from enum value: MULTIADDR = 2;
+   * @generated from enum value: MULTIADDR = 1;
    */
-  MULTIADDR = 2,
+  MULTIADDR = 1,
 
   /**
    * RENDEZVOUS is used to join a mesh using a rendezvous string.
    *
-   * @generated from enum value: RENDEZVOUS = 3;
+   * @generated from enum value: RENDEZVOUS = 2;
    */
-  RENDEZVOUS = 3,
+  RENDEZVOUS = 2,
 }
 
 /**
