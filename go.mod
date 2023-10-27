@@ -3,6 +3,7 @@ module github.com/webmeshproj/api
 go 1.20
 
 require (
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20231017183020-0de7443d03cf.2
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )

@@ -4,11 +4,14 @@ BUF_VERSION  ?= 1.17.0
 
 generate: gen
 
-gen: buf ## Generate proto files.
+gen: buf update  ## Generate proto files.
 	go install github.com/protobuf-tools/protoc-gen-deepcopy@latest
 	rm -rf docs/
 	$(BUF) generate proto
 	npx typedoc --name "Webmesh API" --cleanOutputDir false
+
+update: buf ## Update proto dependencies.
+	cd proto/ ; $(BUF) mod update
 
 .PHONY: buf
 buf: $(BUF) ## Download buf locally if necessary.

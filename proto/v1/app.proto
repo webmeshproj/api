@@ -20,6 +20,7 @@ package v1;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
+import "buf/validate/validate.proto";
 
 import "v1/mesh.proto";
 import "v1/node.proto";
@@ -53,21 +54,21 @@ message ConnectRequest {
     // one will be generated.
     string id = 1;
     // authType is the type of authentication to use.
-    AuthMethod authType = 2;
+    AuthMethod authType = 2 [(buf.validate.field).enum.defined_only = true];
     // authCredentials are additional credentials as required by the authType. 
     map<string, bytes> authCredentials = 3;
     // addrType is the type of join addresses in the addrs list.
-    AddrType addrType = 4;
+    AddrType addrType = 4 [(buf.validate.field).enum.defined_only = true];
     // addrs are the join addresses to use to connect to the mesh.
-    repeated string addrs = 5;
+    repeated string addrs = 5 [(buf.validate.field).required = true];
     // networking is the networking configuration to use.
-    MeshConnNetworking networking = 6;
+    MeshConnNetworking networking = 6 [(buf.validate.field).ignore_empty = true];
     // services are the services to expose to other nodes on the mesh.
-    MeshConnServices services = 7;
+    MeshConnServices services = 7 [(buf.validate.field).ignore_empty = true];
     // bootstrap are options for bootstrapping a new mesh.
-    MeshConnBootstrap bootstrap = 8;
+    MeshConnBootstrap bootstrap = 8 [(buf.validate.field).ignore_empty = true];
     // tls are TLS configurations for the mesh connection.
-    MeshConnTLS tls = 9;
+    MeshConnTLS tls = 9 [(buf.validate.field).ignore_empty = true];
 }
 
 // MeshConnNetworking are configurations for networking on a mesh.
