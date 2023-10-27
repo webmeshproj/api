@@ -36,6 +36,8 @@ message ConnectRequest {
         DNS = 1;
         // MULTIADDR is used to join a mesh using a multiaddr.
         MULTIADDR = 2;
+        // RENDEZVOUS is used to join a mesh using a rendezvous string.
+        RENDEZVOUS = 3;
     };
     // AuthMethod are types of RPC credentials to supply to the connection.
     enum AuthMethod {
@@ -89,6 +91,12 @@ message ConnectRequest {
     MeshConnBootstrap bootstrap = 8;
     // TLS are TLS configurations for the mesh connection.
     MeshConnTLS tls = 9;
+
+    option (buf.validate.message).cel = {
+        id: "connectRequest.requiredAddresses",
+        message: "Must provide at least one address when not bootstrapping",
+        expression: "!this.bootstrap.enabled && this.addrs.length == 0",
+    };
 
     option (buf.validate.message).cel = {
         id: "connectRequest.mtlsConnectionSecurity",

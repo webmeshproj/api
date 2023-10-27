@@ -133,6 +133,13 @@ export declare enum ConnectRequest_AddrType {
    * @generated from enum value: MULTIADDR = 2;
    */
   MULTIADDR = 2,
+
+  /**
+   * RENDEZVOUS is used to join a mesh using a rendezvous string.
+   *
+   * @generated from enum value: RENDEZVOUS = 3;
+   */
+  RENDEZVOUS = 3,
 }
 
 /**
