@@ -89,7 +89,13 @@ message ConnectRequest {
     MeshConnBootstrap bootstrap = 8;
     // TLS are TLS configurations for the mesh connection.
     MeshConnTLS tls = 9;
-    
+
+    option (buf.validate.message).cel = {
+        id: "connectRequest.mtlsConnectionSecurity",
+        message: "Cannot disable TLS when using mTLS",
+        expression: "this.authMethod == 4 && !this.tls.enabled",
+    };
+
     option (buf.validate.message).cel = {
         id: "connectRequest.tlsRequiredFields",
         message: "Must provide a TLS certificate and key for mTLS authentication",
