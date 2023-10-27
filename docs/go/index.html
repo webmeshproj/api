@@ -461,11 +461,19 @@
                 </li>
               
                 <li>
+                  <a href="#v1.MeshConnBootstrap"><span class="badge">M</span>MeshConnBootstrap</a>
+                </li>
+              
+                <li>
                   <a href="#v1.MeshConnNetworking"><span class="badge">M</span>MeshConnNetworking</a>
                 </li>
               
                 <li>
                   <a href="#v1.MeshConnServices"><span class="badge">M</span>MeshConnServices</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.MeshConnTLS"><span class="badge">M</span>MeshConnTLS</a>
                 </li>
               
                 <li>
@@ -3214,6 +3222,20 @@ one will be generated. </p></td>
                   <td><p>services are the services to expose to other nodes on the mesh. </p></td>
                 </tr>
               
+                <tr>
+                  <td>bootstrap</td>
+                  <td><a href="#v1.MeshConnBootstrap">MeshConnBootstrap</a></td>
+                  <td></td>
+                  <td><p>bootstrap are options for bootstrapping a new mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tls</td>
+                  <td><a href="#v1.MeshConnTLS">MeshConnTLS</a></td>
+                  <td></td>
+                  <td><p>tls are TLS configurations for the mesh connection. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3335,10 +3357,51 @@ one will be generated. </p></td>
 
         
       
-        <h3 id="v1.MeshConnNetworking">MeshConnNetworking</h3>
-        <p>MeshConnNetworking is a configuration for networking on a mesh.</p>
+        <h3 id="v1.MeshConnBootstrap">MeshConnBootstrap</h3>
+        <p>MeshConnBootstrap are configurations for bootstrapping a new mesh.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>enabled indicates whether or not to bootstrap a new mesh. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MeshConnNetworking">MeshConnNetworking</h3>
+        <p>MeshConnNetworking are configurations for networking on a mesh.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>useDNS</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>UseDNS indicates whether or not to use the DNS servers of the mesh. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -3346,6 +3409,47 @@ one will be generated. </p></td>
         <p>MeshConnServices are configurations for exposing services to other nodes on a mesh.</p>
 
         
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>enabled indicates whether or not to expose services to other nodes. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MeshConnTLS">MeshConnTLS</h3>
+        <p>MeshhConnTLS are TLS configurations for a mesh connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>enabled indicates whether or not to use TLS. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       

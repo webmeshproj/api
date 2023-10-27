@@ -64,13 +64,35 @@ message ConnectRequest {
     MeshConnNetworking networking = 6;
     // services are the services to expose to other nodes on the mesh.
     MeshConnServices services = 7;
+    // bootstrap are options for bootstrapping a new mesh.
+    MeshConnBootstrap bootstrap = 8;
+    // tls are TLS configurations for the mesh connection.
+    MeshConnTLS tls = 9;
 }
 
-// MeshConnNetworking is a configuration for networking on a mesh.
-message MeshConnNetworking {}
+// MeshConnNetworking are configurations for networking on a mesh.
+message MeshConnNetworking {
+    // UseDNS indicates whether or not to use the DNS servers of the mesh.
+    bool useDNS = 1;
+}
 
 // MeshConnServices are configurations for exposing services to other nodes on a mesh.
-message MeshConnServices {}
+message MeshConnServices {
+    // enabled indicates whether or not to expose services to other nodes.
+    bool enabled = 1;
+}
+
+// MeshConnBootstrap are configurations for bootstrapping a new mesh.
+message MeshConnBootstrap {
+    // enabled indicates whether or not to bootstrap a new mesh.
+    bool enabled = 1;
+}
+
+// MeshhConnTLS are TLS configurations for a mesh connection.
+message MeshConnTLS {
+    // enabled indicates whether or not to use TLS.
+    bool enabled = 1;
+};
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {

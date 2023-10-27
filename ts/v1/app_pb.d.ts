@@ -78,6 +78,20 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
    */
   services?: MeshConnServices;
 
+  /**
+   * bootstrap are options for bootstrapping a new mesh.
+   *
+   * @generated from field: v1.MeshConnBootstrap bootstrap = 8;
+   */
+  bootstrap?: MeshConnBootstrap;
+
+  /**
+   * tls are TLS configurations for the mesh connection.
+   *
+   * @generated from field: v1.MeshConnTLS tls = 9;
+   */
+  tls?: MeshConnTLS;
+
   constructor(data?: PartialMessage<ConnectRequest>);
 
   static readonly runtime: typeof proto3;
@@ -164,11 +178,18 @@ export declare enum ConnectRequest_AuthMethod {
 }
 
 /**
- * MeshConnNetworking is a configuration for networking on a mesh.
+ * MeshConnNetworking are configurations for networking on a mesh.
  *
  * @generated from message v1.MeshConnNetworking
  */
 export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
+  /**
+   * UseDNS indicates whether or not to use the DNS servers of the mesh.
+   *
+   * @generated from field: bool useDNS = 1;
+   */
+  useDNS: boolean;
+
   constructor(data?: PartialMessage<MeshConnNetworking>);
 
   static readonly runtime: typeof proto3;
@@ -190,6 +211,13 @@ export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
  * @generated from message v1.MeshConnServices
  */
 export declare class MeshConnServices extends Message<MeshConnServices> {
+  /**
+   * enabled indicates whether or not to expose services to other nodes.
+   *
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
   constructor(data?: PartialMessage<MeshConnServices>);
 
   static readonly runtime: typeof proto3;
@@ -203,6 +231,62 @@ export declare class MeshConnServices extends Message<MeshConnServices> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnServices;
 
   static equals(a: MeshConnServices | PlainMessage<MeshConnServices> | undefined, b: MeshConnServices | PlainMessage<MeshConnServices> | undefined): boolean;
+}
+
+/**
+ * MeshConnBootstrap are configurations for bootstrapping a new mesh.
+ *
+ * @generated from message v1.MeshConnBootstrap
+ */
+export declare class MeshConnBootstrap extends Message<MeshConnBootstrap> {
+  /**
+   * enabled indicates whether or not to bootstrap a new mesh.
+   *
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  constructor(data?: PartialMessage<MeshConnBootstrap>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.MeshConnBootstrap";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshConnBootstrap;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshConnBootstrap;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnBootstrap;
+
+  static equals(a: MeshConnBootstrap | PlainMessage<MeshConnBootstrap> | undefined, b: MeshConnBootstrap | PlainMessage<MeshConnBootstrap> | undefined): boolean;
+}
+
+/**
+ * MeshhConnTLS are TLS configurations for a mesh connection.
+ *
+ * @generated from message v1.MeshConnTLS
+ */
+export declare class MeshConnTLS extends Message<MeshConnTLS> {
+  /**
+   * enabled indicates whether or not to use TLS.
+   *
+   * @generated from field: bool enabled = 1;
+   */
+  enabled: boolean;
+
+  constructor(data?: PartialMessage<MeshConnTLS>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.MeshConnTLS";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshConnTLS;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshConnTLS;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnTLS;
+
+  static equals(a: MeshConnTLS | PlainMessage<MeshConnTLS> | undefined, b: MeshConnTLS | PlainMessage<MeshConnTLS> | undefined): boolean;
 }
 
 /**

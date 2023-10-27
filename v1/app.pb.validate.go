@@ -123,6 +123,64 @@ func (m *ConnectRequest) validate(all bool) error {
 		}
 	}
 
+	if all {
+		switch v := interface{}(m.GetBootstrap()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Bootstrap",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Bootstrap",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetBootstrap()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectRequestValidationError{
+				field:  "Bootstrap",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetTls()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectRequestValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectRequestValidationError{
+				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return ConnectRequestMultiError(errors)
 	}
@@ -222,6 +280,8 @@ func (m *MeshConnNetworking) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for UseDNS
 
 	if len(errors) > 0 {
 		return MeshConnNetworkingMultiError(errors)
@@ -325,6 +385,8 @@ func (m *MeshConnServices) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Enabled
+
 	if len(errors) > 0 {
 		return MeshConnServicesMultiError(errors)
 	}
@@ -402,6 +464,211 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = MeshConnServicesValidationError{}
+
+// Validate checks the field values on MeshConnBootstrap with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *MeshConnBootstrap) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MeshConnBootstrap with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// MeshConnBootstrapMultiError, or nil if none found.
+func (m *MeshConnBootstrap) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MeshConnBootstrap) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Enabled
+
+	if len(errors) > 0 {
+		return MeshConnBootstrapMultiError(errors)
+	}
+
+	return nil
+}
+
+// MeshConnBootstrapMultiError is an error wrapping multiple validation errors
+// returned by MeshConnBootstrap.ValidateAll() if the designated constraints
+// aren't met.
+type MeshConnBootstrapMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MeshConnBootstrapMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MeshConnBootstrapMultiError) AllErrors() []error { return m }
+
+// MeshConnBootstrapValidationError is the validation error returned by
+// MeshConnBootstrap.Validate if the designated constraints aren't met.
+type MeshConnBootstrapValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MeshConnBootstrapValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MeshConnBootstrapValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MeshConnBootstrapValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MeshConnBootstrapValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MeshConnBootstrapValidationError) ErrorName() string {
+	return "MeshConnBootstrapValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e MeshConnBootstrapValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMeshConnBootstrap.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MeshConnBootstrapValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MeshConnBootstrapValidationError{}
+
+// Validate checks the field values on MeshConnTLS with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MeshConnTLS) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MeshConnTLS with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MeshConnTLSMultiError, or
+// nil if none found.
+func (m *MeshConnTLS) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MeshConnTLS) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Enabled
+
+	if len(errors) > 0 {
+		return MeshConnTLSMultiError(errors)
+	}
+
+	return nil
+}
+
+// MeshConnTLSMultiError is an error wrapping multiple validation errors
+// returned by MeshConnTLS.ValidateAll() if the designated constraints aren't met.
+type MeshConnTLSMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MeshConnTLSMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MeshConnTLSMultiError) AllErrors() []error { return m }
+
+// MeshConnTLSValidationError is the validation error returned by
+// MeshConnTLS.Validate if the designated constraints aren't met.
+type MeshConnTLSValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MeshConnTLSValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MeshConnTLSValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MeshConnTLSValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MeshConnTLSValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MeshConnTLSValidationError) ErrorName() string { return "MeshConnTLSValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MeshConnTLSValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMeshConnTLS.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MeshConnTLSValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MeshConnTLSValidationError{}
 
 // Validate checks the field values on ConnectResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the

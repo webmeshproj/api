@@ -36,6 +36,8 @@ export const ConnectRequest = proto3.makeMessageType(
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 6, name: "networking", kind: "message", T: MeshConnNetworking },
     { no: 7, name: "services", kind: "message", T: MeshConnServices },
+    { no: 8, name: "bootstrap", kind: "message", T: MeshConnBootstrap },
+    { no: 9, name: "tls", kind: "message", T: MeshConnTLS },
   ],
 );
 
@@ -70,13 +72,15 @@ export const ConnectRequest_AuthMethod = proto3.makeEnum(
 );
 
 /**
- * MeshConnNetworking is a configuration for networking on a mesh.
+ * MeshConnNetworking are configurations for networking on a mesh.
  *
  * @generated from message v1.MeshConnNetworking
  */
 export const MeshConnNetworking = proto3.makeMessageType(
   "v1.MeshConnNetworking",
-  [],
+  () => [
+    { no: 1, name: "useDNS", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ],
 );
 
 /**
@@ -86,7 +90,33 @@ export const MeshConnNetworking = proto3.makeMessageType(
  */
 export const MeshConnServices = proto3.makeMessageType(
   "v1.MeshConnServices",
-  [],
+  () => [
+    { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ],
+);
+
+/**
+ * MeshConnBootstrap are configurations for bootstrapping a new mesh.
+ *
+ * @generated from message v1.MeshConnBootstrap
+ */
+export const MeshConnBootstrap = proto3.makeMessageType(
+  "v1.MeshConnBootstrap",
+  () => [
+    { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ],
+);
+
+/**
+ * MeshhConnTLS are TLS configurations for a mesh connection.
+ *
+ * @generated from message v1.MeshConnTLS
+ */
+export const MeshConnTLS = proto3.makeMessageType(
+  "v1.MeshConnTLS",
+  () => [
+    { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ],
 );
 
 /**
