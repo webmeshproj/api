@@ -3446,6 +3446,67 @@ one will be generated. </p></td>
                   <td><p>enabled indicates whether or not to use TLS. </p></td>
                 </tr>
               
+                <tr>
+                  <td>caCertData</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>caCert is a PEM-encoded CA certificate to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>caCertFile</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>caCertFile is a file on the local system containing a 
+PEM-encoded CA certificate to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>certData</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>certData is a PEM-encoded certificate to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>certFile</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>certFile is a file on the local system containing a
+PEM-encoded certificate to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>keyData</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>keyData is a PEM-encoded private key to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>keyFile</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>keyFile is a file on the local system containing a
+PEM-encoded private key to use for TLS. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verifyChainOnly</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>verifyChainOnly indicates whether or not to only verify the
+certificate chain. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>skipVerify</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>skipVerify indicates whether or not to skip verification of the
+server certificate. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3653,7 +3714,8 @@ one will be generated. </p></td>
               <tr>
                 <td>MTLS</td>
                 <td>4</td>
-                <td><p>MTLS is used to indicate that mutual TLS authentication is required.</p></td>
+                <td><p>MTLS is used to indicate that mutual TLS authentication is required.
+The tls object should be used to configure the TLS connection.</p></td>
               </tr>
             
           </tbody>

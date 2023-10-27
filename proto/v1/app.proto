@@ -48,6 +48,7 @@ message ConnectRequest {
         // ID is used to indicate that an identity is required.
         ID = 3;
         // MTLS is used to indicate that mutual TLS authentication is required.
+        // The tls object should be used to configure the TLS connection.
         MTLS = 4;
     };
     // id is the unique identifier of this connection. If not provided
@@ -62,13 +63,13 @@ message ConnectRequest {
     // addrs are the join addresses to use to connect to the mesh.
     repeated string addrs = 5 [(buf.validate.field).repeated.min_items = 1];
     // networking is the networking configuration to use.
-    MeshConnNetworking networking = 6 [(buf.validate.field).ignore_empty = true];
+    MeshConnNetworking networking = 6;
     // services are the services to expose to other nodes on the mesh.
-    MeshConnServices services = 7 [(buf.validate.field).ignore_empty = true];
+    MeshConnServices services = 7;
     // bootstrap are options for bootstrapping a new mesh.
-    MeshConnBootstrap bootstrap = 8 [(buf.validate.field).ignore_empty = true];
+    MeshConnBootstrap bootstrap = 8;
     // tls are TLS configurations for the mesh connection.
-    MeshConnTLS tls = 9 [(buf.validate.field).ignore_empty = true];
+    MeshConnTLS tls = 9;
 }
 
 // MeshConnNetworking are configurations for networking on a mesh.
@@ -93,6 +94,27 @@ message MeshConnBootstrap {
 message MeshConnTLS {
     // enabled indicates whether or not to use TLS.
     bool enabled = 1;
+    // caCert is a PEM-encoded CA certificate to use for TLS.
+    bytes caCertData = 2;
+    // caCertFile is a file on the local system containing a 
+    // PEM-encoded CA certificate to use for TLS.
+    string caCertFile = 3;
+    // certData is a PEM-encoded certificate to use for TLS.
+    bytes certData = 4;
+    // certFile is a file on the local system containing a
+    // PEM-encoded certificate to use for TLS.
+    string certFile = 5;
+    // keyData is a PEM-encoded private key to use for TLS.
+    bytes keyData = 6;
+    // keyFile is a file on the local system containing a
+    // PEM-encoded private key to use for TLS.
+    string keyFile = 7;
+    // verifyChainOnly indicates whether or not to only verify the
+    // certificate chain.
+    bool verifyChainOnly = 8;
+    // skipVerify indicates whether or not to skip verification of the
+    // server certificate.
+    bool skipVerify = 9;
 };
 
 // ConnectResponse is returned by the Connect RPC.

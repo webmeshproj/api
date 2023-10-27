@@ -29,7 +29,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">MeshConnTLS</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L269">app_pb.d.ts:269</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L270">app_pb.d.ts:270</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -41,7 +41,15 @@
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
-<div class="tsd-index-list"><a href="app_pb.MeshConnTLS.html#enabled" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>enabled</span></a>
+<div class="tsd-index-list"><a href="app_pb.MeshConnTLS.html#caCertData" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ca<wbr/>Cert<wbr/>Data</span></a>
+<a href="app_pb.MeshConnTLS.html#caCertFile" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ca<wbr/>Cert<wbr/>File</span></a>
+<a href="app_pb.MeshConnTLS.html#certData" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>cert<wbr/>Data</span></a>
+<a href="app_pb.MeshConnTLS.html#certFile" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>cert<wbr/>File</span></a>
+<a href="app_pb.MeshConnTLS.html#enabled" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>enabled</span></a>
+<a href="app_pb.MeshConnTLS.html#keyData" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>key<wbr/>Data</span></a>
+<a href="app_pb.MeshConnTLS.html#keyFile" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>key<wbr/>File</span></a>
+<a href="app_pb.MeshConnTLS.html#skipVerify" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>skip<wbr/>Verify</span></a>
+<a href="app_pb.MeshConnTLS.html#verifyChainOnly" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>verify<wbr/>Chain<wbr/>Only</span></a>
 <a href="app_pb.MeshConnTLS.html#fields" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>fields</span></a>
 <a href="app_pb.MeshConnTLS.html#runtime" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>runtime</span></a>
 <a href="app_pb.MeshConnTLS.html#typeName" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>type<wbr/>Name</span></a>
@@ -68,9 +76,51 @@
 <h4 class="tsd-returns-title">Returns <a href="app_pb.MeshConnTLS.html" class="tsd-signature-type tsd-kind-class">MeshConnTLS</a></h4><aside class="tsd-sources">
 <p>Overrides Message&lt;MeshConnTLS&gt;.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L277">app_pb.d.ts:277</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L339">app_pb.d.ts:339</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
+<section class="tsd-panel tsd-member"><a id="caCertData" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ca<wbr/>Cert<wbr/>Data</span><a href="#caCertData" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">ca<wbr/>Cert<wbr/>Data</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Uint8Array</span></div>
+<div class="tsd-comment tsd-typography"><p>caCert is a PEM-encoded CA certificate to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: bytes caCertData = 2;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L283">app_pb.d.ts:283</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="caCertFile" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>ca<wbr/>Cert<wbr/>File</span><a href="#caCertFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">ca<wbr/>Cert<wbr/>File</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>caCertFile is a file on the local system containing a 
+PEM-encoded CA certificate to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: string caCertFile = 3;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L291">app_pb.d.ts:291</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="certData" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>cert<wbr/>Data</span><a href="#certData" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">cert<wbr/>Data</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Uint8Array</span></div>
+<div class="tsd-comment tsd-typography"><p>certData is a PEM-encoded certificate to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: bytes certData = 4;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L298">app_pb.d.ts:298</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="certFile" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>cert<wbr/>File</span><a href="#certFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">cert<wbr/>File</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>certFile is a file on the local system containing a
+PEM-encoded certificate to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: string certFile = 5;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L306">app_pb.d.ts:306</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="enabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>enabled</span><a href="#enabled" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">enabled</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
@@ -80,22 +130,65 @@
 <h4>Generated</h4><p>from field: bool enabled = 1;</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L275">app_pb.d.ts:275</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L276">app_pb.d.ts:276</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="keyData" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>key<wbr/>Data</span><a href="#keyData" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">key<wbr/>Data</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Uint8Array</span></div>
+<div class="tsd-comment tsd-typography"><p>keyData is a PEM-encoded private key to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: bytes keyData = 6;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L313">app_pb.d.ts:313</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="keyFile" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>key<wbr/>File</span><a href="#keyFile" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">key<wbr/>File</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>keyFile is a file on the local system containing a
+PEM-encoded private key to use for TLS.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: string keyFile = 7;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L321">app_pb.d.ts:321</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="skipVerify" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>skip<wbr/>Verify</span><a href="#skipVerify" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">skip<wbr/>Verify</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>skipVerify indicates whether or not to skip verification of the
+server certificate.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: bool skipVerify = 9;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L337">app_pb.d.ts:337</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="verifyChainOnly" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>verify<wbr/>Chain<wbr/>Only</span><a href="#verifyChainOnly" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">verify<wbr/>Chain<wbr/>Only</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-comment tsd-typography"><p>verifyChainOnly indicates whether or not to only verify the
+certificate chain.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Generated</h4><p>from field: bool verifyChainOnly = 8;</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L329">app_pb.d.ts:329</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="fields" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>fields</span><a href="#fields" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">fields</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">FieldList</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L281">app_pb.d.ts:281</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L343">app_pb.d.ts:343</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="runtime" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>runtime</span><a href="#runtime" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">runtime</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L279">app_pb.d.ts:279</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L341">app_pb.d.ts:341</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="typeName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>type<wbr/>Name</span><a href="#typeName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">type<wbr/>Name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;v1.MeshConnTLS&quot;</span><span class="tsd-signature-symbol"> = &quot;v1.MeshConnTLS&quot;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L280">app_pb.d.ts:280</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L342">app_pb.d.ts:342</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="equals" class="tsd-anchor"></a>
@@ -112,7 +205,7 @@
 <h5><span class="tsd-kind-parameter">b</span>: <span class="tsd-signature-type">any</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L289">app_pb.d.ts:289</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L351">app_pb.d.ts:351</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fromBinary" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Binary</span><a href="#fromBinary" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -127,7 +220,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-type">any</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="app_pb.MeshConnTLS.html" class="tsd-signature-type tsd-kind-class">MeshConnTLS</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L283">app_pb.d.ts:283</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L345">app_pb.d.ts:345</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fromJson" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Json</span><a href="#fromJson" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -142,7 +235,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-type">any</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="app_pb.MeshConnTLS.html" class="tsd-signature-type tsd-kind-class">MeshConnTLS</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L285">app_pb.d.ts:285</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L347">app_pb.d.ts:347</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fromJsonString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Json<wbr/>String</span><a href="#fromJsonString" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -157,7 +250,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-type">any</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="app_pb.MeshConnTLS.html" class="tsd-signature-type tsd-kind-class">MeshConnTLS</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/webmeshproj/api/blob/95e6008/ts/v1/app_pb.d.ts#L287">app_pb.d.ts:287</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/webmeshproj/api/blob/7486007/ts/v1/app_pb.d.ts#L349">app_pb.d.ts:349</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -178,7 +271,15 @@
 <div class="tsd-accordion-details">
 <ul>
 <li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
+<li><a href="#caCertData" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ca<wbr/>Cert<wbr/>Data</span></a></li>
+<li><a href="#caCertFile" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>ca<wbr/>Cert<wbr/>File</span></a></li>
+<li><a href="#certData" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>cert<wbr/>Data</span></a></li>
+<li><a href="#certFile" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>cert<wbr/>File</span></a></li>
 <li><a href="#enabled" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>enabled</span></a></li>
+<li><a href="#keyData" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>key<wbr/>Data</span></a></li>
+<li><a href="#keyFile" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>key<wbr/>File</span></a></li>
+<li><a href="#skipVerify" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>skip<wbr/>Verify</span></a></li>
+<li><a href="#verifyChainOnly" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>verify<wbr/>Chain<wbr/>Only</span></a></li>
 <li><a href="#fields" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>fields</span></a></li>
 <li><a href="#runtime" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>runtime</span></a></li>
 <li><a href="#typeName" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>type<wbr/>Name</span></a></li>

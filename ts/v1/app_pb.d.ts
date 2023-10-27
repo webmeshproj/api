@@ -171,6 +171,7 @@ export declare enum ConnectRequest_AuthMethod {
 
   /**
    * MTLS is used to indicate that mutual TLS authentication is required.
+   * The tls object should be used to configure the TLS connection.
    *
    * @generated from enum value: MTLS = 4;
    */
@@ -273,6 +274,67 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
    * @generated from field: bool enabled = 1;
    */
   enabled: boolean;
+
+  /**
+   * caCert is a PEM-encoded CA certificate to use for TLS.
+   *
+   * @generated from field: bytes caCertData = 2;
+   */
+  caCertData: Uint8Array;
+
+  /**
+   * caCertFile is a file on the local system containing a 
+   * PEM-encoded CA certificate to use for TLS.
+   *
+   * @generated from field: string caCertFile = 3;
+   */
+  caCertFile: string;
+
+  /**
+   * certData is a PEM-encoded certificate to use for TLS.
+   *
+   * @generated from field: bytes certData = 4;
+   */
+  certData: Uint8Array;
+
+  /**
+   * certFile is a file on the local system containing a
+   * PEM-encoded certificate to use for TLS.
+   *
+   * @generated from field: string certFile = 5;
+   */
+  certFile: string;
+
+  /**
+   * keyData is a PEM-encoded private key to use for TLS.
+   *
+   * @generated from field: bytes keyData = 6;
+   */
+  keyData: Uint8Array;
+
+  /**
+   * keyFile is a file on the local system containing a
+   * PEM-encoded private key to use for TLS.
+   *
+   * @generated from field: string keyFile = 7;
+   */
+  keyFile: string;
+
+  /**
+   * verifyChainOnly indicates whether or not to only verify the
+   * certificate chain.
+   *
+   * @generated from field: bool verifyChainOnly = 8;
+   */
+  verifyChainOnly: boolean;
+
+  /**
+   * skipVerify indicates whether or not to skip verification of the
+   * server certificate.
+   *
+   * @generated from field: bool skipVerify = 9;
+   */
+  skipVerify: boolean;
 
   constructor(data?: PartialMessage<MeshConnTLS>);
 

@@ -593,6 +593,22 @@ func (m *MeshConnTLS) validate(all bool) error {
 
 	// no validation rules for Enabled
 
+	// no validation rules for CaCertData
+
+	// no validation rules for CaCertFile
+
+	// no validation rules for CertData
+
+	// no validation rules for CertFile
+
+	// no validation rules for KeyData
+
+	// no validation rules for KeyFile
+
+	// no validation rules for VerifyChainOnly
+
+	// no validation rules for SkipVerify
+
 	if len(errors) > 0 {
 		return MeshConnTLSMultiError(errors)
 	}

@@ -116,6 +116,14 @@ export const MeshConnTLS = proto3.makeMessageType(
   "v1.MeshConnTLS",
   () => [
     { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "caCertData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 3, name: "caCertFile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "certData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 5, name: "certFile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "keyData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 7, name: "keyFile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "verifyChainOnly", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 9, name: "skipVerify", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 
