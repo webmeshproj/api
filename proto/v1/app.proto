@@ -152,7 +152,11 @@ message ConnectResponse {
 // for allowing the application to disconnect from a specific mesh.
 message DisconnectRequest {
     // ID is the unique identifier of this connection.
-    string id = 1 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 1];
+    string id = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 64
+    ];
 }
 
 // DisconnectResponse is returned by the Disconnect RPC.
@@ -176,7 +180,11 @@ message MetricsResponse {
 // of a mesh connection.
 message StatusRequest {
     // ID is the unique identifier of this connection.
-    string id = 1 [(buf.validate.field).required = true];
+    string id = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 64
+    ];
 }
 
 // StatusResponse is a message containing the status of the node.
