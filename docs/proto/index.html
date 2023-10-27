@@ -502,6 +502,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ConnectRequest.AuthHeader"><span class="badge">E</span>ConnectRequest.AuthHeader</a>
+                </li>
+              
+                <li>
                   <a href="#v1.ConnectRequest.AuthMethod"><span class="badge">E</span>ConnectRequest.AuthMethod</a>
                 </li>
               
@@ -3674,6 +3678,48 @@ server certificate. </p></td>
                 <td>MULTIADDR</td>
                 <td>2</td>
                 <td><p>MULTIADDR is used to join a mesh using a multiaddr.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.ConnectRequest.AuthHeader">ConnectRequest.AuthHeader</h3>
+        <p>AuthHeader is an enumeration of headers that coorespond to the AuthMethod.</p><p>they are used to pass authentication credentials to the daemon. Enums </p><p>cannot be used as map keys, so their string values are used instead.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>BASIC_USERNAME</td>
+                <td>0</td>
+                <td><p>BASIC_USERNAME is the username for basic authentication.</p></td>
+              </tr>
+            
+              <tr>
+                <td>BASIC_PASSWORD</td>
+                <td>1</td>
+                <td><p>BASIC_PASSWORD is the password for basic authentication.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LDAP_USERNAME</td>
+                <td>2</td>
+                <td><p>LDAP_USERNAME is the username for LDAP authentication.</p></td>
+              </tr>
+            
+              <tr>
+                <td>LDAP_PASSWORD</td>
+                <td>3</td>
+                <td><p>LDAP_PASSWORD is the password for LDAP authentication.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ID_TOKEN</td>
+                <td>4</td>
+                <td><p>ID_TOKEN is the identity token for identity authentication.
+If not provided the configured key on the host will be used.</p></td>
               </tr>
             
           </tbody>

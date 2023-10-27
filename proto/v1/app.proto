@@ -51,6 +51,22 @@ message ConnectRequest {
         // The tls object should be used to configure the TLS connection.
         MTLS = 4;
     };
+    // AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
+    // they are used to pass authentication credentials to the daemon. Enums 
+    // cannot be used as map keys, so their string values are used instead.
+    enum AuthHeader {
+        // BASIC_USERNAME is the username for basic authentication.
+        BASIC_USERNAME = 0;
+        // BASIC_PASSWORD is the password for basic authentication.
+        BASIC_PASSWORD = 1;
+        // LDAP_USERNAME is the username for LDAP authentication.
+        LDAP_USERNAME = 2;
+        // LDAP_PASSWORD is the password for LDAP authentication.
+        LDAP_PASSWORD = 3;
+        // ID_TOKEN is the identity token for identity authentication.
+        // If not provided the configured key on the host will be used.
+        ID_TOKEN = 4;
+    };
     // id is the unique identifier of this connection. If not provided
     // one will be generated.
     string id = 1 [(buf.validate.field).string.min_len = 1];
