@@ -52,7 +52,7 @@ message ConnectRequest {
         MTLS = 4;
     };
     // AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
-    // they are used to pass authentication credentials to the daemon. Enums 
+    // They are used to pass authentication credentials to the daemon. Enums 
     // cannot be used as map keys, so their string values are used instead.
     enum AuthHeader {
         // BASIC_USERNAME is the username for basic authentication.
@@ -67,24 +67,24 @@ message ConnectRequest {
         // If not provided the configured key on the host will be used.
         ID_TOKEN = 4;
     };
-    // id is the unique identifier of this connection. If not provided
+    // ID is the unique identifier of this connection. If not provided
     // one will be generated.
     string id = 1 [(buf.validate.field).string.min_len = 1];
-    // authType is the type of authentication to use.
+    // AuthType is the type of authentication to use.
     AuthMethod authType = 2 [(buf.validate.field).enum.defined_only = true];
-    // authCredentials are additional credentials as required by the authType. 
+    // AuthCredentials are additional credentials as required by the authType. 
     map<string, bytes> authCredentials = 3;
-    // addrType is the type of join addresses in the addrs list.
+    // AddrType is the type of join addresses in the addrs list.
     AddrType addrType = 4 [(buf.validate.field).enum.defined_only = true];
-    // addrs are the join addresses to use to connect to the mesh.
+    // Addrs are the join addresses to use to connect to the mesh.
     repeated string addrs = 5 [(buf.validate.field).repeated.min_items = 1];
-    // networking is the networking configuration to use.
+    // Networking is the networking configuration to use.
     MeshConnNetworking networking = 6;
-    // services are the services to expose to other nodes on the mesh.
+    // Services are the services to expose to other nodes on the mesh.
     MeshConnServices services = 7;
-    // bootstrap are options for bootstrapping a new mesh.
+    // Bootstrap are options for bootstrapping a new mesh.
     MeshConnBootstrap bootstrap = 8;
-    // tls are TLS configurations for the mesh connection.
+    // TLS are TLS configurations for the mesh connection.
     MeshConnTLS tls = 9;
 }
 
@@ -96,54 +96,54 @@ message MeshConnNetworking {
 
 // MeshConnServices are configurations for exposing services to other nodes on a mesh.
 message MeshConnServices {
-    // enabled indicates whether or not to expose services to other nodes.
+    // Enabled indicates whether or not to expose services to other nodes.
     bool enabled = 1;
 }
 
 // MeshConnBootstrap are configurations for bootstrapping a new mesh.
 message MeshConnBootstrap {
-    // enabled indicates whether or not to bootstrap a new mesh.
+    // Enabled indicates whether or not to bootstrap a new mesh.
     bool enabled = 1;
 }
 
 // MeshhConnTLS are TLS configurations for a mesh connection.
 message MeshConnTLS {
-    // enabled indicates whether or not to use TLS.
+    // Enabled indicates whether or not to use TLS.
     bool enabled = 1;
-    // caCert is a PEM-encoded CA certificate to use for TLS.
+    // CACert is a PEM-encoded CA certificate to use for TLS.
     bytes caCertData = 2;
-    // caCertFile is a file on the local system containing a 
+    // CACertFile is a file on the local system containing a 
     // PEM-encoded CA certificate to use for TLS.
     string caCertFile = 3;
-    // certData is a PEM-encoded certificate to use for TLS.
+    // CertData is a PEM-encoded certificate to use for TLS.
     bytes certData = 4;
-    // certFile is a file on the local system containing a
+    // CertFile is a file on the local system containing a
     // PEM-encoded certificate to use for TLS.
     string certFile = 5;
-    // keyData is a PEM-encoded private key to use for TLS.
+    // KeyData is a PEM-encoded private key to use for TLS.
     bytes keyData = 6;
-    // keyFile is a file on the local system containing a
+    // KeyFile is a file on the local system containing a
     // PEM-encoded private key to use for TLS.
     string keyFile = 7;
-    // verifyChainOnly indicates whether or not to only verify the
+    // VerifyChainOnly indicates whether or not to only verify the
     // certificate chain.
     bool verifyChainOnly = 8;
-    // skipVerify indicates whether or not to skip verification of the
+    // SkipVerify indicates whether or not to skip verification of the
     // server certificate.
     bool skipVerify = 9;
 };
 
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
-    // id is the unique identifier of this connection.
+    // ID is the unique identifier of this connection.
     string id = 1;
-    // node id is the unique identifier of the node.
+    // Node id is the unique identifier of the node.
     string nodeID = 2;
-    // mesh domain is the domain of the mesh.
+    // Mesh domain is the domain of the mesh.
     string meshDomain = 3;
-    // ipv4 is the IPv4 address of the node.
+    // IPv4 is the IPv4 address of the node.
     string ipv4 = 4;
-    // ipv6 is the IPv6 address of the node.
+    // IPv6 is the IPv6 address of the node.
     string ipv6 = 5;
 }
 
@@ -151,7 +151,7 @@ message ConnectResponse {
 // from a mesh. This message will eventually contain unique identifiers
 // for allowing the application to disconnect from a specific mesh.
 message DisconnectRequest {
-    // id is the unique identifier of this connection.
+    // ID is the unique identifier of this connection.
     string id = 1 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 1];
 }
 
@@ -161,20 +161,21 @@ message DisconnectResponse {}
 // MetricsRequest is sent by the application to a daemon to retrieve interface
 // metrics for a mesh connection.
 message MetricsRequest {
-    // ids are the unique identifiers of the connections to retrieve metrics for.
+    // IDs are the unique identifiers of the connections to retrieve metrics for.
+    // If not provided, metrics for all connections will be returned.
     repeated string ids = 1;
 }
 
 // MetricsResponse is a message containing interface metrics.
 message MetricsResponse {
-    // interfaces is a map of interface names to metrics.
+    // Interfaces is a map of network IDs to their interface metrics.
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
 // StatusRequest is sent by the application to a daemon to retrieve the status
 // of a mesh connection.
 message StatusRequest {
-    // id is the unique identifier of this connection.
+    // ID is the unique identifier of this connection.
     string id = 1 [(buf.validate.field).required = true];
 }
 
@@ -188,9 +189,9 @@ message StatusResponse {
         // CONNECTED indicates that the node is connected to a mesh.
         CONNECTED = 2;
     }
-    // connection status is the status of the connection.
-    ConnectionStatus connection_status = 1;
-    // node is the node status. This is only populated if the node is connected.
+    // ConnectionStatus is the status of the connection.
+    ConnectionStatus connectionStatus = 1;
+    // Node is the node status. This is only populated if the node is connected.
     MeshNode node = 2;
 }
 

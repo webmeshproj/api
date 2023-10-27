@@ -29,7 +29,7 @@ import type { InterfaceMetrics, MeshNode } from "./node_pb.js";
  */
 export declare class ConnectRequest extends Message<ConnectRequest> {
   /**
-   * id is the unique identifier of this connection. If not provided
+   * ID is the unique identifier of this connection. If not provided
    * one will be generated.
    *
    * @generated from field: string id = 1;
@@ -37,56 +37,56 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
   id: string;
 
   /**
-   * authType is the type of authentication to use.
+   * AuthType is the type of authentication to use.
    *
    * @generated from field: v1.ConnectRequest.AuthMethod authType = 2;
    */
   authType: ConnectRequest_AuthMethod;
 
   /**
-   * authCredentials are additional credentials as required by the authType. 
+   * AuthCredentials are additional credentials as required by the authType. 
    *
    * @generated from field: map<string, bytes> authCredentials = 3;
    */
   authCredentials: { [key: string]: Uint8Array };
 
   /**
-   * addrType is the type of join addresses in the addrs list.
+   * AddrType is the type of join addresses in the addrs list.
    *
    * @generated from field: v1.ConnectRequest.AddrType addrType = 4;
    */
   addrType: ConnectRequest_AddrType;
 
   /**
-   * addrs are the join addresses to use to connect to the mesh.
+   * Addrs are the join addresses to use to connect to the mesh.
    *
    * @generated from field: repeated string addrs = 5;
    */
   addrs: string[];
 
   /**
-   * networking is the networking configuration to use.
+   * Networking is the networking configuration to use.
    *
    * @generated from field: v1.MeshConnNetworking networking = 6;
    */
   networking?: MeshConnNetworking;
 
   /**
-   * services are the services to expose to other nodes on the mesh.
+   * Services are the services to expose to other nodes on the mesh.
    *
    * @generated from field: v1.MeshConnServices services = 7;
    */
   services?: MeshConnServices;
 
   /**
-   * bootstrap are options for bootstrapping a new mesh.
+   * Bootstrap are options for bootstrapping a new mesh.
    *
    * @generated from field: v1.MeshConnBootstrap bootstrap = 8;
    */
   bootstrap?: MeshConnBootstrap;
 
   /**
-   * tls are TLS configurations for the mesh connection.
+   * TLS are TLS configurations for the mesh connection.
    *
    * @generated from field: v1.MeshConnTLS tls = 9;
    */
@@ -180,7 +180,7 @@ export declare enum ConnectRequest_AuthMethod {
 
 /**
  * AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
- * they are used to pass authentication credentials to the daemon. Enums 
+ * They are used to pass authentication credentials to the daemon. Enums 
  * cannot be used as map keys, so their string values are used instead.
  *
  * @generated from enum v1.ConnectRequest.AuthHeader
@@ -258,7 +258,7 @@ export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
  */
 export declare class MeshConnServices extends Message<MeshConnServices> {
   /**
-   * enabled indicates whether or not to expose services to other nodes.
+   * Enabled indicates whether or not to expose services to other nodes.
    *
    * @generated from field: bool enabled = 1;
    */
@@ -286,7 +286,7 @@ export declare class MeshConnServices extends Message<MeshConnServices> {
  */
 export declare class MeshConnBootstrap extends Message<MeshConnBootstrap> {
   /**
-   * enabled indicates whether or not to bootstrap a new mesh.
+   * Enabled indicates whether or not to bootstrap a new mesh.
    *
    * @generated from field: bool enabled = 1;
    */
@@ -314,21 +314,21 @@ export declare class MeshConnBootstrap extends Message<MeshConnBootstrap> {
  */
 export declare class MeshConnTLS extends Message<MeshConnTLS> {
   /**
-   * enabled indicates whether or not to use TLS.
+   * Enabled indicates whether or not to use TLS.
    *
    * @generated from field: bool enabled = 1;
    */
   enabled: boolean;
 
   /**
-   * caCert is a PEM-encoded CA certificate to use for TLS.
+   * CACert is a PEM-encoded CA certificate to use for TLS.
    *
    * @generated from field: bytes caCertData = 2;
    */
   caCertData: Uint8Array;
 
   /**
-   * caCertFile is a file on the local system containing a 
+   * CACertFile is a file on the local system containing a 
    * PEM-encoded CA certificate to use for TLS.
    *
    * @generated from field: string caCertFile = 3;
@@ -336,14 +336,14 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
   caCertFile: string;
 
   /**
-   * certData is a PEM-encoded certificate to use for TLS.
+   * CertData is a PEM-encoded certificate to use for TLS.
    *
    * @generated from field: bytes certData = 4;
    */
   certData: Uint8Array;
 
   /**
-   * certFile is a file on the local system containing a
+   * CertFile is a file on the local system containing a
    * PEM-encoded certificate to use for TLS.
    *
    * @generated from field: string certFile = 5;
@@ -351,14 +351,14 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
   certFile: string;
 
   /**
-   * keyData is a PEM-encoded private key to use for TLS.
+   * KeyData is a PEM-encoded private key to use for TLS.
    *
    * @generated from field: bytes keyData = 6;
    */
   keyData: Uint8Array;
 
   /**
-   * keyFile is a file on the local system containing a
+   * KeyFile is a file on the local system containing a
    * PEM-encoded private key to use for TLS.
    *
    * @generated from field: string keyFile = 7;
@@ -366,7 +366,7 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
   keyFile: string;
 
   /**
-   * verifyChainOnly indicates whether or not to only verify the
+   * VerifyChainOnly indicates whether or not to only verify the
    * certificate chain.
    *
    * @generated from field: bool verifyChainOnly = 8;
@@ -374,7 +374,7 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
   verifyChainOnly: boolean;
 
   /**
-   * skipVerify indicates whether or not to skip verification of the
+   * SkipVerify indicates whether or not to skip verification of the
    * server certificate.
    *
    * @generated from field: bool skipVerify = 9;
@@ -403,35 +403,35 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
  */
 export declare class ConnectResponse extends Message<ConnectResponse> {
   /**
-   * id is the unique identifier of this connection.
+   * ID is the unique identifier of this connection.
    *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * node id is the unique identifier of the node.
+   * Node id is the unique identifier of the node.
    *
    * @generated from field: string nodeID = 2;
    */
   nodeID: string;
 
   /**
-   * mesh domain is the domain of the mesh.
+   * Mesh domain is the domain of the mesh.
    *
    * @generated from field: string meshDomain = 3;
    */
   meshDomain: string;
 
   /**
-   * ipv4 is the IPv4 address of the node.
+   * IPv4 is the IPv4 address of the node.
    *
    * @generated from field: string ipv4 = 4;
    */
   ipv4: string;
 
   /**
-   * ipv6 is the IPv6 address of the node.
+   * IPv6 is the IPv6 address of the node.
    *
    * @generated from field: string ipv6 = 5;
    */
@@ -461,7 +461,7 @@ export declare class ConnectResponse extends Message<ConnectResponse> {
  */
 export declare class DisconnectRequest extends Message<DisconnectRequest> {
   /**
-   * id is the unique identifier of this connection.
+   * ID is the unique identifier of this connection.
    *
    * @generated from field: string id = 1;
    */
@@ -511,7 +511,8 @@ export declare class DisconnectResponse extends Message<DisconnectResponse> {
  */
 export declare class MetricsRequest extends Message<MetricsRequest> {
   /**
-   * ids are the unique identifiers of the connections to retrieve metrics for.
+   * IDs are the unique identifiers of the connections to retrieve metrics for.
+   * If not provided, metrics for all connections will be returned.
    *
    * @generated from field: repeated string ids = 1;
    */
@@ -539,7 +540,7 @@ export declare class MetricsRequest extends Message<MetricsRequest> {
  */
 export declare class MetricsResponse extends Message<MetricsResponse> {
   /**
-   * interfaces is a map of interface names to metrics.
+   * Interfaces is a map of network IDs to their interface metrics.
    *
    * @generated from field: map<string, v1.InterfaceMetrics> interfaces = 1;
    */
@@ -568,7 +569,7 @@ export declare class MetricsResponse extends Message<MetricsResponse> {
  */
 export declare class StatusRequest extends Message<StatusRequest> {
   /**
-   * id is the unique identifier of this connection.
+   * ID is the unique identifier of this connection.
    *
    * @generated from field: string id = 1;
    */
@@ -596,14 +597,14 @@ export declare class StatusRequest extends Message<StatusRequest> {
  */
 export declare class StatusResponse extends Message<StatusResponse> {
   /**
-   * connection status is the status of the connection.
+   * ConnectionStatus is the status of the connection.
    *
-   * @generated from field: v1.StatusResponse.ConnectionStatus connection_status = 1;
+   * @generated from field: v1.StatusResponse.ConnectionStatus connectionStatus = 1;
    */
   connectionStatus: StatusResponse_ConnectionStatus;
 
   /**
-   * node is the node status. This is only populated if the node is connected.
+   * Node is the node status. This is only populated if the node is connected.
    *
    * @generated from field: v1.MeshNode node = 2;
    */

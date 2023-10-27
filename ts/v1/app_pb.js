@@ -73,7 +73,7 @@ export const ConnectRequest_AuthMethod = proto3.makeEnum(
 
 /**
  * AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
- * they are used to pass authentication credentials to the daemon. Enums 
+ * They are used to pass authentication credentials to the daemon. Enums 
  * cannot be used as map keys, so their string values are used instead.
  *
  * @generated from enum v1.ConnectRequest.AuthHeader
@@ -231,7 +231,7 @@ export const StatusRequest = proto3.makeMessageType(
 export const StatusResponse = proto3.makeMessageType(
   "v1.StatusResponse",
   () => [
-    { no: 1, name: "connection_status", kind: "enum", T: proto3.getEnumType(StatusResponse_ConnectionStatus) },
+    { no: 1, name: "connectionStatus", kind: "enum", T: proto3.getEnumType(StatusResponse_ConnectionStatus) },
     { no: 2, name: "node", kind: "message", T: MeshNode },
   ],
 );

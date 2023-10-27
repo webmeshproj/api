@@ -3180,7 +3180,7 @@ only available on nodes that are able to provide storage.</p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the unique identifier of this connection. If not provided
+                  <td><p>ID is the unique identifier of this connection. If not provided
 one will be generated. </p></td>
                 </tr>
               
@@ -3188,56 +3188,56 @@ one will be generated. </p></td>
                   <td>authType</td>
                   <td><a href="#v1.ConnectRequest.AuthMethod">ConnectRequest.AuthMethod</a></td>
                   <td></td>
-                  <td><p>authType is the type of authentication to use. </p></td>
+                  <td><p>AuthType is the type of authentication to use. </p></td>
                 </tr>
               
                 <tr>
                   <td>authCredentials</td>
                   <td><a href="#v1.ConnectRequest.AuthCredentialsEntry">ConnectRequest.AuthCredentialsEntry</a></td>
                   <td>repeated</td>
-                  <td><p>authCredentials are additional credentials as required by the authType. </p></td>
+                  <td><p>AuthCredentials are additional credentials as required by the authType. </p></td>
                 </tr>
               
                 <tr>
                   <td>addrType</td>
                   <td><a href="#v1.ConnectRequest.AddrType">ConnectRequest.AddrType</a></td>
                   <td></td>
-                  <td><p>addrType is the type of join addresses in the addrs list. </p></td>
+                  <td><p>AddrType is the type of join addresses in the addrs list. </p></td>
                 </tr>
               
                 <tr>
                   <td>addrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>addrs are the join addresses to use to connect to the mesh. </p></td>
+                  <td><p>Addrs are the join addresses to use to connect to the mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>networking</td>
                   <td><a href="#v1.MeshConnNetworking">MeshConnNetworking</a></td>
                   <td></td>
-                  <td><p>networking is the networking configuration to use. </p></td>
+                  <td><p>Networking is the networking configuration to use. </p></td>
                 </tr>
               
                 <tr>
                   <td>services</td>
                   <td><a href="#v1.MeshConnServices">MeshConnServices</a></td>
                   <td></td>
-                  <td><p>services are the services to expose to other nodes on the mesh. </p></td>
+                  <td><p>Services are the services to expose to other nodes on the mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>bootstrap</td>
                   <td><a href="#v1.MeshConnBootstrap">MeshConnBootstrap</a></td>
                   <td></td>
-                  <td><p>bootstrap are options for bootstrapping a new mesh. </p></td>
+                  <td><p>Bootstrap are options for bootstrapping a new mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>tls</td>
                   <td><a href="#v1.MeshConnTLS">MeshConnTLS</a></td>
                   <td></td>
-                  <td><p>tls are TLS configurations for the mesh connection. </p></td>
+                  <td><p>TLS are TLS configurations for the mesh connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3292,35 +3292,35 @@ one will be generated. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the unique identifier of this connection. </p></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
                 </tr>
               
                 <tr>
                   <td>nodeID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node id is the unique identifier of the node. </p></td>
+                  <td><p>Node id is the unique identifier of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>meshDomain</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>mesh domain is the domain of the mesh. </p></td>
+                  <td><p>Mesh domain is the domain of the mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>ipv4</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ipv4 is the IPv4 address of the node. </p></td>
+                  <td><p>IPv4 is the IPv4 address of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>ipv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ipv6 is the IPv6 address of the node. </p></td>
+                  <td><p>IPv6 is the IPv6 address of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -3344,7 +3344,7 @@ one will be generated. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the unique identifier of this connection. </p></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3375,7 +3375,7 @@ one will be generated. </p></td>
                   <td>enabled</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>enabled indicates whether or not to bootstrap a new mesh. </p></td>
+                  <td><p>Enabled indicates whether or not to bootstrap a new mesh. </p></td>
                 </tr>
               
             </tbody>
@@ -3423,7 +3423,7 @@ one will be generated. </p></td>
                   <td>enabled</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>enabled indicates whether or not to expose services to other nodes. </p></td>
+                  <td><p>Enabled indicates whether or not to expose services to other nodes. </p></td>
                 </tr>
               
             </tbody>
@@ -3447,21 +3447,21 @@ one will be generated. </p></td>
                   <td>enabled</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>enabled indicates whether or not to use TLS. </p></td>
+                  <td><p>Enabled indicates whether or not to use TLS. </p></td>
                 </tr>
               
                 <tr>
                   <td>caCertData</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>caCert is a PEM-encoded CA certificate to use for TLS. </p></td>
+                  <td><p>CACert is a PEM-encoded CA certificate to use for TLS. </p></td>
                 </tr>
               
                 <tr>
                   <td>caCertFile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>caCertFile is a file on the local system containing a 
+                  <td><p>CACertFile is a file on the local system containing a 
 PEM-encoded CA certificate to use for TLS. </p></td>
                 </tr>
               
@@ -3469,14 +3469,14 @@ PEM-encoded CA certificate to use for TLS. </p></td>
                   <td>certData</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>certData is a PEM-encoded certificate to use for TLS. </p></td>
+                  <td><p>CertData is a PEM-encoded certificate to use for TLS. </p></td>
                 </tr>
               
                 <tr>
                   <td>certFile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>certFile is a file on the local system containing a
+                  <td><p>CertFile is a file on the local system containing a
 PEM-encoded certificate to use for TLS. </p></td>
                 </tr>
               
@@ -3484,14 +3484,14 @@ PEM-encoded certificate to use for TLS. </p></td>
                   <td>keyData</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>keyData is a PEM-encoded private key to use for TLS. </p></td>
+                  <td><p>KeyData is a PEM-encoded private key to use for TLS. </p></td>
                 </tr>
               
                 <tr>
                   <td>keyFile</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>keyFile is a file on the local system containing a
+                  <td><p>KeyFile is a file on the local system containing a
 PEM-encoded private key to use for TLS. </p></td>
                 </tr>
               
@@ -3499,7 +3499,7 @@ PEM-encoded private key to use for TLS. </p></td>
                   <td>verifyChainOnly</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>verifyChainOnly indicates whether or not to only verify the
+                  <td><p>VerifyChainOnly indicates whether or not to only verify the
 certificate chain. </p></td>
                 </tr>
               
@@ -3507,7 +3507,7 @@ certificate chain. </p></td>
                   <td>skipVerify</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>skipVerify indicates whether or not to skip verification of the
+                  <td><p>SkipVerify indicates whether or not to skip verification of the
 server certificate. </p></td>
                 </tr>
               
@@ -3532,7 +3532,8 @@ server certificate. </p></td>
                   <td>ids</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>ids are the unique identifiers of the connections to retrieve metrics for. </p></td>
+                  <td><p>IDs are the unique identifiers of the connections to retrieve metrics for.
+If not provided, metrics for all connections will be returned. </p></td>
                 </tr>
               
             </tbody>
@@ -3556,7 +3557,7 @@ server certificate. </p></td>
                   <td>interfaces</td>
                   <td><a href="#v1.MetricsResponse.InterfacesEntry">MetricsResponse.InterfacesEntry</a></td>
                   <td>repeated</td>
-                  <td><p>interfaces is a map of interface names to metrics. </p></td>
+                  <td><p>Interfaces is a map of network IDs to their interface metrics. </p></td>
                 </tr>
               
             </tbody>
@@ -3611,7 +3612,7 @@ server certificate. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the unique identifier of this connection. </p></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3632,17 +3633,17 @@ server certificate. </p></td>
             <tbody>
               
                 <tr>
-                  <td>connection_status</td>
+                  <td>connectionStatus</td>
                   <td><a href="#v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</a></td>
                   <td></td>
-                  <td><p>connection status is the status of the connection. </p></td>
+                  <td><p>ConnectionStatus is the status of the connection. </p></td>
                 </tr>
               
                 <tr>
                   <td>node</td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
-                  <td><p>node is the node status. This is only populated if the node is connected. </p></td>
+                  <td><p>Node is the node status. This is only populated if the node is connected. </p></td>
                 </tr>
               
             </tbody>
@@ -3684,7 +3685,7 @@ server certificate. </p></td>
         </table>
       
         <h3 id="v1.ConnectRequest.AuthHeader">ConnectRequest.AuthHeader</h3>
-        <p>AuthHeader is an enumeration of headers that coorespond to the AuthMethod.</p><p>they are used to pass authentication credentials to the daemon. Enums </p><p>cannot be used as map keys, so their string values are used instead.</p>
+        <p>AuthHeader is an enumeration of headers that coorespond to the AuthMethod.</p><p>They are used to pass authentication credentials to the daemon. Enums </p><p>cannot be used as map keys, so their string values are used instead.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
