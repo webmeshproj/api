@@ -52,7 +52,7 @@ message ConnectRequest {
     };
     // id is the unique identifier of this connection. If not provided
     // one will be generated.
-    string id = 1;
+    string id = 1 [(buf.validate.field).string.min_len = 1];
     // authType is the type of authentication to use.
     AuthMethod authType = 2 [(buf.validate.field).enum.defined_only = true];
     // authCredentials are additional credentials as required by the authType. 
@@ -60,7 +60,7 @@ message ConnectRequest {
     // addrType is the type of join addresses in the addrs list.
     AddrType addrType = 4 [(buf.validate.field).enum.defined_only = true];
     // addrs are the join addresses to use to connect to the mesh.
-    repeated string addrs = 5 [(buf.validate.field).required = true];
+    repeated string addrs = 5 [(buf.validate.field).repeated.min_items = 1];
     // networking is the networking configuration to use.
     MeshConnNetworking networking = 6 [(buf.validate.field).ignore_empty = true];
     // services are the services to expose to other nodes on the mesh.
@@ -114,7 +114,7 @@ message ConnectResponse {
 // for allowing the application to disconnect from a specific mesh.
 message DisconnectRequest {
     // id is the unique identifier of this connection.
-    string id = 1;
+    string id = 1 [(buf.validate.field).required = true, (buf.validate.field).string.min_len = 1];
 }
 
 // DisconnectResponse is returned by the Disconnect RPC.
@@ -123,8 +123,8 @@ message DisconnectResponse {}
 // MetricsRequest is sent by the application to a daemon to retrieve interface
 // metrics for a mesh connection.
 message MetricsRequest {
-    // id is the unique identifier of this connection.
-    string id = 1;
+    // ids are the unique identifiers of the connections to retrieve metrics for.
+    repeated string ids = 1;
 }
 
 // MetricsResponse is a message containing interface metrics.
@@ -137,7 +137,7 @@ message MetricsResponse {
 // of a mesh connection.
 message StatusRequest {
     // id is the unique identifier of this connection.
-    string id = 1;
+    string id = 1 [(buf.validate.field).required = true];
 }
 
 // StatusResponse is a message containing the status of the node.

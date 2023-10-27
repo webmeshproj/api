@@ -404,11 +404,11 @@ export declare class DisconnectResponse extends Message<DisconnectResponse> {
  */
 export declare class MetricsRequest extends Message<MetricsRequest> {
   /**
-   * id is the unique identifier of this connection.
+   * ids are the unique identifiers of the connections to retrieve metrics for.
    *
-   * @generated from field: string id = 1;
+   * @generated from field: repeated string ids = 1;
    */
-  id: string;
+  ids: string[];
 
   constructor(data?: PartialMessage<MetricsRequest>);
 

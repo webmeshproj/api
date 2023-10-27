@@ -168,7 +168,7 @@ export const DisconnectResponse = proto3.makeMessageType(
 export const MetricsRequest = proto3.makeMessageType(
   "v1.MetricsRequest",
   () => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ],
 );
 
