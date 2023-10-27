@@ -70,8 +70,8 @@ message ConnectRequest {
     // ID is the unique identifier of this connection. If not provided
     // one will be generated.
     string id = 1 [(buf.validate.field).string.max_len = 64];
-    // AuthType is the type of authentication to use.
-    AuthMethod authType = 2 [(buf.validate.field).enum.defined_only = true];
+    // AuthMethod is the type of authentication to use.
+    AuthMethod authMethod = 2 [(buf.validate.field).enum.defined_only = true];
     // AuthCredentials are additional credentials as required by the authType. 
     map<string, bytes> authCredentials = 3;
     // AddrType is the type of join addresses in the addrs list.

@@ -30,7 +30,7 @@ export const ConnectRequest = proto3.makeMessageType(
   "v1.ConnectRequest",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "authType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AuthMethod) },
+    { no: 2, name: "authMethod", kind: "enum", T: proto3.getEnumType(ConnectRequest_AuthMethod) },
     { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 12 /* ScalarType.BYTES */} },
     { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },

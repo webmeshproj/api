@@ -59,7 +59,7 @@ func (m *ConnectRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for AuthType
+	// no validation rules for AuthMethod
 
 	// no validation rules for AuthCredentials
 

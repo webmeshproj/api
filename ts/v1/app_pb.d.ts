@@ -37,11 +37,11 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
   id: string;
 
   /**
-   * AuthType is the type of authentication to use.
+   * AuthMethod is the type of authentication to use.
    *
-   * @generated from field: v1.ConnectRequest.AuthMethod authType = 2;
+   * @generated from field: v1.ConnectRequest.AuthMethod authMethod = 2;
    */
-  authType: ConnectRequest_AuthMethod;
+  authMethod: ConnectRequest_AuthMethod;
 
   /**
    * AuthCredentials are additional credentials as required by the authType. 
