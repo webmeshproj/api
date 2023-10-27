@@ -328,48 +328,24 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
   caCertData: Uint8Array;
 
   /**
-   * CACertFile is a file on the local system containing a 
-   * PEM-encoded CA certificate to use for TLS.
-   *
-   * @generated from field: string caCertFile = 3;
-   */
-  caCertFile: string;
-
-  /**
    * CertData is a PEM-encoded certificate to use for TLS.
    *
-   * @generated from field: bytes certData = 4;
+   * @generated from field: bytes certData = 3;
    */
   certData: Uint8Array;
 
   /**
-   * CertFile is a file on the local system containing a
-   * PEM-encoded certificate to use for TLS.
-   *
-   * @generated from field: string certFile = 5;
-   */
-  certFile: string;
-
-  /**
    * KeyData is a PEM-encoded private key to use for TLS.
    *
-   * @generated from field: bytes keyData = 6;
+   * @generated from field: bytes keyData = 4;
    */
   keyData: Uint8Array;
-
-  /**
-   * KeyFile is a file on the local system containing a
-   * PEM-encoded private key to use for TLS.
-   *
-   * @generated from field: string keyFile = 7;
-   */
-  keyFile: string;
 
   /**
    * VerifyChainOnly indicates whether or not to only verify the
    * certificate chain.
    *
-   * @generated from field: bool verifyChainOnly = 8;
+   * @generated from field: bool verifyChainOnly = 5;
    */
   verifyChainOnly: boolean;
 
@@ -377,7 +353,7 @@ export declare class MeshConnTLS extends Message<MeshConnTLS> {
    * SkipVerify indicates whether or not to skip verification of the
    * server certificate.
    *
-   * @generated from field: bool skipVerify = 9;
+   * @generated from field: bool skipVerify = 6;
    */
   skipVerify: boolean;
 

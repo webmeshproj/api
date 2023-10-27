@@ -86,6 +86,12 @@ message ConnectRequest {
     MeshConnBootstrap bootstrap = 8;
     // TLS are TLS configurations for the mesh connection.
     MeshConnTLS tls = 9;
+    
+    option (buf.validate.message).cel = {
+        id: "connectRequest.tlsRequiredFields",
+        message: "Must provide a TLS certificate and key for mTLS authentication",
+        expression: "this.authMethod == 4 && (!this.tls.certData || !this.tls.keyData)",
+    };
 }
 
 // MeshConnNetworking are configurations for networking on a mesh.
@@ -112,25 +118,16 @@ message MeshConnTLS {
     bool enabled = 1;
     // CACert is a PEM-encoded CA certificate to use for TLS.
     bytes caCertData = 2;
-    // CACertFile is a file on the local system containing a 
-    // PEM-encoded CA certificate to use for TLS.
-    string caCertFile = 3;
     // CertData is a PEM-encoded certificate to use for TLS.
-    bytes certData = 4;
-    // CertFile is a file on the local system containing a
-    // PEM-encoded certificate to use for TLS.
-    string certFile = 5;
+    bytes certData = 3;
     // KeyData is a PEM-encoded private key to use for TLS.
-    bytes keyData = 6;
-    // KeyFile is a file on the local system containing a
-    // PEM-encoded private key to use for TLS.
-    string keyFile = 7;
+    bytes keyData = 4;
     // VerifyChainOnly indicates whether or not to only verify the
     // certificate chain.
-    bool verifyChainOnly = 8;
+    bool verifyChainOnly = 5;
     // SkipVerify indicates whether or not to skip verification of the
     // server certificate.
-    bool skipVerify = 9;
+    bool skipVerify = 6;
 };
 
 // ConnectResponse is returned by the Connect RPC.

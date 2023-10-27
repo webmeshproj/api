@@ -595,15 +595,9 @@ func (m *MeshConnTLS) validate(all bool) error {
 
 	// no validation rules for CaCertData
 
-	// no validation rules for CaCertFile
-
 	// no validation rules for CertData
 
-	// no validation rules for CertFile
-
 	// no validation rules for KeyData
-
-	// no validation rules for KeyFile
 
 	// no validation rules for VerifyChainOnly
 
