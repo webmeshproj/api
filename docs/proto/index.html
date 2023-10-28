@@ -441,6 +441,18 @@
             <ul>
               
                 <li>
+                  <a href="#v1.AppPublishRequest"><span class="badge">M</span>AppPublishRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AppQueryRequest"><span class="badge">M</span>AppQueryRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AppSubscribeRequest"><span class="badge">M</span>AppSubscribeRequest</a>
+                </li>
+              
+                <li>
                   <a href="#v1.ConnectRequest"><span class="badge">M</span>ConnectRequest</a>
                 </li>
               
@@ -3166,6 +3178,99 @@ only available on nodes that are able to provide storage.</p></td>
       <p></p>
 
       
+        <h3 id="v1.AppPublishRequest">AppPublishRequest</h3>
+        <p>AppPublishRequest is sent by the application to a daemon to publish to a mesh's storage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>publish</td>
+                  <td><a href="#v1.PublishRequest">PublishRequest</a></td>
+                  <td></td>
+                  <td><p>Publish is the publish to execute. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AppQueryRequest">AppQueryRequest</h3>
+        <p>AppQueryRequest is sent by the application to a daemon to query a mesh's storage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>query</td>
+                  <td><a href="#v1.QueryRequest">QueryRequest</a></td>
+                  <td></td>
+                  <td><p>Query is the query to execute. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AppSubscribeRequest">AppSubscribeRequest</h3>
+        <p>AppSubscribeRequest is sent by the application to a daemon to subscribe to a mesh's storage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>subscribe</td>
+                  <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                  <td></td>
+                  <td><p>Subscribe is the subscription to execute. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.ConnectRequest">ConnectRequest</h3>
         <p>ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.</p>
 
@@ -3800,13 +3905,6 @@ The TLS object should be used to configure the TLS connection.</p></td>
               </tr>
             
               <tr>
-                <td>Query</td>
-                <td><a href="#v1.QueryRequest">QueryRequest</a></td>
-                <td><a href="#v1.QueryResponse">QueryResponse</a></td>
-                <td><p>Query is used to query a mesh for information.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Metrics</td>
                 <td><a href="#v1.MetricsRequest">MetricsRequest</a></td>
                 <td><a href="#v1.MetricsResponse">MetricsResponse</a></td>
@@ -3821,15 +3919,22 @@ The TLS object should be used to configure the TLS connection.</p></td>
               </tr>
             
               <tr>
+                <td>Query</td>
+                <td><a href="#v1.AppQueryRequest">AppQueryRequest</a></td>
+                <td><a href="#v1.QueryResponse">QueryResponse</a></td>
+                <td><p>Query is used to query a mesh for information.</p></td>
+              </tr>
+            
+              <tr>
                 <td>Subscribe</td>
-                <td><a href="#v1.SubscribeRequest">SubscribeRequest</a></td>
+                <td><a href="#v1.AppSubscribeRequest">AppSubscribeRequest</a></td>
                 <td><a href="#v1.SubscriptionEvent">SubscriptionEvent</a> stream</td>
                 <td><p>Subscribe is used to subscribe to events in a mesh database.</p></td>
               </tr>
             
               <tr>
                 <td>Publish</td>
-                <td><a href="#v1.PublishRequest">PublishRequest</a></td>
+                <td><a href="#v1.AppPublishRequest">AppPublishRequest</a></td>
                 <td><a href="#v1.PublishResponse">PublishResponse</a></td>
                 <td><p>Publish is used to publish events to a mesh database.</p></td>
               </tr>

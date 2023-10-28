@@ -21,6 +21,7 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
 import type { InterfaceMetrics, MeshNode } from "./node_pb.js";
+import type { PublishRequest, QueryRequest, SubscribeRequest } from "./storage_query_pb.js";
 
 /**
  * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
@@ -625,5 +626,110 @@ export declare enum StatusResponse_ConnectionStatus {
    * @generated from enum value: CONNECTED = 2;
    */
   CONNECTED = 2,
+}
+
+/**
+ * AppQueryRequest is sent by the application to a daemon to query a mesh's storage.
+ *
+ * @generated from message v1.AppQueryRequest
+ */
+export declare class AppQueryRequest extends Message<AppQueryRequest> {
+  /**
+   * ID is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Query is the query to execute.
+   *
+   * @generated from field: v1.QueryRequest query = 2;
+   */
+  query?: QueryRequest;
+
+  constructor(data?: PartialMessage<AppQueryRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.AppQueryRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppQueryRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppQueryRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppQueryRequest;
+
+  static equals(a: AppQueryRequest | PlainMessage<AppQueryRequest> | undefined, b: AppQueryRequest | PlainMessage<AppQueryRequest> | undefined): boolean;
+}
+
+/**
+ * AppSubscribeRequest is sent by the application to a daemon to subscribe to a mesh's storage.
+ *
+ * @generated from message v1.AppSubscribeRequest
+ */
+export declare class AppSubscribeRequest extends Message<AppSubscribeRequest> {
+  /**
+   * ID is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Subscribe is the subscription to execute.
+   *
+   * @generated from field: v1.SubscribeRequest subscribe = 2;
+   */
+  subscribe?: SubscribeRequest;
+
+  constructor(data?: PartialMessage<AppSubscribeRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.AppSubscribeRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppSubscribeRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppSubscribeRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppSubscribeRequest;
+
+  static equals(a: AppSubscribeRequest | PlainMessage<AppSubscribeRequest> | undefined, b: AppSubscribeRequest | PlainMessage<AppSubscribeRequest> | undefined): boolean;
+}
+
+/**
+ * AppPublishRequest is sent by the application to a daemon to publish to a mesh's storage.
+ *
+ * @generated from message v1.AppPublishRequest
+ */
+export declare class AppPublishRequest extends Message<AppPublishRequest> {
+  /**
+   * ID is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * Publish is the publish to execute.
+   *
+   * @generated from field: v1.PublishRequest publish = 2;
+   */
+  publish?: PublishRequest;
+
+  constructor(data?: PartialMessage<AppPublishRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.AppPublishRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppPublishRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppPublishRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppPublishRequest;
+
+  static equals(a: AppPublishRequest | PlainMessage<AppPublishRequest> | undefined, b: AppPublishRequest | PlainMessage<AppPublishRequest> | undefined): boolean;
 }
 

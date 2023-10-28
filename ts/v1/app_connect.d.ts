@@ -18,9 +18,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
+import { AppPublishRequest, AppQueryRequest, AppSubscribeRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
-import { PublishRequest, PublishResponse, QueryRequest, QueryResponse, SubscribeRequest, SubscriptionEvent } from "./storage_query_pb.js";
+import { PublishResponse, QueryResponse, SubscriptionEvent } from "./storage_query_pb.js";
 
 /**
  * AppDaemon is exposed by nodes running in the app-daemon mode. This mode
@@ -56,17 +56,6 @@ export declare const AppDaemon: {
       readonly kind: MethodKind.Unary,
     },
     /**
-     * Query is used to query a mesh for information.
-     *
-     * @generated from rpc v1.AppDaemon.Query
-     */
-    readonly query: {
-      readonly name: "Query",
-      readonly I: typeof QueryRequest,
-      readonly O: typeof QueryResponse,
-      readonly kind: MethodKind.Unary,
-    },
-    /**
      * Metrics is used to retrieve interface metrics for a mesh connection.
      *
      * @generated from rpc v1.AppDaemon.Metrics
@@ -89,13 +78,24 @@ export declare const AppDaemon: {
       readonly kind: MethodKind.Unary,
     },
     /**
+     * Query is used to query a mesh for information.
+     *
+     * @generated from rpc v1.AppDaemon.Query
+     */
+    readonly query: {
+      readonly name: "Query",
+      readonly I: typeof AppQueryRequest,
+      readonly O: typeof QueryResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
      * Subscribe is used to subscribe to events in a mesh database.
      *
      * @generated from rpc v1.AppDaemon.Subscribe
      */
     readonly subscribe: {
       readonly name: "Subscribe",
-      readonly I: typeof SubscribeRequest,
+      readonly I: typeof AppSubscribeRequest,
       readonly O: typeof SubscriptionEvent,
       readonly kind: MethodKind.ServerStreaming,
     },
@@ -106,7 +106,7 @@ export declare const AppDaemon: {
      */
     readonly publish: {
       readonly name: "Publish",
-      readonly I: typeof PublishRequest,
+      readonly I: typeof AppPublishRequest,
       readonly O: typeof PublishResponse,
       readonly kind: MethodKind.Unary,
     },

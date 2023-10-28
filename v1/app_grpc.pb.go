@@ -36,9 +36,9 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	AppDaemon_Connect_FullMethodName    = "/v1.AppDaemon/Connect"
 	AppDaemon_Disconnect_FullMethodName = "/v1.AppDaemon/Disconnect"
-	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
 	AppDaemon_Metrics_FullMethodName    = "/v1.AppDaemon/Metrics"
 	AppDaemon_Status_FullMethodName     = "/v1.AppDaemon/Status"
+	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
 	AppDaemon_Subscribe_FullMethodName  = "/v1.AppDaemon/Subscribe"
 	AppDaemon_Publish_FullMethodName    = "/v1.AppDaemon/Publish"
 )
@@ -51,16 +51,16 @@ type AppDaemonClient interface {
 	Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (*ConnectResponse, error)
 	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
-	// Query is used to query a mesh for information.
-	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 	// Metrics is used to retrieve interface metrics for a mesh connection.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
 	// Status is used to retrieve the status a mesh connection.
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// Query is used to query a mesh for information.
+	Query(ctx context.Context, in *AppQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 	// Subscribe is used to subscribe to events in a mesh database.
-	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
+	Subscribe(ctx context.Context, in *AppSubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
 	// Publish is used to publish events to a mesh database.
-	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
+	Publish(ctx context.Context, in *AppPublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
 }
 
 type appDaemonClient struct {
@@ -89,15 +89,6 @@ func (c *appDaemonClient) Disconnect(ctx context.Context, in *DisconnectRequest,
 	return out, nil
 }
 
-func (c *appDaemonClient) Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
-	out := new(QueryResponse)
-	err := c.cc.Invoke(ctx, AppDaemon_Query_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *appDaemonClient) Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error) {
 	out := new(MetricsResponse)
 	err := c.cc.Invoke(ctx, AppDaemon_Metrics_FullMethodName, in, out, opts...)
@@ -116,7 +107,16 @@ func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ..
 	return out, nil
 }
 
-func (c *appDaemonClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error) {
+func (c *appDaemonClient) Query(ctx context.Context, in *AppQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error) {
+	out := new(QueryResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_Query_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appDaemonClient) Subscribe(ctx context.Context, in *AppSubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error) {
 	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[0], AppDaemon_Subscribe_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
@@ -148,7 +148,7 @@ func (x *appDaemonSubscribeClient) Recv() (*SubscriptionEvent, error) {
 	return m, nil
 }
 
-func (c *appDaemonClient) Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
+func (c *appDaemonClient) Publish(ctx context.Context, in *AppPublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
 	out := new(PublishResponse)
 	err := c.cc.Invoke(ctx, AppDaemon_Publish_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -165,16 +165,16 @@ type AppDaemonServer interface {
 	Connect(context.Context, *ConnectRequest) (*ConnectResponse, error)
 	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
-	// Query is used to query a mesh for information.
-	Query(context.Context, *QueryRequest) (*QueryResponse, error)
 	// Metrics is used to retrieve interface metrics for a mesh connection.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
 	// Status is used to retrieve the status a mesh connection.
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
+	// Query is used to query a mesh for information.
+	Query(context.Context, *AppQueryRequest) (*QueryResponse, error)
 	// Subscribe is used to subscribe to events in a mesh database.
-	Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error
+	Subscribe(*AppSubscribeRequest, AppDaemon_SubscribeServer) error
 	// Publish is used to publish events to a mesh database.
-	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
+	Publish(context.Context, *AppPublishRequest) (*PublishResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -188,19 +188,19 @@ func (UnimplementedAppDaemonServer) Connect(context.Context, *ConnectRequest) (*
 func (UnimplementedAppDaemonServer) Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Disconnect not implemented")
 }
-func (UnimplementedAppDaemonServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
-}
 func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
 }
 func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*StatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
 }
-func (UnimplementedAppDaemonServer) Subscribe(*SubscribeRequest, AppDaemon_SubscribeServer) error {
+func (UnimplementedAppDaemonServer) Query(context.Context, *AppQueryRequest) (*QueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedAppDaemonServer) Subscribe(*AppSubscribeRequest, AppDaemon_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (UnimplementedAppDaemonServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
+func (UnimplementedAppDaemonServer) Publish(context.Context, *AppPublishRequest) (*PublishResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
@@ -252,24 +252,6 @@ func _AppDaemon_Disconnect_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppDaemon_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppDaemonServer).Query(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppDaemon_Query_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).Query(ctx, req.(*QueryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AppDaemon_Metrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MetricsRequest)
 	if err := dec(in); err != nil {
@@ -306,8 +288,26 @@ func _AppDaemon_Status_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AppQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Query(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Query_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Query(ctx, req.(*AppQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AppDaemon_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeRequest)
+	m := new(AppSubscribeRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -328,7 +328,7 @@ func (x *appDaemonSubscribeServer) Send(m *SubscriptionEvent) error {
 }
 
 func _AppDaemon_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PublishRequest)
+	in := new(AppPublishRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -340,7 +340,7 @@ func _AppDaemon_Publish_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: AppDaemon_Publish_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).Publish(ctx, req.(*PublishRequest))
+		return srv.(AppDaemonServer).Publish(ctx, req.(*AppPublishRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -361,16 +361,16 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppDaemon_Disconnect_Handler,
 		},
 		{
-			MethodName: "Query",
-			Handler:    _AppDaemon_Query_Handler,
-		},
-		{
 			MethodName: "Metrics",
 			Handler:    _AppDaemon_Metrics_Handler,
 		},
 		{
 			MethodName: "Status",
 			Handler:    _AppDaemon_Status_Handler,
+		},
+		{
+			MethodName: "Query",
+			Handler:    _AppDaemon_Query_Handler,
 		},
 		{
 			MethodName: "Publish",

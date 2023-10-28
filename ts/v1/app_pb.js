@@ -20,6 +20,7 @@
 
 import { proto3 } from "@bufbuild/protobuf";
 import { InterfaceMetrics, MeshNode } from "./node_pb.js";
+import { PublishRequest, QueryRequest, SubscribeRequest } from "./storage_query_pb.js";
 
 /**
  * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
@@ -242,6 +243,45 @@ export const StatusResponse_ConnectionStatus = proto3.makeEnum(
     {no: 0, name: "DISCONNECTED"},
     {no: 1, name: "CONNECTING"},
     {no: 2, name: "CONNECTED"},
+  ],
+);
+
+/**
+ * AppQueryRequest is sent by the application to a daemon to query a mesh's storage.
+ *
+ * @generated from message v1.AppQueryRequest
+ */
+export const AppQueryRequest = proto3.makeMessageType(
+  "v1.AppQueryRequest",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "query", kind: "message", T: QueryRequest },
+  ],
+);
+
+/**
+ * AppSubscribeRequest is sent by the application to a daemon to subscribe to a mesh's storage.
+ *
+ * @generated from message v1.AppSubscribeRequest
+ */
+export const AppSubscribeRequest = proto3.makeMessageType(
+  "v1.AppSubscribeRequest",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "subscribe", kind: "message", T: SubscribeRequest },
+  ],
+);
+
+/**
+ * AppPublishRequest is sent by the application to a daemon to publish to a mesh's storage.
+ *
+ * @generated from message v1.AppPublishRequest
+ */
+export const AppPublishRequest = proto3.makeMessageType(
+  "v1.AppPublishRequest",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "publish", kind: "message", T: PublishRequest },
   ],
 );
 
