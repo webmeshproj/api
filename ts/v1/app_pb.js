@@ -124,6 +124,21 @@ export const MeshConnBootstrap = proto3.makeMessageType(
   "v1.MeshConnBootstrap",
   () => [
     { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "domain", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "ipv4Network", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "rbacEnabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "defaultNetworkACL", kind: "enum", T: proto3.getEnumType(MeshConnBootstrap_DefaultNetworkACL) },
+  ],
+);
+
+/**
+ * @generated from enum v1.MeshConnBootstrap.DefaultNetworkACL
+ */
+export const MeshConnBootstrap_DefaultNetworkACL = proto3.makeEnum(
+  "v1.MeshConnBootstrap.DefaultNetworkACL",
+  [
+    {no: 0, name: "ACCEPT"},
+    {no: 1, name: "DROP"},
   ],
 );
 

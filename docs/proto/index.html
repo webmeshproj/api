@@ -522,6 +522,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.MeshConnBootstrap.DefaultNetworkACL"><span class="badge">E</span>MeshConnBootstrap.DefaultNetworkACL</a>
+                </li>
+              
+                <li>
                   <a href="#v1.StatusResponse.ConnectionStatus"><span class="badge">E</span>StatusResponse.ConnectionStatus</a>
                 </li>
               
@@ -3497,6 +3501,34 @@ one will be generated. </p></td>
                   <td><p>Enabled indicates whether or not to bootstrap a new mesh. </p></td>
                 </tr>
               
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Domain is the domain of the mesh. Defaults to &#34;webmesh.internal&#34;. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ipv4Network</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>IPv4Network is the IPv4 network of the mesh. Defaults to 172.16.0.0/12. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rbacEnabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>RBACEnabled indicates whether or not to enable RBAC on the mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>defaultNetworkACL</td>
+                  <td><a href="#v1.MeshConnBootstrap.DefaultNetworkACL">MeshConnBootstrap.DefaultNetworkACL</a></td>
+                  <td></td>
+                  <td><p>DefaultNetworkACL is the default network ACL to use for the mesh. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3867,6 +3899,29 @@ the join addresses to use to connect to the mesh.</p></td>
                 <td>4</td>
                 <td><p>MTLS is used to indicate that mutual TLS authentication is required.
 The TLS object should be used to configure the TLS connection.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.MeshConnBootstrap.DefaultNetworkACL">MeshConnBootstrap.DefaultNetworkACL</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACCEPT</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DROP</td>
+                <td>1</td>
+                <td><p></p></td>
               </tr>
             
           </tbody>

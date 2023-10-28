@@ -302,6 +302,34 @@ export declare class MeshConnBootstrap extends Message<MeshConnBootstrap> {
    */
   enabled: boolean;
 
+  /**
+   * Domain is the domain of the mesh. Defaults to "webmesh.internal".
+   *
+   * @generated from field: string domain = 2;
+   */
+  domain: string;
+
+  /**
+   * IPv4Network is the IPv4 network of the mesh. Defaults to 172.16.0.0/12.
+   *
+   * @generated from field: string ipv4Network = 3;
+   */
+  ipv4Network: string;
+
+  /**
+   * RBACEnabled indicates whether or not to enable RBAC on the mesh.
+   *
+   * @generated from field: bool rbacEnabled = 4;
+   */
+  rbacEnabled: boolean;
+
+  /**
+   * DefaultNetworkACL is the default network ACL to use for the mesh.
+   *
+   * @generated from field: v1.MeshConnBootstrap.DefaultNetworkACL defaultNetworkACL = 5;
+   */
+  defaultNetworkACL: MeshConnBootstrap_DefaultNetworkACL;
+
   constructor(data?: PartialMessage<MeshConnBootstrap>);
 
   static readonly runtime: typeof proto3;
@@ -315,6 +343,21 @@ export declare class MeshConnBootstrap extends Message<MeshConnBootstrap> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshConnBootstrap;
 
   static equals(a: MeshConnBootstrap | PlainMessage<MeshConnBootstrap> | undefined, b: MeshConnBootstrap | PlainMessage<MeshConnBootstrap> | undefined): boolean;
+}
+
+/**
+ * @generated from enum v1.MeshConnBootstrap.DefaultNetworkACL
+ */
+export declare enum MeshConnBootstrap_DefaultNetworkACL {
+  /**
+   * @generated from enum value: ACCEPT = 0;
+   */
+  ACCEPT = 0,
+
+  /**
+   * @generated from enum value: DROP = 1;
+   */
+  DROP = 1,
 }
 
 /**

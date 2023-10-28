@@ -491,6 +491,14 @@ func (m *MeshConnBootstrap) validate(all bool) error {
 
 	// no validation rules for Enabled
 
+	// no validation rules for Domain
+
+	// no validation rules for Ipv4Network
+
+	// no validation rules for RbacEnabled
+
+	// no validation rules for DefaultNetworkACL
+
 	if len(errors) > 0 {
 		return MeshConnBootstrapMultiError(errors)
 	}

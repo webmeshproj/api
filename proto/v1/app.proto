@@ -132,6 +132,20 @@ message MeshConnServices {
 message MeshConnBootstrap {
     // Enabled indicates whether or not to bootstrap a new mesh.
     bool enabled = 1;
+    // Domain is the domain of the mesh. Defaults to "webmesh.internal".
+    string domain = 2 [(buf.validate.field).string.hostname = true];
+    // IPv4Network is the IPv4 network of the mesh. Defaults to 172.16.0.0/12.
+    string ipv4Network = 3 [(buf.validate.field).string.ipv4 = true];
+    // RBACEnabled indicates whether or not to enable RBAC on the mesh.
+    bool rbacEnabled = 4;
+
+    enum DefaultNetworkACL {
+        ACCEPT = 0;
+        DROP = 1;
+    }
+
+    // DefaultNetworkACL is the default network ACL to use for the mesh.
+    DefaultNetworkACL defaultNetworkACL = 5 [(buf.validate.field).enum.defined_only = true];
 }
 
 // MeshhConnTLS are TLS configurations for a mesh connection.
