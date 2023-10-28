@@ -265,6 +265,15 @@ export declare class MeshConnServices extends Message<MeshConnServices> {
    */
   enabled: boolean;
 
+  /**
+   * Public indicates that the services should be exposed publicly.
+   * This is useful for allowing other nodes to connect to the mesh
+   * via this node's public IP address.
+   *
+   * @generated from field: bool public = 2;
+   */
+  public: boolean;
+
   constructor(data?: PartialMessage<MeshConnServices>);
 
   static readonly runtime: typeof proto3;

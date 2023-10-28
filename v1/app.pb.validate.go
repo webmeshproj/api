@@ -387,6 +387,8 @@ func (m *MeshConnServices) validate(all bool) error {
 
 	// no validation rules for Enabled
 
+	// no validation rules for Public
+
 	if len(errors) > 0 {
 		return MeshConnServicesMultiError(errors)
 	}

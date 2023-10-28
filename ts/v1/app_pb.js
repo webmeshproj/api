@@ -111,6 +111,7 @@ export const MeshConnServices = proto3.makeMessageType(
   "v1.MeshConnServices",
   () => [
     { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "public", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 

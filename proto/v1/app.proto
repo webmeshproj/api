@@ -122,6 +122,10 @@ message MeshConnNetworking {
 message MeshConnServices {
     // Enabled indicates whether or not to expose services to other nodes.
     bool enabled = 1;
+    // Public indicates that the services should be exposed publicly.
+    // This is useful for allowing other nodes to connect to the mesh
+    // via this node's public IP address.
+    bool public = 2;
 }
 
 // MeshConnBootstrap are configurations for bootstrapping a new mesh.
