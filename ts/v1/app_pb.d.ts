@@ -171,7 +171,7 @@ export declare enum ConnectRequest_AuthMethod {
 
   /**
    * MTLS is used to indicate that mutual TLS authentication is required.
-   * The tls object should be used to configure the TLS connection.
+   * The TLS object should be used to configure the TLS connection.
    *
    * @generated from enum value: MTLS = 4;
    */
@@ -215,20 +215,12 @@ export declare enum ConnectRequest_AuthHeader {
   LDAP_PASSWORD = 3,
 
   /**
-   * ID_KEY is the identity key for identity authentication.
-   * If not provided the configured key on the host will be used.
-   *
-   * @generated from enum value: ID_KEY = 4;
-   */
-  ID_KEY = 4,
-
-  /**
    * ADDRS_ENVELOPE is the header for a signed envelope containing
    * the join addresses to use to connect to the mesh.
    *
-   * @generated from enum value: ADDRS_ENVELOPE = 5;
+   * @generated from enum value: ADDRS_ENVELOPE = 4;
    */
-  ADDRS_ENVELOPE = 5,
+  ADDRS_ENVELOPE = 4,
 }
 
 /**

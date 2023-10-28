@@ -48,7 +48,7 @@ message ConnectRequest {
         // ID is used to indicate that an identity is required.
         ID = 3;
         // MTLS is used to indicate that mutual TLS authentication is required.
-        // The tls object should be used to configure the TLS connection.
+        // The TLS object should be used to configure the TLS connection.
         MTLS = 4;
     };
     // AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
@@ -63,12 +63,9 @@ message ConnectRequest {
         LDAP_USERNAME = 2;
         // LDAP_PASSWORD is the password for LDAP authentication.
         LDAP_PASSWORD = 3;
-        // ID_KEY is the identity key for identity authentication.
-        // If not provided the configured key on the host will be used.
-        ID_KEY = 4;
         // ADDRS_ENVELOPE is the header for a signed envelope containing
         // the join addresses to use to connect to the mesh.
-        ADDRS_ENVELOPE = 5;
+        ADDRS_ENVELOPE = 4;
     };
     // ID is the unique identifier of this connection. If not provided
     // one will be generated.
