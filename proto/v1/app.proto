@@ -88,9 +88,15 @@ message ConnectRequest {
     MeshConnTLS tls = 9;
 
     option (buf.validate.message).cel = {
-        id: "connectRequest.requiredAddresses",
+        id: "nonBootstrapConnectRequest.requiredAddresses",
         message: "Must provide at least one address when not bootstrapping",
         expression: "!this.bootstrap.enabled && this.addrs.length == 0",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "connectRequest.requiredAddresses",
+        message: "Must provide at least one address connecting via an address or multiaddr",
+        expression: "this.addrType != 2 && this.addrs.length == 0",
     };
 
     option (buf.validate.message).cel = {
