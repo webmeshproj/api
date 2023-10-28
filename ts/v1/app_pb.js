@@ -155,8 +155,10 @@ export const ConnectResponse = proto3.makeMessageType(
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "nodeID", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "meshDomain", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "ipv4", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "ipv6", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "ipv4Address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "ipv6Address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "ipv4Network", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "ipv6Network", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

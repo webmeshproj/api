@@ -710,9 +710,13 @@ func (m *ConnectResponse) validate(all bool) error {
 
 	// no validation rules for MeshDomain
 
-	// no validation rules for Ipv4
+	// no validation rules for Ipv4Address
 
-	// no validation rules for Ipv6
+	// no validation rules for Ipv6Address
+
+	// no validation rules for Ipv4Network
+
+	// no validation rules for Ipv6Network
 
 	if len(errors) > 0 {
 		return ConnectResponseMultiError(errors)

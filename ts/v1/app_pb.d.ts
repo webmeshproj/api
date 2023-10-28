@@ -410,18 +410,32 @@ export declare class ConnectResponse extends Message<ConnectResponse> {
   meshDomain: string;
 
   /**
-   * IPv4 is the IPv4 address of the node.
+   * IPv4Address is the IPv4 address of the node.
    *
-   * @generated from field: string ipv4 = 4;
+   * @generated from field: string ipv4Address = 4;
    */
-  ipv4: string;
+  ipv4Address: string;
 
   /**
-   * IPv6 is the IPv6 address of the node.
+   * IPv6Address is the IPv6 address of the node.
    *
-   * @generated from field: string ipv6 = 5;
+   * @generated from field: string ipv6Address = 5;
    */
-  ipv6: string;
+  ipv6Address: string;
+
+  /**
+   * IPv4Network is the IPv4 network of the mesh.
+   *
+   * @generated from field: string ipv4Network = 6;
+   */
+  ipv4Network: string;
+
+  /**
+   * IPv6Network is the IPv6 network of the mesh.
+   *
+   * @generated from field: string ipv6Network = 7;
+   */
+  ipv6Network: string;
 
   constructor(data?: PartialMessage<ConnectResponse>);
 

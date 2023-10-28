@@ -160,10 +160,14 @@ message ConnectResponse {
     string nodeID = 2;
     // Mesh domain is the domain of the mesh.
     string meshDomain = 3;
-    // IPv4 is the IPv4 address of the node.
-    string ipv4 = 4;
-    // IPv6 is the IPv6 address of the node.
-    string ipv6 = 5;
+    // IPv4Address is the IPv4 address of the node.
+    string ipv4Address = 4;
+    // IPv6Address is the IPv6 address of the node.
+    string ipv6Address = 5;
+    // IPv4Network is the IPv4 network of the mesh.
+    string ipv4Network = 6;
+    // IPv6Network is the IPv6 network of the mesh.
+    string ipv6Network = 7;
 }
 
 // DisconnectRequest is sent by an application to a daemon to disconnect
