@@ -96,13 +96,13 @@ message ConnectRequest {
     option (buf.validate.message).cel = {
         id: "connectRequest.mtlsConnectionSecurity",
         message: "Cannot disable TLS when using mTLS",
-        expression: "this.authMethod == 4 && this.tls.enabled",
+        expression: "this.authMethod != 4 && !this.tls.enabled",
     };
 
     option (buf.validate.message).cel = {
         id: "connectRequest.tlsRequiredFields",
         message: "Must provide a TLS certificate and key for mTLS authentication",
-        expression: "this.authMethod == 4 && size(this.tls.certData) > 0 && size(this.tls.keyData) > 0",
+        expression: "this.authMethod != 4 && size(this.tls.certData) > 0 && size(this.tls.keyData) > 0",
     };
 }
 
