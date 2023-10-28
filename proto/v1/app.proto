@@ -90,7 +90,7 @@ message ConnectRequest {
     option (buf.validate.message).cel = {
         id: "connectRequest.requiredAddresses",
         message: "Must provide at least one address string when not bootstrapping",
-        expression: "!this.bootstrap.enabled && size(this.addrs) > 0",
+        expression: "this.bootstrap.enabled || size(this.addrs) > 0",
     };
 
     option (buf.validate.message).cel = {
@@ -127,9 +127,9 @@ message MeshConnBootstrap {
     // Enabled indicates whether or not to bootstrap a new mesh.
     bool enabled = 1;
     // Domain is the domain of the mesh. Defaults to "webmesh.internal".
-    string domain = 2 [(buf.validate.field).string.hostname = true];
+    string domain = 2;
     // IPv4Network is the IPv4 network of the mesh. Defaults to 172.16.0.0/12.
-    string ipv4Network = 3 [(buf.validate.field).string.ipv4 = true];
+    string ipv4Network = 3;
     // RBACEnabled indicates whether or not to enable RBAC on the mesh.
     bool rbacEnabled = 4;
 
@@ -140,6 +140,18 @@ message MeshConnBootstrap {
 
     // DefaultNetworkACL is the default network ACL to use for the mesh.
     DefaultNetworkACL defaultNetworkACL = 5 [(buf.validate.field).enum.defined_only = true];
+
+    option (buf.validate.message).cel = {
+        id: "bootstrap.validHostname",
+        message: "Domain must be a valid hostname",
+        expression: "!this.enabled || size(this.domain) == 0 || this.domain.isHostname()",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "bootstrap.validIPv4Network",
+        message: "IPv4 network must be a valid IPv4 CIDR",
+        expression: "!this.enabled || size(this.ipv4Network) == 0 || this.ipv4Network.isIp(4)",
+    };
 }
 
 // MeshhConnTLS are TLS configurations for a mesh connection.
