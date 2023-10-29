@@ -8,19 +8,19 @@ managed:
 plugins:
   # Deep copy code for go.
   - plugin: deepcopy
-    out: .
+    out: go
     opt: paths=source_relative
   # Go types
   - plugin: buf.build/protocolbuffers/go
-    out: .
+    out: go
     opt: paths=source_relative
   # Go validators (not currently used)
   - plugin: buf.build/bufbuild/validate-go
-    out: .
+    out: go
     opt: paths=source_relative
   # Go gRPC
   - plugin: buf.build/grpc/go
-    out: .
+    out: go
     opt: paths=source_relative
   # Javascript/Typescript Types
   - plugin: buf.build/bufbuild/es
