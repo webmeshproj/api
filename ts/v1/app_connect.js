@@ -18,9 +18,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AppPublishRequest, AppQueryRequest, AppSubscribeRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
+import { AppQueryRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
-import { PublishResponse, QueryResponse, SubscriptionEvent } from "./storage_query_pb.js";
+import { QueryResponse } from "./storage_query_pb.js";
 
 /**
  * AppDaemon is exposed by nodes running in the app-daemon mode. This mode
@@ -56,7 +56,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Metrics is used to retrieve interface metrics for a mesh connection.
+     * Metrics is used to retrieve interface metrics for one or more mesh connections.
      *
      * @generated from rpc v1.AppDaemon.Metrics
      */
@@ -67,7 +67,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Status is used to retrieve the status a mesh connection.
+     * Status is used to retrieve the status of a mesh connection.
      *
      * @generated from rpc v1.AppDaemon.Status
      */
@@ -78,7 +78,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Query is used to query a mesh for information.
+     * Query is used to query a mesh connection for information.
      *
      * @generated from rpc v1.AppDaemon.Query
      */
@@ -86,28 +86,6 @@ export const AppDaemon = {
       name: "Query",
       I: AppQueryRequest,
       O: QueryResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * Subscribe is used to subscribe to events in a mesh database.
-     *
-     * @generated from rpc v1.AppDaemon.Subscribe
-     */
-    subscribe: {
-      name: "Subscribe",
-      I: AppSubscribeRequest,
-      O: SubscriptionEvent,
-      kind: MethodKind.ServerStreaming,
-    },
-    /**
-     * Publish is used to publish events to a mesh database.
-     *
-     * @generated from rpc v1.AppDaemon.Publish
-     */
-    publish: {
-      name: "Publish",
-      I: AppPublishRequest,
-      O: PublishResponse,
       kind: MethodKind.Unary,
     },
   }

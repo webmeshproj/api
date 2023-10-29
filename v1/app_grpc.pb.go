@@ -39,8 +39,6 @@ const (
 	AppDaemon_Metrics_FullMethodName    = "/v1.AppDaemon/Metrics"
 	AppDaemon_Status_FullMethodName     = "/v1.AppDaemon/Status"
 	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
-	AppDaemon_Subscribe_FullMethodName  = "/v1.AppDaemon/Subscribe"
-	AppDaemon_Publish_FullMethodName    = "/v1.AppDaemon/Publish"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -51,16 +49,12 @@ type AppDaemonClient interface {
 	Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (*ConnectResponse, error)
 	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
-	// Metrics is used to retrieve interface metrics for a mesh connection.
+	// Metrics is used to retrieve interface metrics for one or more mesh connections.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
-	// Status is used to retrieve the status a mesh connection.
+	// Status is used to retrieve the status of a mesh connection.
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	// Query is used to query a mesh for information.
+	// Query is used to query a mesh connection for information.
 	Query(ctx context.Context, in *AppQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
-	// Subscribe is used to subscribe to events in a mesh database.
-	Subscribe(ctx context.Context, in *AppSubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error)
-	// Publish is used to publish events to a mesh database.
-	Publish(ctx context.Context, in *AppPublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
 }
 
 type appDaemonClient struct {
@@ -116,47 +110,6 @@ func (c *appDaemonClient) Query(ctx context.Context, in *AppQueryRequest, opts .
 	return out, nil
 }
 
-func (c *appDaemonClient) Subscribe(ctx context.Context, in *AppSubscribeRequest, opts ...grpc.CallOption) (AppDaemon_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &AppDaemon_ServiceDesc.Streams[0], AppDaemon_Subscribe_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &appDaemonSubscribeClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type AppDaemon_SubscribeClient interface {
-	Recv() (*SubscriptionEvent, error)
-	grpc.ClientStream
-}
-
-type appDaemonSubscribeClient struct {
-	grpc.ClientStream
-}
-
-func (x *appDaemonSubscribeClient) Recv() (*SubscriptionEvent, error) {
-	m := new(SubscriptionEvent)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *appDaemonClient) Publish(ctx context.Context, in *AppPublishRequest, opts ...grpc.CallOption) (*PublishResponse, error) {
-	out := new(PublishResponse)
-	err := c.cc.Invoke(ctx, AppDaemon_Publish_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -165,16 +118,12 @@ type AppDaemonServer interface {
 	Connect(context.Context, *ConnectRequest) (*ConnectResponse, error)
 	// Disconnect is used to disconnect the node from a mesh.
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
-	// Metrics is used to retrieve interface metrics for a mesh connection.
+	// Metrics is used to retrieve interface metrics for one or more mesh connections.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
-	// Status is used to retrieve the status a mesh connection.
+	// Status is used to retrieve the status of a mesh connection.
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
-	// Query is used to query a mesh for information.
+	// Query is used to query a mesh connection for information.
 	Query(context.Context, *AppQueryRequest) (*QueryResponse, error)
-	// Subscribe is used to subscribe to events in a mesh database.
-	Subscribe(*AppSubscribeRequest, AppDaemon_SubscribeServer) error
-	// Publish is used to publish events to a mesh database.
-	Publish(context.Context, *AppPublishRequest) (*PublishResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -196,12 +145,6 @@ func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*St
 }
 func (UnimplementedAppDaemonServer) Query(context.Context, *AppQueryRequest) (*QueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
-}
-func (UnimplementedAppDaemonServer) Subscribe(*AppSubscribeRequest, AppDaemon_SubscribeServer) error {
-	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
-}
-func (UnimplementedAppDaemonServer) Publish(context.Context, *AppPublishRequest) (*PublishResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -306,45 +249,6 @@ func _AppDaemon_Query_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppDaemon_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(AppSubscribeRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(AppDaemonServer).Subscribe(m, &appDaemonSubscribeServer{stream})
-}
-
-type AppDaemon_SubscribeServer interface {
-	Send(*SubscriptionEvent) error
-	grpc.ServerStream
-}
-
-type appDaemonSubscribeServer struct {
-	grpc.ServerStream
-}
-
-func (x *appDaemonSubscribeServer) Send(m *SubscriptionEvent) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _AppDaemon_Publish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AppPublishRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppDaemonServer).Publish(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppDaemon_Publish_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).Publish(ctx, req.(*AppPublishRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -372,17 +276,7 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Query",
 			Handler:    _AppDaemon_Query_Handler,
 		},
-		{
-			MethodName: "Publish",
-			Handler:    _AppDaemon_Publish_Handler,
-		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Subscribe",
-			Handler:       _AppDaemon_Subscribe_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/app.proto",
 }

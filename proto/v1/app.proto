@@ -258,30 +258,6 @@ message AppQueryRequest {
     QueryRequest query = 2;
 }
 
-// AppSubscribeRequest is sent by the application to a daemon to subscribe to a mesh's storage.
-message AppSubscribeRequest {
-    // ID is the unique identifier of this connection.
-    string id = 1 [
-        (buf.validate.field).required = true,
-        (buf.validate.field).string.min_len = 1,
-        (buf.validate.field).string.max_len = 64
-    ];
-    // Subscribe is the subscription to execute.
-    SubscribeRequest subscribe = 2;
-}
-
-// AppPublishRequest is sent by the application to a daemon to publish to a mesh's storage.
-message AppPublishRequest {
-    // ID is the unique identifier of this connection.
-    string id = 1 [
-        (buf.validate.field).required = true,
-        (buf.validate.field).string.min_len = 1,
-        (buf.validate.field).string.max_len = 64
-    ];
-    // Publish is the publish to execute.
-    PublishRequest publish = 2;
-}
-
 // AppDaemon is exposed by nodes running in the app-daemon mode. This mode
 // allows the node to run in an idle state and be controlled by an application.
 // The application can send commands to the node to execute tasks and receive 
@@ -293,18 +269,12 @@ service AppDaemon {
     // Disconnect is used to disconnect the node from a mesh.
     rpc Disconnect(DisconnectRequest) returns (DisconnectResponse) {}
 
-    // Metrics is used to retrieve interface metrics for a mesh connection.
+    // Metrics is used to retrieve interface metrics for one or more mesh connections.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
 
-    // Status is used to retrieve the status a mesh connection.
+    // Status is used to retrieve the status of a mesh connection.
     rpc Status(StatusRequest) returns (StatusResponse) {}
 
-    // Query is used to query a mesh for information.
+    // Query is used to query a mesh connection for information.
     rpc Query(AppQueryRequest) returns (QueryResponse) {}
-
-    // Subscribe is used to subscribe to events in a mesh database.
-    rpc Subscribe(AppSubscribeRequest) returns (stream SubscriptionEvent) {}
-
-    // Publish is used to publish events to a mesh database.
-    rpc Publish(AppPublishRequest) returns (PublishResponse) {}
 }
