@@ -30,7 +30,7 @@ import { proto3 } from "@bufbuild/protobuf";
 export const StartDataChannelRequest = proto3.makeMessageType(
   "v1.StartDataChannelRequest",
   () => [
-    { no: 1, name: "node_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "nodeID", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "proto", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "dst", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "port", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },

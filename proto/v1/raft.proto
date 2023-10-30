@@ -33,36 +33,37 @@ enum RaftCommandType {
 
 // RaftLogEntry is the data of an entry in the Raft log.
 message RaftLogEntry {
-    // type is the type of the log entry.
+    // Type is the type of the log entry.
     RaftCommandType type = 1;
-    // key is the key of the log entry.
+    // Key is the key of the log entry.
     bytes key = 2;
-    // value is the value of the log entry.
+    // Value is the value of the log entry.
     bytes value = 3;
-    // ttl is the time to live of the log entry.
+    // TTL is the time to live of the log entry.
     google.protobuf.Duration ttl = 4;
 }
 
 // RaftApplyResponse is the response to an apply request. It
 // contains the result of applying the log entry.
 message RaftApplyResponse {
-    // time is the total time it took to apply the log entry.
+    // Time is the total time it took to apply the log entry.
     string time = 1;
-    // error is an error that occurred during the apply.
+    // Error is an error that occurred during the apply.
     string error = 2;
 }
 
 // RaftSnapshot is the data of a snapshot.
 message RaftSnapshot {
+    // KV is the key/value pairs of the snapshot.
     repeated RaftDataItem kv = 1;
 }
 
 // RaftDataItem represents a value in the Raft data store.
 message RaftDataItem {
-    // key is the key of the data item.
+    // Key is the key of the data item.
     bytes key = 1;
-    // value is the value of the data item.
+    // Value is the value of the data item.
     bytes value = 2;
-    // ttl is the time to live of the data item.
+    // TTL is the time to live of the data item.
     google.protobuf.Duration ttl = 3;
 }

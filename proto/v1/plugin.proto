@@ -95,15 +95,15 @@ service Plugin {
 
 // AuthenticationRequest is the message containing an authentication request.
 message AuthenticationRequest {
-    // headers are the headers of the request.
+    // Headers are the headers of the request.
     map<string, string> headers = 1;
-    // certificates are the DER encoded certificates of the request.
+    // Certificates are the DER encoded certificates of the request.
     repeated bytes certificates = 2;
 }
 
 // AuthenticationResponse is the message containing an authentication response.
 message AuthenticationResponse {
-    // id is the id of the authenticated user.
+    // ID is the id of the authenticated user.
     string id = 1;
 }
 
@@ -126,11 +126,11 @@ message Event {
         // LEADER_CHANGE indicates that the leader of the cluster has changed.
         LEADER_CHANGE = 3;
     }
-    // type is the type of the watch event.
+    // Type is the type of the watch event.
     WatchEvent type = 1;
-    // event is the data of the watch event.
+    // Event is the data of the watch event.
     oneof event {
-        // node is the node that the event is about.
+        // Node is the node that the event is about.
         MeshNode node = 2;
     }
 }
@@ -143,23 +143,23 @@ service WatchPlugin {
 
 // AllocateIPRequest is the message containing an IP allocation request.
 message AllocateIPRequest {
-    // node_id is the node that the IP should be allocated for.
+    // NodeID is the node that the IP should be allocated for.
     string nodeID = 1;
-    // subnet is the subnet that the IP should be allocated from.
+    // Subnet is the subnet that the IP should be allocated from.
     string subnet = 2;
 }
 
 // AllocatedIP is the message containing an allocated IP.
 message AllocatedIP {
-    // ip is the allocated IP. It should be returned in CIDR notation.
+    // IP is the allocated IP. It should be returned in CIDR notation.
     string ip = 1;
 }
 
 // ReleaseIPRequest is the message containing an IP release request.
 message ReleaseIPRequest {
-    // node_id is the node that the IP should be released for.
+    // NodeID is the node that the IP should be released for.
     string nodeID = 1;
-    // ip is the IP that should be released.
+    // IP is the IP that should be released.
     string ip = 2;
 }
 

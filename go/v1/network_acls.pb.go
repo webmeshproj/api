@@ -94,22 +94,22 @@ type NetworkACL struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the ACL.
+	// Name is the name of the ACL.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// priority is the priority of the ACL. ACLs with higher priority are evaluated first.
+	// Priority is the priority of the ACL. ACLs with higher priority are evaluated first.
 	Priority int32 `protobuf:"varint,2,opt,name=priority,proto3" json:"priority,omitempty"`
-	// action is the action to take when a request matches the ACL.
+	// Action is the action to take when a request matches the ACL.
 	Action ACLAction `protobuf:"varint,3,opt,name=action,proto3,enum=v1.ACLAction" json:"action,omitempty"`
-	// source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+	// SourceNodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
 	// can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
 	SourceNodes []string `protobuf:"bytes,4,rep,name=sourceNodes,proto3" json:"sourceNodes,omitempty"`
-	// destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+	// DestinationNodes is a list of destination nodes to match against. If empty, all nodes are matched.
 	// Groups can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
 	DestinationNodes []string `protobuf:"bytes,5,rep,name=destinationNodes,proto3" json:"destinationNodes,omitempty"`
-	// source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+	// SourceCIDRs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
 	// If one or more of the CIDRs is '*', all CIDRs are matched.
 	SourceCIDRs []string `protobuf:"bytes,6,rep,name=sourceCIDRs,proto3" json:"sourceCIDRs,omitempty"`
-	// destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+	// DestinationCIDRs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
 	// If one or more of the CIDRs is '*', all CIDRs are matched.
 	DestinationCIDRs []string `protobuf:"bytes,7,rep,name=destinationCIDRs,proto3" json:"destinationCIDRs,omitempty"`
 }
@@ -201,7 +201,7 @@ type NetworkACLs struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of network ACLs.
+	// Items is the list of network ACLs.
 	Items []*NetworkACL `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -250,13 +250,14 @@ type Route struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the route.
+	// Name is the name of the route.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// node is the node that broadcasts the route. A group can be specified with the prefix "group:".
+	// Node is the node that broadcasts the route. A group can be specified with the prefix "group:".
 	Node string `protobuf:"bytes,2,opt,name=node,proto3" json:"node,omitempty"`
-	// destination_cidrs are the destination CIDRs of the route.
+	// DestinationCIDRs are the destination CIDRs of the route.
 	DestinationCIDRs []string `protobuf:"bytes,3,rep,name=destinationCIDRs,proto3" json:"destinationCIDRs,omitempty"`
-	// nextHopNode is an optional node that is used as the next hop for the route.
+	// NextHopNode is an optional node that is used as the next hop for the route.
+	// This field is not currentl used.
 	NextHopNode string `protobuf:"bytes,4,opt,name=nextHopNode,proto3" json:"nextHopNode,omitempty"`
 }
 
@@ -326,7 +327,7 @@ type Routes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of routes.
+	// Items is the list of routes.
 	Items []*Route `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -376,13 +377,13 @@ type NetworkAction struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// src_node is the source node of the action.
+	// SrcNode is the source node of the action.
 	SrcNode string `protobuf:"bytes,1,opt,name=srcNode,proto3" json:"srcNode,omitempty"`
-	// src_cidr is the source CIDR of the action.
+	// SrcCIDR is the source CIDR of the action.
 	SrcCIDR string `protobuf:"bytes,2,opt,name=srcCIDR,proto3" json:"srcCIDR,omitempty"`
-	// dst_node is the destination node of the action.
+	// DstNode is the destination node of the action.
 	DstNode string `protobuf:"bytes,3,opt,name=dstNode,proto3" json:"dstNode,omitempty"`
-	// dst_cidr is the destination CIDR of the action.
+	// DstCIDR is the destination CIDR of the action.
 	DstCIDR string `protobuf:"bytes,4,opt,name=dstCIDR,proto3" json:"dstCIDR,omitempty"`
 }
 

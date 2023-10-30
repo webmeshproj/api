@@ -95,32 +95,32 @@ type JoinRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the ID of the node.
+	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// public_key is the public key of the node to broadcast to peers.
+	// PublicKey is the public key of the node to broadcast to peers.
 	PublicKey string `protobuf:"bytes,2,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
-	// primary_endpoint is a routable address for the node. If left unset,
+	// PrimaryEndpoint is a routable address for the node. If left unset,
 	// the node is assumed to be behind a NAT and not directly accessible.
 	PrimaryEndpoint string `protobuf:"bytes,4,opt,name=primaryEndpoint,proto3" json:"primaryEndpoint,omitempty"`
-	// wireguard_endpoints is a list of WireGuard endpoints for the node.
+	// WireguardEndpoints is a list of WireGuard endpoints for the node.
 	WireguardEndpoints []string `protobuf:"bytes,5,rep,name=wireguardEndpoints,proto3" json:"wireguardEndpoints,omitempty"`
-	// zone_awareness_id is the zone awareness ID of the node.
+	// ZoneAwarenessID is the zone awareness ID of the node.
 	ZoneAwarenessID string `protobuf:"bytes,6,opt,name=zoneAwarenessID,proto3" json:"zoneAwarenessID,omitempty"`
-	// assign_ipv4 is whether an IPv4 address should be assigned to the node.
+	// AssignIPv4 is whether an IPv4 address should be assigned to the node.
 	AssignIPv4 bool `protobuf:"varint,7,opt,name=assignIPv4,proto3" json:"assignIPv4,omitempty"`
-	// prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
+	// PreferStorageIPv6 is whether IPv6 should be preferred over IPv4 for storage communication.
 	// This is only used if assign_ipv4 is true.
 	PreferStorageIPv6 bool `protobuf:"varint,8,opt,name=preferStorageIPv6,proto3" json:"preferStorageIPv6,omitempty"`
-	// as_voter is whether the node should receive a vote in elections. The request
+	// AsVoter is whether the node should receive a vote in elections. The request
 	// will be denied if the node is not allowed to vote.
 	AsVoter bool `protobuf:"varint,9,opt,name=asVoter,proto3" json:"asVoter,omitempty"`
-	// as_observer is whether the node should be added as an observer. They will receive
+	// AsObserver is whether the node should be added as an observer. They will receive
 	// updates to the storage, but not be able to vote in elections.
 	AsObserver bool `protobuf:"varint,10,opt,name=asObserver,proto3" json:"asObserver,omitempty"`
-	// routes is a list of routes to advertise to peers. The request will be denied
+	// Routes is a list of routes to advertise to peers. The request will be denied
 	// if the node is not allowed to put routes.
 	Routes []string `protobuf:"bytes,11,rep,name=routes,proto3" json:"routes,omitempty"`
-	// direct_peers is a map of extra peers that should be connected to directly over relays.
+	// DirectPeers is a map of extra peers that should be connected to directly over relays.
 	// The provided edge attribute is the callers preference of how the relay should be created.
 	// The request will be denied if the node is not allowed to put data channels or edges.
 	// The default joining behavior creates direct links between the caller and the joiner.
@@ -129,10 +129,10 @@ type JoinRequest struct {
 	// the joiner will link the caller to all other nodes with the same zone awareness ID
 	// that also have a primary endpoint.
 	DirectPeers map[string]ConnectProtocol `protobuf:"bytes,12,rep,name=directPeers,proto3" json:"directPeers,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3,enum=v1.ConnectProtocol"`
-	// features is a list of features supported by the node that should be advertised to peers
+	// Features is a list of features supported by the node that should be advertised to peers
 	// and the port they are available on.
 	Features []*FeaturePort `protobuf:"bytes,13,rep,name=features,proto3" json:"features,omitempty"`
-	// multiaddrs are libp2p multiaddresses this node is listening on.
+	// Multiaddrs are libp2p multiaddresses this node is listening on.
 	Multiaddrs []string `protobuf:"bytes,14,rep,name=multiaddrs,proto3" json:"multiaddrs,omitempty"`
 }
 
@@ -265,26 +265,26 @@ type JoinResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// address_ipv4 is the private IPv4 wireguard address of the node
+	// AddressIPv4 is the private IPv4 wireguard address of the node
 	// in CIDR format representing the network. This is only set if
 	// assign_ipv4 was set in the request or no network_ipv6 was provided.
 	AddressIPv4 string `protobuf:"bytes,1,opt,name=addressIPv4,proto3" json:"addressIPv4,omitempty"`
-	// address_ipv6 is the IPv6 network assigned to the node.
+	// AddressIPv6 is the IPv6 network assigned to the node.
 	AddressIPv6 string `protobuf:"bytes,2,opt,name=addressIPv6,proto3" json:"addressIPv6,omitempty"`
-	// network_ipv4 is the IPv4 network of the Mesh.
+	// NetworkIPv4 is the IPv4 network of the Mesh.
 	NetworkIPv4 string `protobuf:"bytes,3,opt,name=networkIPv4,proto3" json:"networkIPv4,omitempty"`
-	// network_ipv6 is the IPv6 network of the Mesh.
+	// NetworkIPv6 is the IPv6 network of the Mesh.
 	NetworkIPv6 string `protobuf:"bytes,4,opt,name=networkIPv6,proto3" json:"networkIPv6,omitempty"`
-	// peers is a list of wireguard peers to connect to.
+	// Peers is a list of wireguard peers to connect to.
 	Peers []*WireGuardPeer `protobuf:"bytes,5,rep,name=peers,proto3" json:"peers,omitempty"`
-	// ice_servers is a list of public nodes that can be used to negotiate
+	// ICEServers is a list of public nodes that can be used to negotiate
 	// ICE connections if required. This may only be populated when one of
 	// the peers has the ICE flag set. This must be set if the requestor
 	// specifies direct_peers.
 	IceServers []string `protobuf:"bytes,6,rep,name=iceServers,proto3" json:"iceServers,omitempty"`
-	// dns_servers is a list of peers offering DNS services.
+	// DNSServers is a list of peers offering DNS services.
 	DnsServers []string `protobuf:"bytes,7,rep,name=dnsServers,proto3" json:"dnsServers,omitempty"`
-	// mesh_domain is the domain of the mesh.
+	// MeshDomain is the domain of the mesh.
 	MeshDomain string `protobuf:"bytes,8,opt,name=meshDomain,proto3" json:"meshDomain,omitempty"`
 }
 
@@ -383,27 +383,27 @@ type UpdateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the ID of the node.
+	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// public_key is the public key of the node to broadcast to peers.
+	// PublicKey is the public key of the node to broadcast to peers.
 	PublicKey string `protobuf:"bytes,2,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
-	// primary_endpoint is a routable address for the node. If left unset,
+	// PrimaryEndpoint is a routable address for the node. If left unset,
 	// the node is assumed to be behind a NAT and not directly accessible.
 	PrimaryEndpoint string `protobuf:"bytes,3,opt,name=primaryEndpoint,proto3" json:"primaryEndpoint,omitempty"`
-	// wireguard_endpoints is a list of WireGuard endpoints for the node.
+	// WireguardEndpoints is a list of WireGuard endpoints for the node.
 	WireguardEndpoints []string `protobuf:"bytes,4,rep,name=wireguardEndpoints,proto3" json:"wireguardEndpoints,omitempty"`
-	// zone_awareness_id is the zone awareness ID of the node.
+	// ZoneAwarenessID is the zone awareness ID of the node.
 	ZoneAwarenessID string `protobuf:"bytes,5,opt,name=zoneAwarenessID,proto3" json:"zoneAwarenessID,omitempty"`
-	// as_voter is whether the node should receive a vote in elections. The request
+	// AsVoter is whether the node should receive a vote in elections. The request
 	// will be denied if the node is not allowed to vote.
 	AsVoter bool `protobuf:"varint,6,opt,name=asVoter,proto3" json:"asVoter,omitempty"`
-	// routes is a list of routes to advertise to peers. The request will be denied
+	// Routes is a list of routes to advertise to peers. The request will be denied
 	// if the node is not allowed to put routes.
 	Routes []string `protobuf:"bytes,7,rep,name=routes,proto3" json:"routes,omitempty"`
-	// features is a list of features supported by the node that should be advertised to peers
+	// Features is a list of features supported by the node that should be advertised to peers
 	// and the port they are available on.
 	Features []*FeaturePort `protobuf:"bytes,8,rep,name=features,proto3" json:"features,omitempty"`
-	// multiaddrs are libp2p multiaddresses this node is listening on.
+	// Multiaddrs are libp2p multiaddresses this node is listening on.
 	Multiaddrs []string `protobuf:"bytes,9,rep,name=multiaddrs,proto3" json:"multiaddrs,omitempty"`
 }
 
@@ -549,11 +549,11 @@ type WireGuardPeer struct {
 
 	// Node is information about this node.
 	Node *MeshNode `protobuf:"bytes,1,opt,name=node,proto3" json:"node,omitempty"`
-	// allowed_ips is the list of allowed IPs for the peer.
+	// AllowedIPs is the list of allowed IPs for the peer.
 	AllowedIPs []string `protobuf:"bytes,2,rep,name=allowedIPs,proto3" json:"allowedIPs,omitempty"`
-	// allowed_routes is the list of allowed routes for the peer.
+	// AllowedRoutes is the list of allowed routes for the peer.
 	AllowedRoutes []string `protobuf:"bytes,3,rep,name=allowedRoutes,proto3" json:"allowedRoutes,omitempty"`
-	// proto indicates the protocol to use to connect to the peer.
+	// Proto indicates the protocol to use to connect to the peer.
 	Proto ConnectProtocol `protobuf:"varint,4,opt,name=proto,proto3,enum=v1.ConnectProtocol" json:"proto,omitempty"`
 }
 
@@ -623,7 +623,7 @@ type LeaveRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the ID of the node.
+	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -750,7 +750,7 @@ type StorageConsensusResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// servers is the list of servers in the storage configuration.
+	// Servers is the list of servers in the storage configuration.
 	Servers []*StorageServer `protobuf:"bytes,1,rep,name=servers,proto3" json:"servers,omitempty"`
 }
 
@@ -875,7 +875,7 @@ type SubscribePeersRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the ID of the node.
+	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -924,13 +924,13 @@ type PeerConfigurations struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// peers is a list of wireguard peers to connect to.
+	// Peers is a list of wireguard peers to connect to.
 	Peers []*WireGuardPeer `protobuf:"bytes,5,rep,name=peers,proto3" json:"peers,omitempty"`
-	// ice_servers is a list of public nodes that can be used to negotiate
+	// ICEServers is a list of public nodes that can be used to negotiate
 	// ICE connections if required. This may only be populated when one of
 	// the peers has the ICE flag set.
 	IceServers []string `protobuf:"bytes,6,rep,name=iceServers,proto3" json:"iceServers,omitempty"`
-	// dns_servers is a list of peers offering DNS services.
+	// DNSServers is a list of peers offering DNS services.
 	DnsServers []string `protobuf:"bytes,7,rep,name=dnsServers,proto3" json:"dnsServers,omitempty"`
 }
 

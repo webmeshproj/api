@@ -57,7 +57,7 @@ func (m *StartDataChannelRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for NodeId
+	// no validation rules for NodeID
 
 	// no validation rules for Proto
 

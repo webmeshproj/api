@@ -307,7 +307,7 @@ type StorageStatus struct {
 	// Peers is the list of servers that are currently recognized as peers
 	// by the storage plugin. This should include the current server.
 	Peers []*StoragePeer `protobuf:"bytes,3,rep,name=peers,proto3" json:"peers,omitempty"`
-	// message is an implementation specific message that can be used to provide
+	// Message is an implementation specific message that can be used to provide
 	// additional information about the storage status.
 	Message string `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 }
@@ -380,7 +380,7 @@ type StoragePeer struct {
 
 	// ID is the id of the server.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// public_key is the encoded public key of the server. This is not required
+	// PublicKey is the encoded public key of the server. This is not required
 	// for demotion or removal RPCs. Not all implementations need to support this.
 	PublicKey string `protobuf:"bytes,2,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
 	// Address is the address of the server. This is not required

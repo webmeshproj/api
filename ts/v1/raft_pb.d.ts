@@ -57,28 +57,28 @@ export declare enum RaftCommandType {
  */
 export declare class RaftLogEntry extends Message<RaftLogEntry> {
   /**
-   * type is the type of the log entry.
+   * Type is the type of the log entry.
    *
    * @generated from field: v1.RaftCommandType type = 1;
    */
   type: RaftCommandType;
 
   /**
-   * key is the key of the log entry.
+   * Key is the key of the log entry.
    *
    * @generated from field: bytes key = 2;
    */
   key: Uint8Array;
 
   /**
-   * value is the value of the log entry.
+   * Value is the value of the log entry.
    *
    * @generated from field: bytes value = 3;
    */
   value: Uint8Array;
 
   /**
-   * ttl is the time to live of the log entry.
+   * TTL is the time to live of the log entry.
    *
    * @generated from field: google.protobuf.Duration ttl = 4;
    */
@@ -107,14 +107,14 @@ export declare class RaftLogEntry extends Message<RaftLogEntry> {
  */
 export declare class RaftApplyResponse extends Message<RaftApplyResponse> {
   /**
-   * time is the total time it took to apply the log entry.
+   * Time is the total time it took to apply the log entry.
    *
    * @generated from field: string time = 1;
    */
   time: string;
 
   /**
-   * error is an error that occurred during the apply.
+   * Error is an error that occurred during the apply.
    *
    * @generated from field: string error = 2;
    */
@@ -142,6 +142,8 @@ export declare class RaftApplyResponse extends Message<RaftApplyResponse> {
  */
 export declare class RaftSnapshot extends Message<RaftSnapshot> {
   /**
+   * KV is the key/value pairs of the snapshot.
+   *
    * @generated from field: repeated v1.RaftDataItem kv = 1;
    */
   kv: RaftDataItem[];
@@ -168,21 +170,21 @@ export declare class RaftSnapshot extends Message<RaftSnapshot> {
  */
 export declare class RaftDataItem extends Message<RaftDataItem> {
   /**
-   * key is the key of the data item.
+   * Key is the key of the data item.
    *
    * @generated from field: bytes key = 1;
    */
   key: Uint8Array;
 
   /**
-   * value is the value of the data item.
+   * Value is the value of the data item.
    *
    * @generated from field: bytes value = 2;
    */
   value: Uint8Array;
 
   /**
-   * ttl is the time to live of the data item.
+   * TTL is the time to live of the data item.
    *
    * @generated from field: google.protobuf.Duration ttl = 3;
    */

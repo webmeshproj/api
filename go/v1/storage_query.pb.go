@@ -243,11 +243,11 @@ type QueryRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// command is the command of the query.
+	// Command is the command of the query.
 	Command QueryRequest_QueryCommand `protobuf:"varint,1,opt,name=command,proto3,enum=v1.QueryRequest_QueryCommand" json:"command,omitempty"`
-	// type is the type of the query.
+	// Type is the type of resource for the query.
 	Type QueryRequest_QueryType `protobuf:"varint,2,opt,name=type,proto3,enum=v1.QueryRequest_QueryType" json:"type,omitempty"`
-	// query is the string of the query. This follows the format of a label
+	// Query is the string of the query. This follows the format of a label
 	// selector and is only applicable for certain queries. For get queries
 	// this will usually be an ID. For list queries this will usually be one
 	// or more filters.
@@ -313,10 +313,10 @@ type QueryResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items contain the results of the query. These will be protobuf
+	// Items contain the results of the query. These will be protobuf
 	// json-encoded objects of the given query type.
 	Items [][]byte `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	// error is an error that happened during the query. This will always
+	// Error is an error that happened during the query. This will always
 	// be populated on errors, but single-flight queries will return
 	// a coded error instead.
 	Error string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
@@ -375,7 +375,7 @@ type SubscribeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// prefix is the prefix of the events to subscribe to.
+	// Prefix is the prefix of the events to subscribe to.
 	Prefix []byte `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
 }
 
@@ -424,9 +424,9 @@ type SubscriptionEvent struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// key is the key of the event.
+	// Key is the key of the event.
 	Key []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the event. This will be the raw value of the key.
+	// Value is the value of the event. This will be the raw value of the key.
 	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
@@ -483,11 +483,11 @@ type PublishRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// key is the key of the event.
+	// Key is the key of the event.
 	Key []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the event. This will be the raw value of the key.
+	// Value is the value of the event. This will be the raw value of the key.
 	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	// ttl is the time for the event to live in the database.
+	// TTL is the time for the event to live in the database.
 	Ttl *durationpb.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 

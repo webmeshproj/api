@@ -50,7 +50,7 @@ message StorageStatus {
     // Peers is the list of servers that are currently recognized as peers 
     // by the storage plugin. This should include the current server.
     repeated StoragePeer peers = 3;
-    // message is an implementation specific message that can be used to provide
+    // Message is an implementation specific message that can be used to provide
     // additional information about the storage status.
     string message = 4;
 }
@@ -59,7 +59,7 @@ message StorageStatus {
 message StoragePeer {
     // ID is the id of the server.
     string id = 1;
-    // public_key is the encoded public key of the server. This is not required
+    // PublicKey is the encoded public key of the server. This is not required
     // for demotion or removal RPCs. Not all implementations need to support this.
     string publicKey = 2;
     // Address is the address of the server. This is not required

@@ -234,14 +234,14 @@ export declare enum PluginInfo_PluginCapability {
  */
 export declare class AuthenticationRequest extends Message<AuthenticationRequest> {
   /**
-   * headers are the headers of the request.
+   * Headers are the headers of the request.
    *
    * @generated from field: map<string, string> headers = 1;
    */
   headers: { [key: string]: string };
 
   /**
-   * certificates are the DER encoded certificates of the request.
+   * Certificates are the DER encoded certificates of the request.
    *
    * @generated from field: repeated bytes certificates = 2;
    */
@@ -269,7 +269,7 @@ export declare class AuthenticationRequest extends Message<AuthenticationRequest
  */
 export declare class AuthenticationResponse extends Message<AuthenticationResponse> {
   /**
-   * id is the id of the authenticated user.
+   * ID is the id of the authenticated user.
    *
    * @generated from field: string id = 1;
    */
@@ -297,20 +297,20 @@ export declare class AuthenticationResponse extends Message<AuthenticationRespon
  */
 export declare class Event extends Message<Event> {
   /**
-   * type is the type of the watch event.
+   * Type is the type of the watch event.
    *
    * @generated from field: v1.Event.WatchEvent type = 1;
    */
   type: Event_WatchEvent;
 
   /**
-   * event is the data of the watch event.
+   * Event is the data of the watch event.
    *
    * @generated from oneof v1.Event.event
    */
   event: {
     /**
-     * node is the node that the event is about.
+     * Node is the node that the event is about.
      *
      * @generated from field: v1.MeshNode node = 2;
      */
@@ -375,14 +375,14 @@ export declare enum Event_WatchEvent {
  */
 export declare class AllocateIPRequest extends Message<AllocateIPRequest> {
   /**
-   * node_id is the node that the IP should be allocated for.
+   * NodeID is the node that the IP should be allocated for.
    *
    * @generated from field: string nodeID = 1;
    */
   nodeID: string;
 
   /**
-   * subnet is the subnet that the IP should be allocated from.
+   * Subnet is the subnet that the IP should be allocated from.
    *
    * @generated from field: string subnet = 2;
    */
@@ -410,7 +410,7 @@ export declare class AllocateIPRequest extends Message<AllocateIPRequest> {
  */
 export declare class AllocatedIP extends Message<AllocatedIP> {
   /**
-   * ip is the allocated IP. It should be returned in CIDR notation.
+   * IP is the allocated IP. It should be returned in CIDR notation.
    *
    * @generated from field: string ip = 1;
    */
@@ -438,14 +438,14 @@ export declare class AllocatedIP extends Message<AllocatedIP> {
  */
 export declare class ReleaseIPRequest extends Message<ReleaseIPRequest> {
   /**
-   * node_id is the node that the IP should be released for.
+   * NodeID is the node that the IP should be released for.
    *
    * @generated from field: string nodeID = 1;
    */
   nodeID: string;
 
   /**
-   * ip is the IP that should be released.
+   * IP is the IP that should be released.
    *
    * @generated from field: string ip = 2;
    */

@@ -43,7 +43,7 @@ type GetNodeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the ID of the node.
+	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -92,13 +92,13 @@ type MeshEdge struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// source is the source node.
+	// Source is the source node.
 	Source string `protobuf:"bytes,1,opt,name=source,proto3" json:"source,omitempty"`
-	// target is the target node.
+	// Target is the target node.
 	Target string `protobuf:"bytes,2,opt,name=target,proto3" json:"target,omitempty"`
-	// weight is the weight of the edge.
+	// Weight is the weight of the edge.
 	Weight int32 `protobuf:"varint,3,opt,name=weight,proto3" json:"weight,omitempty"`
-	// attributes is a list of attributes for the edge.
+	// Attributes is a list of attributes for the edge.
 	Attributes map[string]string `protobuf:"bytes,4,rep,name=attributes,proto3" json:"attributes,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
@@ -168,7 +168,7 @@ type MeshEdges struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of edges.
+	// Items is the list of edges.
 	Items []*MeshEdge `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -217,11 +217,11 @@ type MeshGraph struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// nodes is the list of nodes.
+	// Nodes is the list of nodes.
 	Nodes []string `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
-	// edges is the list of edges.
+	// Edges is the list of edges.
 	Edges []*MeshEdge `protobuf:"bytes,2,rep,name=edges,proto3" json:"edges,omitempty"`
-	// dot is the DOT representation of the graph.
+	// DOT is the DOT representation of the graph.
 	Dot string `protobuf:"bytes,3,opt,name=dot,proto3" json:"dot,omitempty"`
 }
 

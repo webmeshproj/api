@@ -574,7 +574,7 @@ func (m *Status) validate(all bool) error {
 
 	// no validation rules for Version
 
-	// no validation rules for Commit
+	// no validation rules for GitCommit
 
 	// no validation rules for BuildDate
 

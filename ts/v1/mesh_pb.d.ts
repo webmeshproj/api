@@ -28,7 +28,7 @@ import { Message, proto3 } from "@bufbuild/protobuf";
  */
 export declare class GetNodeRequest extends Message<GetNodeRequest> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
@@ -56,28 +56,28 @@ export declare class GetNodeRequest extends Message<GetNodeRequest> {
  */
 export declare class MeshEdge extends Message<MeshEdge> {
   /**
-   * source is the source node.
+   * Source is the source node.
    *
    * @generated from field: string source = 1;
    */
   source: string;
 
   /**
-   * target is the target node.
+   * Target is the target node.
    *
    * @generated from field: string target = 2;
    */
   target: string;
 
   /**
-   * weight is the weight of the edge.
+   * Weight is the weight of the edge.
    *
    * @generated from field: int32 weight = 3;
    */
   weight: number;
 
   /**
-   * attributes is a list of attributes for the edge.
+   * Attributes is a list of attributes for the edge.
    *
    * @generated from field: map<string, string> attributes = 4;
    */
@@ -105,7 +105,7 @@ export declare class MeshEdge extends Message<MeshEdge> {
  */
 export declare class MeshEdges extends Message<MeshEdges> {
   /**
-   * items is the list of edges.
+   * Items is the list of edges.
    *
    * @generated from field: repeated v1.MeshEdge items = 1;
    */
@@ -133,21 +133,21 @@ export declare class MeshEdges extends Message<MeshEdges> {
  */
 export declare class MeshGraph extends Message<MeshGraph> {
   /**
-   * nodes is the list of nodes.
+   * Nodes is the list of nodes.
    *
    * @generated from field: repeated string nodes = 1;
    */
   nodes: string[];
 
   /**
-   * edges is the list of edges.
+   * Edges is the list of edges.
    *
    * @generated from field: repeated v1.MeshEdge edges = 2;
    */
   edges: MeshEdge[];
 
   /**
-   * dot is the DOT representation of the graph.
+   * DOT is the DOT representation of the graph.
    *
    * @generated from field: string dot = 3;
    */

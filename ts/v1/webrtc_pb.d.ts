@@ -30,28 +30,28 @@ import { Message, proto3 } from "@bufbuild/protobuf";
  */
 export declare class StartDataChannelRequest extends Message<StartDataChannelRequest> {
   /**
-   * node_id is the ID of the node to send the data to.
+   * NodeID is the ID of the node to send the data to.
    *
-   * @generated from field: string node_id = 1;
+   * @generated from field: string nodeID = 1;
    */
-  nodeId: string;
+  nodeID: string;
 
   /**
-   * proto is the protocol of the traffic.
+   * Proto is the protocol of the traffic.
    *
    * @generated from field: string proto = 2;
    */
   proto: string;
 
   /**
-   * dst is the destination address of the traffic.
+   * Dst is the destination address of the traffic.
    *
    * @generated from field: string dst = 3;
    */
   dst: string;
 
   /**
-   * port is the destination port of the traffic. A port of 0 coupled
+   * Port is the destination port of the traffic. A port of 0 coupled
    * with the udp protocol indicates forwarding to the WireGuard interface.
    *
    * @generated from field: uint32 port = 4;
@@ -59,14 +59,14 @@ export declare class StartDataChannelRequest extends Message<StartDataChannelReq
   port: number;
 
   /**
-   * answer is the answer to the offer.
+   * Answer is the answer to the offer.
    *
    * @generated from field: string answer = 5;
    */
   answer: string;
 
   /**
-   * candidate is an ICE candidate.
+   * Candidate is an ICE candidate.
    *
    * @generated from field: string candidate = 6;
    */
@@ -95,21 +95,21 @@ export declare class StartDataChannelRequest extends Message<StartDataChannelReq
  */
 export declare class DataChannelOffer extends Message<DataChannelOffer> {
   /**
-   * offer is the offer.
+   * Offer is the offer.
    *
    * @generated from field: string offer = 1;
    */
   offer: string;
 
   /**
-   * stun_servers is the list of STUN servers to use.
+   * STUNServers is the list of STUN servers to use.
    *
    * @generated from field: repeated string stunServers = 2;
    */
   stunServers: string[];
 
   /**
-   * candidate is an ICE candidate.
+   * Candidate is an ICE candidate.
    *
    * @generated from field: string candidate = 3;
    */

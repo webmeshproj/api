@@ -164,7 +164,7 @@ export declare class StorageStatus extends Message<StorageStatus> {
   peers: StoragePeer[];
 
   /**
-   * message is an implementation specific message that can be used to provide
+   * Message is an implementation specific message that can be used to provide
    * additional information about the storage status.
    *
    * @generated from field: string message = 4;
@@ -200,7 +200,7 @@ export declare class StoragePeer extends Message<StoragePeer> {
   id: string;
 
   /**
-   * public_key is the encoded public key of the server. This is not required
+   * PublicKey is the encoded public key of the server. This is not required
    * for demotion or removal RPCs. Not all implementations need to support this.
    *
    * @generated from field: string publicKey = 2;

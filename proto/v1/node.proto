@@ -82,39 +82,39 @@ enum EdgeAttribute {
 
 // FeaturePort describes a feature and the port it is advertised on.
 message FeaturePort {
-    // feature is the feature.
+    // Feature is the feature advertised on the port.
     Feature feature = 1;
-    // port is the port the feature is advertised on.
+    // Port is the port the feature is advertised on.
     int32 port = 2;
 }
 
 // MeshNode is a node that has been registered with the mesh.
 message MeshNode {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
-    // public_key is the public key of the node.
+    // PublicKey is the public key of the node.
     string publicKey = 2;
-    // primary_endpoint is the primary endpoint of the node.
+    // PrimaryEndpoint is the primary endpoint of the node.
     string primaryEndpoint = 4;
-    // wireguard_endpoints is a list of WireGuard endpoints for the node.
+    // WireguardEndpoints is a list of WireGuard endpoints for the node.
     repeated string wireguardEndpoints = 5;
-    // zone_awareness_id is the zone awareness ID of the node.
+    // ZoneAwarenessID is the zone awareness ID of the node.
     string zoneAwarenessID = 6;
-    // private_ipv4 is the private IPv4 address of the node.
+    // PrivateIPv4 is the private IPv4 address of the node.
     string privateIPv4 = 7;
-    // private_ipv6 is the private IPv6 address of the node.
+    // PrivateIPv6 is the private IPv6 address of the node.
     string privateIPv6 = 8;
-    // features are a list of features and the ports they are advertised on.
+    // Features are a list of features and the ports they are advertised on.
     repeated FeaturePort features = 9;
-    // multiaddrs are the multiaddrs of the node.
+    // Multiaddrs are the multiaddrs of the node.
     repeated string multiaddrs = 10;
-    // joined_at is the time the node joined the cluster.
+    // JoinedAt is the time the node joined the cluster.
     google.protobuf.Timestamp joinedAt = 11;
 }
 
 // NodeList is a list of nodes.
 message NodeList {
-    // nodes is the list of nodes.
+    // Nodes is the list of nodes.
     repeated MeshNode nodes = 1;
 }
 
@@ -133,112 +133,111 @@ enum DataChannel {
 
 // GetStatusRequest is a request to get the status of a node.
 message GetStatusRequest {
-    // id is the ID of the node. If unset, the status of the 
-    // local node is returned.
+    // ID is the ID of the node. If unset, the status of the local node is returned.
     string id = 1;
 }
 
 // Status represents the status of a node.
 message Status {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
-    // description is an optional description provided
+    // Description is an optional description provided
     // by the node.
     string description = 2;
-    // version is the version of the node.
+    // Version is the version of the node.
     string version = 3;
-    // commit is the commit of the node.
-    string commit = 4;
-    // build_date is the build date of the node.
-    string build_date = 5;
-    // uptime is the uptime of the node.
+    // GitCommit is the git commit of the node.
+    string gitCommit = 4;
+    // BuildDate is the build date of the node.
+    string buildDate = 5;
+    // Uptime is the uptime of the node.
     string uptime = 6;
-    // started_at is the time the node started.
+    // StartedAt is the time the node started.
     google.protobuf.Timestamp startedAt = 7;
-    // features is the list of features currently enabled.
+    // Features is the list of features currently enabled.
     repeated FeaturePort features = 8;
-    // cluster_status is the status of the node in the cluster.
+    // ClusterStatus is the status of the node in the cluster.
     ClusterStatus clusterStatus = 9;
-    // current_leader is the current leader of the cluster.
+    // CurrentLeader is the current leader of the cluster.
     string currentLeader = 10;
-    // interface_metrics are the metrics for the node's interfaces.
+    // InterfaceMetrics are the metrics for the node's interfaces.
     InterfaceMetrics interfaceMetrics = 11;
 }
 
 // DataChannelNegotiation is the message for communicating data channels to nodes.
 message DataChannelNegotiation {
-  // proto is the protocol of the traffic.
+  // Proto is the protocol of the traffic.
   string proto = 1;
-  // src is the address of the client that initiated the request.
+  // Src is the address of the client that initiated the request.
   string src = 2;
-  // dst is the destination address of the traffic.
+  // Dst is the destination address of the traffic.
   string dst = 3;
-  // port is the destination port of the traffic.
+  // Port is the destination port of the traffic.
   uint32 port = 4;
-  // offer is the offer for the node to use as its local description.
+  // Offer is the offer for the node to use as its local description.
   string offer = 5;
-  // answer is the answer for the node to use as its remote description.
+  // Answer is the answer for the node to use as its remote description.
   string answer = 6;
-  // candidate is an ICE candidate.
+  // Candidate is an ICE candidate.
   string candidate = 7;
-  // stun_servers is the list of STUN servers to use.
+  // StunServers is the list of STUN servers to use.
   repeated string stunServers = 8;
 }
 
 // InterfaceMetrics is the metrics for the WireGuard interface on a node.
 message InterfaceMetrics {
-  // device_name is the name of the device.
+  // DeviceName is the name of the device.
   string deviceName = 1;
-  // public_key is the public key of the node.
+  // PublicKey is the public key of the node.
   string publicKey = 2;
-  // address_v4 is the IPv4 address of the node.
+  // AddressV4 is the IPv4 address of the node.
   string addressV4 = 3;
-  // address_v6 is the IPv6 address of the node.
+  // AddressV6 is the IPv6 address of the node.
   string addressV6 = 4;
-  // type is the type of interface being used for wireguard.
+  // Type is the type of interface being used for wireguard.
   string type = 5;
-  // listen_port is the port wireguard is listening on.
+  // ListenPort is the port wireguard is listening on.
   int32 listenPort = 6;
-  // total_receive_bytes is the total number of bytes received.
+  // TotalReceiveBytes is the total number of bytes received.
   uint64 totalReceiveBytes = 7;
-  // total_transmit_bytes is the total number of bytes transmitted.
+  // TotalTransmitBytes is the total number of bytes transmitted.
   uint64 totalTransmitBytes = 8;
-  // num_peers is the number of peers connected to the node.
+  // NumPeers is the number of peers connected to the node.
   int32 numPeers = 9;
-  // peers are the per-peer statistics.
+  // Peers are the per-peer statistics.
   repeated PeerMetrics peers = 10;
 }
 
 // PeerMetrics are the metrics for a node's peer.
 message PeerMetrics {
-  // public_key is the public key of the peer.
+  // PublicKey is the public key of the peer.
   string publicKey = 1;
-  // endpoint is the connected endpoint of the peer.
+  // Endpoint is the connected endpoint of the peer.
   string endpoint = 2;
-  // persistent_keep_alive is the persistent keep alive interval for the peer.
+  // PersistentKeepAlive is the persistent keep alive interval for the peer.
   string persistentKeepAlive = 3;
-  // last_handshake_time is the last handshake time for the peer.
+  // LastHandshakeTime is the last handshake time for the peer.
   string lastHandshakeTime = 4;
-  // allowed_ips is the list of allowed IPs for the peer.
+  // AllowedIPs is the list of allowed IPs for the peer.
   repeated string allowedIPs = 5;
-  // protocol_version is the version of the wireguard protocol negotiated with the peer.
+  // ProtocolVersion is the version of the wireguard protocol negotiated with the peer.
   int64 protocolVersion = 6;
-  // receive_bytes is the bytes received from the peer.
+  // ReceiveBytes is the bytes received from the peer.
   uint64 receiveBytes = 7;
-  // transmit_bytes is the bytes transmitted to the peer.
+  // TransmitBytes is the bytes transmitted to the peer.
   uint64 transmitBytes = 8;
 }
 
 // WebRTCSignal is a signal sent to a remote peer over the WebRTC API.
 message WebRTCSignal {
-  // node_id is the ID of the node to send the signal to.
+  // NodeID is the ID of the node to send the signal to.
   // This is set by the original sender. On the node that
   // receives the ReceiveSignalChannel request, this will
   // be set to the ID of the node that sent the request.
   string nodeID = 1;
-  // candidate is an ICE candidate.
+  // Candidate is an ICE candidate.
   string candidate = 2;
-  // description is a session description.
+  // Description is a session description.
   string description = 3;
 }
 

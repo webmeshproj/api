@@ -238,14 +238,14 @@ export declare enum DataChannel {
  */
 export declare class FeaturePort extends Message<FeaturePort> {
   /**
-   * feature is the feature.
+   * Feature is the feature advertised on the port.
    *
    * @generated from field: v1.Feature feature = 1;
    */
   feature: Feature;
 
   /**
-   * port is the port the feature is advertised on.
+   * Port is the port the feature is advertised on.
    *
    * @generated from field: int32 port = 2;
    */
@@ -273,70 +273,70 @@ export declare class FeaturePort extends Message<FeaturePort> {
  */
 export declare class MeshNode extends Message<MeshNode> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * public_key is the public key of the node.
+   * PublicKey is the public key of the node.
    *
    * @generated from field: string publicKey = 2;
    */
   publicKey: string;
 
   /**
-   * primary_endpoint is the primary endpoint of the node.
+   * PrimaryEndpoint is the primary endpoint of the node.
    *
    * @generated from field: string primaryEndpoint = 4;
    */
   primaryEndpoint: string;
 
   /**
-   * wireguard_endpoints is a list of WireGuard endpoints for the node.
+   * WireguardEndpoints is a list of WireGuard endpoints for the node.
    *
    * @generated from field: repeated string wireguardEndpoints = 5;
    */
   wireguardEndpoints: string[];
 
   /**
-   * zone_awareness_id is the zone awareness ID of the node.
+   * ZoneAwarenessID is the zone awareness ID of the node.
    *
    * @generated from field: string zoneAwarenessID = 6;
    */
   zoneAwarenessID: string;
 
   /**
-   * private_ipv4 is the private IPv4 address of the node.
+   * PrivateIPv4 is the private IPv4 address of the node.
    *
    * @generated from field: string privateIPv4 = 7;
    */
   privateIPv4: string;
 
   /**
-   * private_ipv6 is the private IPv6 address of the node.
+   * PrivateIPv6 is the private IPv6 address of the node.
    *
    * @generated from field: string privateIPv6 = 8;
    */
   privateIPv6: string;
 
   /**
-   * features are a list of features and the ports they are advertised on.
+   * Features are a list of features and the ports they are advertised on.
    *
    * @generated from field: repeated v1.FeaturePort features = 9;
    */
   features: FeaturePort[];
 
   /**
-   * multiaddrs are the multiaddrs of the node.
+   * Multiaddrs are the multiaddrs of the node.
    *
    * @generated from field: repeated string multiaddrs = 10;
    */
   multiaddrs: string[];
 
   /**
-   * joined_at is the time the node joined the cluster.
+   * JoinedAt is the time the node joined the cluster.
    *
    * @generated from field: google.protobuf.Timestamp joinedAt = 11;
    */
@@ -364,7 +364,7 @@ export declare class MeshNode extends Message<MeshNode> {
  */
 export declare class NodeList extends Message<NodeList> {
   /**
-   * nodes is the list of nodes.
+   * Nodes is the list of nodes.
    *
    * @generated from field: repeated v1.MeshNode nodes = 1;
    */
@@ -392,8 +392,7 @@ export declare class NodeList extends Message<NodeList> {
  */
 export declare class GetStatusRequest extends Message<GetStatusRequest> {
   /**
-   * id is the ID of the node. If unset, the status of the 
-   * local node is returned.
+   * ID is the ID of the node. If unset, the status of the local node is returned.
    *
    * @generated from field: string id = 1;
    */
@@ -421,14 +420,14 @@ export declare class GetStatusRequest extends Message<GetStatusRequest> {
  */
 export declare class Status extends Message<Status> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * description is an optional description provided
+   * Description is an optional description provided
    * by the node.
    *
    * @generated from field: string description = 2;
@@ -436,63 +435,63 @@ export declare class Status extends Message<Status> {
   description: string;
 
   /**
-   * version is the version of the node.
+   * Version is the version of the node.
    *
    * @generated from field: string version = 3;
    */
   version: string;
 
   /**
-   * commit is the commit of the node.
+   * GitCommit is the git commit of the node.
    *
-   * @generated from field: string commit = 4;
+   * @generated from field: string gitCommit = 4;
    */
-  commit: string;
+  gitCommit: string;
 
   /**
-   * build_date is the build date of the node.
+   * BuildDate is the build date of the node.
    *
-   * @generated from field: string build_date = 5;
+   * @generated from field: string buildDate = 5;
    */
   buildDate: string;
 
   /**
-   * uptime is the uptime of the node.
+   * Uptime is the uptime of the node.
    *
    * @generated from field: string uptime = 6;
    */
   uptime: string;
 
   /**
-   * started_at is the time the node started.
+   * StartedAt is the time the node started.
    *
    * @generated from field: google.protobuf.Timestamp startedAt = 7;
    */
   startedAt?: Timestamp;
 
   /**
-   * features is the list of features currently enabled.
+   * Features is the list of features currently enabled.
    *
    * @generated from field: repeated v1.FeaturePort features = 8;
    */
   features: FeaturePort[];
 
   /**
-   * cluster_status is the status of the node in the cluster.
+   * ClusterStatus is the status of the node in the cluster.
    *
    * @generated from field: v1.ClusterStatus clusterStatus = 9;
    */
   clusterStatus: ClusterStatus;
 
   /**
-   * current_leader is the current leader of the cluster.
+   * CurrentLeader is the current leader of the cluster.
    *
    * @generated from field: string currentLeader = 10;
    */
   currentLeader: string;
 
   /**
-   * interface_metrics are the metrics for the node's interfaces.
+   * InterfaceMetrics are the metrics for the node's interfaces.
    *
    * @generated from field: v1.InterfaceMetrics interfaceMetrics = 11;
    */
@@ -520,56 +519,56 @@ export declare class Status extends Message<Status> {
  */
 export declare class DataChannelNegotiation extends Message<DataChannelNegotiation> {
   /**
-   * proto is the protocol of the traffic.
+   * Proto is the protocol of the traffic.
    *
    * @generated from field: string proto = 1;
    */
   proto: string;
 
   /**
-   * src is the address of the client that initiated the request.
+   * Src is the address of the client that initiated the request.
    *
    * @generated from field: string src = 2;
    */
   src: string;
 
   /**
-   * dst is the destination address of the traffic.
+   * Dst is the destination address of the traffic.
    *
    * @generated from field: string dst = 3;
    */
   dst: string;
 
   /**
-   * port is the destination port of the traffic.
+   * Port is the destination port of the traffic.
    *
    * @generated from field: uint32 port = 4;
    */
   port: number;
 
   /**
-   * offer is the offer for the node to use as its local description.
+   * Offer is the offer for the node to use as its local description.
    *
    * @generated from field: string offer = 5;
    */
   offer: string;
 
   /**
-   * answer is the answer for the node to use as its remote description.
+   * Answer is the answer for the node to use as its remote description.
    *
    * @generated from field: string answer = 6;
    */
   answer: string;
 
   /**
-   * candidate is an ICE candidate.
+   * Candidate is an ICE candidate.
    *
    * @generated from field: string candidate = 7;
    */
   candidate: string;
 
   /**
-   * stun_servers is the list of STUN servers to use.
+   * StunServers is the list of STUN servers to use.
    *
    * @generated from field: repeated string stunServers = 8;
    */
@@ -597,70 +596,70 @@ export declare class DataChannelNegotiation extends Message<DataChannelNegotiati
  */
 export declare class InterfaceMetrics extends Message<InterfaceMetrics> {
   /**
-   * device_name is the name of the device.
+   * DeviceName is the name of the device.
    *
    * @generated from field: string deviceName = 1;
    */
   deviceName: string;
 
   /**
-   * public_key is the public key of the node.
+   * PublicKey is the public key of the node.
    *
    * @generated from field: string publicKey = 2;
    */
   publicKey: string;
 
   /**
-   * address_v4 is the IPv4 address of the node.
+   * AddressV4 is the IPv4 address of the node.
    *
    * @generated from field: string addressV4 = 3;
    */
   addressV4: string;
 
   /**
-   * address_v6 is the IPv6 address of the node.
+   * AddressV6 is the IPv6 address of the node.
    *
    * @generated from field: string addressV6 = 4;
    */
   addressV6: string;
 
   /**
-   * type is the type of interface being used for wireguard.
+   * Type is the type of interface being used for wireguard.
    *
    * @generated from field: string type = 5;
    */
   type: string;
 
   /**
-   * listen_port is the port wireguard is listening on.
+   * ListenPort is the port wireguard is listening on.
    *
    * @generated from field: int32 listenPort = 6;
    */
   listenPort: number;
 
   /**
-   * total_receive_bytes is the total number of bytes received.
+   * TotalReceiveBytes is the total number of bytes received.
    *
    * @generated from field: uint64 totalReceiveBytes = 7;
    */
   totalReceiveBytes: bigint;
 
   /**
-   * total_transmit_bytes is the total number of bytes transmitted.
+   * TotalTransmitBytes is the total number of bytes transmitted.
    *
    * @generated from field: uint64 totalTransmitBytes = 8;
    */
   totalTransmitBytes: bigint;
 
   /**
-   * num_peers is the number of peers connected to the node.
+   * NumPeers is the number of peers connected to the node.
    *
    * @generated from field: int32 numPeers = 9;
    */
   numPeers: number;
 
   /**
-   * peers are the per-peer statistics.
+   * Peers are the per-peer statistics.
    *
    * @generated from field: repeated v1.PeerMetrics peers = 10;
    */
@@ -688,56 +687,56 @@ export declare class InterfaceMetrics extends Message<InterfaceMetrics> {
  */
 export declare class PeerMetrics extends Message<PeerMetrics> {
   /**
-   * public_key is the public key of the peer.
+   * PublicKey is the public key of the peer.
    *
    * @generated from field: string publicKey = 1;
    */
   publicKey: string;
 
   /**
-   * endpoint is the connected endpoint of the peer.
+   * Endpoint is the connected endpoint of the peer.
    *
    * @generated from field: string endpoint = 2;
    */
   endpoint: string;
 
   /**
-   * persistent_keep_alive is the persistent keep alive interval for the peer.
+   * PersistentKeepAlive is the persistent keep alive interval for the peer.
    *
    * @generated from field: string persistentKeepAlive = 3;
    */
   persistentKeepAlive: string;
 
   /**
-   * last_handshake_time is the last handshake time for the peer.
+   * LastHandshakeTime is the last handshake time for the peer.
    *
    * @generated from field: string lastHandshakeTime = 4;
    */
   lastHandshakeTime: string;
 
   /**
-   * allowed_ips is the list of allowed IPs for the peer.
+   * AllowedIPs is the list of allowed IPs for the peer.
    *
    * @generated from field: repeated string allowedIPs = 5;
    */
   allowedIPs: string[];
 
   /**
-   * protocol_version is the version of the wireguard protocol negotiated with the peer.
+   * ProtocolVersion is the version of the wireguard protocol negotiated with the peer.
    *
    * @generated from field: int64 protocolVersion = 6;
    */
   protocolVersion: bigint;
 
   /**
-   * receive_bytes is the bytes received from the peer.
+   * ReceiveBytes is the bytes received from the peer.
    *
    * @generated from field: uint64 receiveBytes = 7;
    */
   receiveBytes: bigint;
 
   /**
-   * transmit_bytes is the bytes transmitted to the peer.
+   * TransmitBytes is the bytes transmitted to the peer.
    *
    * @generated from field: uint64 transmitBytes = 8;
    */
@@ -765,7 +764,7 @@ export declare class PeerMetrics extends Message<PeerMetrics> {
  */
 export declare class WebRTCSignal extends Message<WebRTCSignal> {
   /**
-   * node_id is the ID of the node to send the signal to.
+   * NodeID is the ID of the node to send the signal to.
    * This is set by the original sender. On the node that
    * receives the ReceiveSignalChannel request, this will
    * be set to the ID of the node that sent the request.
@@ -775,14 +774,14 @@ export declare class WebRTCSignal extends Message<WebRTCSignal> {
   nodeID: string;
 
   /**
-   * candidate is an ICE candidate.
+   * Candidate is an ICE candidate.
    *
    * @generated from field: string candidate = 2;
    */
   candidate: string;
 
   /**
-   * description is a session description.
+   * Description is a session description.
    *
    * @generated from field: string description = 3;
    */

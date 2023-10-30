@@ -56,28 +56,28 @@ export declare enum ACLAction {
  */
 export declare class NetworkACL extends Message<NetworkACL> {
   /**
-   * name is the name of the ACL.
+   * Name is the name of the ACL.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * priority is the priority of the ACL. ACLs with higher priority are evaluated first.
+   * Priority is the priority of the ACL. ACLs with higher priority are evaluated first.
    *
    * @generated from field: int32 priority = 2;
    */
   priority: number;
 
   /**
-   * action is the action to take when a request matches the ACL.
+   * Action is the action to take when a request matches the ACL.
    *
    * @generated from field: v1.ACLAction action = 3;
    */
   action: ACLAction;
 
   /**
-   * source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+   * SourceNodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
    * can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
    *
    * @generated from field: repeated string sourceNodes = 4;
@@ -85,7 +85,7 @@ export declare class NetworkACL extends Message<NetworkACL> {
   sourceNodes: string[];
 
   /**
-   * destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+   * DestinationNodes is a list of destination nodes to match against. If empty, all nodes are matched.
    * Groups can be specified with the prefix "group:". If one or more of the nodes is '*', all nodes are matched.
    *
    * @generated from field: repeated string destinationNodes = 5;
@@ -93,7 +93,7 @@ export declare class NetworkACL extends Message<NetworkACL> {
   destinationNodes: string[];
 
   /**
-   * source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+   * SourceCIDRs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
    * If one or more of the CIDRs is '*', all CIDRs are matched.
    *
    * @generated from field: repeated string sourceCIDRs = 6;
@@ -101,14 +101,8 @@ export declare class NetworkACL extends Message<NetworkACL> {
   sourceCIDRs: string[];
 
   /**
-   * destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+   * DestinationCIDRs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
    * If one or more of the CIDRs is '*', all CIDRs are matched.
-   *
-   * // protocols is a list of protocols to match against. If empty, all protocols are matched.
-   * // Protocols can be specified by name or number.
-   * repeated string protocols = 8;
-   * // ports is a list of ports to match against. If empty, all ports are matched.
-   * repeated uint32 ports = 9;
    *
    * @generated from field: repeated string destinationCIDRs = 7;
    */
@@ -136,7 +130,7 @@ export declare class NetworkACL extends Message<NetworkACL> {
  */
 export declare class NetworkACLs extends Message<NetworkACLs> {
   /**
-   * items is the list of network ACLs.
+   * Items is the list of network ACLs.
    *
    * @generated from field: repeated v1.NetworkACL items = 1;
    */
@@ -164,28 +158,29 @@ export declare class NetworkACLs extends Message<NetworkACLs> {
  */
 export declare class Route extends Message<Route> {
   /**
-   * name is the name of the route.
+   * Name is the name of the route.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * node is the node that broadcasts the route. A group can be specified with the prefix "group:".
+   * Node is the node that broadcasts the route. A group can be specified with the prefix "group:".
    *
    * @generated from field: string node = 2;
    */
   node: string;
 
   /**
-   * destination_cidrs are the destination CIDRs of the route.
+   * DestinationCIDRs are the destination CIDRs of the route.
    *
    * @generated from field: repeated string destinationCIDRs = 3;
    */
   destinationCIDRs: string[];
 
   /**
-   * nextHopNode is an optional node that is used as the next hop for the route.
+   * NextHopNode is an optional node that is used as the next hop for the route.
+   * This field is not currentl used.
    *
    * @generated from field: string nextHopNode = 4;
    */
@@ -213,7 +208,7 @@ export declare class Route extends Message<Route> {
  */
 export declare class Routes extends Message<Routes> {
   /**
-   * items is the list of routes.
+   * Items is the list of routes.
    *
    * @generated from field: repeated v1.Route items = 1;
    */
@@ -242,28 +237,28 @@ export declare class Routes extends Message<Routes> {
  */
 export declare class NetworkAction extends Message<NetworkAction> {
   /**
-   * src_node is the source node of the action.
+   * SrcNode is the source node of the action.
    *
    * @generated from field: string srcNode = 1;
    */
   srcNode: string;
 
   /**
-   * src_cidr is the source CIDR of the action.
+   * SrcCIDR is the source CIDR of the action.
    *
    * @generated from field: string srcCIDR = 2;
    */
   srcCIDR: string;
 
   /**
-   * dst_node is the destination node of the action.
+   * DstNode is the destination node of the action.
    *
    * @generated from field: string dstNode = 3;
    */
   dstNode: string;
 
   /**
-   * dst_cidr is the destination CIDR of the action.
+   * DstCIDR is the destination CIDR of the action.
    *
    * @generated from field: string dstCIDR = 4;
    */

@@ -404,9 +404,9 @@ type AuthenticationRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// headers are the headers of the request.
+	// Headers are the headers of the request.
 	Headers map[string]string `protobuf:"bytes,1,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// certificates are the DER encoded certificates of the request.
+	// Certificates are the DER encoded certificates of the request.
 	Certificates [][]byte `protobuf:"bytes,2,rep,name=certificates,proto3" json:"certificates,omitempty"`
 }
 
@@ -462,7 +462,7 @@ type AuthenticationResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// id is the id of the authenticated user.
+	// ID is the id of the authenticated user.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
@@ -511,9 +511,9 @@ type Event struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// type is the type of the watch event.
+	// Type is the type of the watch event.
 	Type Event_WatchEvent `protobuf:"varint,1,opt,name=type,proto3,enum=v1.Event_WatchEvent" json:"type,omitempty"`
-	// event is the data of the watch event.
+	// Event is the data of the watch event.
 	//
 	// Types that are assignable to Event:
 	//
@@ -579,7 +579,7 @@ type isEvent_Event interface {
 }
 
 type Event_Node struct {
-	// node is the node that the event is about.
+	// Node is the node that the event is about.
 	Node *MeshNode `protobuf:"bytes,2,opt,name=node,proto3,oneof"`
 }
 
@@ -591,9 +591,9 @@ type AllocateIPRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// node_id is the node that the IP should be allocated for.
+	// NodeID is the node that the IP should be allocated for.
 	NodeID string `protobuf:"bytes,1,opt,name=nodeID,proto3" json:"nodeID,omitempty"`
-	// subnet is the subnet that the IP should be allocated from.
+	// Subnet is the subnet that the IP should be allocated from.
 	Subnet string `protobuf:"bytes,2,opt,name=subnet,proto3" json:"subnet,omitempty"`
 }
 
@@ -649,7 +649,7 @@ type AllocatedIP struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ip is the allocated IP. It should be returned in CIDR notation.
+	// IP is the allocated IP. It should be returned in CIDR notation.
 	Ip string `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
 }
 
@@ -698,9 +698,9 @@ type ReleaseIPRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// node_id is the node that the IP should be released for.
+	// NodeID is the node that the IP should be released for.
 	NodeID string `protobuf:"bytes,1,opt,name=nodeID,proto3" json:"nodeID,omitempty"`
-	// ip is the IP that should be released.
+	// IP is the IP that should be released.
 	Ip string `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
 }
 

@@ -206,21 +206,21 @@ export declare enum SubjectType {
  */
 export declare class Rule extends Message<Rule> {
   /**
-   * resources is the resources to which the rule applies.
+   * Resources is the resources to which the rule applies.
    *
    * @generated from field: repeated v1.RuleResource resources = 1;
    */
   resources: RuleResource[];
 
   /**
-   * resource_names is the list of resource names to which the rule applies.
+   * ResourceNames is the list of resource names to which the rule applies.
    *
    * @generated from field: repeated string resourceNames = 2;
    */
   resourceNames: string[];
 
   /**
-   * verbs is the list of verbs that apply to the resource.
+   * Verbs is the list of verbs that apply to the resource.
    *
    * @generated from field: repeated v1.RuleVerb verbs = 3;
    */
@@ -248,14 +248,14 @@ export declare class Rule extends Message<Rule> {
  */
 export declare class Role extends Message<Role> {
   /**
-   * name is the name of the role.
+   * Name is the name of the role.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * rules is the list of rules that apply to the role.
+   * Rules is the list of rules that apply to the role.
    *
    * @generated from field: repeated v1.Rule rules = 2;
    */
@@ -283,7 +283,7 @@ export declare class Role extends Message<Role> {
  */
 export declare class Roles extends Message<Roles> {
   /**
-   * items is the list of roles.
+   * Items is the list of roles.
    *
    * @generated from field: repeated v1.Role items = 1;
    */
@@ -311,21 +311,21 @@ export declare class Roles extends Message<Roles> {
  */
 export declare class RoleBinding extends Message<RoleBinding> {
   /**
-   * name is the name of the role binding.
+   * Name is the name of the role binding.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * role is the name of the role to which the binding applies.
+   * Role is the name of the role to which the binding applies.
    *
    * @generated from field: string role = 2;
    */
   role: string;
 
   /**
-   * subjects is the list of subjects to which the binding applies.
+   * Subjects is the list of subjects to which the binding applies.
    *
    * @generated from field: repeated v1.Subject subjects = 3;
    */
@@ -353,7 +353,7 @@ export declare class RoleBinding extends Message<RoleBinding> {
  */
 export declare class RoleBindings extends Message<RoleBindings> {
   /**
-   * items is the list of role bindings.
+   * Items is the list of role bindings.
    *
    * @generated from field: repeated v1.RoleBinding items = 1;
    */
@@ -381,14 +381,14 @@ export declare class RoleBindings extends Message<RoleBindings> {
  */
 export declare class Subject extends Message<Subject> {
   /**
-   * name is the name of the subject.
+   * Name is the name of the subject.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * type is the type of the subject.
+   * Type is the type of the subject.
    *
    * @generated from field: v1.SubjectType type = 2;
    */
@@ -416,14 +416,14 @@ export declare class Subject extends Message<Subject> {
  */
 export declare class Group extends Message<Group> {
   /**
-   * name is the name of the group.
+   * Name is the name of the group.
    *
    * @generated from field: string name = 1;
    */
   name: string;
 
   /**
-   * subjects is the list of subjects in the group.
+   * Subjects is the list of subjects in the group.
    *
    * @generated from field: repeated v1.Subject subjects = 2;
    */
@@ -451,7 +451,7 @@ export declare class Group extends Message<Group> {
  */
 export declare class Groups extends Message<Groups> {
   /**
-   * items is the list of groups.
+   * Items is the list of groups.
    *
    * @generated from field: repeated v1.Group items = 1;
    */
@@ -480,14 +480,14 @@ export declare class Groups extends Message<Groups> {
  */
 export declare class RBACAction extends Message<RBACAction> {
   /**
-   * resource is the resource on which the action is performed.
+   * Resource is the resource on which the action is performed.
    *
    * @generated from field: v1.RuleResource resource = 1;
    */
   resource: RuleResource;
 
   /**
-   * resource_name is the name of the resource on which the action is
+   * ResourceName is the name of the resource on which the action is
    * performed.
    *
    * @generated from field: string resourceName = 2;
@@ -495,7 +495,7 @@ export declare class RBACAction extends Message<RBACAction> {
   resourceName: string;
 
   /**
-   * verb is the verb that is performed on the resource.
+   * Verb is the verb that is performed on the resource.
    *
    * @generated from field: v1.RuleVerb verb = 3;
    */

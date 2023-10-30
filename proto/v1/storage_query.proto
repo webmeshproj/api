@@ -64,11 +64,11 @@ message QueryRequest {
         // This will return a single item of true or false.
         RBAC_STATE = 10;
     };
-    // command is the command of the query.
+    // Command is the command of the query.
     QueryCommand command = 1;
-    // type is the type of the query.
+    // Type is the type of resource for the query.
     QueryType type = 2;
-    // query is the string of the query. This follows the format of a label
+    // Query is the string of the query. This follows the format of a label
     // selector and is only applicable for certain queries. For get queries
     // this will usually be an ID. For list queries this will usually be one
     // or more filters.
@@ -77,10 +77,10 @@ message QueryRequest {
 
 // QueryResponse is the message containing a mesh query result.
 message QueryResponse {
-    // items contain the results of the query. These will be protobuf
+    // Items contain the results of the query. These will be protobuf
     // json-encoded objects of the given query type.
     repeated bytes items = 1;
-    // error is an error that happened during the query. This will always
+    // Error is an error that happened during the query. This will always
     // be populated on errors, but single-flight queries will return
     // a coded error instead.
     string error = 4;
@@ -89,26 +89,26 @@ message QueryResponse {
 // SubscribeRequest is sent by the application to the node to subscribe to
 // events. This currently only supports database events.
 message SubscribeRequest{
-    // prefix is the prefix of the events to subscribe to.
+    // Prefix is the prefix of the events to subscribe to.
     bytes prefix = 1;
 }
 
 // SubscriptionEvent is a message containing a subscription event.
 message SubscriptionEvent {
-    // key is the key of the event.
+    // Key is the key of the event.
     bytes key = 1;
-    // value is the value of the event. This will be the raw value of the key.
+    // Value is the value of the event. This will be the raw value of the key.
     bytes value = 2;
 }
 
 // PublishRequest is sent by the application to the node to publish events.
 // This currently only supports database events.
 message PublishRequest {
-    // key is the key of the event.
+    // Key is the key of the event.
     bytes key = 1;
-    // value is the value of the event. This will be the raw value of the key.
+    // Value is the value of the event. This will be the raw value of the key.
     bytes value = 2;
-    // ttl is the time for the event to live in the database.
+    // TTL is the time for the event to live in the database.
     google.protobuf.Duration ttl = 3;
 }
 

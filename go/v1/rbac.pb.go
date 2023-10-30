@@ -255,11 +255,11 @@ type Rule struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// resources is the resources to which the rule applies.
+	// Resources is the resources to which the rule applies.
 	Resources []RuleResource `protobuf:"varint,1,rep,packed,name=resources,proto3,enum=v1.RuleResource" json:"resources,omitempty"`
-	// resource_names is the list of resource names to which the rule applies.
+	// ResourceNames is the list of resource names to which the rule applies.
 	ResourceNames []string `protobuf:"bytes,2,rep,name=resourceNames,proto3" json:"resourceNames,omitempty"`
-	// verbs is the list of verbs that apply to the resource.
+	// Verbs is the list of verbs that apply to the resource.
 	Verbs []RuleVerb `protobuf:"varint,3,rep,packed,name=verbs,proto3,enum=v1.RuleVerb" json:"verbs,omitempty"`
 }
 
@@ -322,9 +322,9 @@ type Role struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the role.
+	// Name is the name of the role.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// rules is the list of rules that apply to the role.
+	// Rules is the list of rules that apply to the role.
 	Rules []*Rule `protobuf:"bytes,2,rep,name=rules,proto3" json:"rules,omitempty"`
 }
 
@@ -380,7 +380,7 @@ type Roles struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of roles.
+	// Items is the list of roles.
 	Items []*Role `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -429,11 +429,11 @@ type RoleBinding struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the role binding.
+	// Name is the name of the role binding.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// role is the name of the role to which the binding applies.
+	// Role is the name of the role to which the binding applies.
 	Role string `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
-	// subjects is the list of subjects to which the binding applies.
+	// Subjects is the list of subjects to which the binding applies.
 	Subjects []*Subject `protobuf:"bytes,3,rep,name=subjects,proto3" json:"subjects,omitempty"`
 }
 
@@ -496,7 +496,7 @@ type RoleBindings struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of role bindings.
+	// Items is the list of role bindings.
 	Items []*RoleBinding `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -545,9 +545,9 @@ type Subject struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the subject.
+	// Name is the name of the subject.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// type is the type of the subject.
+	// Type is the type of the subject.
 	Type SubjectType `protobuf:"varint,2,opt,name=type,proto3,enum=v1.SubjectType" json:"type,omitempty"`
 }
 
@@ -603,9 +603,9 @@ type Group struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// name is the name of the group.
+	// Name is the name of the group.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// subjects is the list of subjects in the group.
+	// Subjects is the list of subjects in the group.
 	Subjects []*Subject `protobuf:"bytes,2,rep,name=subjects,proto3" json:"subjects,omitempty"`
 }
 
@@ -661,7 +661,7 @@ type Groups struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// items is the list of groups.
+	// Items is the list of groups.
 	Items []*Group `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
@@ -711,12 +711,12 @@ type RBACAction struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// resource is the resource on which the action is performed.
+	// Resource is the resource on which the action is performed.
 	Resource RuleResource `protobuf:"varint,1,opt,name=resource,proto3,enum=v1.RuleResource" json:"resource,omitempty"`
-	// resource_name is the name of the resource on which the action is
+	// ResourceName is the name of the resource on which the action is
 	// performed.
 	ResourceName string `protobuf:"bytes,2,opt,name=resourceName,proto3" json:"resourceName,omitempty"`
-	// verb is the verb that is performed on the resource.
+	// Verb is the verb that is performed on the resource.
 	Verb RuleVerb `protobuf:"varint,3,opt,name=verb,proto3,enum=v1.RuleVerb" json:"verb,omitempty"`
 }
 

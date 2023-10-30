@@ -910,56 +910,56 @@
                   <td>proto</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>proto is the protocol of the traffic. </p></td>
+                  <td><p>Proto is the protocol of the traffic. </p></td>
                 </tr>
               
                 <tr>
                   <td>src</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>src is the address of the client that initiated the request. </p></td>
+                  <td><p>Src is the address of the client that initiated the request. </p></td>
                 </tr>
               
                 <tr>
                   <td>dst</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dst is the destination address of the traffic. </p></td>
+                  <td><p>Dst is the destination address of the traffic. </p></td>
                 </tr>
               
                 <tr>
                   <td>port</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>port is the destination port of the traffic. </p></td>
+                  <td><p>Port is the destination port of the traffic. </p></td>
                 </tr>
               
                 <tr>
                   <td>offer</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>offer is the offer for the node to use as its local description. </p></td>
+                  <td><p>Offer is the offer for the node to use as its local description. </p></td>
                 </tr>
               
                 <tr>
                   <td>answer</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>answer is the answer for the node to use as its remote description. </p></td>
+                  <td><p>Answer is the answer for the node to use as its remote description. </p></td>
                 </tr>
               
                 <tr>
                   <td>candidate</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
+                  <td><p>Candidate is an ICE candidate. </p></td>
                 </tr>
               
                 <tr>
                   <td>stunServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
+                  <td><p>StunServers is the list of STUN servers to use. </p></td>
                 </tr>
               
             </tbody>
@@ -983,14 +983,14 @@
                   <td>feature</td>
                   <td><a href="#v1.Feature">Feature</a></td>
                   <td></td>
-                  <td><p>feature is the feature. </p></td>
+                  <td><p>Feature is the feature advertised on the port. </p></td>
                 </tr>
               
                 <tr>
                   <td>port</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>port is the port the feature is advertised on. </p></td>
+                  <td><p>Port is the port the feature is advertised on. </p></td>
                 </tr>
               
             </tbody>
@@ -1014,8 +1014,7 @@
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. If unset, the status of the 
-local node is returned. </p></td>
+                  <td><p>ID is the ID of the node. If unset, the status of the local node is returned. </p></td>
                 </tr>
               
             </tbody>
@@ -1039,70 +1038,70 @@ local node is returned. </p></td>
                   <td>deviceName</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>device_name is the name of the device. </p></td>
+                  <td><p>DeviceName is the name of the device. </p></td>
                 </tr>
               
                 <tr>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the public key of the node. </p></td>
+                  <td><p>PublicKey is the public key of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>addressV4</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>address_v4 is the IPv4 address of the node. </p></td>
+                  <td><p>AddressV4 is the IPv4 address of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>addressV6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>address_v6 is the IPv6 address of the node. </p></td>
+                  <td><p>AddressV6 is the IPv6 address of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>type</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>type is the type of interface being used for wireguard. </p></td>
+                  <td><p>Type is the type of interface being used for wireguard. </p></td>
                 </tr>
               
                 <tr>
                   <td>listenPort</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>listen_port is the port wireguard is listening on. </p></td>
+                  <td><p>ListenPort is the port wireguard is listening on. </p></td>
                 </tr>
               
                 <tr>
                   <td>totalReceiveBytes</td>
                   <td><a href="#uint64">uint64</a></td>
                   <td></td>
-                  <td><p>total_receive_bytes is the total number of bytes received. </p></td>
+                  <td><p>TotalReceiveBytes is the total number of bytes received. </p></td>
                 </tr>
               
                 <tr>
                   <td>totalTransmitBytes</td>
                   <td><a href="#uint64">uint64</a></td>
                   <td></td>
-                  <td><p>total_transmit_bytes is the total number of bytes transmitted. </p></td>
+                  <td><p>TotalTransmitBytes is the total number of bytes transmitted. </p></td>
                 </tr>
               
                 <tr>
                   <td>numPeers</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>num_peers is the number of peers connected to the node. </p></td>
+                  <td><p>NumPeers is the number of peers connected to the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>peers</td>
                   <td><a href="#v1.PeerMetrics">PeerMetrics</a></td>
                   <td>repeated</td>
-                  <td><p>peers are the per-peer statistics. </p></td>
+                  <td><p>Peers are the per-peer statistics. </p></td>
                 </tr>
               
             </tbody>
@@ -1126,70 +1125,70 @@ local node is returned. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the public key of the node. </p></td>
+                  <td><p>PublicKey is the public key of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>primaryEndpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>primary_endpoint is the primary endpoint of the node. </p></td>
+                  <td><p>PrimaryEndpoint is the primary endpoint of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>wireguardEndpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                  <td><p>WireguardEndpoints is a list of WireGuard endpoints for the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>zoneAwarenessID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                  <td><p>ZoneAwarenessID is the zone awareness ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>privateIPv4</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>private_ipv4 is the private IPv4 address of the node. </p></td>
+                  <td><p>PrivateIPv4 is the private IPv4 address of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>privateIPv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>private_ipv6 is the private IPv6 address of the node. </p></td>
+                  <td><p>PrivateIPv6 is the private IPv6 address of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>features</td>
                   <td><a href="#v1.FeaturePort">FeaturePort</a></td>
                   <td>repeated</td>
-                  <td><p>features are a list of features and the ports they are advertised on. </p></td>
+                  <td><p>Features are a list of features and the ports they are advertised on. </p></td>
                 </tr>
               
                 <tr>
                   <td>multiaddrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>multiaddrs are the multiaddrs of the node. </p></td>
+                  <td><p>Multiaddrs are the multiaddrs of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>joinedAt</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>joined_at is the time the node joined the cluster. </p></td>
+                  <td><p>JoinedAt is the time the node joined the cluster. </p></td>
                 </tr>
               
             </tbody>
@@ -1213,7 +1212,7 @@ local node is returned. </p></td>
                   <td>nodes</td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td>repeated</td>
-                  <td><p>nodes is the list of nodes. </p></td>
+                  <td><p>Nodes is the list of nodes. </p></td>
                 </tr>
               
             </tbody>
@@ -1237,56 +1236,56 @@ local node is returned. </p></td>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the public key of the peer. </p></td>
+                  <td><p>PublicKey is the public key of the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>endpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>endpoint is the connected endpoint of the peer. </p></td>
+                  <td><p>Endpoint is the connected endpoint of the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>persistentKeepAlive</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>persistent_keep_alive is the persistent keep alive interval for the peer. </p></td>
+                  <td><p>PersistentKeepAlive is the persistent keep alive interval for the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>lastHandshakeTime</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>last_handshake_time is the last handshake time for the peer. </p></td>
+                  <td><p>LastHandshakeTime is the last handshake time for the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>allowedIPs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
+                  <td><p>AllowedIPs is the list of allowed IPs for the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>protocolVersion</td>
                   <td><a href="#int64">int64</a></td>
                   <td></td>
-                  <td><p>protocol_version is the version of the wireguard protocol negotiated with the peer. </p></td>
+                  <td><p>ProtocolVersion is the version of the wireguard protocol negotiated with the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>receiveBytes</td>
                   <td><a href="#uint64">uint64</a></td>
                   <td></td>
-                  <td><p>receive_bytes is the bytes received from the peer. </p></td>
+                  <td><p>ReceiveBytes is the bytes received from the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>transmitBytes</td>
                   <td><a href="#uint64">uint64</a></td>
                   <td></td>
-                  <td><p>transmit_bytes is the bytes transmitted to the peer. </p></td>
+                  <td><p>TransmitBytes is the bytes transmitted to the peer. </p></td>
                 </tr>
               
             </tbody>
@@ -1310,14 +1309,14 @@ local node is returned. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>description is an optional description provided
+                  <td><p>Description is an optional description provided
 by the node. </p></td>
                 </tr>
               
@@ -1325,63 +1324,63 @@ by the node. </p></td>
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>version is the version of the node. </p></td>
+                  <td><p>Version is the version of the node. </p></td>
                 </tr>
               
                 <tr>
-                  <td>commit</td>
+                  <td>gitCommit</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>commit is the commit of the node. </p></td>
+                  <td><p>GitCommit is the git commit of the node. </p></td>
                 </tr>
               
                 <tr>
-                  <td>build_date</td>
+                  <td>buildDate</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>build_date is the build date of the node. </p></td>
+                  <td><p>BuildDate is the build date of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>uptime</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>uptime is the uptime of the node. </p></td>
+                  <td><p>Uptime is the uptime of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>startedAt</td>
                   <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
                   <td></td>
-                  <td><p>started_at is the time the node started. </p></td>
+                  <td><p>StartedAt is the time the node started. </p></td>
                 </tr>
               
                 <tr>
                   <td>features</td>
                   <td><a href="#v1.FeaturePort">FeaturePort</a></td>
                   <td>repeated</td>
-                  <td><p>features is the list of features currently enabled. </p></td>
+                  <td><p>Features is the list of features currently enabled. </p></td>
                 </tr>
               
                 <tr>
                   <td>clusterStatus</td>
                   <td><a href="#v1.ClusterStatus">ClusterStatus</a></td>
                   <td></td>
-                  <td><p>cluster_status is the status of the node in the cluster. </p></td>
+                  <td><p>ClusterStatus is the status of the node in the cluster. </p></td>
                 </tr>
               
                 <tr>
                   <td>currentLeader</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>current_leader is the current leader of the cluster. </p></td>
+                  <td><p>CurrentLeader is the current leader of the cluster. </p></td>
                 </tr>
               
                 <tr>
                   <td>interfaceMetrics</td>
                   <td><a href="#v1.InterfaceMetrics">InterfaceMetrics</a></td>
                   <td></td>
-                  <td><p>interface_metrics are the metrics for the node&#39;s interfaces. </p></td>
+                  <td><p>InterfaceMetrics are the metrics for the node&#39;s interfaces. </p></td>
                 </tr>
               
             </tbody>
@@ -1405,7 +1404,7 @@ by the node. </p></td>
                   <td>nodeID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node_id is the ID of the node to send the signal to.
+                  <td><p>NodeID is the ID of the node to send the signal to.
 This is set by the original sender. On the node that
 receives the ReceiveSignalChannel request, this will
 be set to the ID of the node that sent the request. </p></td>
@@ -1415,14 +1414,14 @@ be set to the ID of the node that sent the request. </p></td>
                   <td>candidate</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
+                  <td><p>Candidate is an ICE candidate. </p></td>
                 </tr>
               
                 <tr>
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>description is a session description. </p></td>
+                  <td><p>Description is a session description. </p></td>
                 </tr>
               
             </tbody>
@@ -1701,7 +1700,7 @@ candidates.</p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -1725,28 +1724,28 @@ candidates.</p></td>
                   <td>source</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>source is the source node. </p></td>
+                  <td><p>Source is the source node. </p></td>
                 </tr>
               
                 <tr>
                   <td>target</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>target is the target node. </p></td>
+                  <td><p>Target is the target node. </p></td>
                 </tr>
               
                 <tr>
                   <td>weight</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>weight is the weight of the edge. </p></td>
+                  <td><p>Weight is the weight of the edge. </p></td>
                 </tr>
               
                 <tr>
                   <td>attributes</td>
                   <td><a href="#v1.MeshEdge.AttributesEntry">MeshEdge.AttributesEntry</a></td>
                   <td>repeated</td>
-                  <td><p>attributes is a list of attributes for the edge. </p></td>
+                  <td><p>Attributes is a list of attributes for the edge. </p></td>
                 </tr>
               
             </tbody>
@@ -1801,7 +1800,7 @@ candidates.</p></td>
                   <td>items</td>
                   <td><a href="#v1.MeshEdge">MeshEdge</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of edges. </p></td>
+                  <td><p>Items is the list of edges. </p></td>
                 </tr>
               
             </tbody>
@@ -1825,21 +1824,21 @@ candidates.</p></td>
                   <td>nodes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>nodes is the list of nodes. </p></td>
+                  <td><p>Nodes is the list of nodes. </p></td>
                 </tr>
               
                 <tr>
                   <td>edges</td>
                   <td><a href="#v1.MeshEdge">MeshEdge</a></td>
                   <td>repeated</td>
-                  <td><p>edges is the list of edges. </p></td>
+                  <td><p>Edges is the list of edges. </p></td>
                 </tr>
               
                 <tr>
                   <td>dot</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dot is the DOT representation of the graph. </p></td>
+                  <td><p>DOT is the DOT representation of the graph. </p></td>
                 </tr>
               
             </tbody>
@@ -1911,28 +1910,28 @@ edges, and a rendering in the dot format.</p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the ACL. </p></td>
+                  <td><p>Name is the name of the ACL. </p></td>
                 </tr>
               
                 <tr>
                   <td>priority</td>
                   <td><a href="#int32">int32</a></td>
                   <td></td>
-                  <td><p>priority is the priority of the ACL. ACLs with higher priority are evaluated first. </p></td>
+                  <td><p>Priority is the priority of the ACL. ACLs with higher priority are evaluated first. </p></td>
                 </tr>
               
                 <tr>
                   <td>action</td>
                   <td><a href="#v1.ACLAction">ACLAction</a></td>
                   <td></td>
-                  <td><p>action is the action to take when a request matches the ACL. </p></td>
+                  <td><p>Action is the action to take when a request matches the ACL. </p></td>
                 </tr>
               
                 <tr>
                   <td>sourceNodes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>source_nodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
+                  <td><p>SourceNodes is a list of source nodes to match against. If empty, all nodes are matched. Groups
 can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
                 </tr>
               
@@ -1940,7 +1939,7 @@ can be specified with the prefix &#34;group:&#34;. If one or more of the nodes i
                   <td>destinationNodes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>destination_nodes is a list of destination nodes to match against. If empty, all nodes are matched.
+                  <td><p>DestinationNodes is a list of destination nodes to match against. If empty, all nodes are matched.
 Groups can be specified with the prefix &#34;group:&#34;. If one or more of the nodes is &#39;*&#39;, all nodes are matched. </p></td>
                 </tr>
               
@@ -1948,7 +1947,7 @@ Groups can be specified with the prefix &#34;group:&#34;. If one or more of the 
                   <td>sourceCIDRs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>source_cidrs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
+                  <td><p>SourceCIDRs is a list of source CIDRs to match against. If empty, all CIDRs are matched.
 If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
                 </tr>
               
@@ -1956,14 +1955,8 @@ If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
                   <td>destinationCIDRs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>destination_cidrs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
-If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched.
-
-// protocols is a list of protocols to match against. If empty, all protocols are matched.
-// Protocols can be specified by name or number.
-repeated string protocols = 8;
-// ports is a list of ports to match against. If empty, all ports are matched.
-repeated uint32 ports = 9; </p></td>
+                  <td><p>DestinationCIDRs is a list of destination CIDRs to match against. If empty, all CIDRs are matched.
+If one or more of the CIDRs is &#39;*&#39;, all CIDRs are matched. </p></td>
                 </tr>
               
             </tbody>
@@ -1987,7 +1980,7 @@ repeated uint32 ports = 9; </p></td>
                   <td>items</td>
                   <td><a href="#v1.NetworkACL">NetworkACL</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of network ACLs. </p></td>
+                  <td><p>Items is the list of network ACLs. </p></td>
                 </tr>
               
             </tbody>
@@ -2011,28 +2004,28 @@ repeated uint32 ports = 9; </p></td>
                   <td>srcNode</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>src_node is the source node of the action. </p></td>
+                  <td><p>SrcNode is the source node of the action. </p></td>
                 </tr>
               
                 <tr>
                   <td>srcCIDR</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>src_cidr is the source CIDR of the action. </p></td>
+                  <td><p>SrcCIDR is the source CIDR of the action. </p></td>
                 </tr>
               
                 <tr>
                   <td>dstNode</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dst_node is the destination node of the action. </p></td>
+                  <td><p>DstNode is the destination node of the action. </p></td>
                 </tr>
               
                 <tr>
                   <td>dstCIDR</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dst_cidr is the destination CIDR of the action. </p></td>
+                  <td><p>DstCIDR is the destination CIDR of the action. </p></td>
                 </tr>
               
             </tbody>
@@ -2056,28 +2049,29 @@ repeated uint32 ports = 9; </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the route. </p></td>
+                  <td><p>Name is the name of the route. </p></td>
                 </tr>
               
                 <tr>
                   <td>node</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node is the node that broadcasts the route. A group can be specified with the prefix &#34;group:&#34;. </p></td>
+                  <td><p>Node is the node that broadcasts the route. A group can be specified with the prefix &#34;group:&#34;. </p></td>
                 </tr>
               
                 <tr>
                   <td>destinationCIDRs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>destination_cidrs are the destination CIDRs of the route. </p></td>
+                  <td><p>DestinationCIDRs are the destination CIDRs of the route. </p></td>
                 </tr>
               
                 <tr>
                   <td>nextHopNode</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>nextHopNode is an optional node that is used as the next hop for the route. </p></td>
+                  <td><p>NextHopNode is an optional node that is used as the next hop for the route.
+This field is not currentl used. </p></td>
                 </tr>
               
             </tbody>
@@ -2101,7 +2095,7 @@ repeated uint32 ports = 9; </p></td>
                   <td>items</td>
                   <td><a href="#v1.Route">Route</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of routes. </p></td>
+                  <td><p>Items is the list of routes. </p></td>
                 </tr>
               
             </tbody>
@@ -2168,14 +2162,14 @@ repeated uint32 ports = 9; </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the group. </p></td>
+                  <td><p>Name is the name of the group. </p></td>
                 </tr>
               
                 <tr>
                   <td>subjects</td>
                   <td><a href="#v1.Subject">Subject</a></td>
                   <td>repeated</td>
-                  <td><p>subjects is the list of subjects in the group. </p></td>
+                  <td><p>Subjects is the list of subjects in the group. </p></td>
                 </tr>
               
             </tbody>
@@ -2199,7 +2193,7 @@ repeated uint32 ports = 9; </p></td>
                   <td>items</td>
                   <td><a href="#v1.Group">Group</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of groups. </p></td>
+                  <td><p>Items is the list of groups. </p></td>
                 </tr>
               
             </tbody>
@@ -2223,14 +2217,14 @@ repeated uint32 ports = 9; </p></td>
                   <td>resource</td>
                   <td><a href="#v1.RuleResource">RuleResource</a></td>
                   <td></td>
-                  <td><p>resource is the resource on which the action is performed. </p></td>
+                  <td><p>Resource is the resource on which the action is performed. </p></td>
                 </tr>
               
                 <tr>
                   <td>resourceName</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>resource_name is the name of the resource on which the action is
+                  <td><p>ResourceName is the name of the resource on which the action is
 performed. </p></td>
                 </tr>
               
@@ -2238,7 +2232,7 @@ performed. </p></td>
                   <td>verb</td>
                   <td><a href="#v1.RuleVerb">RuleVerb</a></td>
                   <td></td>
-                  <td><p>verb is the verb that is performed on the resource. </p></td>
+                  <td><p>Verb is the verb that is performed on the resource. </p></td>
                 </tr>
               
             </tbody>
@@ -2262,14 +2256,14 @@ performed. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the role. </p></td>
+                  <td><p>Name is the name of the role. </p></td>
                 </tr>
               
                 <tr>
                   <td>rules</td>
                   <td><a href="#v1.Rule">Rule</a></td>
                   <td>repeated</td>
-                  <td><p>rules is the list of rules that apply to the role. </p></td>
+                  <td><p>Rules is the list of rules that apply to the role. </p></td>
                 </tr>
               
             </tbody>
@@ -2293,21 +2287,21 @@ performed. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the role binding. </p></td>
+                  <td><p>Name is the name of the role binding. </p></td>
                 </tr>
               
                 <tr>
                   <td>role</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>role is the name of the role to which the binding applies. </p></td>
+                  <td><p>Role is the name of the role to which the binding applies. </p></td>
                 </tr>
               
                 <tr>
                   <td>subjects</td>
                   <td><a href="#v1.Subject">Subject</a></td>
                   <td>repeated</td>
-                  <td><p>subjects is the list of subjects to which the binding applies. </p></td>
+                  <td><p>Subjects is the list of subjects to which the binding applies. </p></td>
                 </tr>
               
             </tbody>
@@ -2331,7 +2325,7 @@ performed. </p></td>
                   <td>items</td>
                   <td><a href="#v1.RoleBinding">RoleBinding</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of role bindings. </p></td>
+                  <td><p>Items is the list of role bindings. </p></td>
                 </tr>
               
             </tbody>
@@ -2355,7 +2349,7 @@ performed. </p></td>
                   <td>items</td>
                   <td><a href="#v1.Role">Role</a></td>
                   <td>repeated</td>
-                  <td><p>items is the list of roles. </p></td>
+                  <td><p>Items is the list of roles. </p></td>
                 </tr>
               
             </tbody>
@@ -2379,21 +2373,21 @@ performed. </p></td>
                   <td>resources</td>
                   <td><a href="#v1.RuleResource">RuleResource</a></td>
                   <td>repeated</td>
-                  <td><p>resources is the resources to which the rule applies. </p></td>
+                  <td><p>Resources is the resources to which the rule applies. </p></td>
                 </tr>
               
                 <tr>
                   <td>resourceNames</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>resource_names is the list of resource names to which the rule applies. </p></td>
+                  <td><p>ResourceNames is the list of resource names to which the rule applies. </p></td>
                 </tr>
               
                 <tr>
                   <td>verbs</td>
                   <td><a href="#v1.RuleVerb">RuleVerb</a></td>
                   <td>repeated</td>
-                  <td><p>verbs is the list of verbs that apply to the resource. </p></td>
+                  <td><p>Verbs is the list of verbs that apply to the resource. </p></td>
                 </tr>
               
             </tbody>
@@ -2417,14 +2411,14 @@ performed. </p></td>
                   <td>name</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>name is the name of the subject. </p></td>
+                  <td><p>Name is the name of the subject. </p></td>
                 </tr>
               
                 <tr>
                   <td>type</td>
                   <td><a href="#v1.SubjectType">SubjectType</a></td>
                   <td></td>
-                  <td><p>type is the type of the subject. </p></td>
+                  <td><p>Type is the type of the subject. </p></td>
                 </tr>
               
             </tbody>
@@ -2862,21 +2856,21 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                   <td>key</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>key is the key of the event. </p></td>
+                  <td><p>Key is the key of the event. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                  <td><p>Value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
               
                 <tr>
                   <td>ttl</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>ttl is the time for the event to live in the database. </p></td>
+                  <td><p>TTL is the time for the event to live in the database. </p></td>
                 </tr>
               
             </tbody>
@@ -2907,21 +2901,21 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                   <td>command</td>
                   <td><a href="#v1.QueryRequest.QueryCommand">QueryRequest.QueryCommand</a></td>
                   <td></td>
-                  <td><p>command is the command of the query. </p></td>
+                  <td><p>Command is the command of the query. </p></td>
                 </tr>
               
                 <tr>
                   <td>type</td>
                   <td><a href="#v1.QueryRequest.QueryType">QueryRequest.QueryType</a></td>
                   <td></td>
-                  <td><p>type is the type of the query. </p></td>
+                  <td><p>Type is the type of resource for the query. </p></td>
                 </tr>
               
                 <tr>
                   <td>query</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>query is the string of the query. This follows the format of a label
+                  <td><p>Query is the string of the query. This follows the format of a label
 selector and is only applicable for certain queries. For get queries
 this will usually be an ID. For list queries this will usually be one
 or more filters. </p></td>
@@ -2948,7 +2942,7 @@ or more filters. </p></td>
                   <td>items</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
-                  <td><p>items contain the results of the query. These will be protobuf
+                  <td><p>Items contain the results of the query. These will be protobuf
 json-encoded objects of the given query type. </p></td>
                 </tr>
               
@@ -2956,7 +2950,7 @@ json-encoded objects of the given query type. </p></td>
                   <td>error</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>error is an error that happened during the query. This will always
+                  <td><p>Error is an error that happened during the query. This will always
 be populated on errors, but single-flight queries will return
 a coded error instead. </p></td>
                 </tr>
@@ -2982,7 +2976,7 @@ a coded error instead. </p></td>
                   <td>prefix</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>prefix is the prefix of the events to subscribe to. </p></td>
+                  <td><p>Prefix is the prefix of the events to subscribe to. </p></td>
                 </tr>
               
             </tbody>
@@ -3006,14 +3000,14 @@ a coded error instead. </p></td>
                   <td>key</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>key is the key of the event. </p></td>
+                  <td><p>Key is the key of the event. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>value is the value of the event. This will be the raw value of the key. </p></td>
+                  <td><p>Value is the value of the event. This will be the raw value of the key. </p></td>
                 </tr>
               
             </tbody>
@@ -3959,14 +3953,14 @@ The TLS object should be used to configure the TLS connection.</p></td>
                   <td>time</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>time is the total time it took to apply the log entry. </p></td>
+                  <td><p>Time is the total time it took to apply the log entry. </p></td>
                 </tr>
               
                 <tr>
                   <td>error</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>error is an error that occurred during the apply. </p></td>
+                  <td><p>Error is an error that occurred during the apply. </p></td>
                 </tr>
               
             </tbody>
@@ -3990,21 +3984,21 @@ The TLS object should be used to configure the TLS connection.</p></td>
                   <td>key</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>key is the key of the data item. </p></td>
+                  <td><p>Key is the key of the data item. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>value is the value of the data item. </p></td>
+                  <td><p>Value is the value of the data item. </p></td>
                 </tr>
               
                 <tr>
                   <td>ttl</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>ttl is the time to live of the data item. </p></td>
+                  <td><p>TTL is the time to live of the data item. </p></td>
                 </tr>
               
             </tbody>
@@ -4028,28 +4022,28 @@ The TLS object should be used to configure the TLS connection.</p></td>
                   <td>type</td>
                   <td><a href="#v1.RaftCommandType">RaftCommandType</a></td>
                   <td></td>
-                  <td><p>type is the type of the log entry. </p></td>
+                  <td><p>Type is the type of the log entry. </p></td>
                 </tr>
               
                 <tr>
                   <td>key</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>key is the key of the log entry. </p></td>
+                  <td><p>Key is the key of the log entry. </p></td>
                 </tr>
               
                 <tr>
                   <td>value</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td></td>
-                  <td><p>value is the value of the log entry. </p></td>
+                  <td><p>Value is the value of the log entry. </p></td>
                 </tr>
               
                 <tr>
                   <td>ttl</td>
                   <td><a href="#google.protobuf.Duration">google.protobuf.Duration</a></td>
                   <td></td>
-                  <td><p>ttl is the time to live of the log entry. </p></td>
+                  <td><p>TTL is the time to live of the log entry. </p></td>
                 </tr>
               
             </tbody>
@@ -4073,7 +4067,7 @@ The TLS object should be used to configure the TLS connection.</p></td>
                   <td>kv</td>
                   <td><a href="#v1.RaftDataItem">RaftDataItem</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>KV is the key/value pairs of the snapshot. </p></td>
                 </tr>
               
             </tbody>
@@ -4140,21 +4134,21 @@ The TLS object should be used to configure the TLS connection.</p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the public key of the node to broadcast to peers. </p></td>
+                  <td><p>PublicKey is the public key of the node to broadcast to peers. </p></td>
                 </tr>
               
                 <tr>
                   <td>primaryEndpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
+                  <td><p>PrimaryEndpoint is a routable address for the node. If left unset, 
 the node is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
@@ -4162,28 +4156,28 @@ the node is assumed to be behind a NAT and not directly accessible. </p></td>
                   <td>wireguardEndpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                  <td><p>WireguardEndpoints is a list of WireGuard endpoints for the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>zoneAwarenessID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                  <td><p>ZoneAwarenessID is the zone awareness ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>assignIPv4</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>assign_ipv4 is whether an IPv4 address should be assigned to the node. </p></td>
+                  <td><p>AssignIPv4 is whether an IPv4 address should be assigned to the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>preferStorageIPv6</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
+                  <td><p>PreferStorageIPv6 is whether IPv6 should be preferred over IPv4 for storage communication.
 This is only used if assign_ipv4 is true. </p></td>
                 </tr>
               
@@ -4191,7 +4185,7 @@ This is only used if assign_ipv4 is true. </p></td>
                   <td>asVoter</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+                  <td><p>AsVoter is whether the node should receive a vote in elections. The request
 will be denied if the node is not allowed to vote. </p></td>
                 </tr>
               
@@ -4199,7 +4193,7 @@ will be denied if the node is not allowed to vote. </p></td>
                   <td>asObserver</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>as_observer is whether the node should be added as an observer. They will receive
+                  <td><p>AsObserver is whether the node should be added as an observer. They will receive
 updates to the storage, but not be able to vote in elections. </p></td>
                 </tr>
               
@@ -4207,7 +4201,7 @@ updates to the storage, but not be able to vote in elections. </p></td>
                   <td>routes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+                  <td><p>Routes is a list of routes to advertise to peers. The request will be denied
 if the node is not allowed to put routes. </p></td>
                 </tr>
               
@@ -4215,7 +4209,7 @@ if the node is not allowed to put routes. </p></td>
                   <td>directPeers</td>
                   <td><a href="#v1.JoinRequest.DirectPeersEntry">JoinRequest.DirectPeersEntry</a></td>
                   <td>repeated</td>
-                  <td><p>direct_peers is a map of extra peers that should be connected to directly over relays. 
+                  <td><p>DirectPeers is a map of extra peers that should be connected to directly over relays. 
 The provided edge attribute is the callers preference of how the relay should be created.
 The request will be denied if the node is not allowed to put data channels or edges.
 The default joining behavior creates direct links between the caller and the joiner.
@@ -4229,7 +4223,7 @@ that also have a primary endpoint. </p></td>
                   <td>features</td>
                   <td><a href="#v1.FeaturePort">FeaturePort</a></td>
                   <td>repeated</td>
-                  <td><p>features is a list of features supported by the node that should be advertised to peers
+                  <td><p>Features is a list of features supported by the node that should be advertised to peers
 and the port they are available on. </p></td>
                 </tr>
               
@@ -4237,7 +4231,7 @@ and the port they are available on. </p></td>
                   <td>multiaddrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>multiaddrs are libp2p multiaddresses this node is listening on. </p></td>
+                  <td><p>Multiaddrs are libp2p multiaddresses this node is listening on. </p></td>
                 </tr>
               
             </tbody>
@@ -4292,7 +4286,7 @@ and the port they are available on. </p></td>
                   <td>addressIPv4</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>address_ipv4 is the private IPv4 wireguard address of the node
+                  <td><p>AddressIPv4 is the private IPv4 wireguard address of the node
 in CIDR format representing the network. This is only set if
 assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                 </tr>
@@ -4301,35 +4295,35 @@ assign_ipv4 was set in the request or no network_ipv6 was provided. </p></td>
                   <td>addressIPv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>address_ipv6 is the IPv6 network assigned to the node. </p></td>
+                  <td><p>AddressIPv6 is the IPv6 network assigned to the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>networkIPv4</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>network_ipv4 is the IPv4 network of the Mesh. </p></td>
+                  <td><p>NetworkIPv4 is the IPv4 network of the Mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>networkIPv6</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>network_ipv6 is the IPv6 network of the Mesh. </p></td>
+                  <td><p>NetworkIPv6 is the IPv6 network of the Mesh. </p></td>
                 </tr>
               
                 <tr>
                   <td>peers</td>
                   <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
                   <td>repeated</td>
-                  <td><p>peers is a list of wireguard peers to connect to. </p></td>
+                  <td><p>Peers is a list of wireguard peers to connect to. </p></td>
                 </tr>
               
                 <tr>
                   <td>iceServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
+                  <td><p>ICEServers is a list of public nodes that can be used to negotiate
 ICE connections if required. This may only be populated when one of
 the peers has the ICE flag set. This must be set if the requestor
 specifies direct_peers. </p></td>
@@ -4339,14 +4333,14 @@ specifies direct_peers. </p></td>
                   <td>dnsServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
+                  <td><p>DNSServers is a list of peers offering DNS services. </p></td>
                 </tr>
               
                 <tr>
                   <td>meshDomain</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>mesh_domain is the domain of the mesh. </p></td>
+                  <td><p>MeshDomain is the domain of the mesh. </p></td>
                 </tr>
               
             </tbody>
@@ -4370,7 +4364,7 @@ specifies direct_peers. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -4401,14 +4395,14 @@ specifies direct_peers. </p></td>
                   <td>peers</td>
                   <td><a href="#v1.WireGuardPeer">WireGuardPeer</a></td>
                   <td>repeated</td>
-                  <td><p>peers is a list of wireguard peers to connect to. </p></td>
+                  <td><p>Peers is a list of wireguard peers to connect to. </p></td>
                 </tr>
               
                 <tr>
                   <td>iceServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>ice_servers is a list of public nodes that can be used to negotiate
+                  <td><p>ICEServers is a list of public nodes that can be used to negotiate
 ICE connections if required. This may only be populated when one of
 the peers has the ICE flag set. </p></td>
                 </tr>
@@ -4417,7 +4411,7 @@ the peers has the ICE flag set. </p></td>
                   <td>dnsServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>dns_servers is a list of peers offering DNS services. </p></td>
+                  <td><p>DNSServers is a list of peers offering DNS services. </p></td>
                 </tr>
               
             </tbody>
@@ -4448,7 +4442,7 @@ the peers has the ICE flag set. </p></td>
                   <td>servers</td>
                   <td><a href="#v1.StorageServer">StorageServer</a></td>
                   <td>repeated</td>
-                  <td><p>servers is the list of servers in the storage configuration. </p></td>
+                  <td><p>Servers is the list of servers in the storage configuration. </p></td>
                 </tr>
               
             </tbody>
@@ -4517,7 +4511,7 @@ the peers has the ICE flag set. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
             </tbody>
@@ -4541,21 +4535,21 @@ the peers has the ICE flag set. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the ID of the node. </p></td>
+                  <td><p>ID is the ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the public key of the node to broadcast to peers. </p></td>
+                  <td><p>PublicKey is the public key of the node to broadcast to peers. </p></td>
                 </tr>
               
                 <tr>
                   <td>primaryEndpoint</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>primary_endpoint is a routable address for the node. If left unset, 
+                  <td><p>PrimaryEndpoint is a routable address for the node. If left unset, 
 the node is assumed to be behind a NAT and not directly accessible. </p></td>
                 </tr>
               
@@ -4563,21 +4557,21 @@ the node is assumed to be behind a NAT and not directly accessible. </p></td>
                   <td>wireguardEndpoints</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>wireguard_endpoints is a list of WireGuard endpoints for the node. </p></td>
+                  <td><p>WireguardEndpoints is a list of WireGuard endpoints for the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>zoneAwarenessID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>zone_awareness_id is the zone awareness ID of the node. </p></td>
+                  <td><p>ZoneAwarenessID is the zone awareness ID of the node. </p></td>
                 </tr>
               
                 <tr>
                   <td>asVoter</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>as_voter is whether the node should receive a vote in elections. The request
+                  <td><p>AsVoter is whether the node should receive a vote in elections. The request
 will be denied if the node is not allowed to vote. </p></td>
                 </tr>
               
@@ -4585,7 +4579,7 @@ will be denied if the node is not allowed to vote. </p></td>
                   <td>routes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>routes is a list of routes to advertise to peers. The request will be denied
+                  <td><p>Routes is a list of routes to advertise to peers. The request will be denied
 if the node is not allowed to put routes. </p></td>
                 </tr>
               
@@ -4593,7 +4587,7 @@ if the node is not allowed to put routes. </p></td>
                   <td>features</td>
                   <td><a href="#v1.FeaturePort">FeaturePort</a></td>
                   <td>repeated</td>
-                  <td><p>features is a list of features supported by the node that should be advertised to peers
+                  <td><p>Features is a list of features supported by the node that should be advertised to peers
 and the port they are available on. </p></td>
                 </tr>
               
@@ -4601,7 +4595,7 @@ and the port they are available on. </p></td>
                   <td>multiaddrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>multiaddrs are libp2p multiaddresses this node is listening on. </p></td>
+                  <td><p>Multiaddrs are libp2p multiaddresses this node is listening on. </p></td>
                 </tr>
               
             </tbody>
@@ -4639,21 +4633,21 @@ and the port they are available on. </p></td>
                   <td>allowedIPs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>allowed_ips is the list of allowed IPs for the peer. </p></td>
+                  <td><p>AllowedIPs is the list of allowed IPs for the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>allowedRoutes</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>allowed_routes is the list of allowed routes for the peer. </p></td>
+                  <td><p>AllowedRoutes is the list of allowed routes for the peer. </p></td>
                 </tr>
               
                 <tr>
                   <td>proto</td>
                   <td><a href="#v1.ConnectProtocol">ConnectProtocol</a></td>
                   <td></td>
-                  <td><p>proto indicates the protocol to use to connect to the peer. </p></td>
+                  <td><p>Proto indicates the protocol to use to connect to the peer. </p></td>
                 </tr>
               
             </tbody>
@@ -4782,14 +4776,14 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>nodeID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node_id is the node that the IP should be allocated for. </p></td>
+                  <td><p>NodeID is the node that the IP should be allocated for. </p></td>
                 </tr>
               
                 <tr>
                   <td>subnet</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>subnet is the subnet that the IP should be allocated from. </p></td>
+                  <td><p>Subnet is the subnet that the IP should be allocated from. </p></td>
                 </tr>
               
             </tbody>
@@ -4813,7 +4807,7 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>ip</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ip is the allocated IP. It should be returned in CIDR notation. </p></td>
+                  <td><p>IP is the allocated IP. It should be returned in CIDR notation. </p></td>
                 </tr>
               
             </tbody>
@@ -4837,14 +4831,14 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>headers</td>
                   <td><a href="#v1.AuthenticationRequest.HeadersEntry">AuthenticationRequest.HeadersEntry</a></td>
                   <td>repeated</td>
-                  <td><p>headers are the headers of the request. </p></td>
+                  <td><p>Headers are the headers of the request. </p></td>
                 </tr>
               
                 <tr>
                   <td>certificates</td>
                   <td><a href="#bytes">bytes</a></td>
                   <td>repeated</td>
-                  <td><p>certificates are the DER encoded certificates of the request. </p></td>
+                  <td><p>Certificates are the DER encoded certificates of the request. </p></td>
                 </tr>
               
             </tbody>
@@ -4899,7 +4893,7 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>id is the id of the authenticated user. </p></td>
+                  <td><p>ID is the id of the authenticated user. </p></td>
                 </tr>
               
             </tbody>
@@ -4923,14 +4917,14 @@ to vote. This is only used by the built-in raft storage implementation.</p></td>
                   <td>type</td>
                   <td><a href="#v1.Event.WatchEvent">Event.WatchEvent</a></td>
                   <td></td>
-                  <td><p>type is the type of the watch event. </p></td>
+                  <td><p>Type is the type of the watch event. </p></td>
                 </tr>
               
                 <tr>
                   <td>node</td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
-                  <td><p>node is the node that the event is about. </p></td>
+                  <td><p>Node is the node that the event is about. </p></td>
                 </tr>
               
             </tbody>
@@ -5097,14 +5091,14 @@ for each plugin. </p></td>
                   <td>nodeID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node_id is the node that the IP should be released for. </p></td>
+                  <td><p>NodeID is the node that the IP should be released for. </p></td>
                 </tr>
               
                 <tr>
                   <td>ip</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ip is the IP that should be released. </p></td>
+                  <td><p>IP is the IP that should be released. </p></td>
                 </tr>
               
             </tbody>
@@ -5860,7 +5854,7 @@ request will fail.</p></td>
                   <td>publicKey</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>public_key is the encoded public key of the server. This is not required
+                  <td><p>PublicKey is the encoded public key of the server. This is not required
 for demotion or removal RPCs. Not all implementations need to support this. </p></td>
                 </tr>
               
@@ -5949,7 +5943,7 @@ by the storage plugin. This should include the current server. </p></td>
                   <td>message</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>message is an implementation specific message that can be used to provide
+                  <td><p>Message is an implementation specific message that can be used to provide
 additional information about the storage status. </p></td>
                 </tr>
               
@@ -6209,21 +6203,21 @@ mutate the storage.</p></td>
                   <td>offer</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>offer is the offer. </p></td>
+                  <td><p>Offer is the offer. </p></td>
                 </tr>
               
                 <tr>
                   <td>stunServers</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>stun_servers is the list of STUN servers to use. </p></td>
+                  <td><p>STUNServers is the list of STUN servers to use. </p></td>
                 </tr>
               
                 <tr>
                   <td>candidate</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
+                  <td><p>Candidate is an ICE candidate. </p></td>
                 </tr>
               
             </tbody>
@@ -6244,31 +6238,31 @@ mutate the storage.</p></td>
             <tbody>
               
                 <tr>
-                  <td>node_id</td>
+                  <td>nodeID</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>node_id is the ID of the node to send the data to. </p></td>
+                  <td><p>NodeID is the ID of the node to send the data to. </p></td>
                 </tr>
               
                 <tr>
                   <td>proto</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>proto is the protocol of the traffic. </p></td>
+                  <td><p>Proto is the protocol of the traffic. </p></td>
                 </tr>
               
                 <tr>
                   <td>dst</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>dst is the destination address of the traffic. </p></td>
+                  <td><p>Dst is the destination address of the traffic. </p></td>
                 </tr>
               
                 <tr>
                   <td>port</td>
                   <td><a href="#uint32">uint32</a></td>
                   <td></td>
-                  <td><p>port is the destination port of the traffic. A port of 0 coupled
+                  <td><p>Port is the destination port of the traffic. A port of 0 coupled
 with the udp protocol indicates forwarding to the WireGuard interface. </p></td>
                 </tr>
               
@@ -6276,14 +6270,14 @@ with the udp protocol indicates forwarding to the WireGuard interface. </p></td>
                   <td>answer</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>answer is the answer to the offer. </p></td>
+                  <td><p>Answer is the answer to the offer. </p></td>
                 </tr>
               
                 <tr>
                   <td>candidate</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>candidate is an ICE candidate. </p></td>
+                  <td><p>Candidate is an ICE candidate. </p></td>
                 </tr>
               
             </tbody>

@@ -25,35 +25,35 @@ import "v1/node.proto";
 
 // GetNodeRequest is a request to get a node.
 message GetNodeRequest {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
 }
 
 // MeshEdge is an edge between two nodes.
 message MeshEdge {
-    // source is the source node.
+    // Source is the source node.
     string source = 1;
-    // target is the target node.
+    // Target is the target node.
     string target = 2;
-    // weight is the weight of the edge.
+    // Weight is the weight of the edge.
     int32 weight = 3;
-    // attributes is a list of attributes for the edge.
+    // Attributes is a list of attributes for the edge.
     map<string, string> attributes = 4;
 }
 
 // MeshEdges is a list of edges.
 message MeshEdges {
-    // items is the list of edges.
+    // Items is the list of edges.
     repeated MeshEdge items = 1;
 }
 
 // MeshGraph is a graph of nodes.
 message MeshGraph {
-    // nodes is the list of nodes.
+    // Nodes is the list of nodes.
     repeated string nodes = 1;
-    // edges is the list of edges.
+    // Edges is the list of edges.
     repeated MeshEdge edges = 2;
-    // dot is the DOT representation of the graph.
+    // DOT is the DOT representation of the graph.
     string dot = 3;
 }
 

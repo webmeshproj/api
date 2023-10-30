@@ -84,74 +84,74 @@ enum SubjectType {
 
 // Rule is a rule that applies to a resource.
 message Rule {
-    // resources is the resources to which the rule applies.
+    // Resources is the resources to which the rule applies.
     repeated RuleResource resources = 1;
-    // resource_names is the list of resource names to which the rule applies.
+    // ResourceNames is the list of resource names to which the rule applies.
     repeated string resourceNames = 2;
-    // verbs is the list of verbs that apply to the resource.
+    // Verbs is the list of verbs that apply to the resource.
     repeated RuleVerb verbs = 3;
 }
 
 // Role is a role that can be assigned to a subject.
 message Role {
-    // name is the name of the role.
+    // Name is the name of the role.
     string name = 1;
-    // rules is the list of rules that apply to the role.
+    // Rules is the list of rules that apply to the role.
     repeated Rule rules = 2;
 }
 
 // Roles is a list of roles.
 message Roles {
-    // items is the list of roles.
+    // Items is the list of roles.
     repeated Role items = 1;
 }
 
 // RoleBinding is a binding of a role to one or more subjects.
 message RoleBinding {
-    // name is the name of the role binding.
+    // Name is the name of the role binding.
     string name = 1;
-    // role is the name of the role to which the binding applies.
+    // Role is the name of the role to which the binding applies.
     string role = 2;
-    // subjects is the list of subjects to which the binding applies.
+    // Subjects is the list of subjects to which the binding applies.
     repeated Subject subjects = 3;
 }
 
 // RoleBindings is a list of role bindings.
 message RoleBindings {
-    // items is the list of role bindings.
+    // Items is the list of role bindings.
     repeated RoleBinding items = 1;
 }
 
 // Subject is a subject to which a role can be bound.
 message Subject {
-    // name is the name of the subject.
+    // Name is the name of the subject.
     string name = 1;
-    // type is the type of the subject.
+    // Type is the type of the subject.
     SubjectType type = 2;
 }
 
 // Group is a group of subjects.
 message Group {
-    // name is the name of the group.
+    // Name is the name of the group.
     string name = 1;
-    // subjects is the list of subjects in the group.
+    // Subjects is the list of subjects in the group.
     repeated Subject subjects = 2;
 }
 
 // Groups is a list of groups.
 message Groups {
-    // items is the list of groups.
+    // Items is the list of groups.
     repeated Group items = 1;
 }
 
 // RBACAction is an action that can be performed on a resource. It is used by implementations
 // to evaluate rules.
 message RBACAction {
-    // resource is the resource on which the action is performed.
+    // Resource is the resource on which the action is performed.
     RuleResource resource = 1;
-    // resource_name is the name of the resource on which the action is
+    // ResourceName is the name of the resource on which the action is
     // performed.
     string resourceName = 2;
-    // verb is the verb that is performed on the resource.
+    // Verb is the verb that is performed on the resource.
     RuleVerb verb = 3;
 }

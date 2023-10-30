@@ -96,13 +96,13 @@ type RaftLogEntry struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// type is the type of the log entry.
+	// Type is the type of the log entry.
 	Type RaftCommandType `protobuf:"varint,1,opt,name=type,proto3,enum=v1.RaftCommandType" json:"type,omitempty"`
-	// key is the key of the log entry.
+	// Key is the key of the log entry.
 	Key []byte `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the log entry.
+	// Value is the value of the log entry.
 	Value []byte `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
-	// ttl is the time to live of the log entry.
+	// TTL is the time to live of the log entry.
 	Ttl *durationpb.Duration `protobuf:"bytes,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 
@@ -173,9 +173,9 @@ type RaftApplyResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// time is the total time it took to apply the log entry.
+	// Time is the total time it took to apply the log entry.
 	Time string `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
-	// error is an error that occurred during the apply.
+	// Error is an error that occurred during the apply.
 	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 }
 
@@ -231,6 +231,7 @@ type RaftSnapshot struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// KV is the key/value pairs of the snapshot.
 	Kv []*RaftDataItem `protobuf:"bytes,1,rep,name=kv,proto3" json:"kv,omitempty"`
 }
 
@@ -279,11 +280,11 @@ type RaftDataItem struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// key is the key of the data item.
+	// Key is the key of the data item.
 	Key []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	// value is the value of the data item.
+	// Value is the value of the data item.
 	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	// ttl is the time to live of the data item.
+	// TTL is the time to live of the data item.
 	Ttl *durationpb.Duration `protobuf:"bytes,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 

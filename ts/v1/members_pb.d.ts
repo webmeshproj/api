@@ -58,21 +58,21 @@ export declare enum ConnectProtocol {
  */
 export declare class JoinRequest extends Message<JoinRequest> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * public_key is the public key of the node to broadcast to peers.
+   * PublicKey is the public key of the node to broadcast to peers.
    *
    * @generated from field: string publicKey = 2;
    */
   publicKey: string;
 
   /**
-   * primary_endpoint is a routable address for the node. If left unset, 
+   * PrimaryEndpoint is a routable address for the node. If left unset, 
    * the node is assumed to be behind a NAT and not directly accessible.
    *
    * @generated from field: string primaryEndpoint = 4;
@@ -80,28 +80,28 @@ export declare class JoinRequest extends Message<JoinRequest> {
   primaryEndpoint: string;
 
   /**
-   * wireguard_endpoints is a list of WireGuard endpoints for the node.
+   * WireguardEndpoints is a list of WireGuard endpoints for the node.
    *
    * @generated from field: repeated string wireguardEndpoints = 5;
    */
   wireguardEndpoints: string[];
 
   /**
-   * zone_awareness_id is the zone awareness ID of the node.
+   * ZoneAwarenessID is the zone awareness ID of the node.
    *
    * @generated from field: string zoneAwarenessID = 6;
    */
   zoneAwarenessID: string;
 
   /**
-   * assign_ipv4 is whether an IPv4 address should be assigned to the node.
+   * AssignIPv4 is whether an IPv4 address should be assigned to the node.
    *
    * @generated from field: bool assignIPv4 = 7;
    */
   assignIPv4: boolean;
 
   /**
-   * prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
+   * PreferStorageIPv6 is whether IPv6 should be preferred over IPv4 for storage communication.
    * This is only used if assign_ipv4 is true.
    *
    * @generated from field: bool preferStorageIPv6 = 8;
@@ -109,7 +109,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   preferStorageIPv6: boolean;
 
   /**
-   * as_voter is whether the node should receive a vote in elections. The request
+   * AsVoter is whether the node should receive a vote in elections. The request
    * will be denied if the node is not allowed to vote.
    *
    * @generated from field: bool asVoter = 9;
@@ -117,7 +117,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   asVoter: boolean;
 
   /**
-   * as_observer is whether the node should be added as an observer. They will receive
+   * AsObserver is whether the node should be added as an observer. They will receive
    * updates to the storage, but not be able to vote in elections.
    *
    * @generated from field: bool asObserver = 10;
@@ -125,7 +125,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   asObserver: boolean;
 
   /**
-   * routes is a list of routes to advertise to peers. The request will be denied
+   * Routes is a list of routes to advertise to peers. The request will be denied
    * if the node is not allowed to put routes.
    *
    * @generated from field: repeated string routes = 11;
@@ -133,7 +133,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   routes: string[];
 
   /**
-   * direct_peers is a map of extra peers that should be connected to directly over relays. 
+   * DirectPeers is a map of extra peers that should be connected to directly over relays. 
    * The provided edge attribute is the callers preference of how the relay should be created.
    * The request will be denied if the node is not allowed to put data channels or edges.
    * The default joining behavior creates direct links between the caller and the joiner.
@@ -147,7 +147,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   directPeers: { [key: string]: ConnectProtocol };
 
   /**
-   * features is a list of features supported by the node that should be advertised to peers
+   * Features is a list of features supported by the node that should be advertised to peers
    * and the port they are available on.
    *
    * @generated from field: repeated v1.FeaturePort features = 13;
@@ -155,7 +155,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
   features: FeaturePort[];
 
   /**
-   * multiaddrs are libp2p multiaddresses this node is listening on.
+   * Multiaddrs are libp2p multiaddresses this node is listening on.
    *
    * @generated from field: repeated string multiaddrs = 14;
    */
@@ -183,7 +183,7 @@ export declare class JoinRequest extends Message<JoinRequest> {
  */
 export declare class JoinResponse extends Message<JoinResponse> {
   /**
-   * address_ipv4 is the private IPv4 wireguard address of the node
+   * AddressIPv4 is the private IPv4 wireguard address of the node
    * in CIDR format representing the network. This is only set if
    * assign_ipv4 was set in the request or no network_ipv6 was provided.
    *
@@ -192,35 +192,35 @@ export declare class JoinResponse extends Message<JoinResponse> {
   addressIPv4: string;
 
   /**
-   * address_ipv6 is the IPv6 network assigned to the node.
+   * AddressIPv6 is the IPv6 network assigned to the node.
    *
    * @generated from field: string addressIPv6 = 2;
    */
   addressIPv6: string;
 
   /**
-   * network_ipv4 is the IPv4 network of the Mesh.
+   * NetworkIPv4 is the IPv4 network of the Mesh.
    *
    * @generated from field: string networkIPv4 = 3;
    */
   networkIPv4: string;
 
   /**
-   * network_ipv6 is the IPv6 network of the Mesh.
+   * NetworkIPv6 is the IPv6 network of the Mesh.
    *
    * @generated from field: string networkIPv6 = 4;
    */
   networkIPv6: string;
 
   /**
-   * peers is a list of wireguard peers to connect to.
+   * Peers is a list of wireguard peers to connect to.
    *
    * @generated from field: repeated v1.WireGuardPeer peers = 5;
    */
   peers: WireGuardPeer[];
 
   /**
-   * ice_servers is a list of public nodes that can be used to negotiate
+   * ICEServers is a list of public nodes that can be used to negotiate
    * ICE connections if required. This may only be populated when one of
    * the peers has the ICE flag set. This must be set if the requestor
    * specifies direct_peers.
@@ -230,14 +230,14 @@ export declare class JoinResponse extends Message<JoinResponse> {
   iceServers: string[];
 
   /**
-   * dns_servers is a list of peers offering DNS services.
+   * DNSServers is a list of peers offering DNS services.
    *
    * @generated from field: repeated string dnsServers = 7;
    */
   dnsServers: string[];
 
   /**
-   * mesh_domain is the domain of the mesh.
+   * MeshDomain is the domain of the mesh.
    *
    * @generated from field: string meshDomain = 8;
    */
@@ -266,21 +266,21 @@ export declare class JoinResponse extends Message<JoinResponse> {
  */
 export declare class UpdateRequest extends Message<UpdateRequest> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * public_key is the public key of the node to broadcast to peers.
+   * PublicKey is the public key of the node to broadcast to peers.
    *
    * @generated from field: string publicKey = 2;
    */
   publicKey: string;
 
   /**
-   * primary_endpoint is a routable address for the node. If left unset, 
+   * PrimaryEndpoint is a routable address for the node. If left unset, 
    * the node is assumed to be behind a NAT and not directly accessible.
    *
    * @generated from field: string primaryEndpoint = 3;
@@ -288,21 +288,21 @@ export declare class UpdateRequest extends Message<UpdateRequest> {
   primaryEndpoint: string;
 
   /**
-   * wireguard_endpoints is a list of WireGuard endpoints for the node.
+   * WireguardEndpoints is a list of WireGuard endpoints for the node.
    *
    * @generated from field: repeated string wireguardEndpoints = 4;
    */
   wireguardEndpoints: string[];
 
   /**
-   * zone_awareness_id is the zone awareness ID of the node.
+   * ZoneAwarenessID is the zone awareness ID of the node.
    *
    * @generated from field: string zoneAwarenessID = 5;
    */
   zoneAwarenessID: string;
 
   /**
-   * as_voter is whether the node should receive a vote in elections. The request
+   * AsVoter is whether the node should receive a vote in elections. The request
    * will be denied if the node is not allowed to vote.
    *
    * @generated from field: bool asVoter = 6;
@@ -310,7 +310,7 @@ export declare class UpdateRequest extends Message<UpdateRequest> {
   asVoter: boolean;
 
   /**
-   * routes is a list of routes to advertise to peers. The request will be denied
+   * Routes is a list of routes to advertise to peers. The request will be denied
    * if the node is not allowed to put routes.
    *
    * @generated from field: repeated string routes = 7;
@@ -318,7 +318,7 @@ export declare class UpdateRequest extends Message<UpdateRequest> {
   routes: string[];
 
   /**
-   * features is a list of features supported by the node that should be advertised to peers
+   * Features is a list of features supported by the node that should be advertised to peers
    * and the port they are available on.
    *
    * @generated from field: repeated v1.FeaturePort features = 8;
@@ -326,7 +326,7 @@ export declare class UpdateRequest extends Message<UpdateRequest> {
   features: FeaturePort[];
 
   /**
-   * multiaddrs are libp2p multiaddresses this node is listening on.
+   * Multiaddrs are libp2p multiaddresses this node is listening on.
    *
    * @generated from field: repeated string multiaddrs = 9;
    */
@@ -382,21 +382,21 @@ export declare class WireGuardPeer extends Message<WireGuardPeer> {
   node?: MeshNode;
 
   /**
-   * allowed_ips is the list of allowed IPs for the peer.
+   * AllowedIPs is the list of allowed IPs for the peer.
    *
    * @generated from field: repeated string allowedIPs = 2;
    */
   allowedIPs: string[];
 
   /**
-   * allowed_routes is the list of allowed routes for the peer.
+   * AllowedRoutes is the list of allowed routes for the peer.
    *
    * @generated from field: repeated string allowedRoutes = 3;
    */
   allowedRoutes: string[];
 
   /**
-   * proto indicates the protocol to use to connect to the peer.
+   * Proto indicates the protocol to use to connect to the peer.
    *
    * @generated from field: v1.ConnectProtocol proto = 4;
    */
@@ -424,7 +424,7 @@ export declare class WireGuardPeer extends Message<WireGuardPeer> {
  */
 export declare class LeaveRequest extends Message<LeaveRequest> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
@@ -494,7 +494,7 @@ export declare class StorageConsensusRequest extends Message<StorageConsensusReq
  */
 export declare class StorageConsensusResponse extends Message<StorageConsensusResponse> {
   /**
-   * servers is the list of servers in the storage configuration.
+   * Servers is the list of servers in the storage configuration.
    *
    * @generated from field: repeated v1.StorageServer servers = 1;
    */
@@ -571,7 +571,7 @@ export declare class StorageServer extends Message<StorageServer> {
  */
 export declare class SubscribePeersRequest extends Message<SubscribePeersRequest> {
   /**
-   * id is the ID of the node.
+   * ID is the ID of the node.
    *
    * @generated from field: string id = 1;
    */
@@ -599,14 +599,14 @@ export declare class SubscribePeersRequest extends Message<SubscribePeersRequest
  */
 export declare class PeerConfigurations extends Message<PeerConfigurations> {
   /**
-   * peers is a list of wireguard peers to connect to.
+   * Peers is a list of wireguard peers to connect to.
    *
    * @generated from field: repeated v1.WireGuardPeer peers = 5;
    */
   peers: WireGuardPeer[];
 
   /**
-   * ice_servers is a list of public nodes that can be used to negotiate
+   * ICEServers is a list of public nodes that can be used to negotiate
    * ICE connections if required. This may only be populated when one of
    * the peers has the ICE flag set.
    *
@@ -615,7 +615,7 @@ export declare class PeerConfigurations extends Message<PeerConfigurations> {
   iceServers: string[];
 
   /**
-   * dns_servers is a list of peers offering DNS services.
+   * DNSServers is a list of peers offering DNS services.
    *
    * @generated from field: repeated string dnsServers = 7;
    */

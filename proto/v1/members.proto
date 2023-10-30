@@ -34,32 +34,32 @@ enum ConnectProtocol {
 
 // JoinRequest is a request to join the cluster.
 message JoinRequest {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
-    // public_key is the public key of the node to broadcast to peers.
+    // PublicKey is the public key of the node to broadcast to peers.
     string publicKey = 2;
-    // primary_endpoint is a routable address for the node. If left unset, 
+    // PrimaryEndpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
     string primaryEndpoint = 4;
-    // wireguard_endpoints is a list of WireGuard endpoints for the node.
+    // WireguardEndpoints is a list of WireGuard endpoints for the node.
     repeated string wireguardEndpoints = 5;
-    // zone_awareness_id is the zone awareness ID of the node.
+    // ZoneAwarenessID is the zone awareness ID of the node.
     string zoneAwarenessID = 6;
-    // assign_ipv4 is whether an IPv4 address should be assigned to the node.
+    // AssignIPv4 is whether an IPv4 address should be assigned to the node.
     bool assignIPv4 = 7;
-    // prefer_storage_ipv6 is whether IPv6 should be preferred over IPv4 for storage communication.
+    // PreferStorageIPv6 is whether IPv6 should be preferred over IPv4 for storage communication.
     // This is only used if assign_ipv4 is true.
     bool preferStorageIPv6 = 8;
-    // as_voter is whether the node should receive a vote in elections. The request
+    // AsVoter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
     bool asVoter = 9;
-    // as_observer is whether the node should be added as an observer. They will receive
+    // AsObserver is whether the node should be added as an observer. They will receive
     // updates to the storage, but not be able to vote in elections.
     bool asObserver = 10;
-    // routes is a list of routes to advertise to peers. The request will be denied
+    // Routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
     repeated string routes = 11;
-    // direct_peers is a map of extra peers that should be connected to directly over relays. 
+    // DirectPeers is a map of extra peers that should be connected to directly over relays. 
     // The provided edge attribute is the callers preference of how the relay should be created.
     // The request will be denied if the node is not allowed to put data channels or edges.
     // The default joining behavior creates direct links between the caller and the joiner.
@@ -68,62 +68,62 @@ message JoinRequest {
     // the joiner will link the caller to all other nodes with the same zone awareness ID
     // that also have a primary endpoint.
     map<string, ConnectProtocol> directPeers = 12;
-    // features is a list of features supported by the node that should be advertised to peers
+    // Features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 13;
-    // multiaddrs are libp2p multiaddresses this node is listening on.
+    // Multiaddrs are libp2p multiaddresses this node is listening on.
     repeated string multiaddrs = 14;
 }
 
 // JoinResponse is a response to a join request.
 message JoinResponse {
-    // address_ipv4 is the private IPv4 wireguard address of the node
+    // AddressIPv4 is the private IPv4 wireguard address of the node
     // in CIDR format representing the network. This is only set if
     // assign_ipv4 was set in the request or no network_ipv6 was provided.
     string addressIPv4 = 1;
-    // address_ipv6 is the IPv6 network assigned to the node.
+    // AddressIPv6 is the IPv6 network assigned to the node.
     string addressIPv6 = 2;
-    // network_ipv4 is the IPv4 network of the Mesh.
+    // NetworkIPv4 is the IPv4 network of the Mesh.
     string networkIPv4 = 3;
-    // network_ipv6 is the IPv6 network of the Mesh.
+    // NetworkIPv6 is the IPv6 network of the Mesh.
     string networkIPv6 = 4;
-    // peers is a list of wireguard peers to connect to.
+    // Peers is a list of wireguard peers to connect to.
     repeated WireGuardPeer peers = 5;
-    // ice_servers is a list of public nodes that can be used to negotiate
+    // ICEServers is a list of public nodes that can be used to negotiate
     // ICE connections if required. This may only be populated when one of
     // the peers has the ICE flag set. This must be set if the requestor
     // specifies direct_peers.
     repeated string iceServers = 6;
-    // dns_servers is a list of peers offering DNS services.
+    // DNSServers is a list of peers offering DNS services.
     repeated string dnsServers = 7;
-    // mesh_domain is the domain of the mesh.
+    // MeshDomain is the domain of the mesh.
     string meshDomain = 8;
 }
 
 // UpdateRequest contains most of the same fields as JoinRequest, but is
 // used to update the state of a node in the cluster.
 message UpdateRequest {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
-    // public_key is the public key of the node to broadcast to peers.
+    // PublicKey is the public key of the node to broadcast to peers.
     string publicKey = 2;
-    // primary_endpoint is a routable address for the node. If left unset, 
+    // PrimaryEndpoint is a routable address for the node. If left unset, 
     // the node is assumed to be behind a NAT and not directly accessible.
     string primaryEndpoint = 3;
-    // wireguard_endpoints is a list of WireGuard endpoints for the node.
+    // WireguardEndpoints is a list of WireGuard endpoints for the node.
     repeated string wireguardEndpoints = 4;
-    // zone_awareness_id is the zone awareness ID of the node.
+    // ZoneAwarenessID is the zone awareness ID of the node.
     string zoneAwarenessID = 5;
-    // as_voter is whether the node should receive a vote in elections. The request
+    // AsVoter is whether the node should receive a vote in elections. The request
     // will be denied if the node is not allowed to vote.
     bool asVoter = 6;
-    // routes is a list of routes to advertise to peers. The request will be denied
+    // Routes is a list of routes to advertise to peers. The request will be denied
     // if the node is not allowed to put routes.
     repeated string routes = 7;
-    // features is a list of features supported by the node that should be advertised to peers
+    // Features is a list of features supported by the node that should be advertised to peers
     // and the port they are available on.
     repeated FeaturePort features = 8;
-    // multiaddrs are libp2p multiaddresses this node is listening on.
+    // Multiaddrs are libp2p multiaddresses this node is listening on.
     repeated string multiaddrs = 9;
 }
 
@@ -134,17 +134,17 @@ message UpdateResponse {}
 message WireGuardPeer {
     // Node is information about this node.
     MeshNode node = 1;
-    // allowed_ips is the list of allowed IPs for the peer.
+    // AllowedIPs is the list of allowed IPs for the peer.
     repeated string allowedIPs = 2;
-    // allowed_routes is the list of allowed routes for the peer.
+    // AllowedRoutes is the list of allowed routes for the peer.
     repeated string allowedRoutes = 3;
-    // proto indicates the protocol to use to connect to the peer.
+    // Proto indicates the protocol to use to connect to the peer.
     ConnectProtocol proto = 4;
 }
 
 // LeaveRequest is a request to leave the cluster.
 message LeaveRequest {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
 }
 
@@ -156,7 +156,7 @@ message StorageConsensusRequest {}
 
 // StorageConsensusResponse is a response to a Storage consensus request.
 message StorageConsensusResponse {
-    // servers is the list of servers in the storage configuration.
+    // Servers is the list of servers in the storage configuration.
     repeated StorageServer servers = 1;
 }
 
@@ -174,19 +174,19 @@ message StorageServer {
 
 // SubscribePeersRequest is a request to subscribe to peer updates.
 message SubscribePeersRequest {
-    // id is the ID of the node.
+    // ID is the ID of the node.
     string id = 1;
 }
 
 // PeerConfigurations is a stream of peer configurations.
 message PeerConfigurations {
-    // peers is a list of wireguard peers to connect to.
+    // Peers is a list of wireguard peers to connect to.
     repeated WireGuardPeer peers = 5;
-    // ice_servers is a list of public nodes that can be used to negotiate
+    // ICEServers is a list of public nodes that can be used to negotiate
     // ICE connections if required. This may only be populated when one of
     // the peers has the ICE flag set.
     repeated string iceServers = 6;
-    // dns_servers is a list of peers offering DNS services.
+    // DNSServers is a list of peers offering DNS services.
     repeated string dnsServers = 7;
 }
 
@@ -196,21 +196,26 @@ message PeerConfigurations {
 service Membership {
     // Join is used to join a node to the mesh.
     rpc Join(JoinRequest) returns (JoinResponse) {}
+
     // Update is used by a node to update its state in the mesh. The node will be updated
     // in the mesh and will be able to query the mesh state or vote in elections. Only
     // non-empty fields will be updated. It is almost semantically equivalent to a join request
     // with the same ID, but redefined to avoid confusion and to allow for expansion.
     rpc Update(UpdateRequest) returns (UpdateResponse) {}
+
     // Leave is used to remove a node from the mesh. The node will be removed from the mesh
     // and will no longer be able to query the mesh state or vote in elections.
     rpc Leave(LeaveRequest) returns (LeaveResponse) {}
+
     // SubscribePeers subscribes to the peer configuration for the given node. The node
     // will receive updates to the peer configuration as it changes.
     rpc SubscribePeers(SubscribePeersRequest) returns (stream PeerConfigurations) {}
+
     // Apply is used by voting nodes to request a log entry be applied to the state machine.
     // This is only available on the leader, and can only be called by nodes that are allowed
     // to vote. This is only used by the built-in raft storage implementation.
     rpc Apply(RaftLogEntry) returns (RaftApplyResponse) {}
+    
     // GetCurrentConsensus returns the current Storage consensus configuration.
     rpc GetCurrentConsensus(StorageConsensusRequest) returns (StorageConsensusResponse) {}
 }

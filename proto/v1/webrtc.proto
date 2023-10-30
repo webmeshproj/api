@@ -24,29 +24,29 @@ import "v1/node.proto";
 // The answer and candidate fields are populated after the offer 
 // is received.
 message StartDataChannelRequest {
-  // node_id is the ID of the node to send the data to.
-  string node_id = 1;
-  // proto is the protocol of the traffic.
+  // NodeID is the ID of the node to send the data to.
+  string nodeID = 1;
+  // Proto is the protocol of the traffic.
   string proto = 2;
-  // dst is the destination address of the traffic.
+  // Dst is the destination address of the traffic.
   string dst = 3;
-  // port is the destination port of the traffic. A port of 0 coupled
+  // Port is the destination port of the traffic. A port of 0 coupled
   // with the udp protocol indicates forwarding to the WireGuard interface.
   uint32 port = 4;
-  // answer is the answer to the offer.
+  // Answer is the answer to the offer.
   string answer = 5;
-  // candidate is an ICE candidate.
+  // Candidate is an ICE candidate.
   string candidate = 6;
 }
 
 // DataChannelOffer is an offer for a data channel. Candidates
 // are sent after the offer is sent.
 message DataChannelOffer {
-  // offer is the offer.
+  // Offer is the offer.
   string offer = 1;
-  // stun_servers is the list of STUN servers to use.
+  // STUNServers is the list of STUN servers to use.
   repeated string stunServers = 2;
-  // candidate is an ICE candidate.
+  // Candidate is an ICE candidate.
   string candidate = 3;
 }
 

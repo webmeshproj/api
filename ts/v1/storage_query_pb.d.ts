@@ -66,21 +66,21 @@ export declare class NetworkState extends Message<NetworkState> {
  */
 export declare class QueryRequest extends Message<QueryRequest> {
   /**
-   * command is the command of the query.
+   * Command is the command of the query.
    *
    * @generated from field: v1.QueryRequest.QueryCommand command = 1;
    */
   command: QueryRequest_QueryCommand;
 
   /**
-   * type is the type of the query.
+   * Type is the type of resource for the query.
    *
    * @generated from field: v1.QueryRequest.QueryType type = 2;
    */
   type: QueryRequest_QueryType;
 
   /**
-   * query is the string of the query. This follows the format of a label
+   * Query is the string of the query. This follows the format of a label
    * selector and is only applicable for certain queries. For get queries
    * this will usually be an ID. For list queries this will usually be one
    * or more filters.
@@ -217,7 +217,7 @@ export declare enum QueryRequest_QueryType {
  */
 export declare class QueryResponse extends Message<QueryResponse> {
   /**
-   * items contain the results of the query. These will be protobuf
+   * Items contain the results of the query. These will be protobuf
    * json-encoded objects of the given query type.
    *
    * @generated from field: repeated bytes items = 1;
@@ -225,7 +225,7 @@ export declare class QueryResponse extends Message<QueryResponse> {
   items: Uint8Array[];
 
   /**
-   * error is an error that happened during the query. This will always
+   * Error is an error that happened during the query. This will always
    * be populated on errors, but single-flight queries will return
    * a coded error instead.
    *
@@ -256,7 +256,7 @@ export declare class QueryResponse extends Message<QueryResponse> {
  */
 export declare class SubscribeRequest extends Message<SubscribeRequest> {
   /**
-   * prefix is the prefix of the events to subscribe to.
+   * Prefix is the prefix of the events to subscribe to.
    *
    * @generated from field: bytes prefix = 1;
    */
@@ -284,14 +284,14 @@ export declare class SubscribeRequest extends Message<SubscribeRequest> {
  */
 export declare class SubscriptionEvent extends Message<SubscriptionEvent> {
   /**
-   * key is the key of the event.
+   * Key is the key of the event.
    *
    * @generated from field: bytes key = 1;
    */
   key: Uint8Array;
 
   /**
-   * value is the value of the event. This will be the raw value of the key.
+   * Value is the value of the event. This will be the raw value of the key.
    *
    * @generated from field: bytes value = 2;
    */
@@ -320,21 +320,21 @@ export declare class SubscriptionEvent extends Message<SubscriptionEvent> {
  */
 export declare class PublishRequest extends Message<PublishRequest> {
   /**
-   * key is the key of the event.
+   * Key is the key of the event.
    *
    * @generated from field: bytes key = 1;
    */
   key: Uint8Array;
 
   /**
-   * value is the value of the event. This will be the raw value of the key.
+   * Value is the value of the event. This will be the raw value of the key.
    *
    * @generated from field: bytes value = 2;
    */
   value: Uint8Array;
 
   /**
-   * ttl is the time for the event to live in the database.
+   * TTL is the time for the event to live in the database.
    *
    * @generated from field: google.protobuf.Duration ttl = 3;
    */
