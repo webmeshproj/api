@@ -190,9 +190,7 @@ message ConnectResponse {
     string ipv6Network = 7;
 }
 
-// DisconnectRequest is sent by an application to a daemon to disconnect
-// from a mesh. This message will eventually contain unique identifiers
-// for allowing the application to disconnect from a specific mesh.
+// DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.
 message DisconnectRequest {
     // ID is the unique identifier of this connection.
     string id = 1 [
@@ -205,8 +203,7 @@ message DisconnectRequest {
 // DisconnectResponse is returned by the Disconnect RPC.
 message DisconnectResponse {}
 
-// MetricsRequest is sent by the application to a daemon to retrieve interface
-// metrics for a mesh connection.
+// MetricsRequest is sent by the application to a daemon to retrieve interface metrics for a mesh connection.
 message MetricsRequest {
     // IDs are the unique identifiers of the connections to retrieve metrics for.
     // If not provided, metrics for all connections will be returned.
@@ -219,8 +216,7 @@ message MetricsResponse {
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
-// StatusRequest is sent by the application to a daemon to retrieve the status
-// of a mesh connection.
+// StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
 message StatusRequest {
     // ID is the unique identifier of this connection.
     string id = 1 [
@@ -258,10 +254,9 @@ message AppQueryRequest {
     QueryRequest query = 2;
 }
 
-// AppDaemon is exposed by nodes running in the app-daemon mode. This mode
-// allows the node to run in an idle state and be controlled by an application.
-// The application can send commands to the node to execute tasks and receive 
-// responses.
+// AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
+// node to run in an idle state and be controlled by an application. The application
+// can send commands to the node to execute tasks and receive responses.
 service AppDaemon {
     // Connect is used to establish a connection between the node and a mesh.
     rpc Connect(ConnectRequest) returns (ConnectResponse) {}

@@ -23,10 +23,9 @@ import { MethodKind } from "@bufbuild/protobuf";
 import { QueryResponse } from "./storage_query_pb.js";
 
 /**
- * AppDaemon is exposed by nodes running in the app-daemon mode. This mode
- * allows the node to run in an idle state and be controlled by an application.
- * The application can send commands to the node to execute tasks and receive 
- * responses.
+ * AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
+ * node to run in an idle state and be controlled by an application. The application
+ * can send commands to the node to execute tasks and receive responses.
  *
  * @generated from service v1.AppDaemon
  */

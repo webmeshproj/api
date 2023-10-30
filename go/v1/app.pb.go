@@ -830,9 +830,7 @@ func (x *ConnectResponse) GetIpv6Network() string {
 	return ""
 }
 
-// DisconnectRequest is sent by an application to a daemon to disconnect
-// from a mesh. This message will eventually contain unique identifiers
-// for allowing the application to disconnect from a specific mesh.
+// DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.
 type DisconnectRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -920,8 +918,7 @@ func (*DisconnectResponse) Descriptor() ([]byte, []int) {
 	return file_v1_app_proto_rawDescGZIP(), []int{7}
 }
 
-// MetricsRequest is sent by the application to a daemon to retrieve interface
-// metrics for a mesh connection.
+// MetricsRequest is sent by the application to a daemon to retrieve interface metrics for a mesh connection.
 type MetricsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1020,8 +1017,7 @@ func (x *MetricsResponse) GetInterfaces() map[string]*InterfaceMetrics {
 	return nil
 }
 
-// StatusRequest is sent by the application to a daemon to retrieve the status
-// of a mesh connection.
+// StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
 type StatusRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

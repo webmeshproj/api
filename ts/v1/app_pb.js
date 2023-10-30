@@ -178,9 +178,7 @@ export const ConnectResponse = proto3.makeMessageType(
 );
 
 /**
- * DisconnectRequest is sent by an application to a daemon to disconnect
- * from a mesh. This message will eventually contain unique identifiers
- * for allowing the application to disconnect from a specific mesh.
+ * DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.
  *
  * @generated from message v1.DisconnectRequest
  */
@@ -202,8 +200,7 @@ export const DisconnectResponse = proto3.makeMessageType(
 );
 
 /**
- * MetricsRequest is sent by the application to a daemon to retrieve interface
- * metrics for a mesh connection.
+ * MetricsRequest is sent by the application to a daemon to retrieve interface metrics for a mesh connection.
  *
  * @generated from message v1.MetricsRequest
  */
@@ -227,8 +224,7 @@ export const MetricsResponse = proto3.makeMessageType(
 );
 
 /**
- * StatusRequest is sent by the application to a daemon to retrieve the status
- * of a mesh connection.
+ * StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
  *
  * @generated from message v1.StatusRequest
  */

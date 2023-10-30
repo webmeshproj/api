@@ -496,9 +496,7 @@ export declare class ConnectResponse extends Message<ConnectResponse> {
 }
 
 /**
- * DisconnectRequest is sent by an application to a daemon to disconnect
- * from a mesh. This message will eventually contain unique identifiers
- * for allowing the application to disconnect from a specific mesh.
+ * DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.
  *
  * @generated from message v1.DisconnectRequest
  */
@@ -547,8 +545,7 @@ export declare class DisconnectResponse extends Message<DisconnectResponse> {
 }
 
 /**
- * MetricsRequest is sent by the application to a daemon to retrieve interface
- * metrics for a mesh connection.
+ * MetricsRequest is sent by the application to a daemon to retrieve interface metrics for a mesh connection.
  *
  * @generated from message v1.MetricsRequest
  */
@@ -605,8 +602,7 @@ export declare class MetricsResponse extends Message<MetricsResponse> {
 }
 
 /**
- * StatusRequest is sent by the application to a daemon to retrieve the status
- * of a mesh connection.
+ * StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
  *
  * @generated from message v1.StatusRequest
  */
