@@ -211,7 +211,7 @@ message MeshConnBootstrap {
     option (buf.validate.message).cel = {
         id: "bootstrap.validIPv4Network",
         message: "IPv4 network must be a valid IPv4 CIDR",
-        expression: "!this.enabled || size(this.ipv4Network) == 0 || this.ipv4Network.isIpPrefix(4)",
+        expression: "!this.enabled || size(this.ipv4Network) == 0 || this.ipv4Network.isIpPrefix(4, true)",
     };
 }
 
