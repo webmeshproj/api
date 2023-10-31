@@ -107,9 +107,15 @@ message ConnectRequest {
     };
 
     option (buf.validate.message).cel = {
-        id: "connectRequest.services.tlsRequiredFields",
+        id: "connectRequest.services.tlsRequiredCert",
         message: "Must provide a TLS certificate and key for serving the API over TLS",
         expression: "!this.services.enabled || !this.services.enableTLS || (size(this.tls.certData) > 0 && size(this.tls.keyData) > 0)",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "connectRequest.services.mtlsRequiredCA",
+        message: "Must provide a TLS CA certificate for enabling mTLS on the API",
+        expression: "!this.services.enabled || this.services.authMethod != 4 || size(this.tls.caCertData) > 0",
     };
 }
 
