@@ -80,14 +80,21 @@ export declare class QueryRequest extends Message<QueryRequest> {
   type: QueryRequest_QueryType;
 
   /**
-   * Query is the string of the query. This follows the format of a label
-   * selector and is only applicable for certain queries. For get queries
-   * this will usually be an ID. For list queries this will usually be one
-   * or more filters.
+   * Query is the string of the query. This follows the format of a comma-separted
+   * label selector and is only applicable for certain queries. For get queries this
+   * will usually be an ID. For list queries this will usually be one or more filters.
+   * On put or delete queries, this should be an ID.
    *
    * @generated from field: string query = 3;
    */
   query: string;
+
+  /**
+   * Item is an item to put. This is only applicable for PUT queries.
+   *
+   * @generated from field: bytes item = 4;
+   */
+  item: Uint8Array;
 
   constructor(data?: PartialMessage<QueryRequest>);
 
@@ -123,6 +130,20 @@ export declare enum QueryRequest_QueryCommand {
    * @generated from enum value: LIST = 1;
    */
   LIST = 1,
+
+  /**
+   * PUT is the command to put a value.
+   *
+   * @generated from enum value: PUT = 2;
+   */
+  PUT = 2,
+
+  /**
+   * DELETE is the command to delete a value.
+   *
+   * @generated from enum value: DELETE = 3;
+   */
+  DELETE = 3,
 }
 
 /**

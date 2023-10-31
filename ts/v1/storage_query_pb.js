@@ -47,6 +47,7 @@ export const QueryRequest = proto3.makeMessageType(
     { no: 1, name: "command", kind: "enum", T: proto3.getEnumType(QueryRequest_QueryCommand) },
     { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(QueryRequest_QueryType) },
     { no: 3, name: "query", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "item", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
   ],
 );
 
@@ -60,6 +61,8 @@ export const QueryRequest_QueryCommand = proto3.makeEnum(
   [
     {no: 0, name: "GET"},
     {no: 1, name: "LIST"},
+    {no: 2, name: "PUT"},
+    {no: 3, name: "DELETE"},
   ],
 );
 

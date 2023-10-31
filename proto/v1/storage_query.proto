@@ -37,6 +37,10 @@ message QueryRequest {
         GET = 0;
         // LIST is the command to list keys with an optional prefix.
         LIST = 1;
+        // PUT is the command to put a value.
+        PUT = 2;
+        // DELETE is the command to delete a value.
+        DELETE = 3;
     };
     // QueryType is the type of object being queried.
     enum QueryType {
@@ -68,11 +72,13 @@ message QueryRequest {
     QueryCommand command = 1;
     // Type is the type of resource for the query.
     QueryType type = 2;
-    // Query is the string of the query. This follows the format of a label
-    // selector and is only applicable for certain queries. For get queries
-    // this will usually be an ID. For list queries this will usually be one
-    // or more filters.
+    // Query is the string of the query. This follows the format of a comma-separted
+    // label selector and is only applicable for certain queries. For get queries this
+    // will usually be an ID. For list queries this will usually be one or more filters.
+    // On put or delete queries, this should be an ID.
     string query = 3;
+    // Item is an item to put. This is only applicable for PUT queries.
+    bytes item = 4;
 }
 
 // QueryResponse is the message containing a mesh query result.

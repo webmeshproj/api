@@ -2915,10 +2915,17 @@ It can be used with a subject named &#39;*&#39; to match all subjects.</p></td>
                   <td>query</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Query is the string of the query. This follows the format of a label
-selector and is only applicable for certain queries. For get queries
-this will usually be an ID. For list queries this will usually be one
-or more filters. </p></td>
+                  <td><p>Query is the string of the query. This follows the format of a comma-separted
+label selector and is only applicable for certain queries. For get queries this
+will usually be an ID. For list queries this will usually be one or more filters.
+On put or delete queries, this should be an ID. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>item</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p>Item is an item to put. This is only applicable for PUT queries. </p></td>
                 </tr>
               
             </tbody>
@@ -3037,6 +3044,18 @@ a coded error instead. </p></td>
                 <td>LIST</td>
                 <td>1</td>
                 <td><p>LIST is the command to list keys with an optional prefix.</p></td>
+              </tr>
+            
+              <tr>
+                <td>PUT</td>
+                <td>2</td>
+                <td><p>PUT is the command to put a value.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DELETE</td>
+                <td>3</td>
+                <td><p>DELETE is the command to delete a value.</p></td>
               </tr>
             
           </tbody>
