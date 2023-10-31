@@ -19,8 +19,24 @@
 // @ts-nocheck
 
 import { proto3 } from "@bufbuild/protobuf";
-import { InterfaceMetrics, MeshNode } from "./node_pb.js";
+import { Feature, InterfaceMetrics, MeshNode } from "./node_pb.js";
 import { QueryRequest } from "./storage_query_pb.js";
+
+/**
+ * NetworkAuthMethod are types of RPC credentials to supply to mesh nodes.
+ *
+ * @generated from enum v1.NetworkAuthMethod
+ */
+export const NetworkAuthMethod = proto3.makeEnum(
+  "v1.NetworkAuthMethod",
+  [
+    {no: 0, name: "NO_AUTH"},
+    {no: 1, name: "BASIC"},
+    {no: 2, name: "LDAP"},
+    {no: 3, name: "ID"},
+    {no: 4, name: "MTLS"},
+  ],
+);
 
 /**
  * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
@@ -31,7 +47,7 @@ export const ConnectRequest = proto3.makeMessageType(
   "v1.ConnectRequest",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "authMethod", kind: "enum", T: proto3.getEnumType(ConnectRequest_AuthMethod) },
+    { no: 2, name: "authMethod", kind: "enum", T: proto3.getEnumType(NetworkAuthMethod) },
     { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 12 /* ScalarType.BYTES */} },
     { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
@@ -53,22 +69,6 @@ export const ConnectRequest_AddrType = proto3.makeEnum(
     {no: 0, name: "ADDR"},
     {no: 1, name: "MULTIADDR"},
     {no: 2, name: "RENDEZVOUS"},
-  ],
-);
-
-/**
- * AuthMethod are types of RPC credentials to supply to the connection.
- *
- * @generated from enum v1.ConnectRequest.AuthMethod
- */
-export const ConnectRequest_AuthMethod = proto3.makeEnum(
-  "v1.ConnectRequest.AuthMethod",
-  [
-    {no: 0, name: "NO_AUTH"},
-    {no: 1, name: "BASIC"},
-    {no: 2, name: "LDAP"},
-    {no: 3, name: "ID"},
-    {no: 4, name: "MTLS"},
   ],
 );
 
@@ -99,6 +99,8 @@ export const MeshConnNetworking = proto3.makeMessageType(
   "v1.MeshConnNetworking",
   () => [
     { no: 1, name: "useDNS", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "endpoints", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 3, name: "detectEndpoints", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 
@@ -111,7 +113,13 @@ export const MeshConnServices = proto3.makeMessageType(
   "v1.MeshConnServices",
   () => [
     { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "public", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "enableLibP2P", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 3, name: "enableTLS", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "rendezvous", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "listenAddress", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "listenMultiaddrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 7, name: "authMethod", kind: "enum", T: proto3.getEnumType(NetworkAuthMethod) },
+    { no: 8, name: "features", kind: "enum", T: proto3.getEnumType(Feature), repeated: true },
   ],
 );
 

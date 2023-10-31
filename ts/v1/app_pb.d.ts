@@ -20,8 +20,51 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3 } from "@bufbuild/protobuf";
-import type { InterfaceMetrics, MeshNode } from "./node_pb.js";
+import type { Feature, InterfaceMetrics, MeshNode } from "./node_pb.js";
 import type { QueryRequest } from "./storage_query_pb.js";
+
+/**
+ * NetworkAuthMethod are types of RPC credentials to supply to mesh nodes.
+ *
+ * @generated from enum v1.NetworkAuthMethod
+ */
+export declare enum NetworkAuthMethod {
+  /**
+   * NO_AUTH is used to indicate that no authentication is required.
+   *
+   * @generated from enum value: NO_AUTH = 0;
+   */
+  NO_AUTH = 0,
+
+  /**
+   * BASIC is used to indicate that basic authentication is required.
+   *
+   * @generated from enum value: BASIC = 1;
+   */
+  BASIC = 1,
+
+  /**
+   * LDAP is used to indicate that LDAP authentication is required.
+   *
+   * @generated from enum value: LDAP = 2;
+   */
+  LDAP = 2,
+
+  /**
+   * ID is used to indicate that an identity is required.
+   *
+   * @generated from enum value: ID = 3;
+   */
+  ID = 3,
+
+  /**
+   * MTLS is used to indicate that mutual TLS authentication is required.
+   * The TLS object should be used to configure the TLS connection.
+   *
+   * @generated from enum value: MTLS = 4;
+   */
+  MTLS = 4,
+}
 
 /**
  * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
@@ -40,9 +83,9 @@ export declare class ConnectRequest extends Message<ConnectRequest> {
   /**
    * AuthMethod is the type of authentication to use.
    *
-   * @generated from field: v1.ConnectRequest.AuthMethod authMethod = 2;
+   * @generated from field: v1.NetworkAuthMethod authMethod = 2;
    */
-  authMethod: ConnectRequest_AuthMethod;
+  authMethod: NetworkAuthMethod;
 
   /**
    * AuthCredentials are additional credentials as required by the authType. 
@@ -137,49 +180,6 @@ export declare enum ConnectRequest_AddrType {
 }
 
 /**
- * AuthMethod are types of RPC credentials to supply to the connection.
- *
- * @generated from enum v1.ConnectRequest.AuthMethod
- */
-export declare enum ConnectRequest_AuthMethod {
-  /**
-   * NO_AUTH is used to indicate that no authentication is required.
-   *
-   * @generated from enum value: NO_AUTH = 0;
-   */
-  NO_AUTH = 0,
-
-  /**
-   * BASIC is used to indicate that basic authentication is required.
-   *
-   * @generated from enum value: BASIC = 1;
-   */
-  BASIC = 1,
-
-  /**
-   * LDAP is used to indicate that LDAP authentication is required.
-   *
-   * @generated from enum value: LDAP = 2;
-   */
-  LDAP = 2,
-
-  /**
-   * ID is used to indicate that an identity is required.
-   *
-   * @generated from enum value: ID = 3;
-   */
-  ID = 3,
-
-  /**
-   * MTLS is used to indicate that mutual TLS authentication is required.
-   * The TLS object should be used to configure the TLS connection.
-   *
-   * @generated from enum value: MTLS = 4;
-   */
-  MTLS = 4,
-}
-
-/**
  * AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
  * They are used to pass authentication credentials to the daemon. Enums 
  * cannot be used as map keys, so their string values are used instead.
@@ -237,6 +237,20 @@ export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
    */
   useDNS: boolean;
 
+  /**
+   * Endpoints are wireguard endpoints to broadcast to the mesh.
+   *
+   * @generated from field: repeated string endpoints = 2;
+   */
+  endpoints: string[];
+
+  /**
+   * DetectEndpoints enables endpoint detection.
+   *
+   * @generated from field: bool detectEndpoints = 3;
+   */
+  detectEndpoints: boolean;
+
   constructor(data?: PartialMessage<MeshConnNetworking>);
 
   static readonly runtime: typeof proto3;
@@ -266,13 +280,56 @@ export declare class MeshConnServices extends Message<MeshConnServices> {
   enabled: boolean;
 
   /**
-   * Public indicates that the services should be exposed publicly.
-   * This is useful for allowing other nodes to connect to the mesh
-   * via this node's public IP address.
+   * EnableLibP2P indicates whether or not to serve the API over libp2p.
    *
-   * @generated from field: bool public = 2;
+   * @generated from field: bool enableLibP2P = 2;
    */
-  public: boolean;
+  enableLibP2P: boolean;
+
+  /**
+   * EnableTLS indicates whether or not to use TLS for the API.
+   *
+   * @generated from field: bool enableTLS = 3;
+   */
+  enableTLS: boolean;
+
+  /**
+   * Rendezvous is an optional rendezvous string to use for anouncing the service
+   * on the IPFS DHT.
+   *
+   * @generated from field: string rendezvous = 4;
+   */
+  rendezvous: string;
+
+  /**
+   * ListenAddress is a raw IP address and port to listen on.
+   *
+   * @generated from field: string listenAddress = 5;
+   */
+  listenAddress: string;
+
+  /**
+   * ListenMultiaddrs are multiaddrs to listen on. If not provided and
+   * EnableLibP2P is set, the default listen addresses will be used.
+   *
+   * @generated from field: repeated string listenMultiaddrs = 6;
+   */
+  listenMultiaddrs: string[];
+
+  /**
+   * AuthMetod is the of authentication to enable for the services.
+   * Only mTLS and ID are supported.
+   *
+   * @generated from field: v1.NetworkAuthMethod authMethod = 7;
+   */
+  authMethod: NetworkAuthMethod;
+
+  /**
+   * Features are which features to enable on the API.
+   *
+   * @generated from field: repeated v1.Feature features = 8;
+   */
+  features: Feature[];
 
   constructor(data?: PartialMessage<MeshConnServices>);
 

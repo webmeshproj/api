@@ -26,6 +26,21 @@ import "v1/mesh.proto";
 import "v1/node.proto";
 import "v1/storage_query.proto";
 
+// NetworkAuthMethod are types of RPC credentials to supply to mesh nodes.
+enum NetworkAuthMethod {
+    // NO_AUTH is used to indicate that no authentication is required.
+    NO_AUTH = 0;
+    // BASIC is used to indicate that basic authentication is required.
+    BASIC = 1;
+    // LDAP is used to indicate that LDAP authentication is required.
+    LDAP = 2;
+    // ID is used to indicate that an identity is required.
+    ID = 3;
+    // MTLS is used to indicate that mutual TLS authentication is required.
+    // The TLS object should be used to configure the TLS connection.
+    MTLS = 4;
+};
+
 // ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
 message ConnectRequest {
     // AddrType is the type of join addresses included in the request.
@@ -36,20 +51,6 @@ message ConnectRequest {
         MULTIADDR = 1;
         // RENDEZVOUS is used to join a mesh using a rendezvous string.
         RENDEZVOUS = 2;
-    };
-    // AuthMethod are types of RPC credentials to supply to the connection.
-    enum AuthMethod {
-        // NO_AUTH is used to indicate that no authentication is required.
-        NO_AUTH = 0;
-        // BASIC is used to indicate that basic authentication is required.
-        BASIC = 1;
-        // LDAP is used to indicate that LDAP authentication is required.
-        LDAP = 2;
-        // ID is used to indicate that an identity is required.
-        ID = 3;
-        // MTLS is used to indicate that mutual TLS authentication is required.
-        // The TLS object should be used to configure the TLS connection.
-        MTLS = 4;
     };
     // AuthHeader is an enumeration of headers that coorespond to the AuthMethod.
     // They are used to pass authentication credentials to the daemon. Enums 
@@ -71,7 +72,7 @@ message ConnectRequest {
     // one will be generated.
     string id = 1 [(buf.validate.field).string.max_len = 64];
     // AuthMethod is the type of authentication to use.
-    AuthMethod authMethod = 2 [(buf.validate.field).enum.defined_only = true];
+    NetworkAuthMethod authMethod = 2 [(buf.validate.field).enum.defined_only = true];
     // AuthCredentials are additional credentials as required by the authType. 
     map<string, bytes> authCredentials = 3;
     // AddrType is the type of join addresses in the addrs list.
@@ -101,8 +102,14 @@ message ConnectRequest {
 
     option (buf.validate.message).cel = {
         id: "connectRequest.tlsRequiredFields",
-        message: "Must provide a TLS certificate and key for mTLS authentication",
+        message: "Must provide a TLS certificate and key for mTLS client authentication",
         expression: "this.authMethod != 4 || (size(this.tls.certData) > 0 && size(this.tls.keyData) > 0)",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "connectRequest.services.tlsRequiredFields",
+        message: "Must provide a TLS certificate and key for serving the API over TLS",
+        expression: "!this.services.enabled || !this.services.enableTLS || (size(this.tls.certData) > 0 && size(this.tls.keyData) > 0)",
     };
 }
 
@@ -110,16 +117,64 @@ message ConnectRequest {
 message MeshConnNetworking {
     // UseDNS indicates whether or not to use the DNS servers of the mesh.
     bool useDNS = 1;
+    // Endpoints are wireguard endpoints to broadcast to the mesh.
+    repeated string endpoints = 2;
+    // DetectEndpoints enables endpoint detection.
+    bool detectEndpoints = 3;
 }
 
 // MeshConnServices are configurations for exposing services to other nodes on a mesh.
 message MeshConnServices {
     // Enabled indicates whether or not to expose services to other nodes.
     bool enabled = 1;
-    // Public indicates that the services should be exposed publicly.
-    // This is useful for allowing other nodes to connect to the mesh
-    // via this node's public IP address.
-    bool public = 2;
+    // EnableLibP2P indicates whether or not to serve the API over libp2p.
+    bool enableLibP2P = 2;
+    // EnableTLS indicates whether or not to use TLS for the API.
+    bool enableTLS = 3;
+    // Rendezvous is an optional rendezvous string to use for anouncing the service
+    // on the IPFS DHT.
+    string rendezvous = 4;
+    // ListenAddress is a raw IP address and port to listen on.
+    string listenAddress = 5;
+    // ListenMultiaddrs are multiaddrs to listen on. If not provided and
+    // EnableLibP2P is set, the default listen addresses will be used.
+    repeated string listenMultiaddrs = 6;
+    // AuthMetod is the of authentication to enable for the services.
+    // Only mTLS and ID are supported.
+    NetworkAuthMethod authMethod = 7 [(buf.validate.field).enum.defined_only = true];
+    // Features are which features to enable on the API.
+    repeated Feature features = 8 [
+        (buf.validate.field).repeated.unique = true,
+        (buf.validate.field).repeated.items = {
+            enum: {
+                in: [1, 2, 3, 4, 5, 7, 11]
+            }
+        }
+    ];
+
+    option (buf.validate.message).cel = {
+        id: "services.requiredAddresses",
+        message: "Must provide at least one listen address when not using libp2p",
+        expression: "!this.enabled || this.enableLibP2P || size(this.listenAddress) > 0",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "services.invalidRendezvous",
+        message: "Cannot use rendezvous string when not using libp2p",
+        expression: "!this.enabled || size(this.rendezvous) == 0 || this.enableLibP2P",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "services.invalidAuthMethod",
+        message: "Only mTLS and ID are supported for service authentication",
+        expression: "!this.enabled || this.authMethod == 0 || this.authMethod == 3 || this.authMethod == 4",
+    };
+
+    option (buf.validate.message).cel = {
+        id: "services.requireTLS",
+        message: "Cannot disable TLS when using mTLS",
+        expression: "!this.enabled || this.authMethod != 4 || this.enableTLS",
+    };
 }
 
 // MeshConnBootstrap are configurations for bootstrapping a new mesh.
@@ -150,7 +205,7 @@ message MeshConnBootstrap {
     option (buf.validate.message).cel = {
         id: "bootstrap.validIPv4Network",
         message: "IPv4 network must be a valid IPv4 CIDR",
-        expression: "!this.enabled || size(this.ipv4Network) == 0 || this.ipv4Network.isIp(4)",
+        expression: "!this.enabled || size(this.ipv4Network) == 0 || this.ipv4Network.isIpPrefix(4)",
     };
 }
 

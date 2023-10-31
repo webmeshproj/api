@@ -283,6 +283,8 @@ func (m *MeshConnNetworking) validate(all bool) error {
 
 	// no validation rules for UseDNS
 
+	// no validation rules for DetectEndpoints
+
 	if len(errors) > 0 {
 		return MeshConnNetworkingMultiError(errors)
 	}
@@ -387,7 +389,15 @@ func (m *MeshConnServices) validate(all bool) error {
 
 	// no validation rules for Enabled
 
-	// no validation rules for Public
+	// no validation rules for EnableLibP2P
+
+	// no validation rules for EnableTLS
+
+	// no validation rules for Rendezvous
+
+	// no validation rules for ListenAddress
+
+	// no validation rules for AuthMethod
 
 	if len(errors) > 0 {
 		return MeshConnServicesMultiError(errors)

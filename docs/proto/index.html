@@ -510,11 +510,11 @@
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectRequest.AuthMethod"><span class="badge">E</span>ConnectRequest.AuthMethod</a>
+                  <a href="#v1.MeshConnBootstrap.DefaultNetworkACL"><span class="badge">E</span>MeshConnBootstrap.DefaultNetworkACL</a>
                 </li>
               
                 <li>
-                  <a href="#v1.MeshConnBootstrap.DefaultNetworkACL"><span class="badge">E</span>MeshConnBootstrap.DefaultNetworkACL</a>
+                  <a href="#v1.NetworkAuthMethod"><span class="badge">E</span>NetworkAuthMethod</a>
                 </li>
               
                 <li>
@@ -3239,7 +3239,7 @@ one will be generated. </p></td>
               
                 <tr>
                   <td>authMethod</td>
-                  <td><a href="#v1.ConnectRequest.AuthMethod">ConnectRequest.AuthMethod</a></td>
+                  <td><a href="#v1.NetworkAuthMethod">NetworkAuthMethod</a></td>
                   <td></td>
                   <td><p>AuthMethod is the type of authentication to use. </p></td>
                 </tr>
@@ -3497,6 +3497,20 @@ one will be generated. </p></td>
                   <td><p>UseDNS indicates whether or not to use the DNS servers of the mesh. </p></td>
                 </tr>
               
+                <tr>
+                  <td>endpoints</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>Endpoints are wireguard endpoints to broadcast to the mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>detectEndpoints</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>DetectEndpoints enables endpoint detection. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3522,12 +3536,55 @@ one will be generated. </p></td>
                 </tr>
               
                 <tr>
-                  <td>public</td>
+                  <td>enableLibP2P</td>
                   <td><a href="#bool">bool</a></td>
                   <td></td>
-                  <td><p>Public indicates that the services should be exposed publicly.
-This is useful for allowing other nodes to connect to the mesh
-via this node&#39;s public IP address. </p></td>
+                  <td><p>EnableLibP2P indicates whether or not to serve the API over libp2p. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enableTLS</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>EnableTLS indicates whether or not to use TLS for the API. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>rendezvous</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Rendezvous is an optional rendezvous string to use for anouncing the service
+on the IPFS DHT. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>listenAddress</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ListenAddress is a raw IP address and port to listen on. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>listenMultiaddrs</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>ListenMultiaddrs are multiaddrs to listen on. If not provided and
+EnableLibP2P is set, the default listen addresses will be used. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>authMethod</td>
+                  <td><a href="#v1.NetworkAuthMethod">NetworkAuthMethod</a></td>
+                  <td></td>
+                  <td><p>AuthMetod is the of authentication to enable for the services.
+Only mTLS and ID are supported. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>features</td>
+                  <td><a href="#v1.Feature">Feature</a></td>
+                  <td>repeated</td>
+                  <td><p>Features are which features to enable on the API. </p></td>
                 </tr>
               
             </tbody>
@@ -3806,8 +3863,31 @@ the join addresses to use to connect to the mesh.</p></td>
           </tbody>
         </table>
       
-        <h3 id="v1.ConnectRequest.AuthMethod">ConnectRequest.AuthMethod</h3>
-        <p>AuthMethod are types of RPC credentials to supply to the connection.</p>
+        <h3 id="v1.MeshConnBootstrap.DefaultNetworkACL">MeshConnBootstrap.DefaultNetworkACL</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>ACCEPT</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DROP</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="v1.NetworkAuthMethod">NetworkAuthMethod</h3>
+        <p>NetworkAuthMethod are types of RPC credentials to supply to mesh nodes.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -3843,29 +3923,6 @@ the join addresses to use to connect to the mesh.</p></td>
                 <td>4</td>
                 <td><p>MTLS is used to indicate that mutual TLS authentication is required.
 The TLS object should be used to configure the TLS connection.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.MeshConnBootstrap.DefaultNetworkACL">MeshConnBootstrap.DefaultNetworkACL</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>ACCEPT</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>DROP</td>
-                <td>1</td>
-                <td><p></p></td>
               </tr>
             
           </tbody>
