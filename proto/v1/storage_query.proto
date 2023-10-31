@@ -77,7 +77,8 @@ message QueryRequest {
     // will usually be an ID. For list queries this will usually be one or more filters.
     // On put or delete queries, this should be an ID.
     string query = 3;
-    // Item is an item to put. This is only applicable for PUT queries.
+    // Item is an item to put. This is only applicable for PUT queries. It should be a
+    // protobuf-JSON encoded object of the given query type.
     bytes item = 4;
 }
 

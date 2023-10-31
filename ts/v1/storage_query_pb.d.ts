@@ -90,7 +90,8 @@ export declare class QueryRequest extends Message<QueryRequest> {
   query: string;
 
   /**
-   * Item is an item to put. This is only applicable for PUT queries.
+   * Item is an item to put. This is only applicable for PUT queries. It should be a
+   * protobuf-JSON encoded object of the given query type.
    *
    * @generated from field: bytes item = 4;
    */

@@ -260,7 +260,8 @@ type QueryRequest struct {
 	// will usually be an ID. For list queries this will usually be one or more filters.
 	// On put or delete queries, this should be an ID.
 	Query string `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
-	// Item is an item to put. This is only applicable for PUT queries.
+	// Item is an item to put. This is only applicable for PUT queries. It should be a
+	// protobuf-JSON encoded object of the given query type.
 	Item []byte `protobuf:"bytes,4,opt,name=item,proto3" json:"item,omitempty"`
 }
 
