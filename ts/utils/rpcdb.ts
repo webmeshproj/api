@@ -56,6 +56,10 @@ export class MeshNodes {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("MeshNode not found"))
           return
@@ -81,7 +85,11 @@ export class MeshNodes {
           type: QueryRequest_QueryType.PEERS,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -103,6 +111,10 @@ export class MeshNodes {
           type: QueryRequest_QueryType.PEERS,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => MeshNode.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -125,7 +137,11 @@ export class MeshNodes {
           type: QueryRequest_QueryType.PEERS,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -162,6 +178,10 @@ export class MeshEdges {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("MeshEdge not found"))
           return
@@ -187,7 +207,11 @@ export class MeshEdges {
           type: QueryRequest_QueryType.EDGES,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -209,6 +233,10 @@ export class MeshEdges {
           type: QueryRequest_QueryType.EDGES,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => MeshEdge.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -231,7 +259,11 @@ export class MeshEdges {
           type: QueryRequest_QueryType.EDGES,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -268,6 +300,10 @@ export class Roles {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("Role not found"))
           return
@@ -293,7 +329,11 @@ export class Roles {
           type: QueryRequest_QueryType.ROLES,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -315,6 +355,10 @@ export class Roles {
           type: QueryRequest_QueryType.ROLES,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => Role.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -337,7 +381,11 @@ export class Roles {
           type: QueryRequest_QueryType.ROLES,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -374,6 +422,10 @@ export class RoleBindings {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("RoleBinding not found"))
           return
@@ -399,7 +451,11 @@ export class RoleBindings {
           type: QueryRequest_QueryType.ROLEBINDINGS,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -421,6 +477,10 @@ export class RoleBindings {
           type: QueryRequest_QueryType.ROLEBINDINGS,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => RoleBinding.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -443,7 +503,11 @@ export class RoleBindings {
           type: QueryRequest_QueryType.ROLEBINDINGS,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -480,6 +544,10 @@ export class Groups {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("Group not found"))
           return
@@ -505,7 +573,11 @@ export class Groups {
           type: QueryRequest_QueryType.GROUPS,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -527,6 +599,10 @@ export class Groups {
           type: QueryRequest_QueryType.GROUPS,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => Group.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -549,7 +625,11 @@ export class Groups {
           type: QueryRequest_QueryType.GROUPS,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -586,6 +666,10 @@ export class NetworkACLs {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("NetworkACL not found"))
           return
@@ -611,7 +695,11 @@ export class NetworkACLs {
           type: QueryRequest_QueryType.ACLS,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -633,6 +721,10 @@ export class NetworkACLs {
           type: QueryRequest_QueryType.ACLS,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => NetworkACL.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -655,7 +747,11 @@ export class NetworkACLs {
           type: QueryRequest_QueryType.ACLS,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -692,6 +788,10 @@ export class Routes {
           query: 'id=' + id,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         if (res.items.length == 0) {
           reject(new Error("Route not found"))
           return
@@ -717,7 +817,11 @@ export class Routes {
           type: QueryRequest_QueryType.ROUTES,
           query: 'id=' + id,
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)
@@ -739,6 +843,10 @@ export class Routes {
           type: QueryRequest_QueryType.ROUTES,
         }
       }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve(res.items.map((item) => Route.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
@@ -761,7 +869,11 @@ export class Routes {
           type: QueryRequest_QueryType.ROUTES,
           item: enc.encode(obj.toJsonString()),
         }
-      }).then(() => {
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
         resolve()
       }).catch((err: Error) => {
         reject(err)

@@ -57,6 +57,10 @@ export class {{ .Name }}s {
 					query: 'id=' + id,
 				}
 			}).then((res: QueryResponse) => {
+				if (res.error.length > 0) {
+					reject(new Error(res.error))
+					return
+				}
 				if (res.items.length == 0) {
 					reject(new Error("{{ .Name }} not found"))
 					return
@@ -82,7 +86,11 @@ export class {{ .Name }}s {
 					type: QueryRequest_QueryType.{{ .QueryType }},
 					query: 'id=' + id,
 				}
-			}).then(() => {
+			}).then((res: QueryResponse) => {
+				if (res.error.length > 0) {
+					reject(new Error(res.error))
+					return
+				}
 				resolve()
 			}).catch((err: Error) => {
 				reject(err)
@@ -104,6 +112,10 @@ export class {{ .Name }}s {
 					type: QueryRequest_QueryType.{{ .QueryType }},
 				}
 			}).then((res: QueryResponse) => {
+				if (res.error.length > 0) {
+					reject(new Error(res.error))
+					return
+				}
 				resolve(res.items.map((item) => {{ .Name }}.fromJson(item.toString())))
 			}).catch((err: Error) => {
 				reject(err)
@@ -126,7 +138,11 @@ export class {{ .Name }}s {
 					type: QueryRequest_QueryType.{{ .QueryType }},
 					item: enc.encode(obj.toJsonString()),
 				}
-			}).then(() => {
+			}).then((res: QueryResponse) => {
+				if (res.error.length > 0) {
+					reject(new Error(res.error))
+					return
+				}
 				resolve()
 			}).catch((err: Error) => {
 				reject(err)
