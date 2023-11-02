@@ -2,6 +2,7 @@
 package main
 
 import (
+	"embed"
 	"os"
 	"strings"
 	"text/template"
@@ -42,50 +43,17 @@ func (i *Interface) Name() string {
 	return string(proto.MessageName(i.Type).Name())
 }
 
-var typescriptTemplate = template.Must(template.New("").Funcs(template.FuncMap{
+//go:embed templates/*.tmpl
+var templateFS embed.FS
+
+var funcMap = template.FuncMap{
 	"join": func(a []string, sep string) string {
 		return strings.Join(a, sep)
 	},
-}).Parse(`
-{{- $typesRoot := .Spec.TypesPath -}}
-import { PromiseClient } from "@connectrpc/connect";
-import { AppDaemon } from "{{ $typesRoot }}/app_connect.js";
-{{ range $file, $types := .Spec.Imports -}}
-import { {{ join $types "," }} } from "{{ $typesRoot }}/{{ $file }}.js";
-{{ end -}}
-import { 
-	QueryRequest_QueryCommand,
-	QueryRequest_QueryType,
-} from "{{ $typesRoot }}/storage_query_pb.js";
-
-{{ range .Spec.Interfaces }}
-export class {{ .Name }}s {
-	constructor(private readonly client: PromiseClient<AppDaemon>, private readonly connID: string) {}
-
-	get(id: string): Promise<{{ .Name }}> {
-		return new Promise((resolve, reject) => {
-			const res = this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.GET,
-					type: QueryRequest_QueryType.{{ .QueryType }},
-					query: 'id=' + id,
-				}
-			})
-			return new {{ .Name }}.fromJson(res.items[0])
-		});
-	},
-
-	list(): Promise<{{ .Name }}[]>;
-
-	put(obj: {{ .Name }}): Promise<{{ .Name }}>;
-
-	delete(id: string): Promise<void>;
 }
-{{- end }}
-`))
 
 func main() {
+	t := template.Must(template.New("templates").Funcs(funcMap).ParseFS(templateFS, "templates/*.tmpl"))
 	genspec := Spec{
 		TypesPath: "../v1",
 		Interfaces: []Interface{
@@ -96,7 +64,7 @@ func main() {
 			},
 		},
 	}
-	err := typescriptTemplate.Execute(os.Stdout, map[string]any{
+	err := t.ExecuteTemplate(os.Stdout, "ts-rpcdb.ts.tmpl", map[string]any{
 		"Spec": &genspec,
 	})
 	if err != nil {
