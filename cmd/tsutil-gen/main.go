@@ -3,7 +3,7 @@ package main
 
 import (
 	"embed"
-	"os"
+	"fmt"
 	"strings"
 	"text/template"
 
@@ -64,10 +64,14 @@ func main() {
 			},
 		},
 	}
-	err := t.ExecuteTemplate(os.Stdout, "ts-rpcdb.ts.tmpl", map[string]any{
+	var buf strings.Builder
+	err := t.ExecuteTemplate(&buf, "ts-rpcdb.ts.tmpl", map[string]any{
 		"Spec": &genspec,
 	})
 	if err != nil {
 		panic(err)
 	}
+	// Replace all tabs with 2 spaces.
+	out := strings.ReplaceAll(buf.String(), "\t", "  ")
+	fmt.Println(out)
 }
