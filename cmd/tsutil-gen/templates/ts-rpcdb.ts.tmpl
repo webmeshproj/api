@@ -33,23 +33,23 @@ import {
 /**
  * {{ $name }} is the interface for working with {{ $name }}s over the AppDaemon query RPC.
  *
- * @generated from {{ $templateName }}
+ * @generated From {{ $templateName }}
  */
 export class {{ $name }}s {
 	/**
-	 * @param client - the client to use for RPC calls
-	 * @param connID - the connection ID to use for RPC calls
+	 * @param client - The client to use for RPC calls.
+	 * @param connID - The connection ID to use for RPC calls.
 	 */
 	constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
 	}
 
 	/**
-	 * get returns the {{ $name }} with the given {{ andJoin .Identifiers }}.
+	 * Returns the {{ $name }} with the given {{ andJoin .Identifiers }}.
 	 *
 	 {{ range $id, $description := .Identifiers -}}
-	 * @param {{ $id }} - {{ $description }}
+	 * @param {{ $id }} - {{ $description }}.
 	 {{ end -}}
-	 * @returns the {{ $name }} with the given {{ andJoin .Identifiers }}
+	 * @returns The {{ $name }} with the given {{ andJoin .Identifiers }}.
 	 */
 	get({{ stringParams .Identifiers }}): Promise<{{ $name }}> {
 		return new Promise((resolve, reject) => {
@@ -77,10 +77,10 @@ export class {{ $name }}s {
 	}
 	{{ range $id, $description := .ExtraGetIdentifiers }}
 	/**
-	 * getBy{{ title $id }} returns the {{ $name }} with the given {{ $id }}.
+	 * Returns the {{ $name }} with the given {{ $id }}.
 	 *
-	 * @param {{ $id }} - {{ $description }}
-	 * @returns the {{ $name }} with the given {{ $id }}
+	 * @param {{ $id }} - {{ $description }}.
+	 * @returns The {{ $name }} with the given {{ $id }}.
 	 */
 	getBy{{ title $id }}({{ stringParams $id }}): Promise<{{ $name }}> {
 		return new Promise((resolve, reject) => {
@@ -108,10 +108,10 @@ export class {{ $name }}s {
 	}
 	{{ end }}
 	/**
-	 * delete deletes the {{ $name }} with the given {{ andJoin .Identifiers }}.
+	 * Deletes the {{ $name }} with the given {{ andJoin .Identifiers }}.
 	 *
 	 {{ range $id, $description := .Identifiers -}}
-	 * @param {{ $id }} - {{ $description }}
+	 * @param {{ $id }} - {{ $description }}.
 	 {{ end -}}
 	 */
 	delete({{ stringParams .Identifiers }}): Promise<void> {
@@ -136,9 +136,9 @@ export class {{ $name }}s {
 	}
 
 	/**
-	 * list returns all {{ $name }}s.
+	 * Returns all {{ $name }}s.
 	 *
-	 * @returns all {{ $name }}s
+	 * @returns All {{ $name }}s known to the AppDaemon.
 	 */
 	list(): Promise<{{ $name }}[]> {
 		return new Promise((resolve, reject) => {
@@ -161,10 +161,10 @@ export class {{ $name }}s {
 	}
 	{{ range $id, $description := .ExtraListIdentifiers }}
 	/**
-	 * listBy{{ title $id }} returns the {{ $name }}s with the given {{ $id }}.
+	 * Returns the {{ $name }}s with the given {{ $id }}.
 	 *
 	 * @param {{ $id }} - {{ $description }}
-	 * @returns the {{ $name }} with the given {{ $id }}
+	 * @returns Any {{ $name }}s found with the given {{ $id }}.
 	 */
 	listBy{{ title $id }}({{ stringParams $id }}): Promise<{{ $name }}> {
 		return new Promise((resolve, reject) => {
@@ -192,9 +192,9 @@ export class {{ $name }}s {
 	}
 	{{ end }}
 	/**
-	 * put puts the given {{ $name }}.
+	 * Puts the given {{ $name }}.
 	 *
-	 * @param obj - the {{ $name }} to put
+	 * @param obj - The {{ $name }} to put into the mesh storage.
 	 */
 	put(obj: {{ $name }}): Promise<void> {
 		return new Promise((resolve, reject) => {

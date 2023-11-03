@@ -30,21 +30,21 @@ import {
 /**
  * MeshNode is the interface for working with MeshNodes over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class MeshNodes {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the MeshNode with the given ID.
+   * Returns the MeshNode with the given ID.
    *
-   * @param id - The ID of the node.
-   * @returns the MeshNode with the given ID
+   * @param id - The ID of the node..
+   * @returns The MeshNode with the given ID.
    */
   get(id: string): Promise<MeshNode> {
     return new Promise((resolve, reject) => {
@@ -72,10 +72,10 @@ export class MeshNodes {
   }
   
   /**
-   * getByPubkey returns the MeshNode with the given pubkey.
+   * Returns the MeshNode with the given pubkey.
    *
-   * @param pubkey - The base64 encoded public key of the node.
-   * @returns the MeshNode with the given pubkey
+   * @param pubkey - The base64 encoded public key of the node..
+   * @returns The MeshNode with the given pubkey.
    */
   getByPubkey(pubkey: string): Promise<MeshNode> {
     return new Promise((resolve, reject) => {
@@ -103,9 +103,9 @@ export class MeshNodes {
   }
   
   /**
-   * delete deletes the MeshNode with the given ID.
+   * Deletes the MeshNode with the given ID.
    *
-   * @param id - The ID of the node.
+   * @param id - The ID of the node..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -129,9 +129,9 @@ export class MeshNodes {
   }
 
   /**
-   * list returns all MeshNodes.
+   * Returns all MeshNodes.
    *
-   * @returns all MeshNodes
+   * @returns All MeshNodes known to the AppDaemon.
    */
   list(): Promise<MeshNode[]> {
     return new Promise((resolve, reject) => {
@@ -154,9 +154,9 @@ export class MeshNodes {
   }
   
   /**
-   * put puts the given MeshNode.
+   * Puts the given MeshNode.
    *
-   * @param obj - the MeshNode to put
+   * @param obj - The MeshNode to put into the mesh storage.
    */
   put(obj: MeshNode): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -183,31 +183,31 @@ export class MeshNodes {
 /**
  * MeshEdge is the interface for working with MeshEdges over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class MeshEdges {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the MeshEdge with the given Sourceid and Targetid.
+   * Returns the MeshEdge with the given Sourceid and Targetid.
    *
-   * @param sourceid - The ID of the source node.
-   * @param targetid - The ID of the target node.
-   * @returns the MeshEdge with the given Sourceid and Targetid
+   * @param sourceid - The ID of the source node..
+   * @param targetid - The ID of the target node..
+   * @returns The MeshEdge with the given Targetid and Sourceid.
    */
-  get(targetid: string, sourceid: string): Promise<MeshEdge> {
+  get(sourceid: string, targetid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.EDGES,
-          query: `targetid=${targetid},sourceid=${sourceid}`,
+          query: `sourceid=${sourceid},targetid=${targetid}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -226,10 +226,10 @@ export class MeshEdges {
   }
   
   /**
-   * delete deletes the MeshEdge with the given Targetid and Sourceid.
+   * Deletes the MeshEdge with the given Sourceid and Targetid.
    *
-   * @param sourceid - The ID of the source node.
-   * @param targetid - The ID of the target node.
+   * @param sourceid - The ID of the source node..
+   * @param targetid - The ID of the target node..
    */
   delete(sourceid: string, targetid: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -253,9 +253,9 @@ export class MeshEdges {
   }
 
   /**
-   * list returns all MeshEdges.
+   * Returns all MeshEdges.
    *
-   * @returns all MeshEdges
+   * @returns All MeshEdges known to the AppDaemon.
    */
   list(): Promise<MeshEdge[]> {
     return new Promise((resolve, reject) => {
@@ -278,9 +278,9 @@ export class MeshEdges {
   }
   
   /**
-   * put puts the given MeshEdge.
+   * Puts the given MeshEdge.
    *
-   * @param obj - the MeshEdge to put
+   * @param obj - The MeshEdge to put into the mesh storage.
    */
   put(obj: MeshEdge): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -307,21 +307,21 @@ export class MeshEdges {
 /**
  * Role is the interface for working with Roles over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class Roles {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the Role with the given ID.
+   * Returns the Role with the given ID.
    *
-   * @param id - The name of the role.
-   * @returns the Role with the given ID
+   * @param id - The name of the role..
+   * @returns The Role with the given ID.
    */
   get(id: string): Promise<Role> {
     return new Promise((resolve, reject) => {
@@ -349,9 +349,9 @@ export class Roles {
   }
   
   /**
-   * delete deletes the Role with the given ID.
+   * Deletes the Role with the given ID.
    *
-   * @param id - The name of the role.
+   * @param id - The name of the role..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -375,9 +375,9 @@ export class Roles {
   }
 
   /**
-   * list returns all Roles.
+   * Returns all Roles.
    *
-   * @returns all Roles
+   * @returns All Roles known to the AppDaemon.
    */
   list(): Promise<Role[]> {
     return new Promise((resolve, reject) => {
@@ -400,9 +400,9 @@ export class Roles {
   }
   
   /**
-   * put puts the given Role.
+   * Puts the given Role.
    *
-   * @param obj - the Role to put
+   * @param obj - The Role to put into the mesh storage.
    */
   put(obj: Role): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -429,21 +429,21 @@ export class Roles {
 /**
  * RoleBinding is the interface for working with RoleBindings over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class RoleBindings {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the RoleBinding with the given ID.
+   * Returns the RoleBinding with the given ID.
    *
-   * @param id - The name of the rolebinding.
-   * @returns the RoleBinding with the given ID
+   * @param id - The name of the rolebinding..
+   * @returns The RoleBinding with the given ID.
    */
   get(id: string): Promise<RoleBinding> {
     return new Promise((resolve, reject) => {
@@ -471,9 +471,9 @@ export class RoleBindings {
   }
   
   /**
-   * delete deletes the RoleBinding with the given ID.
+   * Deletes the RoleBinding with the given ID.
    *
-   * @param id - The name of the rolebinding.
+   * @param id - The name of the rolebinding..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -497,9 +497,9 @@ export class RoleBindings {
   }
 
   /**
-   * list returns all RoleBindings.
+   * Returns all RoleBindings.
    *
-   * @returns all RoleBindings
+   * @returns All RoleBindings known to the AppDaemon.
    */
   list(): Promise<RoleBinding[]> {
     return new Promise((resolve, reject) => {
@@ -522,9 +522,9 @@ export class RoleBindings {
   }
   
   /**
-   * put puts the given RoleBinding.
+   * Puts the given RoleBinding.
    *
-   * @param obj - the RoleBinding to put
+   * @param obj - The RoleBinding to put into the mesh storage.
    */
   put(obj: RoleBinding): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -551,21 +551,21 @@ export class RoleBindings {
 /**
  * Group is the interface for working with Groups over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class Groups {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the Group with the given ID.
+   * Returns the Group with the given ID.
    *
-   * @param id - The name of the group.
-   * @returns the Group with the given ID
+   * @param id - The name of the group..
+   * @returns The Group with the given ID.
    */
   get(id: string): Promise<Group> {
     return new Promise((resolve, reject) => {
@@ -593,9 +593,9 @@ export class Groups {
   }
   
   /**
-   * delete deletes the Group with the given ID.
+   * Deletes the Group with the given ID.
    *
-   * @param id - The name of the group.
+   * @param id - The name of the group..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -619,9 +619,9 @@ export class Groups {
   }
 
   /**
-   * list returns all Groups.
+   * Returns all Groups.
    *
-   * @returns all Groups
+   * @returns All Groups known to the AppDaemon.
    */
   list(): Promise<Group[]> {
     return new Promise((resolve, reject) => {
@@ -644,9 +644,9 @@ export class Groups {
   }
   
   /**
-   * put puts the given Group.
+   * Puts the given Group.
    *
-   * @param obj - the Group to put
+   * @param obj - The Group to put into the mesh storage.
    */
   put(obj: Group): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -673,21 +673,21 @@ export class Groups {
 /**
  * NetworkACL is the interface for working with NetworkACLs over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class NetworkACLs {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the NetworkACL with the given ID.
+   * Returns the NetworkACL with the given ID.
    *
-   * @param id - The name of the network ACL.
-   * @returns the NetworkACL with the given ID
+   * @param id - The name of the network ACL..
+   * @returns The NetworkACL with the given ID.
    */
   get(id: string): Promise<NetworkACL> {
     return new Promise((resolve, reject) => {
@@ -715,9 +715,9 @@ export class NetworkACLs {
   }
   
   /**
-   * delete deletes the NetworkACL with the given ID.
+   * Deletes the NetworkACL with the given ID.
    *
-   * @param id - The name of the network ACL.
+   * @param id - The name of the network ACL..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -741,9 +741,9 @@ export class NetworkACLs {
   }
 
   /**
-   * list returns all NetworkACLs.
+   * Returns all NetworkACLs.
    *
-   * @returns all NetworkACLs
+   * @returns All NetworkACLs known to the AppDaemon.
    */
   list(): Promise<NetworkACL[]> {
     return new Promise((resolve, reject) => {
@@ -766,9 +766,9 @@ export class NetworkACLs {
   }
   
   /**
-   * put puts the given NetworkACL.
+   * Puts the given NetworkACL.
    *
-   * @param obj - the NetworkACL to put
+   * @param obj - The NetworkACL to put into the mesh storage.
    */
   put(obj: NetworkACL): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -795,21 +795,21 @@ export class NetworkACLs {
 /**
  * Route is the interface for working with Routes over the AppDaemon query RPC.
  *
- * @generated from ts-rpcdb.ts.tmpl
+ * @generated From ts-rpcdb.ts.tmpl
  */
 export class Routes {
   /**
-   * @param client - the client to use for RPC calls
-   * @param connID - the connection ID to use for RPC calls
+   * @param client - The client to use for RPC calls.
+   * @param connID - The connection ID to use for RPC calls.
    */
   constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
   }
 
   /**
-   * get returns the Route with the given ID.
+   * Returns the Route with the given ID.
    *
-   * @param id - The name of the route.
-   * @returns the Route with the given ID
+   * @param id - The name of the route..
+   * @returns The Route with the given ID.
    */
   get(id: string): Promise<Route> {
     return new Promise((resolve, reject) => {
@@ -837,9 +837,9 @@ export class Routes {
   }
   
   /**
-   * delete deletes the Route with the given ID.
+   * Deletes the Route with the given ID.
    *
-   * @param id - The name of the route.
+   * @param id - The name of the route..
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -863,9 +863,9 @@ export class Routes {
   }
 
   /**
-   * list returns all Routes.
+   * Returns all Routes.
    *
-   * @returns all Routes
+   * @returns All Routes known to the AppDaemon.
    */
   list(): Promise<Route[]> {
     return new Promise((resolve, reject) => {
@@ -888,10 +888,10 @@ export class Routes {
   }
   
   /**
-   * listByCidr returns the Routes with the given cidr.
+   * Returns the Routes with the given cidr.
    *
    * @param cidr - The CIDR of the route.
-   * @returns the Route with the given cidr
+   * @returns Any Routes found with the given cidr.
    */
   listByCidr(cidr: string): Promise<Route> {
     return new Promise((resolve, reject) => {
@@ -919,10 +919,10 @@ export class Routes {
   }
   
   /**
-   * listByNodeID returns the Routes with the given nodeid.
+   * Returns the Routes with the given nodeid.
    *
    * @param nodeid - The ID of the node.
-   * @returns the Route with the given nodeid
+   * @returns Any Routes found with the given nodeid.
    */
   listByNodeID(nodeid: string): Promise<Route> {
     return new Promise((resolve, reject) => {
@@ -950,9 +950,9 @@ export class Routes {
   }
   
   /**
-   * put puts the given Route.
+   * Puts the given Route.
    *
-   * @param obj - the Route to put
+   * @param obj - The Route to put into the mesh storage.
    */
   put(obj: Route): Promise<void> {
     return new Promise((resolve, reject) => {
