@@ -16,7 +16,7 @@
 
 {{ $templateName := .TemplateName -}}
 {{ $typesRoot := .Spec.TypesPath -}}
-import { PromiseClient } from "@connectrpc/connect";
+import { PromiseClient, StreamResponse, CallOptions } from "@connectrpc/connect";
 import { AppDaemon } from "{{ $typesRoot }}/app_connect.js";
 {{ range $file, $types := .Spec.Imports -}}
 import { {{ join $types }} } from "{{ $typesRoot }}/{{ $file }}.js";
@@ -24,9 +24,20 @@ import { {{ join $types }} } from "{{ $typesRoot }}/{{ $file }}.js";
 import { 
 	QueryRequest_QueryCommand,
 	QueryRequest_QueryType,
+	QueryRequest,
 	QueryResponse
 } from "{{ $typesRoot }}/storage_query_pb.js";
 
+/**
+ * AppDaemonClient is the interface for working with an AppDaemon over gRPC.
+ *
+ * @generated From {{ $templateName }}
+ */
+export type AppDaemonClient = PromiseClient<typeof AppDaemon>;
+
+/**
+ * TODO: Allow the below interfaces to be constructed with a plugin query stream as well.
+ */
 {{ range .Spec.Interfaces }}
 {{- $name := .Name }}
 {{- $queryType := .QueryType }}
@@ -40,7 +51,32 @@ export class {{ $name }}s {
 	 * @param client - The client to use for RPC calls.
 	 * @param connID - The connection ID to use for RPC calls.
 	 */
-	constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+	constructor(
+		private readonly client: AppDaemonClient,
+		private readonly connID: string
+	) {}
+
+	/**
+	 * Queries the AppDaemon for {{ $name }}s.
+	 *
+	 * @param query - The query to run.
+	 * @returns The results of the query.
+	 */
+	private query(query: QueryRequest): Promise<QueryResponse> {
+		return new Promise((resolve, reject) => {
+			this.client.query({
+				id: this.connID,
+				query: query
+			}).then((res: QueryResponse) => {
+				if (res.error.length > 0) {
+					reject(new Error(res.error))
+					return
+				}
+				resolve(res)
+			}).catch((err: Error) => {
+				reject(err)
+			})
+		});
 	}
 
 	/**
@@ -53,18 +89,11 @@ export class {{ $name }}s {
 	 */
 	get({{ stringParams .Identifiers }}): Promise<{{ $name }}> {
 		return new Promise((resolve, reject) => {
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.GET,
-					type: QueryRequest_QueryType.{{ $queryType }},
-					query: `{{ queryString .Identifiers }}`,
-				}
-			}).then((res: QueryResponse) => {
-				if (res.error.length > 0) {
-					reject(new Error(res.error))
-					return
-				}
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.GET,
+				type: QueryRequest_QueryType.{{ $queryType }},
+				query: `{{ queryString .Identifiers }}`,
+			})).then((res: QueryResponse) => {
 				if (res.items.length == 0) {
 					reject(new Error("{{ $name }} not found"))
 					return
@@ -84,14 +113,11 @@ export class {{ $name }}s {
 	 */
 	getBy{{ title $id }}({{ stringParams $id }}): Promise<{{ $name }}> {
 		return new Promise((resolve, reject) => {
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.GET,
-					type: QueryRequest_QueryType.{{ $queryType }},
-					query: `{{ queryString $id }}`,
-				}
-			}).then((res: QueryResponse) => {
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.GET,
+				type: QueryRequest_QueryType.{{ $queryType }},
+				query: `{{ queryString $id }}`,
+			})).then((res: QueryResponse) => {
 				if (res.error.length > 0) {
 					reject(new Error(res.error))
 					return
@@ -116,14 +142,11 @@ export class {{ $name }}s {
 	 */
 	delete({{ stringParams .Identifiers }}): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.DELETE,
-					type: QueryRequest_QueryType.{{ $queryType }},
-					query: `{{ queryString .Identifiers }}`,
-				}
-			}).then((res: QueryResponse) => {
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.DELETE,
+				type: QueryRequest_QueryType.{{ $queryType }},
+				query: `{{ queryString .Identifiers }}`,
+			})).then((res: QueryResponse) => {
 				if (res.error.length > 0) {
 					reject(new Error(res.error))
 					return
@@ -142,13 +165,10 @@ export class {{ $name }}s {
 	 */
 	list(): Promise<{{ $name }}[]> {
 		return new Promise((resolve, reject) => {
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.LIST,
-					type: QueryRequest_QueryType.{{ $queryType }},
-				}
-			}).then((res: QueryResponse) => {
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.LIST,
+				type: QueryRequest_QueryType.{{ $queryType }},
+			})).then((res: QueryResponse) => {
 				if (res.error.length > 0) {
 					reject(new Error(res.error))
 					return
@@ -168,14 +188,11 @@ export class {{ $name }}s {
 	 */
 	listBy{{ title $id }}({{ stringParams $id }}): Promise<{{ $name }}[]> {
 		return new Promise((resolve, reject) => {
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.LIST,
-					type: QueryRequest_QueryType.{{ $queryType }},
-					query: `{{ queryString $id }}`,
-				}
-			}).then((res: QueryResponse) => {
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.LIST,
+				type: QueryRequest_QueryType.{{ $queryType }},
+				query: `{{ queryString $id }}`,
+			})).then((res: QueryResponse) => {
 				if (res.error.length > 0) {
 					reject(new Error(res.error))
 					return
@@ -195,14 +212,11 @@ export class {{ $name }}s {
 	put(obj: {{ $name }}): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const enc = new TextEncoder();
-			this.client.query({
-				id: this.connID,
-				query: {
-					command: QueryRequest_QueryCommand.PUT,
-					type: QueryRequest_QueryType.{{ $queryType }},
-					item: enc.encode(obj.toJsonString()),
-				}
-			}).then((res: QueryResponse) => {
+			this.query(new QueryRequest({
+				command: QueryRequest_QueryCommand.PUT,
+				type: QueryRequest_QueryType.{{ $queryType }},
+				item: enc.encode(obj.toJsonString()),
+			})).then((res: QueryResponse) => {
 				if (res.error.length > 0) {
 					reject(new Error(res.error))
 					return

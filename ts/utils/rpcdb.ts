@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { PromiseClient } from "@connectrpc/connect";
+import { PromiseClient, StreamResponse, CallOptions } from "@connectrpc/connect";
 import { AppDaemon } from "../v1/app_connect.js";
 import { MeshEdge } from "../v1/mesh_pb.js";
 import { NetworkACL, Route } from "../v1/network_acls_pb.js";
@@ -23,9 +23,20 @@ import { Role, RoleBinding, Group } from "../v1/rbac_pb.js";
 import { 
   QueryRequest_QueryCommand,
   QueryRequest_QueryType,
+  QueryRequest,
   QueryResponse
 } from "../v1/storage_query_pb.js";
 
+/**
+ * AppDaemonClient is the interface for working with an AppDaemon over gRPC.
+ *
+ * @generated From ts-rpcdb.ts.tmpl
+ */
+export type AppDaemonClient = PromiseClient<typeof AppDaemon>;
+
+/**
+ * TODO: Allow the below interfaces to be constructed with a plugin query stream as well.
+ */
 
 /**
  * MeshNode is the interface for working with MeshNodes over the AppDaemon query RPC.
@@ -37,7 +48,32 @@ export class MeshNodes {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for MeshNodes.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -48,18 +84,11 @@ export class MeshNodes {
    */
   get(id: string): Promise<MeshNode> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.PEERS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.PEERS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("MeshNode not found"))
           return
@@ -79,14 +108,11 @@ export class MeshNodes {
    */
   getByPubkey(pubkey: string): Promise<MeshNode> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.PEERS,
-          query: `pubkey=${pubkey}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.PEERS,
+        query: `pubkey=${pubkey}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -109,14 +135,11 @@ export class MeshNodes {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.PEERS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.PEERS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -135,13 +158,10 @@ export class MeshNodes {
    */
   list(): Promise<MeshNode[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.PEERS,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.PEERS,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -161,14 +181,11 @@ export class MeshNodes {
   put(obj: MeshNode): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.PEERS,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.PEERS,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -190,7 +207,32 @@ export class MeshEdges {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for MeshEdges.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -198,22 +240,15 @@ export class MeshEdges {
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
-   * @returns The MeshEdge with the given Sourceid and Targetid.
+   * @returns The MeshEdge with the given Targetid and Sourceid.
    */
   get(sourceid: string, targetid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.EDGES,
-          query: `sourceid=${sourceid},targetid=${targetid}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.EDGES,
+        query: `sourceid=${sourceid},targetid=${targetid}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("MeshEdge not found"))
           return
@@ -231,16 +266,13 @@ export class MeshEdges {
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
    */
-  delete(targetid: string, sourceid: string): Promise<void> {
+  delete(sourceid: string, targetid: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.EDGES,
-          query: `sourceid=${sourceid},targetid=${targetid}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.EDGES,
+        query: `targetid=${targetid},sourceid=${sourceid}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -259,13 +291,10 @@ export class MeshEdges {
    */
   list(): Promise<MeshEdge[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.EDGES,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.EDGES,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -285,14 +314,11 @@ export class MeshEdges {
   put(obj: MeshEdge): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.EDGES,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.EDGES,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -314,7 +340,32 @@ export class Roles {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for Roles.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -325,18 +376,11 @@ export class Roles {
    */
   get(id: string): Promise<Role> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.ROLES,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.ROLES,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("Role not found"))
           return
@@ -355,14 +399,11 @@ export class Roles {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.ROLES,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.ROLES,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -381,13 +422,10 @@ export class Roles {
    */
   list(): Promise<Role[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROLES,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROLES,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -407,14 +445,11 @@ export class Roles {
    */
   listByNodeID(nodeid: string): Promise<Role[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROLES,
-          query: `nodeid=${nodeid}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROLES,
+        query: `nodeid=${nodeid}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -434,14 +469,11 @@ export class Roles {
   put(obj: Role): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.ROLES,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.ROLES,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -463,7 +495,32 @@ export class RoleBindings {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for RoleBindings.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -474,18 +531,11 @@ export class RoleBindings {
    */
   get(id: string): Promise<RoleBinding> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.ROLEBINDINGS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.ROLEBINDINGS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("RoleBinding not found"))
           return
@@ -504,14 +554,11 @@ export class RoleBindings {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.ROLEBINDINGS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.ROLEBINDINGS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -530,13 +577,10 @@ export class RoleBindings {
    */
   list(): Promise<RoleBinding[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROLEBINDINGS,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROLEBINDINGS,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -556,14 +600,11 @@ export class RoleBindings {
   put(obj: RoleBinding): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.ROLEBINDINGS,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.ROLEBINDINGS,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -585,7 +626,32 @@ export class Groups {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for Groups.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -596,18 +662,11 @@ export class Groups {
    */
   get(id: string): Promise<Group> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.GROUPS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.GROUPS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("Group not found"))
           return
@@ -626,14 +685,11 @@ export class Groups {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.GROUPS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.GROUPS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -652,13 +708,10 @@ export class Groups {
    */
   list(): Promise<Group[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.GROUPS,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.GROUPS,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -678,14 +731,11 @@ export class Groups {
   put(obj: Group): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.GROUPS,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.GROUPS,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -707,7 +757,32 @@ export class NetworkACLs {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for NetworkACLs.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -718,18 +793,11 @@ export class NetworkACLs {
    */
   get(id: string): Promise<NetworkACL> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.ACLS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.ACLS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("NetworkACL not found"))
           return
@@ -748,14 +816,11 @@ export class NetworkACLs {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.ACLS,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.ACLS,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -774,13 +839,10 @@ export class NetworkACLs {
    */
   list(): Promise<NetworkACL[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ACLS,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ACLS,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -800,14 +862,11 @@ export class NetworkACLs {
   put(obj: NetworkACL): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.ACLS,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.ACLS,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -829,7 +888,32 @@ export class Routes {
    * @param client - The client to use for RPC calls.
    * @param connID - The connection ID to use for RPC calls.
    */
-  constructor(private readonly client: PromiseClient<typeof AppDaemon>, private readonly connID: string) {
+  constructor(
+    private readonly client: AppDaemonClient,
+    private readonly connID: string
+  ) {}
+
+  /**
+   * Queries the AppDaemon for Routes.
+   *
+   * @param query - The query to run.
+   * @returns The results of the query.
+   */
+  private query(query: QueryRequest): Promise<QueryResponse> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: query
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res)
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
   }
 
   /**
@@ -840,18 +924,11 @@ export class Routes {
    */
   get(id: string): Promise<Route> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.GET,
-          type: QueryRequest_QueryType.ROUTES,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
-        if (res.error.length > 0) {
-          reject(new Error(res.error))
-          return
-        }
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.GET,
+        type: QueryRequest_QueryType.ROUTES,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("Route not found"))
           return
@@ -870,14 +947,11 @@ export class Routes {
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.DELETE,
-          type: QueryRequest_QueryType.ROUTES,
-          query: `id=${id}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.DELETE,
+        type: QueryRequest_QueryType.ROUTES,
+        query: `id=${id}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -896,13 +970,10 @@ export class Routes {
    */
   list(): Promise<Route[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROUTES,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROUTES,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -922,14 +993,11 @@ export class Routes {
    */
   listByCidr(cidr: string): Promise<Route[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROUTES,
-          query: `cidr=${cidr}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROUTES,
+        query: `cidr=${cidr}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -949,14 +1017,11 @@ export class Routes {
    */
   listByNodeID(nodeid: string): Promise<Route[]> {
     return new Promise((resolve, reject) => {
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.LIST,
-          type: QueryRequest_QueryType.ROUTES,
-          query: `nodeid=${nodeid}`,
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.LIST,
+        type: QueryRequest_QueryType.ROUTES,
+        query: `nodeid=${nodeid}`,
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
@@ -976,14 +1041,11 @@ export class Routes {
   put(obj: Route): Promise<void> {
     return new Promise((resolve, reject) => {
       const enc = new TextEncoder();
-      this.client.query({
-        id: this.connID,
-        query: {
-          command: QueryRequest_QueryCommand.PUT,
-          type: QueryRequest_QueryType.ROUTES,
-          item: enc.encode(obj.toJsonString()),
-        }
-      }).then((res: QueryResponse) => {
+      this.query(new QueryRequest({
+        command: QueryRequest_QueryCommand.PUT,
+        type: QueryRequest_QueryType.ROUTES,
+        item: enc.encode(obj.toJsonString()),
+      })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))
           return
