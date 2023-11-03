@@ -198,7 +198,7 @@ export class MeshEdges {
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
-   * @returns The MeshEdge with the given Targetid and Sourceid.
+   * @returns The MeshEdge with the given Sourceid and Targetid.
    */
   get(sourceid: string, targetid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {
@@ -231,7 +231,7 @@ export class MeshEdges {
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
    */
-  delete(sourceid: string, targetid: string): Promise<void> {
+  delete(targetid: string, sourceid: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
@@ -386,6 +386,33 @@ export class Roles {
         query: {
           command: QueryRequest_QueryCommand.LIST,
           type: QueryRequest_QueryType.ROLES,
+        }
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        resolve(res.items.map((item) => Role.fromJson(item.toString())))
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
+  }
+  
+  /**
+   * Returns the Roles with the given nodeid.
+   *
+   * @param nodeid - The ID of the node
+   * @returns Any Roles found with the given nodeid.
+   */
+  listByNodeID(nodeid: string): Promise<Role[]> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: {
+          command: QueryRequest_QueryCommand.LIST,
+          type: QueryRequest_QueryType.ROLES,
+          query: `nodeid=${nodeid}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -893,7 +920,7 @@ export class Routes {
    * @param cidr - The CIDR of the route
    * @returns Any Routes found with the given cidr.
    */
-  listByCidr(cidr: string): Promise<Route> {
+  listByCidr(cidr: string): Promise<Route[]> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
@@ -907,11 +934,7 @@ export class Routes {
           reject(new Error(res.error))
           return
         }
-        if (res.items.length == 0) {
-          reject(new Error("Route not found"))
-          return
-        }
-        resolve(Route.fromJson(res.items[0].toString()))
+        resolve(res.items.map((item) => Route.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
       })
@@ -924,7 +947,7 @@ export class Routes {
    * @param nodeid - The ID of the node
    * @returns Any Routes found with the given nodeid.
    */
-  listByNodeID(nodeid: string): Promise<Route> {
+  listByNodeID(nodeid: string): Promise<Route[]> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
@@ -938,11 +961,7 @@ export class Routes {
           reject(new Error(res.error))
           return
         }
-        if (res.items.length == 0) {
-          reject(new Error("Route not found"))
-          return
-        }
-        resolve(Route.fromJson(res.items[0].toString()))
+        resolve(res.items.map((item) => Route.fromJson(item.toString())))
       }).catch((err: Error) => {
         reject(err)
       })

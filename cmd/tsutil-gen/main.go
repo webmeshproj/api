@@ -169,6 +169,9 @@ func main() {
 				JSImport:    "rbac_pb",
 				QueryType:   "ROLES",
 				Identifiers: map[string]string{"id": "The name of the role"},
+				ExtraListIdentifiers: map[string]string{
+					"nodeid": "The ID of the node",
+				},
 			},
 			{
 				Type:        &v1.RoleBinding{},
