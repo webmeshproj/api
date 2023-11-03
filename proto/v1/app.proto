@@ -267,8 +267,16 @@ message DisconnectResponse {}
 // MetricsRequest is sent by the application to a daemon to retrieve interface metrics for a mesh connection.
 message MetricsRequest {
     // IDs are the unique identifiers of the connections to retrieve metrics for.
-    // If not provided, metrics for all connections will be returned.
-    repeated string ids = 1;
+    // If not provided, metrics for all known connections will be returned.
+    repeated string ids = 1 [
+        (buf.validate.field).repeated.unique = true,
+        (buf.validate.field).repeated.items = {
+            string: {
+                min_len: 1,
+                max_len: 64
+            }
+        }
+    ];
 }
 
 // MetricsResponse is a message containing interface metrics.
@@ -279,11 +287,16 @@ message MetricsResponse {
 
 // StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
 message StatusRequest {
-    // ID is the unique identifier of this connection.
-    string id = 1 [
-        (buf.validate.field).required = true,
-        (buf.validate.field).string.min_len = 1,
-        (buf.validate.field).string.max_len = 64
+    // IDs are the unique identifiers of the connections to retrieve status for.
+    // If not provided, status for all known connections will be returned.
+    repeated string ids = 1 [
+        (buf.validate.field).repeated.unique = true,
+        (buf.validate.field).repeated.items = {
+            string: {
+                min_len: 1,
+                max_len: 64
+            }
+        }
     ];
 }
 

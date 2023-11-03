@@ -259,7 +259,7 @@ export class MeshEdges {
       this.query(new QueryRequest({
         command: QueryRequest_QueryCommand.GET,
         type: QueryRequest_QueryType.EDGES,
-        query: `targetid=${targetid},sourceid=${sourceid}`,
+        query: `sourceid=${sourceid},targetid=${targetid}`,
       })).then((res: QueryResponse) => {
         if (res.items.length == 0) {
           reject(new Error("MeshEdge not found"))
@@ -273,7 +273,7 @@ export class MeshEdges {
   }
   
   /**
-   * Deletes the MeshEdge with the given Targetid and Sourceid.
+   * Deletes the MeshEdge with the given Sourceid and Targetid.
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.

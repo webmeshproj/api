@@ -3670,7 +3670,7 @@ server certificate. </p></td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
                   <td><p>IDs are the unique identifiers of the connections to retrieve metrics for.
-If not provided, metrics for all connections will be returned. </p></td>
+If not provided, metrics for all known connections will be returned. </p></td>
                 </tr>
               
             </tbody>
@@ -3746,10 +3746,11 @@ If not provided, metrics for all connections will be returned. </p></td>
             <tbody>
               
                 <tr>
-                  <td>id</td>
+                  <td>ids</td>
                   <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID is the unique identifier of this connection. </p></td>
+                  <td>repeated</td>
+                  <td><p>IDs are the unique identifiers of the connections to retrieve status for.
+If not provided, status for all known connections will be returned. </p></td>
                 </tr>
               
             </tbody>

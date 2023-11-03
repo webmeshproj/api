@@ -609,7 +609,7 @@ export declare class DisconnectResponse extends Message<DisconnectResponse> {
 export declare class MetricsRequest extends Message<MetricsRequest> {
   /**
    * IDs are the unique identifiers of the connections to retrieve metrics for.
-   * If not provided, metrics for all connections will be returned.
+   * If not provided, metrics for all known connections will be returned.
    *
    * @generated from field: repeated string ids = 1;
    */
@@ -665,11 +665,12 @@ export declare class MetricsResponse extends Message<MetricsResponse> {
  */
 export declare class StatusRequest extends Message<StatusRequest> {
   /**
-   * ID is the unique identifier of this connection.
+   * IDs are the unique identifiers of the connections to retrieve status for.
+   * If not provided, status for all known connections will be returned.
    *
-   * @generated from field: string id = 1;
+   * @generated from field: repeated string ids = 1;
    */
-  id: string;
+  ids: string[];
 
   constructor(data?: PartialMessage<StatusRequest>);
 

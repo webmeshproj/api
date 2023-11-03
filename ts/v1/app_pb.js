@@ -239,7 +239,7 @@ export const MetricsResponse = proto3.makeMessageType(
 export const StatusRequest = proto3.makeMessageType(
   "v1.StatusRequest",
   () => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ],
 );
 
