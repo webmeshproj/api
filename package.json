@@ -2,7 +2,6 @@
     "name": "webmesh-api",
     "version": "1.0.0",
     "description": "Generated service and type definitions for the Webmesh API",
-    "main": "index.js",
     "repository": "https://github.com/webmeshproj/api",
     "author": "Avi Zimmerman",
     "license": "Apache-2.0",
