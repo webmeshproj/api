@@ -43,7 +43,7 @@ export class MeshNodes {
   /**
    * get returns the MeshNode with the given ID.
    *
-   * @param id - the ID of the MeshNode to get
+   * @param id - The ID of the node.
    * @returns the MeshNode with the given ID
    */
   get(id: string): Promise<MeshNode> {
@@ -53,7 +53,7 @@ export class MeshNodes {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.PEERS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -70,11 +70,42 @@ export class MeshNodes {
       })
     });
   }
-
+  
+  /**
+   * getByPubkey returns the MeshNode with the given pubkey.
+   *
+   * @param pubkey - The base64 encoded public key of the node.
+   * @returns the MeshNode with the given pubkey
+   */
+  getByPubkey(pubkey: string): Promise<MeshNode> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: {
+          command: QueryRequest_QueryCommand.GET,
+          type: QueryRequest_QueryType.PEERS,
+          query: `pubkey=${pubkey}`,
+        }
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        if (res.items.length == 0) {
+          reject(new Error("MeshNode not found"))
+          return
+        }
+        resolve(MeshNode.fromJson(res.items[0].toString()))
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
+  }
+  
   /**
    * delete deletes the MeshNode with the given ID.
    *
-   * @param id - the ID of the MeshNode to delete
+   * @param id - The ID of the node.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -83,7 +114,7 @@ export class MeshNodes {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.PEERS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -121,7 +152,7 @@ export class MeshNodes {
       })
     });
   }
-
+  
   /**
    * put puts the given MeshNode.
    *
@@ -163,19 +194,20 @@ export class MeshEdges {
   }
 
   /**
-   * get returns the MeshEdge with the given ID.
+   * get returns the MeshEdge with the given Sourceid and Targetid.
    *
-   * @param id - the ID of the MeshEdge to get
-   * @returns the MeshEdge with the given ID
+   * @param sourceid - The ID of the source node.
+   * @param targetid - The ID of the target node.
+   * @returns the MeshEdge with the given Sourceid and Targetid
    */
-  get(id: string): Promise<MeshEdge> {
+  get(targetid: string, sourceid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.EDGES,
-          query: 'id=' + id,
+          query: `targetid=${targetid},sourceid=${sourceid}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -192,20 +224,21 @@ export class MeshEdges {
       })
     });
   }
-
+  
   /**
-   * delete deletes the MeshEdge with the given ID.
+   * delete deletes the MeshEdge with the given Targetid and Sourceid.
    *
-   * @param id - the ID of the MeshEdge to delete
+   * @param sourceid - The ID of the source node.
+   * @param targetid - The ID of the target node.
    */
-  delete(id: string): Promise<void> {
+  delete(sourceid: string, targetid: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.query({
         id: this.connID,
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.EDGES,
-          query: 'id=' + id,
+          query: `sourceid=${sourceid},targetid=${targetid}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -243,7 +276,7 @@ export class MeshEdges {
       })
     });
   }
-
+  
   /**
    * put puts the given MeshEdge.
    *
@@ -287,7 +320,7 @@ export class Roles {
   /**
    * get returns the Role with the given ID.
    *
-   * @param id - the ID of the Role to get
+   * @param id - The name of the role.
    * @returns the Role with the given ID
    */
   get(id: string): Promise<Role> {
@@ -297,7 +330,7 @@ export class Roles {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.ROLES,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -314,11 +347,11 @@ export class Roles {
       })
     });
   }
-
+  
   /**
    * delete deletes the Role with the given ID.
    *
-   * @param id - the ID of the Role to delete
+   * @param id - The name of the role.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -327,7 +360,7 @@ export class Roles {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.ROLES,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -365,7 +398,7 @@ export class Roles {
       })
     });
   }
-
+  
   /**
    * put puts the given Role.
    *
@@ -409,7 +442,7 @@ export class RoleBindings {
   /**
    * get returns the RoleBinding with the given ID.
    *
-   * @param id - the ID of the RoleBinding to get
+   * @param id - The name of the rolebinding.
    * @returns the RoleBinding with the given ID
    */
   get(id: string): Promise<RoleBinding> {
@@ -419,7 +452,7 @@ export class RoleBindings {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.ROLEBINDINGS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -436,11 +469,11 @@ export class RoleBindings {
       })
     });
   }
-
+  
   /**
    * delete deletes the RoleBinding with the given ID.
    *
-   * @param id - the ID of the RoleBinding to delete
+   * @param id - The name of the rolebinding.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -449,7 +482,7 @@ export class RoleBindings {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.ROLEBINDINGS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -487,7 +520,7 @@ export class RoleBindings {
       })
     });
   }
-
+  
   /**
    * put puts the given RoleBinding.
    *
@@ -531,7 +564,7 @@ export class Groups {
   /**
    * get returns the Group with the given ID.
    *
-   * @param id - the ID of the Group to get
+   * @param id - The name of the group.
    * @returns the Group with the given ID
    */
   get(id: string): Promise<Group> {
@@ -541,7 +574,7 @@ export class Groups {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.GROUPS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -558,11 +591,11 @@ export class Groups {
       })
     });
   }
-
+  
   /**
    * delete deletes the Group with the given ID.
    *
-   * @param id - the ID of the Group to delete
+   * @param id - The name of the group.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -571,7 +604,7 @@ export class Groups {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.GROUPS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -609,7 +642,7 @@ export class Groups {
       })
     });
   }
-
+  
   /**
    * put puts the given Group.
    *
@@ -653,7 +686,7 @@ export class NetworkACLs {
   /**
    * get returns the NetworkACL with the given ID.
    *
-   * @param id - the ID of the NetworkACL to get
+   * @param id - The name of the network ACL.
    * @returns the NetworkACL with the given ID
    */
   get(id: string): Promise<NetworkACL> {
@@ -663,7 +696,7 @@ export class NetworkACLs {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.ACLS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -680,11 +713,11 @@ export class NetworkACLs {
       })
     });
   }
-
+  
   /**
    * delete deletes the NetworkACL with the given ID.
    *
-   * @param id - the ID of the NetworkACL to delete
+   * @param id - The name of the network ACL.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -693,7 +726,7 @@ export class NetworkACLs {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.ACLS,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -731,7 +764,7 @@ export class NetworkACLs {
       })
     });
   }
-
+  
   /**
    * put puts the given NetworkACL.
    *
@@ -775,7 +808,7 @@ export class Routes {
   /**
    * get returns the Route with the given ID.
    *
-   * @param id - the ID of the Route to get
+   * @param id - The name of the route.
    * @returns the Route with the given ID
    */
   get(id: string): Promise<Route> {
@@ -785,7 +818,7 @@ export class Routes {
         query: {
           command: QueryRequest_QueryCommand.GET,
           type: QueryRequest_QueryType.ROUTES,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -802,11 +835,11 @@ export class Routes {
       })
     });
   }
-
+  
   /**
    * delete deletes the Route with the given ID.
    *
-   * @param id - the ID of the Route to delete
+   * @param id - The name of the route.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -815,7 +848,7 @@ export class Routes {
         query: {
           command: QueryRequest_QueryCommand.DELETE,
           type: QueryRequest_QueryType.ROUTES,
-          query: 'id=' + id,
+          query: `id=${id}`,
         }
       }).then((res: QueryResponse) => {
         if (res.error.length > 0) {
@@ -853,7 +886,69 @@ export class Routes {
       })
     });
   }
-
+  
+  /**
+   * listByCidr returns the Routes with the given cidr.
+   *
+   * @param cidr - The CIDR of the route.
+   * @returns the Route with the given cidr
+   */
+  listByCidr(cidr: string): Promise<Route> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: {
+          command: QueryRequest_QueryCommand.LIST,
+          type: QueryRequest_QueryType.ROUTES,
+          query: `cidr=${cidr}`,
+        }
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        if (res.items.length == 0) {
+          reject(new Error("Route not found"))
+          return
+        }
+        resolve(Route.fromJson(res.items[0].toString()))
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
+  }
+  
+  /**
+   * listByNodeID returns the Routes with the given nodeid.
+   *
+   * @param nodeid - The ID of the node.
+   * @returns the Route with the given nodeid
+   */
+  listByNodeID(nodeid: string): Promise<Route> {
+    return new Promise((resolve, reject) => {
+      this.client.query({
+        id: this.connID,
+        query: {
+          command: QueryRequest_QueryCommand.LIST,
+          type: QueryRequest_QueryType.ROUTES,
+          query: `nodeid=${nodeid}`,
+        }
+      }).then((res: QueryResponse) => {
+        if (res.error.length > 0) {
+          reject(new Error(res.error))
+          return
+        }
+        if (res.items.length == 0) {
+          reject(new Error("Route not found"))
+          return
+        }
+        resolve(Route.fromJson(res.items[0].toString()))
+      }).catch((err: Error) => {
+        reject(err)
+      })
+    });
+  }
+  
   /**
    * put puts the given Route.
    *
