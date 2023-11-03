@@ -1388,34 +1388,49 @@ func (m *StatusResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ConnectionStatus
-
-	if all {
-		switch v := interface{}(m.GetNode()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, StatusResponseValidationError{
-					field:  "Node",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, StatusResponseValidationError{
-					field:  "Node",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
+	{
+		sorted_keys := make([]string, len(m.GetStatuses()))
+		i := 0
+		for key := range m.GetStatuses() {
+			sorted_keys[i] = key
+			i++
 		}
-	} else if v, ok := interface{}(m.GetNode()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return StatusResponseValidationError{
-				field:  "Node",
-				reason: "embedded message failed validation",
-				cause:  err,
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetStatuses()[key]
+			_ = val
+
+			// no validation rules for Statuses[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, StatusResponseValidationError{
+							field:  fmt.Sprintf("Statuses[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, StatusResponseValidationError{
+							field:  fmt.Sprintf("Statuses[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return StatusResponseValidationError{
+						field:  fmt.Sprintf("Statuses[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
 			}
+
 		}
 	}
 
@@ -1496,6 +1511,137 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatusResponseValidationError{}
+
+// Validate checks the field values on ConnectionStatus with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ConnectionStatus) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ConnectionStatus with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ConnectionStatusMultiError, or nil if none found.
+func (m *ConnectionStatus) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ConnectionStatus) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ConnectionStatus
+
+	if all {
+		switch v := interface{}(m.GetNode()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectionStatusValidationError{
+					field:  "Node",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectionStatusValidationError{
+					field:  "Node",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetNode()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectionStatusValidationError{
+				field:  "Node",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ConnectionStatusMultiError(errors)
+	}
+
+	return nil
+}
+
+// ConnectionStatusMultiError is an error wrapping multiple validation errors
+// returned by ConnectionStatus.ValidateAll() if the designated constraints
+// aren't met.
+type ConnectionStatusMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ConnectionStatusMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ConnectionStatusMultiError) AllErrors() []error { return m }
+
+// ConnectionStatusValidationError is the validation error returned by
+// ConnectionStatus.Validate if the designated constraints aren't met.
+type ConnectionStatusValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ConnectionStatusValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ConnectionStatusValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ConnectionStatusValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ConnectionStatusValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ConnectionStatusValidationError) ErrorName() string { return "ConnectionStatusValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ConnectionStatusValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sConnectionStatus.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ConnectionStatusValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ConnectionStatusValidationError{}
 
 // Validate checks the field values on AppQueryRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the

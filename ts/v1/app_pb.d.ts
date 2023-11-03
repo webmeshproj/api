@@ -694,18 +694,11 @@ export declare class StatusRequest extends Message<StatusRequest> {
  */
 export declare class StatusResponse extends Message<StatusResponse> {
   /**
-   * ConnectionStatus is the status of the connection.
+   * Statuses is a map of network IDs to their status.
    *
-   * @generated from field: v1.StatusResponse.ConnectionStatus connectionStatus = 1;
+   * @generated from field: map<string, v1.ConnectionStatus> statuses = 1;
    */
-  connectionStatus: StatusResponse_ConnectionStatus;
-
-  /**
-   * Node is the node status. This is only populated if the node is connected.
-   *
-   * @generated from field: v1.MeshNode node = 2;
-   */
-  node?: MeshNode;
+  statuses: { [key: string]: ConnectionStatus };
 
   constructor(data?: PartialMessage<StatusResponse>);
 
@@ -723,9 +716,44 @@ export declare class StatusResponse extends Message<StatusResponse> {
 }
 
 /**
- * @generated from enum v1.StatusResponse.ConnectionStatus
+ * ConnectionStatus is the status of a connection.
+ *
+ * @generated from message v1.ConnectionStatus
  */
-export declare enum StatusResponse_ConnectionStatus {
+export declare class ConnectionStatus extends Message<ConnectionStatus> {
+  /**
+   * ConnectionStatus is the status of the connection.
+   *
+   * @generated from field: v1.ConnectionStatus.Status connectionStatus = 1;
+   */
+  connectionStatus: ConnectionStatus_Status;
+
+  /**
+   * Node is the node status. This is only populated if the node is connected.
+   *
+   * @generated from field: v1.MeshNode node = 2;
+   */
+  node?: MeshNode;
+
+  constructor(data?: PartialMessage<ConnectionStatus>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "v1.ConnectionStatus";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectionStatus;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectionStatus;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectionStatus;
+
+  static equals(a: ConnectionStatus | PlainMessage<ConnectionStatus> | undefined, b: ConnectionStatus | PlainMessage<ConnectionStatus> | undefined): boolean;
+}
+
+/**
+ * @generated from enum v1.ConnectionStatus.Status
+ */
+export declare enum ConnectionStatus_Status {
   /**
    * DISCONNECTED indicates that the node is not connected to a mesh.
    *

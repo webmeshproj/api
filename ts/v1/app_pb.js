@@ -251,16 +251,28 @@ export const StatusRequest = proto3.makeMessageType(
 export const StatusResponse = proto3.makeMessageType(
   "v1.StatusResponse",
   () => [
-    { no: 1, name: "connectionStatus", kind: "enum", T: proto3.getEnumType(StatusResponse_ConnectionStatus) },
+    { no: 1, name: "statuses", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "message", T: ConnectionStatus} },
+  ],
+);
+
+/**
+ * ConnectionStatus is the status of a connection.
+ *
+ * @generated from message v1.ConnectionStatus
+ */
+export const ConnectionStatus = proto3.makeMessageType(
+  "v1.ConnectionStatus",
+  () => [
+    { no: 1, name: "connectionStatus", kind: "enum", T: proto3.getEnumType(ConnectionStatus_Status) },
     { no: 2, name: "node", kind: "message", T: MeshNode },
   ],
 );
 
 /**
- * @generated from enum v1.StatusResponse.ConnectionStatus
+ * @generated from enum v1.ConnectionStatus.Status
  */
-export const StatusResponse_ConnectionStatus = proto3.makeEnum(
-  "v1.StatusResponse.ConnectionStatus",
+export const ConnectionStatus_Status = proto3.makeEnum(
+  "v1.ConnectionStatus.Status",
   [
     {no: 0, name: "DISCONNECTED"},
     {no: 1, name: "CONNECTING"},

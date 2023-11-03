@@ -457,6 +457,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ConnectionStatus"><span class="badge">M</span>ConnectionStatus</a>
+                </li>
+              
+                <li>
                   <a href="#v1.DisconnectRequest"><span class="badge">M</span>DisconnectRequest</a>
                 </li>
               
@@ -500,6 +504,10 @@
                   <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
                 </li>
               
+                <li>
+                  <a href="#v1.StatusResponse.StatusesEntry"><span class="badge">M</span>StatusResponse.StatusesEntry</a>
+                </li>
+              
               
                 <li>
                   <a href="#v1.ConnectRequest.AddrType"><span class="badge">E</span>ConnectRequest.AddrType</a>
@@ -510,15 +518,15 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ConnectionStatus.Status"><span class="badge">E</span>ConnectionStatus.Status</a>
+                </li>
+              
+                <li>
                   <a href="#v1.MeshConnBootstrap.DefaultNetworkACL"><span class="badge">E</span>MeshConnBootstrap.DefaultNetworkACL</a>
                 </li>
               
                 <li>
                   <a href="#v1.NetworkAuthMethod"><span class="badge">E</span>NetworkAuthMethod</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StatusResponse.ConnectionStatus"><span class="badge">E</span>StatusResponse.ConnectionStatus</a>
                 </li>
               
               
@@ -3397,6 +3405,37 @@ one will be generated. </p></td>
 
         
       
+        <h3 id="v1.ConnectionStatus">ConnectionStatus</h3>
+        <p>ConnectionStatus is the status of a connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connectionStatus</td>
+                  <td><a href="#v1.ConnectionStatus.Status">ConnectionStatus.Status</a></td>
+                  <td></td>
+                  <td><p>ConnectionStatus is the status of the connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td></td>
+                  <td><p>Node is the node status. This is only populated if the node is connected. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="v1.DisconnectRequest">DisconnectRequest</h3>
         <p>DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.</p>
 
@@ -3771,17 +3810,41 @@ If not provided, status for all known connections will be returned. </p></td>
             <tbody>
               
                 <tr>
-                  <td>connectionStatus</td>
-                  <td><a href="#v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</a></td>
+                  <td>statuses</td>
+                  <td><a href="#v1.StatusResponse.StatusesEntry">StatusResponse.StatusesEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Statuses is a map of network IDs to their status. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.StatusResponse.StatusesEntry">StatusResponse.StatusesEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ConnectionStatus is the status of the connection. </p></td>
+                  <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>node</td>
-                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td>value</td>
+                  <td><a href="#v1.ConnectionStatus">ConnectionStatus</a></td>
                   <td></td>
-                  <td><p>Node is the node status. This is only populated if the node is connected. </p></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -3864,6 +3927,35 @@ the join addresses to use to connect to the mesh.</p></td>
           </tbody>
         </table>
       
+        <h3 id="v1.ConnectionStatus.Status">ConnectionStatus.Status</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>DISCONNECTED</td>
+                <td>0</td>
+                <td><p>DISCONNECTED indicates that the node is not connected to a mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTING</td>
+                <td>1</td>
+                <td><p>CONNECTING indicates that the node is in the process of connecting to a mesh.</p></td>
+              </tr>
+            
+              <tr>
+                <td>CONNECTED</td>
+                <td>2</td>
+                <td><p>CONNECTED indicates that the node is connected to a mesh.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
         <h3 id="v1.MeshConnBootstrap.DefaultNetworkACL">MeshConnBootstrap.DefaultNetworkACL</h3>
         <p></p>
         <table class="enum-table">
@@ -3924,35 +4016,6 @@ the join addresses to use to connect to the mesh.</p></td>
                 <td>4</td>
                 <td><p>MTLS is used to indicate that mutual TLS authentication is required.
 The TLS object should be used to configure the TLS connection.</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
-        <h3 id="v1.StatusResponse.ConnectionStatus">StatusResponse.ConnectionStatus</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>DISCONNECTED</td>
-                <td>0</td>
-                <td><p>DISCONNECTED indicates that the node is not connected to a mesh.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CONNECTING</td>
-                <td>1</td>
-                <td><p>CONNECTING indicates that the node is in the process of connecting to a mesh.</p></td>
-              </tr>
-            
-              <tr>
-                <td>CONNECTED</td>
-                <td>2</td>
-                <td><p>CONNECTED indicates that the node is connected to a mesh.</p></td>
               </tr>
             
           </tbody>

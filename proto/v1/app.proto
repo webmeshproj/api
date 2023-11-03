@@ -302,7 +302,13 @@ message StatusRequest {
 
 // StatusResponse is a message containing the status of the node.
 message StatusResponse {
-    enum ConnectionStatus {
+    // Statuses is a map of network IDs to their status.
+    map<string, ConnectionStatus> statuses = 1;
+}
+
+// ConnectionStatus is the status of a connection.
+message ConnectionStatus {
+    enum Status {
         // DISCONNECTED indicates that the node is not connected to a mesh.
         DISCONNECTED = 0;
         // CONNECTING indicates that the node is in the process of connecting to a mesh.
@@ -311,7 +317,7 @@ message StatusResponse {
         CONNECTED = 2;
     }
     // ConnectionStatus is the status of the connection.
-    ConnectionStatus connectionStatus = 1;
+    Status connectionStatus = 1;
     // Node is the node status. This is only populated if the node is connected.
     MeshNode node = 2;
 }
