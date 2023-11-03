@@ -43,7 +43,7 @@ export class MeshNodes {
   /**
    * Returns the MeshNode with the given ID.
    *
-   * @param id - The ID of the node..
+   * @param id - The ID of the node.
    * @returns The MeshNode with the given ID.
    */
   get(id: string): Promise<MeshNode> {
@@ -74,7 +74,7 @@ export class MeshNodes {
   /**
    * Returns the MeshNode with the given pubkey.
    *
-   * @param pubkey - The base64 encoded public key of the node..
+   * @param pubkey - The base64 encoded public key of the node.
    * @returns The MeshNode with the given pubkey.
    */
   getByPubkey(pubkey: string): Promise<MeshNode> {
@@ -105,7 +105,7 @@ export class MeshNodes {
   /**
    * Deletes the MeshNode with the given ID.
    *
-   * @param id - The ID of the node..
+   * @param id - The ID of the node.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -196,8 +196,8 @@ export class MeshEdges {
   /**
    * Returns the MeshEdge with the given Sourceid and Targetid.
    *
-   * @param sourceid - The ID of the source node..
-   * @param targetid - The ID of the target node..
+   * @param sourceid - The ID of the source node.
+   * @param targetid - The ID of the target node.
    * @returns The MeshEdge with the given Targetid and Sourceid.
    */
   get(sourceid: string, targetid: string): Promise<MeshEdge> {
@@ -228,8 +228,8 @@ export class MeshEdges {
   /**
    * Deletes the MeshEdge with the given Sourceid and Targetid.
    *
-   * @param sourceid - The ID of the source node..
-   * @param targetid - The ID of the target node..
+   * @param sourceid - The ID of the source node.
+   * @param targetid - The ID of the target node.
    */
   delete(sourceid: string, targetid: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -320,7 +320,7 @@ export class Roles {
   /**
    * Returns the Role with the given ID.
    *
-   * @param id - The name of the role..
+   * @param id - The name of the role.
    * @returns The Role with the given ID.
    */
   get(id: string): Promise<Role> {
@@ -351,7 +351,7 @@ export class Roles {
   /**
    * Deletes the Role with the given ID.
    *
-   * @param id - The name of the role..
+   * @param id - The name of the role.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -442,7 +442,7 @@ export class RoleBindings {
   /**
    * Returns the RoleBinding with the given ID.
    *
-   * @param id - The name of the rolebinding..
+   * @param id - The name of the rolebinding.
    * @returns The RoleBinding with the given ID.
    */
   get(id: string): Promise<RoleBinding> {
@@ -473,7 +473,7 @@ export class RoleBindings {
   /**
    * Deletes the RoleBinding with the given ID.
    *
-   * @param id - The name of the rolebinding..
+   * @param id - The name of the rolebinding.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -564,7 +564,7 @@ export class Groups {
   /**
    * Returns the Group with the given ID.
    *
-   * @param id - The name of the group..
+   * @param id - The name of the group.
    * @returns The Group with the given ID.
    */
   get(id: string): Promise<Group> {
@@ -595,7 +595,7 @@ export class Groups {
   /**
    * Deletes the Group with the given ID.
    *
-   * @param id - The name of the group..
+   * @param id - The name of the group.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -686,7 +686,7 @@ export class NetworkACLs {
   /**
    * Returns the NetworkACL with the given ID.
    *
-   * @param id - The name of the network ACL..
+   * @param id - The name of the network ACL.
    * @returns The NetworkACL with the given ID.
    */
   get(id: string): Promise<NetworkACL> {
@@ -717,7 +717,7 @@ export class NetworkACLs {
   /**
    * Deletes the NetworkACL with the given ID.
    *
-   * @param id - The name of the network ACL..
+   * @param id - The name of the network ACL.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -808,7 +808,7 @@ export class Routes {
   /**
    * Returns the Route with the given ID.
    *
-   * @param id - The name of the route..
+   * @param id - The name of the route.
    * @returns The Route with the given ID.
    */
   get(id: string): Promise<Route> {
@@ -839,7 +839,7 @@ export class Routes {
   /**
    * Deletes the Route with the given ID.
    *
-   * @param id - The name of the route..
+   * @param id - The name of the route.
    */
   delete(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -890,7 +890,7 @@ export class Routes {
   /**
    * Returns the Routes with the given cidr.
    *
-   * @param cidr - The CIDR of the route.
+   * @param cidr - The CIDR of the route
    * @returns Any Routes found with the given cidr.
    */
   listByCidr(cidr: string): Promise<Route> {
@@ -921,7 +921,7 @@ export class Routes {
   /**
    * Returns the Routes with the given nodeid.
    *
-   * @param nodeid - The ID of the node.
+   * @param nodeid - The ID of the node
    * @returns Any Routes found with the given nodeid.
    */
   listByNodeID(nodeid: string): Promise<Route> {
