@@ -222,12 +222,12 @@ message MeshConnBootstrap {
 message MeshConnTLS {
     // Enabled indicates whether or not to use TLS.
     bool enabled = 1;
-    // CACert is a PEM-encoded CA certificate to use for TLS.
-    bytes caCertData = 2;
-    // CertData is a PEM-encoded certificate to use for TLS.
-    bytes certData = 3;
-    // KeyData is a PEM-encoded private key to use for TLS.
-    bytes keyData = 4;
+    // CACert is a base64 and PEM encoded CA certificate to use for TLS.
+    string caCertData = 2;
+    // CertData is a base64 and PEM encoded certificate to use for TLS.
+    string certData = 3;
+    // KeyData is a base64 and PEM encoded private key to use for TLS.
+    string keyData = 4;
     // VerifyChainOnly indicates whether or not to only verify the
     // certificate chain.
     bool verifyChainOnly = 5;

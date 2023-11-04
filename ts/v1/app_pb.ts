@@ -540,25 +540,25 @@ export class MeshConnTLS extends Message<MeshConnTLS> {
   enabled = false;
 
   /**
-   * CACert is a PEM-encoded CA certificate to use for TLS.
+   * CACert is a base64 and PEM encoded CA certificate to use for TLS.
    *
-   * @generated from field: bytes caCertData = 2;
+   * @generated from field: string caCertData = 2;
    */
-  caCertData = new Uint8Array(0);
+  caCertData = "";
 
   /**
-   * CertData is a PEM-encoded certificate to use for TLS.
+   * CertData is a base64 and PEM encoded certificate to use for TLS.
    *
-   * @generated from field: bytes certData = 3;
+   * @generated from field: string certData = 3;
    */
-  certData = new Uint8Array(0);
+  certData = "";
 
   /**
-   * KeyData is a PEM-encoded private key to use for TLS.
+   * KeyData is a base64 and PEM encoded private key to use for TLS.
    *
-   * @generated from field: bytes keyData = 4;
+   * @generated from field: string keyData = 4;
    */
-  keyData = new Uint8Array(0);
+  keyData = "";
 
   /**
    * VerifyChainOnly indicates whether or not to only verify the
@@ -585,9 +585,9 @@ export class MeshConnTLS extends Message<MeshConnTLS> {
   static readonly typeName = "v1.MeshConnTLS";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "caCertData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 3, name: "certData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
-    { no: 4, name: "keyData", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
+    { no: 2, name: "caCertData", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "certData", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "keyData", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "verifyChainOnly", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 6, name: "skipVerify", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
