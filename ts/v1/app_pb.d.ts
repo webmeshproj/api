@@ -251,6 +251,14 @@ export declare class MeshConnNetworking extends Message<MeshConnNetworking> {
    */
   detectEndpoints: boolean;
 
+  /**
+   * DetectPrivateEndpoints enables endpoint detection for private addresses.
+   * This only makes sense when DetectEndpoints is enabled.
+   *
+   * @generated from field: bool detectPrivateEndpoints = 4;
+   */
+  detectPrivateEndpoints: boolean;
+
   constructor(data?: PartialMessage<MeshConnNetworking>);
 
   static readonly runtime: typeof proto3;

@@ -101,6 +101,7 @@ export const MeshConnNetworking = proto3.makeMessageType(
     { no: 1, name: "useDNS", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "endpoints", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 3, name: "detectEndpoints", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "detectPrivateEndpoints", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 

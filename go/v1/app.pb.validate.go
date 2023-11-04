@@ -285,6 +285,8 @@ func (m *MeshConnNetworking) validate(all bool) error {
 
 	// no validation rules for DetectEndpoints
 
+	// no validation rules for DetectPrivateEndpoints
+
 	if len(errors) > 0 {
 		return MeshConnNetworkingMultiError(errors)
 	}

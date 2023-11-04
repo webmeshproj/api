@@ -127,6 +127,9 @@ message MeshConnNetworking {
     repeated string endpoints = 2;
     // DetectEndpoints enables endpoint detection.
     bool detectEndpoints = 3;
+    // DetectPrivateEndpoints enables endpoint detection for private addresses.
+    // This only makes sense when DetectEndpoints is enabled.
+    bool detectPrivateEndpoints = 4;
 }
 
 // MeshConnServices are configurations for exposing services to other nodes on a mesh.
