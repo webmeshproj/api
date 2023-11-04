@@ -248,11 +248,11 @@ export class MeshEdges {
   }
 
   /**
-   * Returns the MeshEdge with the given Targetid and Sourceid.
+   * Returns the MeshEdge with the given Sourceid and Targetid.
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
-   * @returns The MeshEdge with the given Targetid and Sourceid.
+   * @returns The MeshEdge with the given Sourceid and Targetid.
    */
   get(sourceid: string, targetid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {
@@ -278,12 +278,12 @@ export class MeshEdges {
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
    */
-  delete(targetid: string, sourceid: string): Promise<void> {
+  delete(sourceid: string, targetid: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.query(new QueryRequest({
         command: QueryRequest_QueryCommand.DELETE,
         type: QueryRequest_QueryType.EDGES,
-        query: `targetid=${targetid},sourceid=${sourceid}`,
+        query: `sourceid=${sourceid},targetid=${targetid}`,
       })).then((res: QueryResponse) => {
         if (res.error.length > 0) {
           reject(new Error(res.error))

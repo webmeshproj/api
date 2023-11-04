@@ -401,6 +401,35 @@ func (m *MeshConnServices) validate(all bool) error {
 
 	// no validation rules for AuthMethod
 
+	if all {
+		switch v := interface{}(m.GetDns()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, MeshConnServicesValidationError{
+					field:  "Dns",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, MeshConnServicesValidationError{
+					field:  "Dns",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetDns()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return MeshConnServicesValidationError{
+				field:  "Dns",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return MeshConnServicesMultiError(errors)
 	}
@@ -478,6 +507,112 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = MeshConnServicesValidationError{}
+
+// Validate checks the field values on MeshDNSService with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MeshDNSService) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MeshDNSService with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MeshDNSServiceMultiError,
+// or nil if none found.
+func (m *MeshDNSService) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MeshDNSService) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Enabled
+
+	// no validation rules for ListenUDP
+
+	// no validation rules for ListenTCP
+
+	if len(errors) > 0 {
+		return MeshDNSServiceMultiError(errors)
+	}
+
+	return nil
+}
+
+// MeshDNSServiceMultiError is an error wrapping multiple validation errors
+// returned by MeshDNSService.ValidateAll() if the designated constraints
+// aren't met.
+type MeshDNSServiceMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MeshDNSServiceMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MeshDNSServiceMultiError) AllErrors() []error { return m }
+
+// MeshDNSServiceValidationError is the validation error returned by
+// MeshDNSService.Validate if the designated constraints aren't met.
+type MeshDNSServiceValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MeshDNSServiceValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MeshDNSServiceValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MeshDNSServiceValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MeshDNSServiceValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MeshDNSServiceValidationError) ErrorName() string { return "MeshDNSServiceValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MeshDNSServiceValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMeshDNSService.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MeshDNSServiceValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MeshDNSServiceValidationError{}
 
 // Validate checks the field values on MeshConnBootstrap with the rules defined
 // in the proto definition for this message. If any rules are violated, the

@@ -398,6 +398,13 @@ export class MeshConnServices extends Message<MeshConnServices> {
    */
   features: Feature[] = [];
 
+  /**
+   * DNS are configurations for running a MeshDNS server.
+   *
+   * @generated from field: v1.MeshDNSService dns = 9;
+   */
+  dns?: MeshDNSService;
+
   constructor(data?: PartialMessage<MeshConnServices>) {
     super();
     proto3.util.initPartial(data, this);
@@ -414,6 +421,7 @@ export class MeshConnServices extends Message<MeshConnServices> {
     { no: 6, name: "listenMultiaddrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 7, name: "authMethod", kind: "enum", T: proto3.getEnumType(NetworkAuthMethod) },
     { no: 8, name: "features", kind: "enum", T: proto3.getEnumType(Feature), repeated: true },
+    { no: 9, name: "dns", kind: "message", T: MeshDNSService },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshConnServices {
@@ -430,6 +438,65 @@ export class MeshConnServices extends Message<MeshConnServices> {
 
   static equals(a: MeshConnServices | PlainMessage<MeshConnServices> | undefined, b: MeshConnServices | PlainMessage<MeshConnServices> | undefined): boolean {
     return proto3.util.equals(MeshConnServices, a, b);
+  }
+}
+
+/**
+ * MeshDNSService are configurations for running a MeshDNS server.
+ *
+ * @generated from message v1.MeshDNSService
+ */
+export class MeshDNSService extends Message<MeshDNSService> {
+  /**
+   * Enabled indicates whether or not to run a MeshDNS server.
+   *
+   * @generated from field: bool enabled = 1;
+   */
+  enabled = false;
+
+  /**
+   * ListenUDP is a raw IP address and port to listen on for UDP.
+   * Defaults to :53. Set to an empty string to disable.
+   *
+   * @generated from field: string listenUDP = 2;
+   */
+  listenUDP = "";
+
+  /**
+   * ListenTCP is a raw IP address and port to listen on for TCP.
+   * Defaults to :53. Set to an empty string to disable.
+   *
+   * @generated from field: string listenTCP = 3;
+   */
+  listenTCP = "";
+
+  constructor(data?: PartialMessage<MeshDNSService>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.MeshDNSService";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "listenUDP", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "listenTCP", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MeshDNSService {
+    return new MeshDNSService().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MeshDNSService {
+    return new MeshDNSService().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MeshDNSService {
+    return new MeshDNSService().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: MeshDNSService | PlainMessage<MeshDNSService> | undefined, b: MeshDNSService | PlainMessage<MeshDNSService> | undefined): boolean {
+    return proto3.util.equals(MeshDNSService, a, b);
   }
 }
 

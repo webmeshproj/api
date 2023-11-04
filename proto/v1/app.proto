@@ -160,6 +160,8 @@ message MeshConnServices {
             }
         }
     ];
+    // DNS are configurations for running a MeshDNS server.
+    MeshDNSService dns = 9;
 
     option (buf.validate.message).cel = {
         id: "services.requiredAddresses",
@@ -184,6 +186,18 @@ message MeshConnServices {
         message: "Cannot disable TLS when using mTLS",
         expression: "!this.enabled || this.authMethod != 4 || this.enableTLS",
     };
+}
+
+// MeshDNSService are configurations for running a MeshDNS server.
+message MeshDNSService {
+    // Enabled indicates whether or not to run a MeshDNS server.
+    bool enabled = 1;
+    // ListenUDP is a raw IP address and port to listen on for UDP.
+    // Defaults to :53. Set to an empty string to disable.
+    string listenUDP = 2;
+    // ListenTCP is a raw IP address and port to listen on for TCP.
+    // Defaults to :53. Set to an empty string to disable.
+    string listenTCP = 3;
 }
 
 // MeshConnBootstrap are configurations for bootstrapping a new mesh.

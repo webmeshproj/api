@@ -485,6 +485,10 @@
                 </li>
               
                 <li>
+                  <a href="#v1.MeshDNSService"><span class="badge">M</span>MeshDNSService</a>
+                </li>
+              
+                <li>
                   <a href="#v1.MetricsRequest"><span class="badge">M</span>MetricsRequest</a>
                 </li>
               
@@ -3634,6 +3638,13 @@ Only mTLS and ID are supported. </p></td>
                   <td><p>Features are which features to enable on the API. </p></td>
                 </tr>
               
+                <tr>
+                  <td>dns</td>
+                  <td><a href="#v1.MeshDNSService">MeshDNSService</a></td>
+                  <td></td>
+                  <td><p>DNS are configurations for running a MeshDNS server. </p></td>
+                </tr>
+              
             </tbody>
           </table>
 
@@ -3693,6 +3704,46 @@ certificate chain. </p></td>
                   <td></td>
                   <td><p>SkipVerify indicates whether or not to skip verification of the
 server certificate. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.MeshDNSService">MeshDNSService</h3>
+        <p>MeshDNSService are configurations for running a MeshDNS server.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>enabled</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>Enabled indicates whether or not to run a MeshDNS server. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>listenUDP</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ListenUDP is a raw IP address and port to listen on for UDP.
+Defaults to :53. Set to an empty string to disable. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>listenTCP</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ListenTCP is a raw IP address and port to listen on for TCP.
+Defaults to :53. Set to an empty string to disable. </p></td>
                 </tr>
               
             </tbody>
