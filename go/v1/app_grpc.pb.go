@@ -39,6 +39,7 @@ const (
 	AppDaemon_Metrics_FullMethodName    = "/v1.AppDaemon/Metrics"
 	AppDaemon_Status_FullMethodName     = "/v1.AppDaemon/Status"
 	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
+	AppDaemon_Drop_FullMethodName       = "/v1.AppDaemon/Drop"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -55,6 +56,8 @@ type AppDaemonClient interface {
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	// Query is used to query a mesh connection for information.
 	Query(ctx context.Context, in *AppQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
+	// Drop deletes all data stored for a given mesh connection.
+	Drop(ctx context.Context, in *AppDropRequest, opts ...grpc.CallOption) (*AppDropResponse, error)
 }
 
 type appDaemonClient struct {
@@ -110,6 +113,15 @@ func (c *appDaemonClient) Query(ctx context.Context, in *AppQueryRequest, opts .
 	return out, nil
 }
 
+func (c *appDaemonClient) Drop(ctx context.Context, in *AppDropRequest, opts ...grpc.CallOption) (*AppDropResponse, error) {
+	out := new(AppDropResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_Drop_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -124,6 +136,8 @@ type AppDaemonServer interface {
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
 	// Query is used to query a mesh connection for information.
 	Query(context.Context, *AppQueryRequest) (*QueryResponse, error)
+	// Drop deletes all data stored for a given mesh connection.
+	Drop(context.Context, *AppDropRequest) (*AppDropResponse, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -145,6 +159,9 @@ func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*St
 }
 func (UnimplementedAppDaemonServer) Query(context.Context, *AppQueryRequest) (*QueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedAppDaemonServer) Drop(context.Context, *AppDropRequest) (*AppDropResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Drop not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -249,6 +266,24 @@ func _AppDaemon_Query_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_Drop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AppDropRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Drop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Drop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Drop(ctx, req.(*AppDropRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -275,6 +310,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _AppDaemon_Query_Handler,
+		},
+		{
+			MethodName: "Drop",
+			Handler:    _AppDaemon_Drop_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

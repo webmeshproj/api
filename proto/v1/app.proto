@@ -351,6 +351,19 @@ message AppQueryRequest {
     QueryRequest query = 2;
 }
 
+// AppDropRequest is sent by the application to a daemon to drop a mesh's storage.
+message AppDropRequest {
+    // ID is the unique identifier of this connection.
+    string id = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 64
+    ];
+}
+
+// AppDropResponse is a message returned for a drop request.
+message AppDropResponse {}
+
 // AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
 // node to run in an idle state and be controlled by an application. The application
 // can send commands to the node to execute tasks and receive responses.
@@ -369,4 +382,7 @@ service AppDaemon {
 
     // Query is used to query a mesh connection for information.
     rpc Query(AppQueryRequest) returns (QueryResponse) {}
+
+    // Drop deletes all data stored for a given mesh connection.
+    rpc Drop(AppDropRequest) returns (AppDropResponse) {}
 }

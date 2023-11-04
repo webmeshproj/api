@@ -1910,3 +1910,205 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AppQueryRequestValidationError{}
+
+// Validate checks the field values on AppDropRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *AppDropRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AppDropRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in AppDropRequestMultiError,
+// or nil if none found.
+func (m *AppDropRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AppDropRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if len(errors) > 0 {
+		return AppDropRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AppDropRequestMultiError is an error wrapping multiple validation errors
+// returned by AppDropRequest.ValidateAll() if the designated constraints
+// aren't met.
+type AppDropRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AppDropRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AppDropRequestMultiError) AllErrors() []error { return m }
+
+// AppDropRequestValidationError is the validation error returned by
+// AppDropRequest.Validate if the designated constraints aren't met.
+type AppDropRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AppDropRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AppDropRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AppDropRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AppDropRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AppDropRequestValidationError) ErrorName() string { return "AppDropRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AppDropRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAppDropRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AppDropRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AppDropRequestValidationError{}
+
+// Validate checks the field values on AppDropResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AppDropResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AppDropResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AppDropResponseMultiError, or nil if none found.
+func (m *AppDropResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AppDropResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return AppDropResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// AppDropResponseMultiError is an error wrapping multiple validation errors
+// returned by AppDropResponse.ValidateAll() if the designated constraints
+// aren't met.
+type AppDropResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AppDropResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AppDropResponseMultiError) AllErrors() []error { return m }
+
+// AppDropResponseValidationError is the validation error returned by
+// AppDropResponse.Validate if the designated constraints aren't met.
+type AppDropResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AppDropResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AppDropResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AppDropResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AppDropResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AppDropResponseValidationError) ErrorName() string { return "AppDropResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AppDropResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAppDropResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AppDropResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AppDropResponseValidationError{}

@@ -18,7 +18,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AppQueryRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
+import { AppDropRequest, AppDropResponse, AppQueryRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { QueryResponse } from "./storage_query_pb.js";
 
@@ -85,6 +85,17 @@ export const AppDaemon = {
       name: "Query",
       I: AppQueryRequest,
       O: QueryResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Drop deletes all data stored for a given mesh connection.
+     *
+     * @generated from rpc v1.AppDaemon.Drop
+     */
+    drop: {
+      name: "Drop",
+      I: AppDropRequest,
+      O: AppDropResponse,
       kind: MethodKind.Unary,
     },
   }

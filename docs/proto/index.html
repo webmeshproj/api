@@ -441,6 +441,14 @@
             <ul>
               
                 <li>
+                  <a href="#v1.AppDropRequest"><span class="badge">M</span>AppDropRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.AppDropResponse"><span class="badge">M</span>AppDropResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.AppQueryRequest"><span class="badge">M</span>AppQueryRequest</a>
                 </li>
               
@@ -3200,6 +3208,37 @@ only available on nodes that are able to provide storage.</p></td>
       <p></p>
 
       
+        <h3 id="v1.AppDropRequest">AppDropRequest</h3>
+        <p>AppDropRequest is sent by the application to a daemon to drop a mesh's storage.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.AppDropResponse">AppDropResponse</h3>
+        <p>AppDropResponse is a message returned for a drop request.</p>
+
+        
+
+        
+      
         <h3 id="v1.AppQueryRequest">AppQueryRequest</h3>
         <p>AppQueryRequest is sent by the application to a daemon to query a mesh's storage.</p>
 
@@ -4125,6 +4164,13 @@ The TLS object should be used to configure the TLS connection.</p></td>
                 <td><a href="#v1.AppQueryRequest">AppQueryRequest</a></td>
                 <td><a href="#v1.QueryResponse">QueryResponse</a></td>
                 <td><p>Query is used to query a mesh connection for information.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Drop</td>
+                <td><a href="#v1.AppDropRequest">AppDropRequest</a></td>
+                <td><a href="#v1.AppDropResponse">AppDropResponse</a></td>
+                <td><p>Drop deletes all data stored for a given mesh connection.</p></td>
               </tr>
             
           </tbody>

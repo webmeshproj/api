@@ -1135,3 +1135,77 @@ export class AppQueryRequest extends Message<AppQueryRequest> {
   }
 }
 
+/**
+ * AppDropRequest is sent by the application to a daemon to drop a mesh's storage.
+ *
+ * @generated from message v1.AppDropRequest
+ */
+export class AppDropRequest extends Message<AppDropRequest> {
+  /**
+   * ID is the unique identifier of this connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<AppDropRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.AppDropRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppDropRequest {
+    return new AppDropRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppDropRequest {
+    return new AppDropRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppDropRequest {
+    return new AppDropRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AppDropRequest | PlainMessage<AppDropRequest> | undefined, b: AppDropRequest | PlainMessage<AppDropRequest> | undefined): boolean {
+    return proto3.util.equals(AppDropRequest, a, b);
+  }
+}
+
+/**
+ * AppDropResponse is a message returned for a drop request.
+ *
+ * @generated from message v1.AppDropResponse
+ */
+export class AppDropResponse extends Message<AppDropResponse> {
+  constructor(data?: PartialMessage<AppDropResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.AppDropResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppDropResponse {
+    return new AppDropResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppDropResponse {
+    return new AppDropResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppDropResponse {
+    return new AppDropResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AppDropResponse | PlainMessage<AppDropResponse> | undefined, b: AppDropResponse | PlainMessage<AppDropResponse> | undefined): boolean {
+    return proto3.util.equals(AppDropResponse, a, b);
+  }
+}
+
