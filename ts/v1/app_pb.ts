@@ -98,9 +98,9 @@ export class ConnectRequest extends Message<ConnectRequest> {
   /**
    * AuthCredentials are additional credentials as required by the authType. 
    *
-   * @generated from field: map<string, bytes> authCredentials = 3;
+   * @generated from field: map<string, string> authCredentials = 3;
    */
-  authCredentials: { [key: string]: Uint8Array } = {};
+  authCredentials: { [key: string]: string } = {};
 
   /**
    * AddrType is the type of join addresses in the addrs list.
@@ -154,7 +154,7 @@ export class ConnectRequest extends Message<ConnectRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "authMethod", kind: "enum", T: proto3.getEnumType(NetworkAuthMethod) },
-    { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 12 /* ScalarType.BYTES */} },
+    { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
     { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 6, name: "networking", kind: "message", T: MeshConnNetworking },

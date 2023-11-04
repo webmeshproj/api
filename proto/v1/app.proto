@@ -74,7 +74,7 @@ message ConnectRequest {
     // AuthMethod is the type of authentication to use.
     NetworkAuthMethod authMethod = 2 [(buf.validate.field).enum.defined_only = true];
     // AuthCredentials are additional credentials as required by the authType. 
-    map<string, bytes> authCredentials = 3;
+    map<string, string> authCredentials = 3;
     // AddrType is the type of join addresses in the addrs list.
     AddrType addrType = 4 [(buf.validate.field).enum.defined_only = true];
     // Addrs are the join addresses to use to connect to the mesh.
