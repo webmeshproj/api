@@ -141,8 +141,7 @@ message GetStatusRequest {
 message Status {
     // ID is the ID of the node.
     string id = 1;
-    // Description is an optional description provided
-    // by the node.
+    // Description is an optional description provided by the node.
     string description = 2;
     // Version is the version of the node.
     string version = 3;

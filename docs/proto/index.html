@@ -469,6 +469,26 @@
                 </li>
               
                 <li>
+                  <a href="#v1.ConnectionStatusRequest"><span class="badge">M</span>ConnectionStatusRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ConnectionStatusResponse"><span class="badge">M</span>ConnectionStatusResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ConnectionStatusResponse.StatusesEntry"><span class="badge">M</span>ConnectionStatusResponse.StatusesEntry</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DaemonStatus"><span class="badge">M</span>DaemonStatus</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DaemonStatus.ConnectionsEntry"><span class="badge">M</span>DaemonStatus.ConnectionsEntry</a>
+                </li>
+              
+                <li>
                   <a href="#v1.DisconnectRequest"><span class="badge">M</span>DisconnectRequest</a>
                 </li>
               
@@ -512,14 +532,6 @@
                   <a href="#v1.StatusRequest"><span class="badge">M</span>StatusRequest</a>
                 </li>
               
-                <li>
-                  <a href="#v1.StatusResponse"><span class="badge">M</span>StatusResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.StatusResponse.StatusesEntry"><span class="badge">M</span>StatusResponse.StatusesEntry</a>
-                </li>
-              
               
                 <li>
                   <a href="#v1.ConnectRequest.AddrType"><span class="badge">E</span>ConnectRequest.AddrType</a>
@@ -530,7 +542,7 @@
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectionStatus.Status"><span class="badge">E</span>ConnectionStatus.Status</a>
+                  <a href="#v1.DaemonConnStatus"><span class="badge">E</span>DaemonConnStatus</a>
                 </li>
               
                 <li>
@@ -1336,8 +1348,7 @@
                   <td>description</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Description is an optional description provided
-by the node. </p></td>
+                  <td><p>Description is an optional description provided by the node. </p></td>
                 </tr>
               
                 <tr>
@@ -3460,7 +3471,7 @@ one will be generated. </p></td>
               
                 <tr>
                   <td>connectionStatus</td>
-                  <td><a href="#v1.ConnectionStatus.Status">ConnectionStatus.Status</a></td>
+                  <td><a href="#v1.DaemonConnStatus">DaemonConnStatus</a></td>
                   <td></td>
                   <td><p>ConnectionStatus is the status of the connection. </p></td>
                 </tr>
@@ -3470,6 +3481,192 @@ one will be generated. </p></td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
                   <td><p>Node is the node status. This is only populated if the node is connected. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ConnectionStatusRequest">ConnectionStatusRequest</h3>
+        <p>ConnectionStatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>IDs are the unique identifiers of the connections to retrieve status for.
+If not provided, status for all known connections will be returned. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ConnectionStatusResponse">ConnectionStatusResponse</h3>
+        <p>ConnectionStatusResponse is a message containing the status of the node.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>statuses</td>
+                  <td><a href="#v1.ConnectionStatusResponse.StatusesEntry">ConnectionStatusResponse.StatusesEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Statuses is a map of network IDs to their status. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ConnectionStatusResponse.StatusesEntry">ConnectionStatusResponse.StatusesEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.ConnectionStatus">ConnectionStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.DaemonStatus">DaemonStatus</h3>
+        <p>DaemonStatus contains the information about the daemon.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>nodeID</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>NodeID is the unique identifier of the daemon.
+This is used for mesh connections from the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>description</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Description is a description of the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>version</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Version is the version of the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>gitCommit</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>GitCommit is the git commit of the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>buildDate</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>BuildDate is the build date of the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>uptime</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Uptime is the uptime of the daemon. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>startedAt</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p>StartedAt is the time the daemon started. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>connections</td>
+                  <td><a href="#v1.DaemonStatus.ConnectionsEntry">DaemonStatus.ConnectionsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Connections are a map of known connections to the daemon
+and their statuses. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.DaemonStatus.ConnectionsEntry">DaemonStatus.ConnectionsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.DaemonConnStatus">DaemonConnStatus</a></td>
+                  <td></td>
+                  <td><p> </p></td>
                 </tr>
               
             </tbody>
@@ -3873,82 +4070,9 @@ If not provided, metrics for all known connections will be returned. </p></td>
         
       
         <h3 id="v1.StatusRequest">StatusRequest</h3>
-        <p>StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.</p>
+        <p>StatusRequest is sent by the application to a daemon to retrieve the status of the daemon.</p>
 
         
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>ids</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>IDs are the unique identifiers of the connections to retrieve status for.
-If not provided, status for all known connections will be returned. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StatusResponse">StatusResponse</h3>
-        <p>StatusResponse is a message containing the status of the node.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>statuses</td>
-                  <td><a href="#v1.StatusResponse.StatusesEntry">StatusResponse.StatusesEntry</a></td>
-                  <td>repeated</td>
-                  <td><p>Statuses is a map of network IDs to their status. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.StatusResponse.StatusesEntry">StatusResponse.StatusesEntry</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#v1.ConnectionStatus">ConnectionStatus</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
 
         
       
@@ -4025,8 +4149,8 @@ the join addresses to use to connect to the mesh.</p></td>
           </tbody>
         </table>
       
-        <h3 id="v1.ConnectionStatus.Status">ConnectionStatus.Status</h3>
-        <p></p>
+        <h3 id="v1.DaemonConnStatus">DaemonConnStatus</h3>
+        <p>DaemonConnStatus are the statuses of a mesh connection.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Name</td><td>Number</td><td>Description</td></tr>
@@ -4153,10 +4277,10 @@ The TLS object should be used to configure the TLS connection.</p></td>
               </tr>
             
               <tr>
-                <td>Status</td>
-                <td><a href="#v1.StatusRequest">StatusRequest</a></td>
-                <td><a href="#v1.StatusResponse">StatusResponse</a></td>
-                <td><p>Status is used to retrieve the status of a mesh connection.</p></td>
+                <td>ConnectionStatus</td>
+                <td><a href="#v1.ConnectionStatusRequest">ConnectionStatusRequest</a></td>
+                <td><a href="#v1.ConnectionStatusResponse">ConnectionStatusResponse</a></td>
+                <td><p>ConnectionStatus is used to retrieve the status of a mesh connection.</p></td>
               </tr>
             
               <tr>
@@ -4171,6 +4295,13 @@ The TLS object should be used to configure the TLS connection.</p></td>
                 <td><a href="#v1.AppDropRequest">AppDropRequest</a></td>
                 <td><a href="#v1.AppDropResponse">AppDropResponse</a></td>
                 <td><p>Drop deletes all data stored for a given mesh connection.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Status</td>
+                <td><a href="#v1.StatusRequest">StatusRequest</a></td>
+                <td><a href="#v1.DaemonStatus">DaemonStatus</a></td>
+                <td><p>Status is used to retrieve the status of the daemon.</p></td>
               </tr>
             
           </tbody>

@@ -34,12 +34,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AppDaemon_Connect_FullMethodName    = "/v1.AppDaemon/Connect"
-	AppDaemon_Disconnect_FullMethodName = "/v1.AppDaemon/Disconnect"
-	AppDaemon_Metrics_FullMethodName    = "/v1.AppDaemon/Metrics"
-	AppDaemon_Status_FullMethodName     = "/v1.AppDaemon/Status"
-	AppDaemon_Query_FullMethodName      = "/v1.AppDaemon/Query"
-	AppDaemon_Drop_FullMethodName       = "/v1.AppDaemon/Drop"
+	AppDaemon_Connect_FullMethodName          = "/v1.AppDaemon/Connect"
+	AppDaemon_Disconnect_FullMethodName       = "/v1.AppDaemon/Disconnect"
+	AppDaemon_Metrics_FullMethodName          = "/v1.AppDaemon/Metrics"
+	AppDaemon_ConnectionStatus_FullMethodName = "/v1.AppDaemon/ConnectionStatus"
+	AppDaemon_Query_FullMethodName            = "/v1.AppDaemon/Query"
+	AppDaemon_Drop_FullMethodName             = "/v1.AppDaemon/Drop"
+	AppDaemon_Status_FullMethodName           = "/v1.AppDaemon/Status"
 )
 
 // AppDaemonClient is the client API for AppDaemon service.
@@ -52,12 +53,14 @@ type AppDaemonClient interface {
 	Disconnect(ctx context.Context, in *DisconnectRequest, opts ...grpc.CallOption) (*DisconnectResponse, error)
 	// Metrics is used to retrieve interface metrics for one or more mesh connections.
 	Metrics(ctx context.Context, in *MetricsRequest, opts ...grpc.CallOption) (*MetricsResponse, error)
-	// Status is used to retrieve the status of a mesh connection.
-	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// ConnectionStatus is used to retrieve the status of a mesh connection.
+	ConnectionStatus(ctx context.Context, in *ConnectionStatusRequest, opts ...grpc.CallOption) (*ConnectionStatusResponse, error)
 	// Query is used to query a mesh connection for information.
 	Query(ctx context.Context, in *AppQueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 	// Drop deletes all data stored for a given mesh connection.
 	Drop(ctx context.Context, in *AppDropRequest, opts ...grpc.CallOption) (*AppDropResponse, error)
+	// Status is used to retrieve the status of the daemon.
+	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*DaemonStatus, error)
 }
 
 type appDaemonClient struct {
@@ -95,9 +98,9 @@ func (c *appDaemonClient) Metrics(ctx context.Context, in *MetricsRequest, opts 
 	return out, nil
 }
 
-func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
-	out := new(StatusResponse)
-	err := c.cc.Invoke(ctx, AppDaemon_Status_FullMethodName, in, out, opts...)
+func (c *appDaemonClient) ConnectionStatus(ctx context.Context, in *ConnectionStatusRequest, opts ...grpc.CallOption) (*ConnectionStatusResponse, error) {
+	out := new(ConnectionStatusResponse)
+	err := c.cc.Invoke(ctx, AppDaemon_ConnectionStatus_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -122,6 +125,15 @@ func (c *appDaemonClient) Drop(ctx context.Context, in *AppDropRequest, opts ...
 	return out, nil
 }
 
+func (c *appDaemonClient) Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*DaemonStatus, error) {
+	out := new(DaemonStatus)
+	err := c.cc.Invoke(ctx, AppDaemon_Status_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppDaemonServer is the server API for AppDaemon service.
 // All implementations must embed UnimplementedAppDaemonServer
 // for forward compatibility
@@ -132,12 +144,14 @@ type AppDaemonServer interface {
 	Disconnect(context.Context, *DisconnectRequest) (*DisconnectResponse, error)
 	// Metrics is used to retrieve interface metrics for one or more mesh connections.
 	Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error)
-	// Status is used to retrieve the status of a mesh connection.
-	Status(context.Context, *StatusRequest) (*StatusResponse, error)
+	// ConnectionStatus is used to retrieve the status of a mesh connection.
+	ConnectionStatus(context.Context, *ConnectionStatusRequest) (*ConnectionStatusResponse, error)
 	// Query is used to query a mesh connection for information.
 	Query(context.Context, *AppQueryRequest) (*QueryResponse, error)
 	// Drop deletes all data stored for a given mesh connection.
 	Drop(context.Context, *AppDropRequest) (*AppDropResponse, error)
+	// Status is used to retrieve the status of the daemon.
+	Status(context.Context, *StatusRequest) (*DaemonStatus, error)
 	mustEmbedUnimplementedAppDaemonServer()
 }
 
@@ -154,14 +168,17 @@ func (UnimplementedAppDaemonServer) Disconnect(context.Context, *DisconnectReque
 func (UnimplementedAppDaemonServer) Metrics(context.Context, *MetricsRequest) (*MetricsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
 }
-func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*StatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
+func (UnimplementedAppDaemonServer) ConnectionStatus(context.Context, *ConnectionStatusRequest) (*ConnectionStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectionStatus not implemented")
 }
 func (UnimplementedAppDaemonServer) Query(context.Context, *AppQueryRequest) (*QueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
 }
 func (UnimplementedAppDaemonServer) Drop(context.Context, *AppDropRequest) (*AppDropResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Drop not implemented")
+}
+func (UnimplementedAppDaemonServer) Status(context.Context, *StatusRequest) (*DaemonStatus, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
 }
 func (UnimplementedAppDaemonServer) mustEmbedUnimplementedAppDaemonServer() {}
 
@@ -230,20 +247,20 @@ func _AppDaemon_Metrics_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppDaemon_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StatusRequest)
+func _AppDaemon_ConnectionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectionStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppDaemonServer).Status(ctx, in)
+		return srv.(AppDaemonServer).ConnectionStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppDaemon_Status_FullMethodName,
+		FullMethod: AppDaemon_ConnectionStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppDaemonServer).Status(ctx, req.(*StatusRequest))
+		return srv.(AppDaemonServer).ConnectionStatus(ctx, req.(*ConnectionStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -284,6 +301,24 @@ func _AppDaemon_Drop_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppDaemon_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppDaemonServer).Status(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppDaemon_Status_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppDaemonServer).Status(ctx, req.(*StatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppDaemon_ServiceDesc is the grpc.ServiceDesc for AppDaemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,8 +339,8 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppDaemon_Metrics_Handler,
 		},
 		{
-			MethodName: "Status",
-			Handler:    _AppDaemon_Status_Handler,
+			MethodName: "ConnectionStatus",
+			Handler:    _AppDaemon_ConnectionStatus_Handler,
 		},
 		{
 			MethodName: "Query",
@@ -314,6 +349,10 @@ var AppDaemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Drop",
 			Handler:    _AppDaemon_Drop_Handler,
+		},
+		{
+			MethodName: "Status",
+			Handler:    _AppDaemon_Status_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

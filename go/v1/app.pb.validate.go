@@ -1403,22 +1403,22 @@ var _ interface {
 	ErrorName() string
 } = MetricsResponseValidationError{}
 
-// Validate checks the field values on StatusRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *StatusRequest) Validate() error {
+// Validate checks the field values on ConnectionStatusRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ConnectionStatusRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StatusRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in StatusRequestMultiError, or
-// nil if none found.
-func (m *StatusRequest) ValidateAll() error {
+// ValidateAll checks the field values on ConnectionStatusRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ConnectionStatusRequestMultiError, or nil if none found.
+func (m *ConnectionStatusRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StatusRequest) validate(all bool) error {
+func (m *ConnectionStatusRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1426,19 +1426,19 @@ func (m *StatusRequest) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return StatusRequestMultiError(errors)
+		return ConnectionStatusRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// StatusRequestMultiError is an error wrapping multiple validation errors
-// returned by StatusRequest.ValidateAll() if the designated constraints
-// aren't met.
-type StatusRequestMultiError []error
+// ConnectionStatusRequestMultiError is an error wrapping multiple validation
+// errors returned by ConnectionStatusRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ConnectionStatusRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StatusRequestMultiError) Error() string {
+func (m ConnectionStatusRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1447,11 +1447,11 @@ func (m StatusRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StatusRequestMultiError) AllErrors() []error { return m }
+func (m ConnectionStatusRequestMultiError) AllErrors() []error { return m }
 
-// StatusRequestValidationError is the validation error returned by
-// StatusRequest.Validate if the designated constraints aren't met.
-type StatusRequestValidationError struct {
+// ConnectionStatusRequestValidationError is the validation error returned by
+// ConnectionStatusRequest.Validate if the designated constraints aren't met.
+type ConnectionStatusRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1459,22 +1459,24 @@ type StatusRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e StatusRequestValidationError) Field() string { return e.field }
+func (e ConnectionStatusRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StatusRequestValidationError) Reason() string { return e.reason }
+func (e ConnectionStatusRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StatusRequestValidationError) Cause() error { return e.cause }
+func (e ConnectionStatusRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StatusRequestValidationError) Key() bool { return e.key }
+func (e ConnectionStatusRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StatusRequestValidationError) ErrorName() string { return "StatusRequestValidationError" }
+func (e ConnectionStatusRequestValidationError) ErrorName() string {
+	return "ConnectionStatusRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e StatusRequestValidationError) Error() string {
+func (e ConnectionStatusRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1486,14 +1488,14 @@ func (e StatusRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStatusRequest.%s: %s%s",
+		"invalid %sConnectionStatusRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StatusRequestValidationError{}
+var _ error = ConnectionStatusRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1501,24 +1503,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StatusRequestValidationError{}
+} = ConnectionStatusRequestValidationError{}
 
-// Validate checks the field values on StatusResponse with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *StatusResponse) Validate() error {
+// Validate checks the field values on ConnectionStatusResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ConnectionStatusResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StatusResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in StatusResponseMultiError,
-// or nil if none found.
-func (m *StatusResponse) ValidateAll() error {
+// ValidateAll checks the field values on ConnectionStatusResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ConnectionStatusResponseMultiError, or nil if none found.
+func (m *ConnectionStatusResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StatusResponse) validate(all bool) error {
+func (m *ConnectionStatusResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1543,7 +1545,7 @@ func (m *StatusResponse) validate(all bool) error {
 				switch v := interface{}(val).(type) {
 				case interface{ ValidateAll() error }:
 					if err := v.ValidateAll(); err != nil {
-						errors = append(errors, StatusResponseValidationError{
+						errors = append(errors, ConnectionStatusResponseValidationError{
 							field:  fmt.Sprintf("Statuses[%v]", key),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -1551,7 +1553,7 @@ func (m *StatusResponse) validate(all bool) error {
 					}
 				case interface{ Validate() error }:
 					if err := v.Validate(); err != nil {
-						errors = append(errors, StatusResponseValidationError{
+						errors = append(errors, ConnectionStatusResponseValidationError{
 							field:  fmt.Sprintf("Statuses[%v]", key),
 							reason: "embedded message failed validation",
 							cause:  err,
@@ -1560,7 +1562,7 @@ func (m *StatusResponse) validate(all bool) error {
 				}
 			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 				if err := v.Validate(); err != nil {
-					return StatusResponseValidationError{
+					return ConnectionStatusResponseValidationError{
 						field:  fmt.Sprintf("Statuses[%v]", key),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1572,19 +1574,19 @@ func (m *StatusResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return StatusResponseMultiError(errors)
+		return ConnectionStatusResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// StatusResponseMultiError is an error wrapping multiple validation errors
-// returned by StatusResponse.ValidateAll() if the designated constraints
-// aren't met.
-type StatusResponseMultiError []error
+// ConnectionStatusResponseMultiError is an error wrapping multiple validation
+// errors returned by ConnectionStatusResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ConnectionStatusResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StatusResponseMultiError) Error() string {
+func (m ConnectionStatusResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1593,11 +1595,11 @@ func (m StatusResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StatusResponseMultiError) AllErrors() []error { return m }
+func (m ConnectionStatusResponseMultiError) AllErrors() []error { return m }
 
-// StatusResponseValidationError is the validation error returned by
-// StatusResponse.Validate if the designated constraints aren't met.
-type StatusResponseValidationError struct {
+// ConnectionStatusResponseValidationError is the validation error returned by
+// ConnectionStatusResponse.Validate if the designated constraints aren't met.
+type ConnectionStatusResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1605,22 +1607,24 @@ type StatusResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e StatusResponseValidationError) Field() string { return e.field }
+func (e ConnectionStatusResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StatusResponseValidationError) Reason() string { return e.reason }
+func (e ConnectionStatusResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StatusResponseValidationError) Cause() error { return e.cause }
+func (e ConnectionStatusResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StatusResponseValidationError) Key() bool { return e.key }
+func (e ConnectionStatusResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StatusResponseValidationError) ErrorName() string { return "StatusResponseValidationError" }
+func (e ConnectionStatusResponseValidationError) ErrorName() string {
+	return "ConnectionStatusResponseValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e StatusResponseValidationError) Error() string {
+func (e ConnectionStatusResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1632,14 +1636,14 @@ func (e StatusResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStatusResponse.%s: %s%s",
+		"invalid %sConnectionStatusResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StatusResponseValidationError{}
+var _ error = ConnectionStatusResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1647,7 +1651,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StatusResponseValidationError{}
+} = ConnectionStatusResponseValidationError{}
 
 // Validate checks the field values on ConnectionStatus with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -2112,3 +2116,245 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AppDropResponseValidationError{}
+
+// Validate checks the field values on StatusRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *StatusRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatusRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in StatusRequestMultiError, or
+// nil if none found.
+func (m *StatusRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatusRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return StatusRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatusRequestMultiError is an error wrapping multiple validation errors
+// returned by StatusRequest.ValidateAll() if the designated constraints
+// aren't met.
+type StatusRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatusRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatusRequestMultiError) AllErrors() []error { return m }
+
+// StatusRequestValidationError is the validation error returned by
+// StatusRequest.Validate if the designated constraints aren't met.
+type StatusRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatusRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatusRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatusRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatusRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatusRequestValidationError) ErrorName() string { return "StatusRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StatusRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatusRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatusRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatusRequestValidationError{}
+
+// Validate checks the field values on DaemonStatus with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DaemonStatus) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DaemonStatus with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DaemonStatusMultiError, or
+// nil if none found.
+func (m *DaemonStatus) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DaemonStatus) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for NodeID
+
+	// no validation rules for Description
+
+	// no validation rules for Version
+
+	// no validation rules for GitCommit
+
+	// no validation rules for BuildDate
+
+	// no validation rules for Uptime
+
+	if all {
+		switch v := interface{}(m.GetStartedAt()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DaemonStatusValidationError{
+					field:  "StartedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DaemonStatusValidationError{
+					field:  "StartedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetStartedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DaemonStatusValidationError{
+				field:  "StartedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Connections
+
+	if len(errors) > 0 {
+		return DaemonStatusMultiError(errors)
+	}
+
+	return nil
+}
+
+// DaemonStatusMultiError is an error wrapping multiple validation errors
+// returned by DaemonStatus.ValidateAll() if the designated constraints aren't met.
+type DaemonStatusMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DaemonStatusMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DaemonStatusMultiError) AllErrors() []error { return m }
+
+// DaemonStatusValidationError is the validation error returned by
+// DaemonStatus.Validate if the designated constraints aren't met.
+type DaemonStatusValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DaemonStatusValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DaemonStatusValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DaemonStatusValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DaemonStatusValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DaemonStatusValidationError) ErrorName() string { return "DaemonStatusValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DaemonStatusValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDaemonStatus.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DaemonStatusValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DaemonStatusValidationError{}

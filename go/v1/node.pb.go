@@ -601,8 +601,7 @@ type Status struct {
 
 	// ID is the ID of the node.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Description is an optional description provided
-	// by the node.
+	// Description is an optional description provided by the node.
 	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	// Version is the version of the node.
 	Version string `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`

@@ -20,6 +20,7 @@ package v1;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "buf/validate/validate.proto";
 
 import "v1/mesh.proto";
@@ -39,6 +40,16 @@ enum NetworkAuthMethod {
     // MTLS is used to indicate that mutual TLS authentication is required.
     // The TLS object should be used to configure the TLS connection.
     MTLS = 4;
+};
+
+// DaemonConnStatus are the statuses of a mesh connection.
+enum DaemonConnStatus {
+    // DISCONNECTED indicates that the node is not connected to a mesh.
+    DISCONNECTED = 0;
+    // CONNECTING indicates that the node is in the process of connecting to a mesh.
+    CONNECTING = 1;
+    // CONNECTED indicates that the node is connected to a mesh.
+    CONNECTED = 2;
 };
 
 // ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
@@ -302,8 +313,8 @@ message MetricsResponse {
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
-// StatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
-message StatusRequest {
+// ConnectionStatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
+message ConnectionStatusRequest {
     // IDs are the unique identifiers of the connections to retrieve status for.
     // If not provided, status for all known connections will be returned.
     repeated string ids = 1 [
@@ -317,24 +328,16 @@ message StatusRequest {
     ];
 }
 
-// StatusResponse is a message containing the status of the node.
-message StatusResponse {
+// ConnectionStatusResponse is a message containing the status of the node.
+message ConnectionStatusResponse {
     // Statuses is a map of network IDs to their status.
     map<string, ConnectionStatus> statuses = 1;
 }
 
 // ConnectionStatus is the status of a connection.
 message ConnectionStatus {
-    enum Status {
-        // DISCONNECTED indicates that the node is not connected to a mesh.
-        DISCONNECTED = 0;
-        // CONNECTING indicates that the node is in the process of connecting to a mesh.
-        CONNECTING = 1;
-        // CONNECTED indicates that the node is connected to a mesh.
-        CONNECTED = 2;
-    }
     // ConnectionStatus is the status of the connection.
-    Status connectionStatus = 1;
+    DaemonConnStatus connectionStatus = 1;
     // Node is the node status. This is only populated if the node is connected.
     MeshNode node = 2;
 }
@@ -364,6 +367,31 @@ message AppDropRequest {
 // AppDropResponse is a message returned for a drop request.
 message AppDropResponse {}
 
+// StatusRequest is sent by the application to a daemon to retrieve the status of the daemon.
+message StatusRequest {}
+
+// DaemonStatus contains the information about the daemon.
+message DaemonStatus {
+    // NodeID is the unique identifier of the daemon.
+    // This is used for mesh connections from the daemon.
+    string nodeID = 1;
+    // Description is a description of the daemon.
+    string description = 2;
+    // Version is the version of the daemon.
+    string version = 3;
+    // GitCommit is the git commit of the daemon.
+    string gitCommit = 4;
+    // BuildDate is the build date of the daemon.
+    string buildDate = 5;
+    // Uptime is the uptime of the daemon.
+    string uptime = 6;
+    // StartedAt is the time the daemon started.
+    google.protobuf.Timestamp startedAt = 7;
+    // Connections are a map of known connections to the daemon
+    // and their statuses.
+    map<string, DaemonConnStatus> connections = 8;
+}
+
 // AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
 // node to run in an idle state and be controlled by an application. The application
 // can send commands to the node to execute tasks and receive responses.
@@ -377,12 +405,15 @@ service AppDaemon {
     // Metrics is used to retrieve interface metrics for one or more mesh connections.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
 
-    // Status is used to retrieve the status of a mesh connection.
-    rpc Status(StatusRequest) returns (StatusResponse) {}
+    // ConnectionStatus is used to retrieve the status of a mesh connection.
+    rpc ConnectionStatus(ConnectionStatusRequest) returns (ConnectionStatusResponse) {}
 
     // Query is used to query a mesh connection for information.
     rpc Query(AppQueryRequest) returns (QueryResponse) {}
 
     // Drop deletes all data stored for a given mesh connection.
     rpc Drop(AppDropRequest) returns (AppDropResponse) {}
+
+    // Status is used to retrieve the status of the daemon.
+    rpc Status(StatusRequest) returns (DaemonStatus) {}
 }

@@ -18,7 +18,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AppDropRequest, AppDropResponse, AppQueryRequest, ConnectRequest, ConnectResponse, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest, StatusResponse } from "./app_pb.js";
+import { AppDropRequest, AppDropResponse, AppQueryRequest, ConnectionStatusRequest, ConnectionStatusResponse, ConnectRequest, ConnectResponse, DaemonStatus, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { QueryResponse } from "./storage_query_pb.js";
 
@@ -66,14 +66,14 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Status is used to retrieve the status of a mesh connection.
+     * ConnectionStatus is used to retrieve the status of a mesh connection.
      *
-     * @generated from rpc v1.AppDaemon.Status
+     * @generated from rpc v1.AppDaemon.ConnectionStatus
      */
-    status: {
-      name: "Status",
-      I: StatusRequest,
-      O: StatusResponse,
+    connectionStatus: {
+      name: "ConnectionStatus",
+      I: ConnectionStatusRequest,
+      O: ConnectionStatusResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -96,6 +96,17 @@ export const AppDaemon = {
       name: "Drop",
       I: AppDropRequest,
       O: AppDropResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Status is used to retrieve the status of the daemon.
+     *
+     * @generated from rpc v1.AppDaemon.Status
+     */
+    status: {
+      name: "Status",
+      I: StatusRequest,
+      O: DaemonStatus,
       kind: MethodKind.Unary,
     },
   }
