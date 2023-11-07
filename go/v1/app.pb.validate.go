@@ -2241,6 +2241,8 @@ func (m *DaemonStatus) validate(all bool) error {
 
 	// no validation rules for NodeID
 
+	// no validation rules for PublicKey
+
 	// no validation rules for Description
 
 	// no validation rules for Version

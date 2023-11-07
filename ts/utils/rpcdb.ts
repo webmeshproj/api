@@ -273,12 +273,12 @@ export class MeshEdges {
   }
   
   /**
-   * Deletes the MeshEdge with the given Targetid and Sourceid.
+   * Deletes the MeshEdge with the given Sourceid and Targetid.
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
    */
-  delete(sourceid: string, targetid: string): Promise<void> {
+  delete(targetid: string, sourceid: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.query(new QueryRequest({
         command: QueryRequest_QueryCommand.DELETE,

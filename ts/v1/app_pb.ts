@@ -1259,44 +1259,51 @@ export class DaemonStatus extends Message<DaemonStatus> {
   nodeID = "";
 
   /**
+   * PublicKey is the public key of the daemon.
+   *
+   * @generated from field: string publicKey = 2;
+   */
+  publicKey = "";
+
+  /**
    * Description is a description of the daemon.
    *
-   * @generated from field: string description = 2;
+   * @generated from field: string description = 3;
    */
   description = "";
 
   /**
    * Version is the version of the daemon.
    *
-   * @generated from field: string version = 3;
+   * @generated from field: string version = 4;
    */
   version = "";
 
   /**
    * GitCommit is the git commit of the daemon.
    *
-   * @generated from field: string gitCommit = 4;
+   * @generated from field: string gitCommit = 5;
    */
   gitCommit = "";
 
   /**
    * BuildDate is the build date of the daemon.
    *
-   * @generated from field: string buildDate = 5;
+   * @generated from field: string buildDate = 6;
    */
   buildDate = "";
 
   /**
    * Uptime is the uptime of the daemon.
    *
-   * @generated from field: string uptime = 6;
+   * @generated from field: string uptime = 7;
    */
   uptime = "";
 
   /**
    * StartedAt is the time the daemon started.
    *
-   * @generated from field: google.protobuf.Timestamp startedAt = 7;
+   * @generated from field: google.protobuf.Timestamp startedAt = 8;
    */
   startedAt?: Timestamp;
 
@@ -1304,7 +1311,7 @@ export class DaemonStatus extends Message<DaemonStatus> {
    * Connections are a map of known connections to the daemon
    * and their statuses.
    *
-   * @generated from field: map<string, v1.DaemonConnStatus> connections = 8;
+   * @generated from field: map<string, v1.DaemonConnStatus> connections = 9;
    */
   connections: { [key: string]: DaemonConnStatus } = {};
 
@@ -1317,13 +1324,14 @@ export class DaemonStatus extends Message<DaemonStatus> {
   static readonly typeName = "v1.DaemonStatus";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "nodeID", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "version", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "gitCommit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "buildDate", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "startedAt", kind: "message", T: Timestamp },
-    { no: 8, name: "connections", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "enum", T: proto3.getEnumType(DaemonConnStatus)} },
+    { no: 2, name: "publicKey", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "version", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "gitCommit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "buildDate", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "startedAt", kind: "message", T: Timestamp },
+    { no: 9, name: "connections", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "enum", T: proto3.getEnumType(DaemonConnStatus)} },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DaemonStatus {

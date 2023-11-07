@@ -375,21 +375,23 @@ message DaemonStatus {
     // NodeID is the unique identifier of the daemon.
     // This is used for mesh connections from the daemon.
     string nodeID = 1;
+    // PublicKey is the public key of the daemon.
+    string publicKey = 2;
     // Description is a description of the daemon.
-    string description = 2;
+    string description = 3;
     // Version is the version of the daemon.
-    string version = 3;
+    string version = 4;
     // GitCommit is the git commit of the daemon.
-    string gitCommit = 4;
+    string gitCommit = 5;
     // BuildDate is the build date of the daemon.
-    string buildDate = 5;
+    string buildDate = 6;
     // Uptime is the uptime of the daemon.
-    string uptime = 6;
+    string uptime = 7;
     // StartedAt is the time the daemon started.
-    google.protobuf.Timestamp startedAt = 7;
+    google.protobuf.Timestamp startedAt = 8;
     // Connections are a map of known connections to the daemon
     // and their statuses.
-    map<string, DaemonConnStatus> connections = 8;
+    map<string, DaemonConnStatus> connections = 9;
 }
 
 // AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
