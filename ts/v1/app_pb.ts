@@ -19,7 +19,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3, Timestamp } from "@bufbuild/protobuf";
+import { Message, proto3, Struct, Timestamp } from "@bufbuild/protobuf";
 import { Feature, InterfaceMetrics, MeshNode } from "./node_pb.js";
 import { QueryRequest } from "./storage_query_pb.js";
 
@@ -130,6 +130,13 @@ export class PutConnectionRequest extends Message<PutConnectionRequest> {
    */
   parameters?: ConnectionParameters;
 
+  /**
+   * Metadata are arbitrary key/value pairs to store with the connection.
+   *
+   * @generated from field: google.protobuf.Struct metadata = 3;
+   */
+  metadata?: Struct;
+
   constructor(data?: PartialMessage<PutConnectionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -140,6 +147,7 @@ export class PutConnectionRequest extends Message<PutConnectionRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "parameters", kind: "message", T: ConnectionParameters },
+    { no: 3, name: "metadata", kind: "message", T: Struct },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PutConnectionRequest {
@@ -270,6 +278,13 @@ export class GetConnectionResponse extends Message<GetConnectionResponse> {
    */
   node?: MeshNode;
 
+  /**
+   * Metadata are arbitrary key/value pairs stored with the connection.
+   *
+   * @generated from field: google.protobuf.Struct metadata = 4;
+   */
+  metadata?: Struct;
+
   constructor(data?: PartialMessage<GetConnectionResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -281,6 +296,7 @@ export class GetConnectionResponse extends Message<GetConnectionResponse> {
     { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(DaemonConnStatus) },
     { no: 2, name: "parameters", kind: "message", T: ConnectionParameters },
     { no: 3, name: "node", kind: "message", T: MeshNode },
+    { no: 4, name: "metadata", kind: "message", T: Struct },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConnectionResponse {

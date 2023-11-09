@@ -252,7 +252,7 @@ export class MeshEdges {
    *
    * @param sourceid - The ID of the source node.
    * @param targetid - The ID of the target node.
-   * @returns The MeshEdge with the given Targetid and Sourceid.
+   * @returns The MeshEdge with the given Sourceid and Targetid.
    */
   get(sourceid: string, targetid: string): Promise<MeshEdge> {
     return new Promise((resolve, reject) => {

@@ -64,6 +64,8 @@ message PutConnectionRequest {
     ];
     // Parameters are the parameters for the connection.
     ConnectionParameters parameters = 2;
+    // Metadata are arbitrary key/value pairs to store with the connection.
+    google.protobuf.Struct metadata = 3;
 };
 
 // PutConnectionResponse is returned by the PutConnection RPC.
@@ -90,6 +92,8 @@ message GetConnectionResponse {
     // Node is the node information for the connection.
     // This is only populated when the connection is connected.
     MeshNode node = 3;
+    // Metadata are arbitrary key/value pairs stored with the connection.
+    google.protobuf.Struct metadata = 4;
 };
 
 // ListConnectionsRequest is sent by an application to a daemon to retrieve the parameters
