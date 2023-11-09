@@ -1,6 +1,6 @@
 {
     "$schema": "https://typedoc.org/schema.json",
-    "entryPoints": ["./ts/v1", "ts/utils"],
+    "entryPoints": ["v1", "utils"],
     "entryPointStrategy": "expand",
-    "out": "docs"
+    "out": "../docs"
 }
