@@ -109,19 +109,279 @@ proto3.util.setEnumType(DaemonConnStatus, "v1.DaemonConnStatus", [
 ]);
 
 /**
- * ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
+ * PutConnectionRequest is sent by an application to a daemon to store the parameters
+ * for a mesh connection.
  *
- * @generated from message v1.ConnectRequest
+ * @generated from message v1.PutConnectionRequest
  */
-export class ConnectRequest extends Message<ConnectRequest> {
+export class PutConnectionRequest extends Message<PutConnectionRequest> {
   /**
-   * ID is the unique identifier of this connection. If not provided
+   * ID is the unique identifier of the connection. If not provided
    * one will be generated.
    *
    * @generated from field: string id = 1;
    */
   id = "";
 
+  /**
+   * Parameters are the parameters for the connection.
+   *
+   * @generated from field: v1.ConnectionParameters parameters = 2;
+   */
+  parameters?: ConnectionParameters;
+
+  constructor(data?: PartialMessage<PutConnectionRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.PutConnectionRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "parameters", kind: "message", T: ConnectionParameters },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PutConnectionRequest {
+    return new PutConnectionRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PutConnectionRequest {
+    return new PutConnectionRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PutConnectionRequest {
+    return new PutConnectionRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PutConnectionRequest | PlainMessage<PutConnectionRequest> | undefined, b: PutConnectionRequest | PlainMessage<PutConnectionRequest> | undefined): boolean {
+    return proto3.util.equals(PutConnectionRequest, a, b);
+  }
+}
+
+/**
+ * PutConnectionResponse is returned by the PutConnection RPC.
+ *
+ * @generated from message v1.PutConnectionResponse
+ */
+export class PutConnectionResponse extends Message<PutConnectionResponse> {
+  constructor(data?: PartialMessage<PutConnectionResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.PutConnectionResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PutConnectionResponse {
+    return new PutConnectionResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PutConnectionResponse {
+    return new PutConnectionResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PutConnectionResponse {
+    return new PutConnectionResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PutConnectionResponse | PlainMessage<PutConnectionResponse> | undefined, b: PutConnectionResponse | PlainMessage<PutConnectionResponse> | undefined): boolean {
+    return proto3.util.equals(PutConnectionResponse, a, b);
+  }
+}
+
+/**
+ * GetConnectionRequest is sent by an application to a daemon to retrieve the parameters
+ * and current status of a mesh connection.
+ *
+ * @generated from message v1.GetConnectionRequest
+ */
+export class GetConnectionRequest extends Message<GetConnectionRequest> {
+  /**
+   * ID is the unique identifier of the connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<GetConnectionRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.GetConnectionRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConnectionRequest {
+    return new GetConnectionRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetConnectionRequest {
+    return new GetConnectionRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetConnectionRequest {
+    return new GetConnectionRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetConnectionRequest | PlainMessage<GetConnectionRequest> | undefined, b: GetConnectionRequest | PlainMessage<GetConnectionRequest> | undefined): boolean {
+    return proto3.util.equals(GetConnectionRequest, a, b);
+  }
+}
+
+/**
+ * GetConnectionResponse is returned by the GetConnection RPC.
+ *
+ * @generated from message v1.GetConnectionResponse
+ */
+export class GetConnectionResponse extends Message<GetConnectionResponse> {
+  /**
+   * Status is the status of the connection.
+   *
+   * @generated from field: v1.DaemonConnStatus status = 1;
+   */
+  status = DaemonConnStatus.DISCONNECTED;
+
+  /**
+   * Parameters are the parameters for the connection.
+   *
+   * @generated from field: v1.ConnectionParameters parameters = 2;
+   */
+  parameters?: ConnectionParameters;
+
+  /**
+   * Node is the node information for the connection.
+   * This is only populated when the connection is connected.
+   *
+   * @generated from field: v1.MeshNode node = 3;
+   */
+  node?: MeshNode;
+
+  constructor(data?: PartialMessage<GetConnectionResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.GetConnectionResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(DaemonConnStatus) },
+    { no: 2, name: "parameters", kind: "message", T: ConnectionParameters },
+    { no: 3, name: "node", kind: "message", T: MeshNode },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConnectionResponse {
+    return new GetConnectionResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetConnectionResponse {
+    return new GetConnectionResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetConnectionResponse {
+    return new GetConnectionResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetConnectionResponse | PlainMessage<GetConnectionResponse> | undefined, b: GetConnectionResponse | PlainMessage<GetConnectionResponse> | undefined): boolean {
+    return proto3.util.equals(GetConnectionResponse, a, b);
+  }
+}
+
+/**
+ * ListConnectionsRequest is sent by an application to a daemon to retrieve the parameters
+ * and current status of all mesh connections.
+ *
+ * @generated from message v1.ListConnectionsRequest
+ */
+export class ListConnectionsRequest extends Message<ListConnectionsRequest> {
+  /**
+   * IDs are the unique identifiers of the connections to retrieve information for.
+   * If not provided, metrics for all known connections will be returned.
+   *
+   * @generated from field: repeated string ids = 1;
+   */
+  ids: string[] = [];
+
+  constructor(data?: PartialMessage<ListConnectionsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.ListConnectionsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListConnectionsRequest {
+    return new ListConnectionsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListConnectionsRequest {
+    return new ListConnectionsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListConnectionsRequest {
+    return new ListConnectionsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListConnectionsRequest | PlainMessage<ListConnectionsRequest> | undefined, b: ListConnectionsRequest | PlainMessage<ListConnectionsRequest> | undefined): boolean {
+    return proto3.util.equals(ListConnectionsRequest, a, b);
+  }
+}
+
+/**
+ * ListConnectionsResponse is returned by the ListConnections RPC.
+ *
+ * @generated from message v1.ListConnectionsResponse
+ */
+export class ListConnectionsResponse extends Message<ListConnectionsResponse> {
+  /**
+   * Connections are the parameters and statuses of all connections.
+   *
+   * @generated from field: map<string, v1.GetConnectionResponse> connections = 1;
+   */
+  connections: { [key: string]: GetConnectionResponse } = {};
+
+  constructor(data?: PartialMessage<ListConnectionsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.ListConnectionsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "connections", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "message", T: GetConnectionResponse} },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListConnectionsResponse {
+    return new ListConnectionsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListConnectionsResponse {
+    return new ListConnectionsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListConnectionsResponse {
+    return new ListConnectionsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListConnectionsResponse | PlainMessage<ListConnectionsResponse> | undefined, b: ListConnectionsResponse | PlainMessage<ListConnectionsResponse> | undefined): boolean {
+    return proto3.util.equals(ListConnectionsResponse, a, b);
+  }
+}
+
+/**
+ * ConnectionParameters are the parameters for a mesh connection.
+ *
+ * @generated from message v1.ConnectionParameters
+ */
+export class ConnectionParameters extends Message<ConnectionParameters> {
   /**
    * AuthMethod is the type of authentication to use.
    *
@@ -139,9 +399,9 @@ export class ConnectRequest extends Message<ConnectRequest> {
   /**
    * AddrType is the type of join addresses in the addrs list.
    *
-   * @generated from field: v1.ConnectRequest.AddrType addrType = 4;
+   * @generated from field: v1.ConnectionParameters.AddrType addrType = 4;
    */
-  addrType = ConnectRequest_AddrType.ADDR;
+  addrType = ConnectionParameters_AddrType.ADDR;
 
   /**
    * Addrs are the join addresses to use to connect to the mesh.
@@ -178,18 +438,17 @@ export class ConnectRequest extends Message<ConnectRequest> {
    */
   tls?: MeshConnTLS;
 
-  constructor(data?: PartialMessage<ConnectRequest>) {
+  constructor(data?: PartialMessage<ConnectionParameters>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.ConnectRequest";
+  static readonly typeName = "v1.ConnectionParameters";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "authMethod", kind: "enum", T: proto3.getEnumType(NetworkAuthMethod) },
     { no: 3, name: "authCredentials", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
-    { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectRequest_AddrType) },
+    { no: 4, name: "addrType", kind: "enum", T: proto3.getEnumType(ConnectionParameters_AddrType) },
     { no: 5, name: "addrs", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 6, name: "networking", kind: "message", T: MeshConnNetworking },
     { no: 7, name: "services", kind: "message", T: MeshConnServices },
@@ -197,29 +456,29 @@ export class ConnectRequest extends Message<ConnectRequest> {
     { no: 9, name: "tls", kind: "message", T: MeshConnTLS },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectRequest {
-    return new ConnectRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectionParameters {
+    return new ConnectionParameters().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectRequest {
-    return new ConnectRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectionParameters {
+    return new ConnectionParameters().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectRequest {
-    return new ConnectRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectionParameters {
+    return new ConnectionParameters().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ConnectRequest | PlainMessage<ConnectRequest> | undefined, b: ConnectRequest | PlainMessage<ConnectRequest> | undefined): boolean {
-    return proto3.util.equals(ConnectRequest, a, b);
+  static equals(a: ConnectionParameters | PlainMessage<ConnectionParameters> | undefined, b: ConnectionParameters | PlainMessage<ConnectionParameters> | undefined): boolean {
+    return proto3.util.equals(ConnectionParameters, a, b);
   }
 }
 
 /**
  * AddrType is the type of join addresses included in the request.
  *
- * @generated from enum v1.ConnectRequest.AddrType
+ * @generated from enum v1.ConnectionParameters.AddrType
  */
-export enum ConnectRequest_AddrType {
+export enum ConnectionParameters_AddrType {
   /**
    * ADDR is used to join a mesh using an IP or DNS address.
    *
@@ -241,8 +500,8 @@ export enum ConnectRequest_AddrType {
    */
   RENDEZVOUS = 2,
 }
-// Retrieve enum metadata with: proto3.getEnumType(ConnectRequest_AddrType)
-proto3.util.setEnumType(ConnectRequest_AddrType, "v1.ConnectRequest.AddrType", [
+// Retrieve enum metadata with: proto3.getEnumType(ConnectionParameters_AddrType)
+proto3.util.setEnumType(ConnectionParameters_AddrType, "v1.ConnectionParameters.AddrType", [
   { no: 0, name: "ADDR" },
   { no: 1, name: "MULTIADDR" },
   { no: 2, name: "RENDEZVOUS" },
@@ -253,9 +512,9 @@ proto3.util.setEnumType(ConnectRequest_AddrType, "v1.ConnectRequest.AddrType", [
  * They are used to pass authentication credentials to the daemon. Enums 
  * cannot be used as map keys, so their string values are used instead.
  *
- * @generated from enum v1.ConnectRequest.AuthHeader
+ * @generated from enum v1.ConnectionParameters.AuthHeader
  */
-export enum ConnectRequest_AuthHeader {
+export enum ConnectionParameters_AuthHeader {
   /**
    * BASIC_USERNAME is the username for basic authentication.
    *
@@ -292,8 +551,8 @@ export enum ConnectRequest_AuthHeader {
    */
   ADDRS_ENVELOPE = 4,
 }
-// Retrieve enum metadata with: proto3.getEnumType(ConnectRequest_AuthHeader)
-proto3.util.setEnumType(ConnectRequest_AuthHeader, "v1.ConnectRequest.AuthHeader", [
+// Retrieve enum metadata with: proto3.getEnumType(ConnectionParameters_AuthHeader)
+proto3.util.setEnumType(ConnectionParameters_AuthHeader, "v1.ConnectionParameters.AuthHeader", [
   { no: 0, name: "BASIC_USERNAME" },
   { no: 1, name: "BASIC_PASSWORD" },
   { no: 2, name: "LDAP_USERNAME" },
@@ -711,6 +970,47 @@ export class MeshConnTLS extends Message<MeshConnTLS> {
 }
 
 /**
+ * ConnectRequest is sent by an application to a daemon to connect to a mesh.
+ *
+ * @generated from message v1.ConnectRequest
+ */
+export class ConnectRequest extends Message<ConnectRequest> {
+  /**
+   * ID is the unique identifier of the connection.
+   *
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<ConnectRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "v1.ConnectRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectRequest {
+    return new ConnectRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectRequest {
+    return new ConnectRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectRequest {
+    return new ConnectRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ConnectRequest | PlainMessage<ConnectRequest> | undefined, b: ConnectRequest | PlainMessage<ConnectRequest> | undefined): boolean {
+    return proto3.util.equals(ConnectRequest, a, b);
+  }
+}
+
+/**
  * ConnectResponse is returned by the Connect RPC.
  *
  * @generated from message v1.ConnectResponse
@@ -806,7 +1106,7 @@ export class ConnectResponse extends Message<ConnectResponse> {
  */
 export class DisconnectRequest extends Message<DisconnectRequest> {
   /**
-   * ID is the unique identifier of this connection.
+   * ID is the unique identifier of the connection.
    *
    * @generated from field: string id = 1;
    */
@@ -957,138 +1257,6 @@ export class MetricsResponse extends Message<MetricsResponse> {
 }
 
 /**
- * ConnectionStatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
- *
- * @generated from message v1.ConnectionStatusRequest
- */
-export class ConnectionStatusRequest extends Message<ConnectionStatusRequest> {
-  /**
-   * IDs are the unique identifiers of the connections to retrieve status for.
-   * If not provided, status for all known connections will be returned.
-   *
-   * @generated from field: repeated string ids = 1;
-   */
-  ids: string[] = [];
-
-  constructor(data?: PartialMessage<ConnectionStatusRequest>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.ConnectionStatusRequest";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectionStatusRequest {
-    return new ConnectionStatusRequest().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectionStatusRequest {
-    return new ConnectionStatusRequest().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectionStatusRequest {
-    return new ConnectionStatusRequest().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ConnectionStatusRequest | PlainMessage<ConnectionStatusRequest> | undefined, b: ConnectionStatusRequest | PlainMessage<ConnectionStatusRequest> | undefined): boolean {
-    return proto3.util.equals(ConnectionStatusRequest, a, b);
-  }
-}
-
-/**
- * ConnectionStatusResponse is a message containing the status of the node.
- *
- * @generated from message v1.ConnectionStatusResponse
- */
-export class ConnectionStatusResponse extends Message<ConnectionStatusResponse> {
-  /**
-   * Statuses is a map of network IDs to their status.
-   *
-   * @generated from field: map<string, v1.ConnectionStatus> statuses = 1;
-   */
-  statuses: { [key: string]: ConnectionStatus } = {};
-
-  constructor(data?: PartialMessage<ConnectionStatusResponse>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.ConnectionStatusResponse";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "statuses", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "message", T: ConnectionStatus} },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectionStatusResponse {
-    return new ConnectionStatusResponse().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectionStatusResponse {
-    return new ConnectionStatusResponse().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectionStatusResponse {
-    return new ConnectionStatusResponse().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ConnectionStatusResponse | PlainMessage<ConnectionStatusResponse> | undefined, b: ConnectionStatusResponse | PlainMessage<ConnectionStatusResponse> | undefined): boolean {
-    return proto3.util.equals(ConnectionStatusResponse, a, b);
-  }
-}
-
-/**
- * ConnectionStatus is the status of a connection.
- *
- * @generated from message v1.ConnectionStatus
- */
-export class ConnectionStatus extends Message<ConnectionStatus> {
-  /**
-   * ConnectionStatus is the status of the connection.
-   *
-   * @generated from field: v1.DaemonConnStatus connectionStatus = 1;
-   */
-  connectionStatus = DaemonConnStatus.DISCONNECTED;
-
-  /**
-   * Node is the node status. This is only populated if the node is connected.
-   *
-   * @generated from field: v1.MeshNode node = 2;
-   */
-  node?: MeshNode;
-
-  constructor(data?: PartialMessage<ConnectionStatus>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.ConnectionStatus";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "connectionStatus", kind: "enum", T: proto3.getEnumType(DaemonConnStatus) },
-    { no: 2, name: "node", kind: "message", T: MeshNode },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConnectionStatus {
-    return new ConnectionStatus().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConnectionStatus {
-    return new ConnectionStatus().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConnectionStatus {
-    return new ConnectionStatus().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ConnectionStatus | PlainMessage<ConnectionStatus> | undefined, b: ConnectionStatus | PlainMessage<ConnectionStatus> | undefined): boolean {
-    return proto3.util.equals(ConnectionStatus, a, b);
-  }
-}
-
-/**
  * AppQueryRequest is sent by the application to a daemon to query a mesh's storage.
  *
  * @generated from message v1.AppQueryRequest
@@ -1138,11 +1306,12 @@ export class AppQueryRequest extends Message<AppQueryRequest> {
 }
 
 /**
- * AppDropRequest is sent by the application to a daemon to drop a mesh's storage.
+ * DropConnectionRequest is sent by the application to a daemon to drop all storage
+ * and information for a mesh connection.
  *
- * @generated from message v1.AppDropRequest
+ * @generated from message v1.DropConnectionRequest
  */
-export class AppDropRequest extends Message<AppDropRequest> {
+export class DropConnectionRequest extends Message<DropConnectionRequest> {
   /**
    * ID is the unique identifier of this connection.
    *
@@ -1150,64 +1319,64 @@ export class AppDropRequest extends Message<AppDropRequest> {
    */
   id = "";
 
-  constructor(data?: PartialMessage<AppDropRequest>) {
+  constructor(data?: PartialMessage<DropConnectionRequest>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.AppDropRequest";
+  static readonly typeName = "v1.DropConnectionRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppDropRequest {
-    return new AppDropRequest().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DropConnectionRequest {
+    return new DropConnectionRequest().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppDropRequest {
-    return new AppDropRequest().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DropConnectionRequest {
+    return new DropConnectionRequest().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppDropRequest {
-    return new AppDropRequest().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DropConnectionRequest {
+    return new DropConnectionRequest().fromJsonString(jsonString, options);
   }
 
-  static equals(a: AppDropRequest | PlainMessage<AppDropRequest> | undefined, b: AppDropRequest | PlainMessage<AppDropRequest> | undefined): boolean {
-    return proto3.util.equals(AppDropRequest, a, b);
+  static equals(a: DropConnectionRequest | PlainMessage<DropConnectionRequest> | undefined, b: DropConnectionRequest | PlainMessage<DropConnectionRequest> | undefined): boolean {
+    return proto3.util.equals(DropConnectionRequest, a, b);
   }
 }
 
 /**
- * AppDropResponse is a message returned for a drop request.
+ * DropConnectionResponse is a message returned for a drop request.
  *
- * @generated from message v1.AppDropResponse
+ * @generated from message v1.DropConnectionResponse
  */
-export class AppDropResponse extends Message<AppDropResponse> {
-  constructor(data?: PartialMessage<AppDropResponse>) {
+export class DropConnectionResponse extends Message<DropConnectionResponse> {
+  constructor(data?: PartialMessage<DropConnectionResponse>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime: typeof proto3 = proto3;
-  static readonly typeName = "v1.AppDropResponse";
+  static readonly typeName = "v1.DropConnectionResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AppDropResponse {
-    return new AppDropResponse().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DropConnectionResponse {
+    return new DropConnectionResponse().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AppDropResponse {
-    return new AppDropResponse().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DropConnectionResponse {
+    return new DropConnectionResponse().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AppDropResponse {
-    return new AppDropResponse().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DropConnectionResponse {
+    return new DropConnectionResponse().fromJsonString(jsonString, options);
   }
 
-  static equals(a: AppDropResponse | PlainMessage<AppDropResponse> | undefined, b: AppDropResponse | PlainMessage<AppDropResponse> | undefined): boolean {
-    return proto3.util.equals(AppDropResponse, a, b);
+  static equals(a: DropConnectionResponse | PlainMessage<DropConnectionResponse> | undefined, b: DropConnectionResponse | PlainMessage<DropConnectionResponse> | undefined): boolean {
+    return proto3.util.equals(DropConnectionResponse, a, b);
   }
 }
 
@@ -1308,8 +1477,7 @@ export class DaemonStatus extends Message<DaemonStatus> {
   startedAt?: Timestamp;
 
   /**
-   * Connections are a map of known connections to the daemon
-   * and their statuses.
+   * Connections are a map of known connections to the daemon and their statuses.
    *
    * @generated from field: map<string, v1.DaemonConnStatus> connections = 9;
    */

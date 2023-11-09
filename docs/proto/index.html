@@ -441,14 +441,6 @@
             <ul>
               
                 <li>
-                  <a href="#v1.AppDropRequest"><span class="badge">M</span>AppDropRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.AppDropResponse"><span class="badge">M</span>AppDropResponse</a>
-                </li>
-              
-                <li>
                   <a href="#v1.AppQueryRequest"><span class="badge">M</span>AppQueryRequest</a>
                 </li>
               
@@ -457,27 +449,15 @@
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectRequest.AuthCredentialsEntry"><span class="badge">M</span>ConnectRequest.AuthCredentialsEntry</a>
-                </li>
-              
-                <li>
                   <a href="#v1.ConnectResponse"><span class="badge">M</span>ConnectResponse</a>
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectionStatus"><span class="badge">M</span>ConnectionStatus</a>
+                  <a href="#v1.ConnectionParameters"><span class="badge">M</span>ConnectionParameters</a>
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectionStatusRequest"><span class="badge">M</span>ConnectionStatusRequest</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.ConnectionStatusResponse"><span class="badge">M</span>ConnectionStatusResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#v1.ConnectionStatusResponse.StatusesEntry"><span class="badge">M</span>ConnectionStatusResponse.StatusesEntry</a>
+                  <a href="#v1.ConnectionParameters.AuthCredentialsEntry"><span class="badge">M</span>ConnectionParameters.AuthCredentialsEntry</a>
                 </li>
               
                 <li>
@@ -494,6 +474,34 @@
               
                 <li>
                   <a href="#v1.DisconnectResponse"><span class="badge">M</span>DisconnectResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DropConnectionRequest"><span class="badge">M</span>DropConnectionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.DropConnectionResponse"><span class="badge">M</span>DropConnectionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetConnectionRequest"><span class="badge">M</span>GetConnectionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.GetConnectionResponse"><span class="badge">M</span>GetConnectionResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListConnectionsRequest"><span class="badge">M</span>ListConnectionsRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListConnectionsResponse"><span class="badge">M</span>ListConnectionsResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.ListConnectionsResponse.ConnectionsEntry"><span class="badge">M</span>ListConnectionsResponse.ConnectionsEntry</a>
                 </li>
               
                 <li>
@@ -529,16 +537,24 @@
                 </li>
               
                 <li>
+                  <a href="#v1.PutConnectionRequest"><span class="badge">M</span>PutConnectionRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#v1.PutConnectionResponse"><span class="badge">M</span>PutConnectionResponse</a>
+                </li>
+              
+                <li>
                   <a href="#v1.StatusRequest"><span class="badge">M</span>StatusRequest</a>
                 </li>
               
               
                 <li>
-                  <a href="#v1.ConnectRequest.AddrType"><span class="badge">E</span>ConnectRequest.AddrType</a>
+                  <a href="#v1.ConnectionParameters.AddrType"><span class="badge">E</span>ConnectionParameters.AddrType</a>
                 </li>
               
                 <li>
-                  <a href="#v1.ConnectRequest.AuthHeader"><span class="badge">E</span>ConnectRequest.AuthHeader</a>
+                  <a href="#v1.ConnectionParameters.AuthHeader"><span class="badge">E</span>ConnectionParameters.AuthHeader</a>
                 </li>
               
                 <li>
@@ -3219,37 +3235,6 @@ only available on nodes that are able to provide storage.</p></td>
       <p></p>
 
       
-        <h3 id="v1.AppDropRequest">AppDropRequest</h3>
-        <p>AppDropRequest is sent by the application to a daemon to drop a mesh's storage.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>id</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>ID is the unique identifier of this connection. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.AppDropResponse">AppDropResponse</h3>
-        <p>AppDropResponse is a message returned for a drop request.</p>
-
-        
-
-        
-      
         <h3 id="v1.AppQueryRequest">AppQueryRequest</h3>
         <p>AppQueryRequest is sent by the application to a daemon to query a mesh's storage.</p>
 
@@ -3282,7 +3267,7 @@ only available on nodes that are able to provide storage.</p></td>
         
       
         <h3 id="v1.ConnectRequest">ConnectRequest</h3>
-        <p>ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.</p>
+        <p>ConnectRequest is sent by an application to a daemon to connect to a mesh.</p>
 
         
           <table class="field-table">
@@ -3295,95 +3280,7 @@ only available on nodes that are able to provide storage.</p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID is the unique identifier of this connection. If not provided
-one will be generated. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>authMethod</td>
-                  <td><a href="#v1.NetworkAuthMethod">NetworkAuthMethod</a></td>
-                  <td></td>
-                  <td><p>AuthMethod is the type of authentication to use. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>authCredentials</td>
-                  <td><a href="#v1.ConnectRequest.AuthCredentialsEntry">ConnectRequest.AuthCredentialsEntry</a></td>
-                  <td>repeated</td>
-                  <td><p>AuthCredentials are additional credentials as required by the authType. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>addrType</td>
-                  <td><a href="#v1.ConnectRequest.AddrType">ConnectRequest.AddrType</a></td>
-                  <td></td>
-                  <td><p>AddrType is the type of join addresses in the addrs list. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>addrs</td>
-                  <td><a href="#string">string</a></td>
-                  <td>repeated</td>
-                  <td><p>Addrs are the join addresses to use to connect to the mesh. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>networking</td>
-                  <td><a href="#v1.MeshConnNetworking">MeshConnNetworking</a></td>
-                  <td></td>
-                  <td><p>Networking is the networking configuration to use. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>services</td>
-                  <td><a href="#v1.MeshConnServices">MeshConnServices</a></td>
-                  <td></td>
-                  <td><p>Services are the services to expose to other nodes on the mesh. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>bootstrap</td>
-                  <td><a href="#v1.MeshConnBootstrap">MeshConnBootstrap</a></td>
-                  <td></td>
-                  <td><p>Bootstrap are options for bootstrapping a new mesh. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>tls</td>
-                  <td><a href="#v1.MeshConnTLS">MeshConnTLS</a></td>
-                  <td></td>
-                  <td><p>TLS are TLS configurations for the mesh connection. </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.ConnectRequest.AuthCredentialsEntry">ConnectRequest.AuthCredentialsEntry</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
+                  <td><p>ID is the unique identifier of the connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3459,8 +3356,8 @@ one will be generated. </p></td>
 
         
       
-        <h3 id="v1.ConnectionStatus">ConnectionStatus</h3>
-        <p>ConnectionStatus is the status of a connection.</p>
+        <h3 id="v1.ConnectionParameters">ConnectionParameters</h3>
+        <p>ConnectionParameters are the parameters for a mesh connection.</p>
 
         
           <table class="field-table">
@@ -3470,66 +3367,59 @@ one will be generated. </p></td>
             <tbody>
               
                 <tr>
-                  <td>connectionStatus</td>
-                  <td><a href="#v1.DaemonConnStatus">DaemonConnStatus</a></td>
+                  <td>authMethod</td>
+                  <td><a href="#v1.NetworkAuthMethod">NetworkAuthMethod</a></td>
                   <td></td>
-                  <td><p>ConnectionStatus is the status of the connection. </p></td>
+                  <td><p>AuthMethod is the type of authentication to use. </p></td>
                 </tr>
               
                 <tr>
-                  <td>node</td>
-                  <td><a href="#v1.MeshNode">MeshNode</a></td>
-                  <td></td>
-                  <td><p>Node is the node status. This is only populated if the node is connected. </p></td>
+                  <td>authCredentials</td>
+                  <td><a href="#v1.ConnectionParameters.AuthCredentialsEntry">ConnectionParameters.AuthCredentialsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>AuthCredentials are additional credentials as required by the authType. </p></td>
                 </tr>
               
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.ConnectionStatusRequest">ConnectionStatusRequest</h3>
-        <p>ConnectionStatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
+                <tr>
+                  <td>addrType</td>
+                  <td><a href="#v1.ConnectionParameters.AddrType">ConnectionParameters.AddrType</a></td>
+                  <td></td>
+                  <td><p>AddrType is the type of join addresses in the addrs list. </p></td>
+                </tr>
               
                 <tr>
-                  <td>ids</td>
+                  <td>addrs</td>
                   <td><a href="#string">string</a></td>
                   <td>repeated</td>
-                  <td><p>IDs are the unique identifiers of the connections to retrieve status for.
-If not provided, status for all known connections will be returned. </p></td>
+                  <td><p>Addrs are the join addresses to use to connect to the mesh. </p></td>
                 </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="v1.ConnectionStatusResponse">ConnectionStatusResponse</h3>
-        <p>ConnectionStatusResponse is a message containing the status of the node.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
               
                 <tr>
-                  <td>statuses</td>
-                  <td><a href="#v1.ConnectionStatusResponse.StatusesEntry">ConnectionStatusResponse.StatusesEntry</a></td>
-                  <td>repeated</td>
-                  <td><p>Statuses is a map of network IDs to their status. </p></td>
+                  <td>networking</td>
+                  <td><a href="#v1.MeshConnNetworking">MeshConnNetworking</a></td>
+                  <td></td>
+                  <td><p>Networking is the networking configuration to use. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>services</td>
+                  <td><a href="#v1.MeshConnServices">MeshConnServices</a></td>
+                  <td></td>
+                  <td><p>Services are the services to expose to other nodes on the mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>bootstrap</td>
+                  <td><a href="#v1.MeshConnBootstrap">MeshConnBootstrap</a></td>
+                  <td></td>
+                  <td><p>Bootstrap are options for bootstrapping a new mesh. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>tls</td>
+                  <td><a href="#v1.MeshConnTLS">MeshConnTLS</a></td>
+                  <td></td>
+                  <td><p>TLS are TLS configurations for the mesh connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3539,7 +3429,7 @@ If not provided, status for all known connections will be returned. </p></td>
 
         
       
-        <h3 id="v1.ConnectionStatusResponse.StatusesEntry">ConnectionStatusResponse.StatusesEntry</h3>
+        <h3 id="v1.ConnectionParameters.AuthCredentialsEntry">ConnectionParameters.AuthCredentialsEntry</h3>
         <p></p>
 
         
@@ -3558,7 +3448,7 @@ If not provided, status for all known connections will be returned. </p></td>
               
                 <tr>
                   <td>value</td>
-                  <td><a href="#v1.ConnectionStatus">ConnectionStatus</a></td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -3641,8 +3531,7 @@ This is used for mesh connections from the daemon. </p></td>
                   <td>connections</td>
                   <td><a href="#v1.DaemonStatus.ConnectionsEntry">DaemonStatus.ConnectionsEntry</a></td>
                   <td>repeated</td>
-                  <td><p>Connections are a map of known connections to the daemon
-and their statuses. </p></td>
+                  <td><p>Connections are a map of known connections to the daemon and their statuses. </p></td>
                 </tr>
               
             </tbody>
@@ -3697,7 +3586,7 @@ and their statuses. </p></td>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>ID is the unique identifier of this connection. </p></td>
+                  <td><p>ID is the unique identifier of the connection. </p></td>
                 </tr>
               
             </tbody>
@@ -3711,6 +3600,180 @@ and their statuses. </p></td>
         <p>DisconnectResponse is returned by the Disconnect RPC.</p>
 
         
+
+        
+      
+        <h3 id="v1.DropConnectionRequest">DropConnectionRequest</h3>
+        <p>DropConnectionRequest is sent by the application to a daemon to drop all storage</p><p>and information for a mesh connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of this connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.DropConnectionResponse">DropConnectionResponse</h3>
+        <p>DropConnectionResponse is a message returned for a drop request.</p>
+
+        
+
+        
+      
+        <h3 id="v1.GetConnectionRequest">GetConnectionRequest</h3>
+        <p>GetConnectionRequest is sent by an application to a daemon to retrieve the parameters</p><p>and current status of a mesh connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of the connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.GetConnectionResponse">GetConnectionResponse</h3>
+        <p>GetConnectionResponse is returned by the GetConnection RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#v1.DaemonConnStatus">DaemonConnStatus</a></td>
+                  <td></td>
+                  <td><p>Status is the status of the connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td><a href="#v1.ConnectionParameters">ConnectionParameters</a></td>
+                  <td></td>
+                  <td><p>Parameters are the parameters for the connection. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>node</td>
+                  <td><a href="#v1.MeshNode">MeshNode</a></td>
+                  <td></td>
+                  <td><p>Node is the node information for the connection.
+This is only populated when the connection is connected. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListConnectionsRequest">ListConnectionsRequest</h3>
+        <p>ListConnectionsRequest is sent by an application to a daemon to retrieve the parameters</p><p>and current status of all mesh connections.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>ids</td>
+                  <td><a href="#string">string</a></td>
+                  <td>repeated</td>
+                  <td><p>IDs are the unique identifiers of the connections to retrieve information for.
+If not provided, metrics for all known connections will be returned. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListConnectionsResponse">ListConnectionsResponse</h3>
+        <p>ListConnectionsResponse is returned by the ListConnections RPC.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>connections</td>
+                  <td><a href="#v1.ListConnectionsResponse.ConnectionsEntry">ListConnectionsResponse.ConnectionsEntry</a></td>
+                  <td>repeated</td>
+                  <td><p>Connections are the parameters and statuses of all connections. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.ListConnectionsResponse.ConnectionsEntry">ListConnectionsResponse.ConnectionsEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#v1.GetConnectionResponse">GetConnectionResponse</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
 
         
       
@@ -4076,6 +4139,45 @@ If not provided, metrics for all known connections will be returned. </p></td>
 
         
       
+        <h3 id="v1.PutConnectionRequest">PutConnectionRequest</h3>
+        <p>PutConnectionRequest is sent by an application to a daemon to store the parameters</p><p>for a mesh connection.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>ID is the unique identifier of the connection. If not provided
+one will be generated. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>parameters</td>
+                  <td><a href="#v1.ConnectionParameters">ConnectionParameters</a></td>
+                  <td></td>
+                  <td><p>Parameters are the parameters for the connection. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="v1.PutConnectionResponse">PutConnectionResponse</h3>
+        <p>PutConnectionResponse is returned by the PutConnection RPC.</p>
+
+        
+
+        
+      
         <h3 id="v1.StatusRequest">StatusRequest</h3>
         <p>StatusRequest is sent by the application to a daemon to retrieve the status of the daemon.</p>
 
@@ -4085,7 +4187,7 @@ If not provided, metrics for all known connections will be returned. </p></td>
       
 
       
-        <h3 id="v1.ConnectRequest.AddrType">ConnectRequest.AddrType</h3>
+        <h3 id="v1.ConnectionParameters.AddrType">ConnectionParameters.AddrType</h3>
         <p>AddrType is the type of join addresses included in the request.</p>
         <table class="enum-table">
           <thead>
@@ -4114,7 +4216,7 @@ If not provided, metrics for all known connections will be returned. </p></td>
           </tbody>
         </table>
       
-        <h3 id="v1.ConnectRequest.AuthHeader">ConnectRequest.AuthHeader</h3>
+        <h3 id="v1.ConnectionParameters.AuthHeader">ConnectionParameters.AuthHeader</h3>
         <p>AuthHeader is an enumeration of headers that coorespond to the AuthMethod.</p><p>They are used to pass authentication credentials to the daemon. Enums </p><p>cannot be used as map keys, so their string values are used instead.</p>
         <table class="enum-table">
           <thead>
@@ -4255,12 +4357,40 @@ The TLS object should be used to configure the TLS connection.</p></td>
 
       
         <h3 id="v1.AppDaemon">AppDaemon</h3>
-        <p>AppDaemon is exposed by nodes running in the daemon mode. This mode allows the</p><p>node to run in an idle state and be controlled by an application. The application</p><p>can send commands to the node to execute tasks and receive responses.</p>
+        <p>AppDaemon is exposed by nodes running in the daemon mode.</p><p>This mode allows the node to run in an idle state and be controlled by an application.</p><p>The application can send commands to the node to execute tasks and receive responses.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
           </thead>
           <tbody>
+            
+              <tr>
+                <td>PutConnection</td>
+                <td><a href="#v1.PutConnectionRequest">PutConnectionRequest</a></td>
+                <td><a href="#v1.PutConnectionResponse">PutConnectionResponse</a></td>
+                <td><p>PutConnection stores the parameters for a connection in the daemon.</p></td>
+              </tr>
+            
+              <tr>
+                <td>GetConnection</td>
+                <td><a href="#v1.GetConnectionRequest">GetConnectionRequest</a></td>
+                <td><a href="#v1.GetConnectionResponse">GetConnectionResponse</a></td>
+                <td><p>GetConnection retrieves the parameters and current status of a connection in the daemon.</p></td>
+              </tr>
+            
+              <tr>
+                <td>DropConnection</td>
+                <td><a href="#v1.DropConnectionRequest">DropConnectionRequest</a></td>
+                <td><a href="#v1.DropConnectionResponse">DropConnectionResponse</a></td>
+                <td><p>DropConnection deletes all data stored for a given mesh connection.</p></td>
+              </tr>
+            
+              <tr>
+                <td>ListConnections</td>
+                <td><a href="#v1.ListConnectionsRequest">ListConnectionsRequest</a></td>
+                <td><a href="#v1.ListConnectionsResponse">ListConnectionsResponse</a></td>
+                <td><p>ListConnections retrieves the parameters and current status of all connections in the daemon.</p></td>
+              </tr>
             
               <tr>
                 <td>Connect</td>
@@ -4284,13 +4414,6 @@ The TLS object should be used to configure the TLS connection.</p></td>
               </tr>
             
               <tr>
-                <td>ConnectionStatus</td>
-                <td><a href="#v1.ConnectionStatusRequest">ConnectionStatusRequest</a></td>
-                <td><a href="#v1.ConnectionStatusResponse">ConnectionStatusResponse</a></td>
-                <td><p>ConnectionStatus is used to retrieve the status of a mesh connection.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Query</td>
                 <td><a href="#v1.AppQueryRequest">AppQueryRequest</a></td>
                 <td><a href="#v1.QueryResponse">QueryResponse</a></td>
@@ -4298,17 +4421,10 @@ The TLS object should be used to configure the TLS connection.</p></td>
               </tr>
             
               <tr>
-                <td>Drop</td>
-                <td><a href="#v1.AppDropRequest">AppDropRequest</a></td>
-                <td><a href="#v1.AppDropResponse">AppDropResponse</a></td>
-                <td><p>Drop deletes all data stored for a given mesh connection.</p></td>
-              </tr>
-            
-              <tr>
                 <td>Status</td>
                 <td><a href="#v1.StatusRequest">StatusRequest</a></td>
                 <td><a href="#v1.DaemonStatus">DaemonStatus</a></td>
-                <td><p>Status is used to retrieve the status of the daemon.</p></td>
+                <td><p>Status is used to retrieve the status of the daemon. This includes a map of known connections and their statuses.</p></td>
               </tr>
             
           </tbody>

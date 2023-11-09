@@ -18,20 +18,64 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AppDropRequest, AppDropResponse, AppQueryRequest, ConnectionStatusRequest, ConnectionStatusResponse, ConnectRequest, ConnectResponse, DaemonStatus, DisconnectRequest, DisconnectResponse, MetricsRequest, MetricsResponse, StatusRequest } from "./app_pb.js";
+import { AppQueryRequest, ConnectRequest, ConnectResponse, DaemonStatus, DisconnectRequest, DisconnectResponse, DropConnectionRequest, DropConnectionResponse, GetConnectionRequest, GetConnectionResponse, ListConnectionsRequest, ListConnectionsResponse, MetricsRequest, MetricsResponse, PutConnectionRequest, PutConnectionResponse, StatusRequest } from "./app_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { QueryResponse } from "./storage_query_pb.js";
 
 /**
- * AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
- * node to run in an idle state and be controlled by an application. The application
- * can send commands to the node to execute tasks and receive responses.
+ * AppDaemon is exposed by nodes running in the daemon mode.
+ * This mode allows the node to run in an idle state and be controlled by an application.
+ * The application can send commands to the node to execute tasks and receive responses.
  *
  * @generated from service v1.AppDaemon
  */
 export const AppDaemon = {
   typeName: "v1.AppDaemon",
   methods: {
+    /**
+     * PutConnection stores the parameters for a connection in the daemon.
+     *
+     * @generated from rpc v1.AppDaemon.PutConnection
+     */
+    putConnection: {
+      name: "PutConnection",
+      I: PutConnectionRequest,
+      O: PutConnectionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * GetConnection retrieves the parameters and current status of a connection in the daemon.
+     *
+     * @generated from rpc v1.AppDaemon.GetConnection
+     */
+    getConnection: {
+      name: "GetConnection",
+      I: GetConnectionRequest,
+      O: GetConnectionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * DropConnection deletes all data stored for a given mesh connection.
+     *
+     * @generated from rpc v1.AppDaemon.DropConnection
+     */
+    dropConnection: {
+      name: "DropConnection",
+      I: DropConnectionRequest,
+      O: DropConnectionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * ListConnections retrieves the parameters and current status of all connections in the daemon.
+     *
+     * @generated from rpc v1.AppDaemon.ListConnections
+     */
+    listConnections: {
+      name: "ListConnections",
+      I: ListConnectionsRequest,
+      O: ListConnectionsResponse,
+      kind: MethodKind.Unary,
+    },
     /**
      * Connect is used to establish a connection between the node and a mesh.
      *
@@ -66,17 +110,6 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * ConnectionStatus is used to retrieve the status of a mesh connection.
-     *
-     * @generated from rpc v1.AppDaemon.ConnectionStatus
-     */
-    connectionStatus: {
-      name: "ConnectionStatus",
-      I: ConnectionStatusRequest,
-      O: ConnectionStatusResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
      * Query is used to query a mesh connection for information.
      *
      * @generated from rpc v1.AppDaemon.Query
@@ -88,18 +121,7 @@ export const AppDaemon = {
       kind: MethodKind.Unary,
     },
     /**
-     * Drop deletes all data stored for a given mesh connection.
-     *
-     * @generated from rpc v1.AppDaemon.Drop
-     */
-    drop: {
-      name: "Drop",
-      I: AppDropRequest,
-      O: AppDropResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * Status is used to retrieve the status of the daemon.
+     * Status is used to retrieve the status of the daemon. This includes a map of known connections and their statuses.
      *
      * @generated from rpc v1.AppDaemon.Status
      */

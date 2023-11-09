@@ -35,22 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on ConnectRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *ConnectRequest) Validate() error {
+// Validate checks the field values on PutConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PutConnectionRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ConnectRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ConnectRequestMultiError,
-// or nil if none found.
-func (m *ConnectRequest) ValidateAll() error {
+// ValidateAll checks the field values on PutConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PutConnectionRequestMultiError, or nil if none found.
+func (m *PutConnectionRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ConnectRequest) validate(all bool) error {
+func (m *PutConnectionRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -59,122 +59,29 @@ func (m *ConnectRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for AuthMethod
-
-	// no validation rules for AuthCredentials
-
-	// no validation rules for AddrType
-
 	if all {
-		switch v := interface{}(m.GetNetworking()).(type) {
+		switch v := interface{}(m.GetParameters()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Networking",
+				errors = append(errors, PutConnectionRequestValidationError{
+					field:  "Parameters",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Networking",
+				errors = append(errors, PutConnectionRequestValidationError{
+					field:  "Parameters",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetNetworking()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetParameters()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ConnectRequestValidationError{
-				field:  "Networking",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
-		switch v := interface{}(m.GetServices()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Services",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Services",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetServices()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ConnectRequestValidationError{
-				field:  "Services",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
-		switch v := interface{}(m.GetBootstrap()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Bootstrap",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Bootstrap",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetBootstrap()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ConnectRequestValidationError{
-				field:  "Bootstrap",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
-		switch v := interface{}(m.GetTls()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Tls",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectRequestValidationError{
-					field:  "Tls",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ConnectRequestValidationError{
-				field:  "Tls",
+			return PutConnectionRequestValidationError{
+				field:  "Parameters",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -182,19 +89,19 @@ func (m *ConnectRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ConnectRequestMultiError(errors)
+		return PutConnectionRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ConnectRequestMultiError is an error wrapping multiple validation errors
-// returned by ConnectRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ConnectRequestMultiError []error
+// PutConnectionRequestMultiError is an error wrapping multiple validation
+// errors returned by PutConnectionRequest.ValidateAll() if the designated
+// constraints aren't met.
+type PutConnectionRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ConnectRequestMultiError) Error() string {
+func (m PutConnectionRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -203,11 +110,11 @@ func (m ConnectRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ConnectRequestMultiError) AllErrors() []error { return m }
+func (m PutConnectionRequestMultiError) AllErrors() []error { return m }
 
-// ConnectRequestValidationError is the validation error returned by
-// ConnectRequest.Validate if the designated constraints aren't met.
-type ConnectRequestValidationError struct {
+// PutConnectionRequestValidationError is the validation error returned by
+// PutConnectionRequest.Validate if the designated constraints aren't met.
+type PutConnectionRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -215,22 +122,24 @@ type ConnectRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ConnectRequestValidationError) Field() string { return e.field }
+func (e PutConnectionRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ConnectRequestValidationError) Reason() string { return e.reason }
+func (e PutConnectionRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ConnectRequestValidationError) Cause() error { return e.cause }
+func (e PutConnectionRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ConnectRequestValidationError) Key() bool { return e.key }
+func (e PutConnectionRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ConnectRequestValidationError) ErrorName() string { return "ConnectRequestValidationError" }
+func (e PutConnectionRequestValidationError) ErrorName() string {
+	return "PutConnectionRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e ConnectRequestValidationError) Error() string {
+func (e PutConnectionRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -242,14 +151,14 @@ func (e ConnectRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sConnectRequest.%s: %s%s",
+		"invalid %sPutConnectionRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ConnectRequestValidationError{}
+var _ error = PutConnectionRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -257,7 +166,849 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ConnectRequestValidationError{}
+} = PutConnectionRequestValidationError{}
+
+// Validate checks the field values on PutConnectionResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PutConnectionResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PutConnectionResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PutConnectionResponseMultiError, or nil if none found.
+func (m *PutConnectionResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PutConnectionResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return PutConnectionResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// PutConnectionResponseMultiError is an error wrapping multiple validation
+// errors returned by PutConnectionResponse.ValidateAll() if the designated
+// constraints aren't met.
+type PutConnectionResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PutConnectionResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PutConnectionResponseMultiError) AllErrors() []error { return m }
+
+// PutConnectionResponseValidationError is the validation error returned by
+// PutConnectionResponse.Validate if the designated constraints aren't met.
+type PutConnectionResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PutConnectionResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PutConnectionResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PutConnectionResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PutConnectionResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PutConnectionResponseValidationError) ErrorName() string {
+	return "PutConnectionResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PutConnectionResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPutConnectionResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PutConnectionResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PutConnectionResponseValidationError{}
+
+// Validate checks the field values on GetConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetConnectionRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetConnectionRequestMultiError, or nil if none found.
+func (m *GetConnectionRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetConnectionRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if len(errors) > 0 {
+		return GetConnectionRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetConnectionRequestMultiError is an error wrapping multiple validation
+// errors returned by GetConnectionRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetConnectionRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetConnectionRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetConnectionRequestMultiError) AllErrors() []error { return m }
+
+// GetConnectionRequestValidationError is the validation error returned by
+// GetConnectionRequest.Validate if the designated constraints aren't met.
+type GetConnectionRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetConnectionRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetConnectionRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetConnectionRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetConnectionRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetConnectionRequestValidationError) ErrorName() string {
+	return "GetConnectionRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetConnectionRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetConnectionRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetConnectionRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetConnectionRequestValidationError{}
+
+// Validate checks the field values on GetConnectionResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetConnectionResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetConnectionResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetConnectionResponseMultiError, or nil if none found.
+func (m *GetConnectionResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetConnectionResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Status
+
+	if all {
+		switch v := interface{}(m.GetParameters()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetConnectionResponseValidationError{
+					field:  "Parameters",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetConnectionResponseValidationError{
+					field:  "Parameters",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetParameters()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetConnectionResponseValidationError{
+				field:  "Parameters",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetNode()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetConnectionResponseValidationError{
+					field:  "Node",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetConnectionResponseValidationError{
+					field:  "Node",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetNode()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetConnectionResponseValidationError{
+				field:  "Node",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetConnectionResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetConnectionResponseMultiError is an error wrapping multiple validation
+// errors returned by GetConnectionResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetConnectionResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetConnectionResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetConnectionResponseMultiError) AllErrors() []error { return m }
+
+// GetConnectionResponseValidationError is the validation error returned by
+// GetConnectionResponse.Validate if the designated constraints aren't met.
+type GetConnectionResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetConnectionResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetConnectionResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetConnectionResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetConnectionResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetConnectionResponseValidationError) ErrorName() string {
+	return "GetConnectionResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetConnectionResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetConnectionResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetConnectionResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetConnectionResponseValidationError{}
+
+// Validate checks the field values on ListConnectionsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListConnectionsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListConnectionsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListConnectionsRequestMultiError, or nil if none found.
+func (m *ListConnectionsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListConnectionsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ListConnectionsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListConnectionsRequestMultiError is an error wrapping multiple validation
+// errors returned by ListConnectionsRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListConnectionsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListConnectionsRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListConnectionsRequestMultiError) AllErrors() []error { return m }
+
+// ListConnectionsRequestValidationError is the validation error returned by
+// ListConnectionsRequest.Validate if the designated constraints aren't met.
+type ListConnectionsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListConnectionsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListConnectionsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListConnectionsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListConnectionsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListConnectionsRequestValidationError) ErrorName() string {
+	return "ListConnectionsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListConnectionsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListConnectionsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListConnectionsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListConnectionsRequestValidationError{}
+
+// Validate checks the field values on ListConnectionsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListConnectionsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListConnectionsResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListConnectionsResponseMultiError, or nil if none found.
+func (m *ListConnectionsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListConnectionsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	{
+		sorted_keys := make([]string, len(m.GetConnections()))
+		i := 0
+		for key := range m.GetConnections() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetConnections()[key]
+			_ = val
+
+			// no validation rules for Connections[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, ListConnectionsResponseValidationError{
+							field:  fmt.Sprintf("Connections[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, ListConnectionsResponseValidationError{
+							field:  fmt.Sprintf("Connections[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return ListConnectionsResponseValidationError{
+						field:  fmt.Sprintf("Connections[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		}
+	}
+
+	if len(errors) > 0 {
+		return ListConnectionsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListConnectionsResponseMultiError is an error wrapping multiple validation
+// errors returned by ListConnectionsResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListConnectionsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListConnectionsResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListConnectionsResponseMultiError) AllErrors() []error { return m }
+
+// ListConnectionsResponseValidationError is the validation error returned by
+// ListConnectionsResponse.Validate if the designated constraints aren't met.
+type ListConnectionsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListConnectionsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListConnectionsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListConnectionsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListConnectionsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListConnectionsResponseValidationError) ErrorName() string {
+	return "ListConnectionsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListConnectionsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListConnectionsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListConnectionsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListConnectionsResponseValidationError{}
+
+// Validate checks the field values on ConnectionParameters with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ConnectionParameters) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ConnectionParameters with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ConnectionParametersMultiError, or nil if none found.
+func (m *ConnectionParameters) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ConnectionParameters) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for AuthMethod
+
+	// no validation rules for AuthCredentials
+
+	// no validation rules for AddrType
+
+	if all {
+		switch v := interface{}(m.GetNetworking()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Networking",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Networking",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetNetworking()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectionParametersValidationError{
+				field:  "Networking",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetServices()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Services",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Services",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetServices()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectionParametersValidationError{
+				field:  "Services",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetBootstrap()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Bootstrap",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Bootstrap",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetBootstrap()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectionParametersValidationError{
+				field:  "Bootstrap",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetTls()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ConnectionParametersValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ConnectionParametersValidationError{
+				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ConnectionParametersMultiError(errors)
+	}
+
+	return nil
+}
+
+// ConnectionParametersMultiError is an error wrapping multiple validation
+// errors returned by ConnectionParameters.ValidateAll() if the designated
+// constraints aren't met.
+type ConnectionParametersMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ConnectionParametersMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ConnectionParametersMultiError) AllErrors() []error { return m }
+
+// ConnectionParametersValidationError is the validation error returned by
+// ConnectionParameters.Validate if the designated constraints aren't met.
+type ConnectionParametersValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ConnectionParametersValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ConnectionParametersValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ConnectionParametersValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ConnectionParametersValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ConnectionParametersValidationError) ErrorName() string {
+	return "ConnectionParametersValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ConnectionParametersValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sConnectionParameters.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ConnectionParametersValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ConnectionParametersValidationError{}
 
 // Validate checks the field values on MeshConnNetworking with the rules
 // defined in the proto definition for this message. If any rules are
@@ -837,6 +1588,108 @@ var _ interface {
 	ErrorName() string
 } = MeshConnTLSValidationError{}
 
+// Validate checks the field values on ConnectRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ConnectRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ConnectRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ConnectRequestMultiError,
+// or nil if none found.
+func (m *ConnectRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ConnectRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if len(errors) > 0 {
+		return ConnectRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ConnectRequestMultiError is an error wrapping multiple validation errors
+// returned by ConnectRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ConnectRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ConnectRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ConnectRequestMultiError) AllErrors() []error { return m }
+
+// ConnectRequestValidationError is the validation error returned by
+// ConnectRequest.Validate if the designated constraints aren't met.
+type ConnectRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ConnectRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ConnectRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ConnectRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ConnectRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ConnectRequestValidationError) ErrorName() string { return "ConnectRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ConnectRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sConnectRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ConnectRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ConnectRequestValidationError{}
+
 // Validate checks the field values on ConnectResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -1403,387 +2256,6 @@ var _ interface {
 	ErrorName() string
 } = MetricsResponseValidationError{}
 
-// Validate checks the field values on ConnectionStatusRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ConnectionStatusRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ConnectionStatusRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ConnectionStatusRequestMultiError, or nil if none found.
-func (m *ConnectionStatusRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ConnectionStatusRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if len(errors) > 0 {
-		return ConnectionStatusRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// ConnectionStatusRequestMultiError is an error wrapping multiple validation
-// errors returned by ConnectionStatusRequest.ValidateAll() if the designated
-// constraints aren't met.
-type ConnectionStatusRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ConnectionStatusRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ConnectionStatusRequestMultiError) AllErrors() []error { return m }
-
-// ConnectionStatusRequestValidationError is the validation error returned by
-// ConnectionStatusRequest.Validate if the designated constraints aren't met.
-type ConnectionStatusRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ConnectionStatusRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ConnectionStatusRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ConnectionStatusRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ConnectionStatusRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ConnectionStatusRequestValidationError) ErrorName() string {
-	return "ConnectionStatusRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ConnectionStatusRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sConnectionStatusRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ConnectionStatusRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ConnectionStatusRequestValidationError{}
-
-// Validate checks the field values on ConnectionStatusResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ConnectionStatusResponse) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ConnectionStatusResponse with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ConnectionStatusResponseMultiError, or nil if none found.
-func (m *ConnectionStatusResponse) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ConnectionStatusResponse) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	{
-		sorted_keys := make([]string, len(m.GetStatuses()))
-		i := 0
-		for key := range m.GetStatuses() {
-			sorted_keys[i] = key
-			i++
-		}
-		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
-		for _, key := range sorted_keys {
-			val := m.GetStatuses()[key]
-			_ = val
-
-			// no validation rules for Statuses[key]
-
-			if all {
-				switch v := interface{}(val).(type) {
-				case interface{ ValidateAll() error }:
-					if err := v.ValidateAll(); err != nil {
-						errors = append(errors, ConnectionStatusResponseValidationError{
-							field:  fmt.Sprintf("Statuses[%v]", key),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				case interface{ Validate() error }:
-					if err := v.Validate(); err != nil {
-						errors = append(errors, ConnectionStatusResponseValidationError{
-							field:  fmt.Sprintf("Statuses[%v]", key),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				}
-			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
-				if err := v.Validate(); err != nil {
-					return ConnectionStatusResponseValidationError{
-						field:  fmt.Sprintf("Statuses[%v]", key),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
-		}
-	}
-
-	if len(errors) > 0 {
-		return ConnectionStatusResponseMultiError(errors)
-	}
-
-	return nil
-}
-
-// ConnectionStatusResponseMultiError is an error wrapping multiple validation
-// errors returned by ConnectionStatusResponse.ValidateAll() if the designated
-// constraints aren't met.
-type ConnectionStatusResponseMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ConnectionStatusResponseMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ConnectionStatusResponseMultiError) AllErrors() []error { return m }
-
-// ConnectionStatusResponseValidationError is the validation error returned by
-// ConnectionStatusResponse.Validate if the designated constraints aren't met.
-type ConnectionStatusResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ConnectionStatusResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ConnectionStatusResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ConnectionStatusResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ConnectionStatusResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ConnectionStatusResponseValidationError) ErrorName() string {
-	return "ConnectionStatusResponseValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ConnectionStatusResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sConnectionStatusResponse.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ConnectionStatusResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ConnectionStatusResponseValidationError{}
-
-// Validate checks the field values on ConnectionStatus with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ConnectionStatus) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ConnectionStatus with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ConnectionStatusMultiError, or nil if none found.
-func (m *ConnectionStatus) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ConnectionStatus) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	// no validation rules for ConnectionStatus
-
-	if all {
-		switch v := interface{}(m.GetNode()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ConnectionStatusValidationError{
-					field:  "Node",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ConnectionStatusValidationError{
-					field:  "Node",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetNode()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ConnectionStatusValidationError{
-				field:  "Node",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if len(errors) > 0 {
-		return ConnectionStatusMultiError(errors)
-	}
-
-	return nil
-}
-
-// ConnectionStatusMultiError is an error wrapping multiple validation errors
-// returned by ConnectionStatus.ValidateAll() if the designated constraints
-// aren't met.
-type ConnectionStatusMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ConnectionStatusMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ConnectionStatusMultiError) AllErrors() []error { return m }
-
-// ConnectionStatusValidationError is the validation error returned by
-// ConnectionStatus.Validate if the designated constraints aren't met.
-type ConnectionStatusValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ConnectionStatusValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ConnectionStatusValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ConnectionStatusValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ConnectionStatusValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ConnectionStatusValidationError) ErrorName() string { return "ConnectionStatusValidationError" }
-
-// Error satisfies the builtin error interface
-func (e ConnectionStatusValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sConnectionStatus.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ConnectionStatusValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ConnectionStatusValidationError{}
-
 // Validate checks the field values on AppQueryRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -1915,22 +2387,22 @@ var _ interface {
 	ErrorName() string
 } = AppQueryRequestValidationError{}
 
-// Validate checks the field values on AppDropRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *AppDropRequest) Validate() error {
+// Validate checks the field values on DropConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DropConnectionRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AppDropRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in AppDropRequestMultiError,
-// or nil if none found.
-func (m *AppDropRequest) ValidateAll() error {
+// ValidateAll checks the field values on DropConnectionRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DropConnectionRequestMultiError, or nil if none found.
+func (m *DropConnectionRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AppDropRequest) validate(all bool) error {
+func (m *DropConnectionRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1940,19 +2412,19 @@ func (m *AppDropRequest) validate(all bool) error {
 	// no validation rules for Id
 
 	if len(errors) > 0 {
-		return AppDropRequestMultiError(errors)
+		return DropConnectionRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// AppDropRequestMultiError is an error wrapping multiple validation errors
-// returned by AppDropRequest.ValidateAll() if the designated constraints
-// aren't met.
-type AppDropRequestMultiError []error
+// DropConnectionRequestMultiError is an error wrapping multiple validation
+// errors returned by DropConnectionRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DropConnectionRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AppDropRequestMultiError) Error() string {
+func (m DropConnectionRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1961,11 +2433,11 @@ func (m AppDropRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AppDropRequestMultiError) AllErrors() []error { return m }
+func (m DropConnectionRequestMultiError) AllErrors() []error { return m }
 
-// AppDropRequestValidationError is the validation error returned by
-// AppDropRequest.Validate if the designated constraints aren't met.
-type AppDropRequestValidationError struct {
+// DropConnectionRequestValidationError is the validation error returned by
+// DropConnectionRequest.Validate if the designated constraints aren't met.
+type DropConnectionRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1973,22 +2445,24 @@ type AppDropRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AppDropRequestValidationError) Field() string { return e.field }
+func (e DropConnectionRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AppDropRequestValidationError) Reason() string { return e.reason }
+func (e DropConnectionRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AppDropRequestValidationError) Cause() error { return e.cause }
+func (e DropConnectionRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AppDropRequestValidationError) Key() bool { return e.key }
+func (e DropConnectionRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AppDropRequestValidationError) ErrorName() string { return "AppDropRequestValidationError" }
+func (e DropConnectionRequestValidationError) ErrorName() string {
+	return "DropConnectionRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e AppDropRequestValidationError) Error() string {
+func (e DropConnectionRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2000,14 +2474,14 @@ func (e AppDropRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAppDropRequest.%s: %s%s",
+		"invalid %sDropConnectionRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AppDropRequestValidationError{}
+var _ error = DropConnectionRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -2015,24 +2489,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AppDropRequestValidationError{}
+} = DropConnectionRequestValidationError{}
 
-// Validate checks the field values on AppDropResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *AppDropResponse) Validate() error {
+// Validate checks the field values on DropConnectionResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DropConnectionResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AppDropResponse with the rules
+// ValidateAll checks the field values on DropConnectionResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// AppDropResponseMultiError, or nil if none found.
-func (m *AppDropResponse) ValidateAll() error {
+// DropConnectionResponseMultiError, or nil if none found.
+func (m *DropConnectionResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AppDropResponse) validate(all bool) error {
+func (m *DropConnectionResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2040,19 +2514,19 @@ func (m *AppDropResponse) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return AppDropResponseMultiError(errors)
+		return DropConnectionResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// AppDropResponseMultiError is an error wrapping multiple validation errors
-// returned by AppDropResponse.ValidateAll() if the designated constraints
-// aren't met.
-type AppDropResponseMultiError []error
+// DropConnectionResponseMultiError is an error wrapping multiple validation
+// errors returned by DropConnectionResponse.ValidateAll() if the designated
+// constraints aren't met.
+type DropConnectionResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AppDropResponseMultiError) Error() string {
+func (m DropConnectionResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2061,11 +2535,11 @@ func (m AppDropResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AppDropResponseMultiError) AllErrors() []error { return m }
+func (m DropConnectionResponseMultiError) AllErrors() []error { return m }
 
-// AppDropResponseValidationError is the validation error returned by
-// AppDropResponse.Validate if the designated constraints aren't met.
-type AppDropResponseValidationError struct {
+// DropConnectionResponseValidationError is the validation error returned by
+// DropConnectionResponse.Validate if the designated constraints aren't met.
+type DropConnectionResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2073,22 +2547,24 @@ type AppDropResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e AppDropResponseValidationError) Field() string { return e.field }
+func (e DropConnectionResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AppDropResponseValidationError) Reason() string { return e.reason }
+func (e DropConnectionResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AppDropResponseValidationError) Cause() error { return e.cause }
+func (e DropConnectionResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AppDropResponseValidationError) Key() bool { return e.key }
+func (e DropConnectionResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AppDropResponseValidationError) ErrorName() string { return "AppDropResponseValidationError" }
+func (e DropConnectionResponseValidationError) ErrorName() string {
+	return "DropConnectionResponseValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e AppDropResponseValidationError) Error() string {
+func (e DropConnectionResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2100,14 +2576,14 @@ func (e AppDropResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAppDropResponse.%s: %s%s",
+		"invalid %sDropConnectionResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AppDropResponseValidationError{}
+var _ error = DropConnectionResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -2115,7 +2591,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AppDropResponseValidationError{}
+} = DropConnectionResponseValidationError{}
 
 // Validate checks the field values on StatusRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first

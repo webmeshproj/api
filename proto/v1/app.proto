@@ -52,8 +52,67 @@ enum DaemonConnStatus {
     CONNECTED = 2;
 };
 
-// ConnectRequest is sent by an application to a daemon to establish a connection to a mesh.
-message ConnectRequest {
+// PutConnectionRequest is sent by an application to a daemon to store the parameters
+// for a mesh connection.
+message PutConnectionRequest {
+    // ID is the unique identifier of the connection. If not provided
+    // one will be generated.
+    string id = 1 [
+        (buf.validate.field).required = false,
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 64
+    ];
+    // Parameters are the parameters for the connection.
+    ConnectionParameters parameters = 2;
+};
+
+// PutConnectionResponse is returned by the PutConnection RPC.
+message PutConnectionResponse {};
+
+// GetConnectionRequest is sent by an application to a daemon to retrieve the parameters
+// and current status of a mesh connection.
+message GetConnectionRequest {
+    // ID is the unique identifier of the connection.
+    string id = 1 [
+        (buf.validate.field).string.max_len = 64
+    ];
+};
+
+// GetConnectionResponse is returned by the GetConnection RPC.
+message GetConnectionResponse {
+    // Status is the status of the connection.
+    DaemonConnStatus status = 1;
+    // Parameters are the parameters for the connection.
+    ConnectionParameters parameters = 2;
+    // Node is the node information for the connection.
+    // This is only populated when the connection is connected.
+    MeshNode node = 3;
+};
+
+// ListConnectionsRequest is sent by an application to a daemon to retrieve the parameters
+// and current status of all mesh connections.
+message ListConnectionsRequest {
+    // IDs are the unique identifiers of the connections to retrieve information for.
+    // If not provided, metrics for all known connections will be returned.
+    repeated string ids = 1 [
+        (buf.validate.field).repeated.unique = true,
+        (buf.validate.field).repeated.items = {
+            string: {
+                min_len: 1,
+                max_len: 64
+            }
+        }
+    ];
+};
+
+// ListConnectionsResponse is returned by the ListConnections RPC.
+message ListConnectionsResponse {
+    // Connections are the parameters and statuses of all connections.
+    map<string, GetConnectionResponse> connections = 1;
+};
+
+// ConnectionParameters are the parameters for a mesh connection.
+message ConnectionParameters {
     // AddrType is the type of join addresses included in the request.
     enum AddrType {
         // ADDR is used to join a mesh using an IP or DNS address.
@@ -79,9 +138,6 @@ message ConnectRequest {
         // the join addresses to use to connect to the mesh.
         ADDRS_ENVELOPE = 4;
     };
-    // ID is the unique identifier of this connection. If not provided
-    // one will be generated.
-    string id = 1 [(buf.validate.field).string.max_len = 64];
     // AuthMethod is the type of authentication to use.
     NetworkAuthMethod authMethod = 2 [(buf.validate.field).enum.defined_only = true];
     // AuthCredentials are additional credentials as required by the authType. 
@@ -261,6 +317,16 @@ message MeshConnTLS {
     bool skipVerify = 6;
 };
 
+// ConnectRequest is sent by an application to a daemon to connect to a mesh.
+message ConnectRequest {
+    // ID is the unique identifier of the connection.
+    string id = 1 [
+        (buf.validate.field).required = false,
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 64
+    ];
+}
+
 // ConnectResponse is returned by the Connect RPC.
 message ConnectResponse {
     // ID is the unique identifier of this connection.
@@ -281,7 +347,7 @@ message ConnectResponse {
 
 // DisconnectRequest is sent by an application to a daemon to disconnect from a mesh.
 message DisconnectRequest {
-    // ID is the unique identifier of this connection.
+    // ID is the unique identifier of the connection.
     string id = 1 [
         (buf.validate.field).required = true,
         (buf.validate.field).string.min_len = 1,
@@ -313,35 +379,6 @@ message MetricsResponse {
     map<string, InterfaceMetrics> interfaces = 1;
 }
 
-// ConnectionStatusRequest is sent by the application to a daemon to retrieve the status of a mesh connection.
-message ConnectionStatusRequest {
-    // IDs are the unique identifiers of the connections to retrieve status for.
-    // If not provided, status for all known connections will be returned.
-    repeated string ids = 1 [
-        (buf.validate.field).repeated.unique = true,
-        (buf.validate.field).repeated.items = {
-            string: {
-                min_len: 1,
-                max_len: 64
-            }
-        }
-    ];
-}
-
-// ConnectionStatusResponse is a message containing the status of the node.
-message ConnectionStatusResponse {
-    // Statuses is a map of network IDs to their status.
-    map<string, ConnectionStatus> statuses = 1;
-}
-
-// ConnectionStatus is the status of a connection.
-message ConnectionStatus {
-    // ConnectionStatus is the status of the connection.
-    DaemonConnStatus connectionStatus = 1;
-    // Node is the node status. This is only populated if the node is connected.
-    MeshNode node = 2;
-}
-
 // AppQueryRequest is sent by the application to a daemon to query a mesh's storage.
 message AppQueryRequest {
     // ID is the unique identifier of this connection.
@@ -354,8 +391,9 @@ message AppQueryRequest {
     QueryRequest query = 2;
 }
 
-// AppDropRequest is sent by the application to a daemon to drop a mesh's storage.
-message AppDropRequest {
+// DropConnectionRequest is sent by the application to a daemon to drop all storage
+// and information for a mesh connection.
+message DropConnectionRequest {
     // ID is the unique identifier of this connection.
     string id = 1 [
         (buf.validate.field).required = true,
@@ -364,8 +402,8 @@ message AppDropRequest {
     ];
 }
 
-// AppDropResponse is a message returned for a drop request.
-message AppDropResponse {}
+// DropConnectionResponse is a message returned for a drop request.
+message DropConnectionResponse {}
 
 // StatusRequest is sent by the application to a daemon to retrieve the status of the daemon.
 message StatusRequest {}
@@ -389,15 +427,26 @@ message DaemonStatus {
     string uptime = 7;
     // StartedAt is the time the daemon started.
     google.protobuf.Timestamp startedAt = 8;
-    // Connections are a map of known connections to the daemon
-    // and their statuses.
+    // Connections are a map of known connections to the daemon and their statuses.
     map<string, DaemonConnStatus> connections = 9;
 }
 
-// AppDaemon is exposed by nodes running in the daemon mode. This mode allows the
-// node to run in an idle state and be controlled by an application. The application
-// can send commands to the node to execute tasks and receive responses.
+// AppDaemon is exposed by nodes running in the daemon mode.
+// This mode allows the node to run in an idle state and be controlled by an application.
+// The application can send commands to the node to execute tasks and receive responses.
 service AppDaemon {
+    // PutConnection stores the parameters for a connection in the daemon.
+    rpc PutConnection(PutConnectionRequest) returns (PutConnectionResponse) {}
+
+    // GetConnection retrieves the parameters and current status of a connection in the daemon.
+    rpc GetConnection(GetConnectionRequest) returns (GetConnectionResponse) {}
+
+    // DropConnection deletes all data stored for a given mesh connection.
+    rpc DropConnection(DropConnectionRequest) returns (DropConnectionResponse) {}
+
+    // ListConnections retrieves the parameters and current status of all connections in the daemon.
+    rpc ListConnections(ListConnectionsRequest) returns (ListConnectionsResponse) {}
+
     // Connect is used to establish a connection between the node and a mesh.
     rpc Connect(ConnectRequest) returns (ConnectResponse) {}
 
@@ -407,15 +456,9 @@ service AppDaemon {
     // Metrics is used to retrieve interface metrics for one or more mesh connections.
     rpc Metrics(MetricsRequest) returns (MetricsResponse) {}
 
-    // ConnectionStatus is used to retrieve the status of a mesh connection.
-    rpc ConnectionStatus(ConnectionStatusRequest) returns (ConnectionStatusResponse) {}
-
     // Query is used to query a mesh connection for information.
     rpc Query(AppQueryRequest) returns (QueryResponse) {}
 
-    // Drop deletes all data stored for a given mesh connection.
-    rpc Drop(AppDropRequest) returns (AppDropResponse) {}
-
-    // Status is used to retrieve the status of the daemon.
+    // Status is used to retrieve the status of the daemon. This includes a map of known connections and their statuses.
     rpc Status(StatusRequest) returns (DaemonStatus) {}
 }
