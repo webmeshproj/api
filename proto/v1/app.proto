@@ -67,7 +67,10 @@ message PutConnectionRequest {
 };
 
 // PutConnectionResponse is returned by the PutConnection RPC.
-message PutConnectionResponse {};
+message PutConnectionResponse {
+    // ID is the unique identifier of the connection.
+    string id = 1;
+};
 
 // GetConnectionRequest is sent by an application to a daemon to retrieve the parameters
 // and current status of a mesh connection.
