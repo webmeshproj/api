@@ -1,6 +1,6 @@
 {
     "name": "@webmeshproject/api",
-    "version": "0.11.2",
+    "version": "0.11.3",
     "description": "Generated service and type definitions for the Webmesh API",
     "author": "Avi Zimmerman",
     "license": "Apache-2.0",
