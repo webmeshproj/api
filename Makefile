@@ -1,5 +1,6 @@
-LOCALBIN     ?= $(CURDIR)/bin
-BUF          ?= buf
+LOCALBIN  ?= $(CURDIR)/bin
+BUF       ?= buf
+VERSION   ?= $(shell git describe --tags --always)
 
 generate: gen
 
@@ -15,3 +16,7 @@ update: ## Update proto dependencies.
 
 publish:
 	cd proto/ ; $(BUF) push
+
+npm-publish:
+	sed -i 's/"version": ".*"/"version": "$(subst v,,$(VERSION))"/' ts/package.json
+	# cd ts && npm publish --access public
