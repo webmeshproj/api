@@ -271,19 +271,43 @@ export class GetConnectionResponse extends Message<GetConnectionResponse> {
   parameters?: ConnectionParameters;
 
   /**
+   * Metadata are arbitrary key/value pairs stored with the connection.
+   *
+   * @generated from field: google.protobuf.Struct metadata = 3;
+   */
+  metadata?: Struct;
+
+  /**
    * Node is the node information for the connection.
    * This is only populated when the connection is connected.
    *
-   * @generated from field: v1.MeshNode node = 3;
+   * @generated from field: v1.MeshNode node = 4;
    */
   node?: MeshNode;
 
   /**
-   * Metadata are arbitrary key/value pairs stored with the connection.
+   * IPv4Network is the IPv4 network of the mesh. 
+   * This is only populated when the connection is connected.
    *
-   * @generated from field: google.protobuf.Struct metadata = 4;
+   * @generated from field: string ipv4Network = 5;
    */
-  metadata?: Struct;
+  ipv4Network = "";
+
+  /**
+   * IPv6Network is the IPv6 network of the mesh.
+   * This is only populated when the connection is connected.
+   *
+   * @generated from field: string ipv6Network = 6;
+   */
+  ipv6Network = "";
+
+  /**
+   * Domain is the domain of the mesh.
+   * This is only populated when the connection is connected.
+   *
+   * @generated from field: string domain = 7;
+   */
+  domain = "";
 
   constructor(data?: PartialMessage<GetConnectionResponse>) {
     super();
@@ -295,8 +319,11 @@ export class GetConnectionResponse extends Message<GetConnectionResponse> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(DaemonConnStatus) },
     { no: 2, name: "parameters", kind: "message", T: ConnectionParameters },
-    { no: 3, name: "node", kind: "message", T: MeshNode },
-    { no: 4, name: "metadata", kind: "message", T: Struct },
+    { no: 3, name: "metadata", kind: "message", T: Struct },
+    { no: 4, name: "node", kind: "message", T: MeshNode },
+    { no: 5, name: "ipv4Network", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "ipv6Network", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "domain", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConnectionResponse {

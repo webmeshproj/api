@@ -1,6 +1,6 @@
 LOCALBIN  ?= $(CURDIR)/bin
 BUF       ?= buf
-VERSION   ?= $(shell git describe --tags --always)
+VERSION   ?= $(shell git describe --tags --always | cut -d '-' -f 1)
 
 generate: gen
 

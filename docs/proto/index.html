@@ -3683,6 +3683,13 @@ This is used for mesh connections from the daemon. </p></td>
                 </tr>
               
                 <tr>
+                  <td>metadata</td>
+                  <td><a href="#google.protobuf.Struct">google.protobuf.Struct</a></td>
+                  <td></td>
+                  <td><p>Metadata are arbitrary key/value pairs stored with the connection. </p></td>
+                </tr>
+              
+                <tr>
                   <td>node</td>
                   <td><a href="#v1.MeshNode">MeshNode</a></td>
                   <td></td>
@@ -3691,10 +3698,27 @@ This is only populated when the connection is connected. </p></td>
                 </tr>
               
                 <tr>
-                  <td>metadata</td>
-                  <td><a href="#google.protobuf.Struct">google.protobuf.Struct</a></td>
+                  <td>ipv4Network</td>
+                  <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p>Metadata are arbitrary key/value pairs stored with the connection. </p></td>
+                  <td><p>IPv4Network is the IPv4 network of the mesh. 
+This is only populated when the connection is connected. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ipv6Network</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>IPv6Network is the IPv6 network of the mesh.
+This is only populated when the connection is connected. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>domain</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Domain is the domain of the mesh.
+This is only populated when the connection is connected. </p></td>
                 </tr>
               
             </tbody>

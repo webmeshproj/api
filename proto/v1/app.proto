@@ -59,7 +59,6 @@ message PutConnectionRequest {
     // one will be generated.
     string id = 1 [
         (buf.validate.field).required = false,
-        (buf.validate.field).string.min_len = 1,
         (buf.validate.field).string.max_len = 64
     ];
     // Parameters are the parameters for the connection.
@@ -89,11 +88,20 @@ message GetConnectionResponse {
     DaemonConnStatus status = 1;
     // Parameters are the parameters for the connection.
     ConnectionParameters parameters = 2;
+    // Metadata are arbitrary key/value pairs stored with the connection.
+    google.protobuf.Struct metadata = 3;
     // Node is the node information for the connection.
     // This is only populated when the connection is connected.
-    MeshNode node = 3;
-    // Metadata are arbitrary key/value pairs stored with the connection.
-    google.protobuf.Struct metadata = 4;
+    MeshNode node = 4;
+    // IPv4Network is the IPv4 network of the mesh. 
+    // This is only populated when the connection is connected.
+    string ipv4Network = 5;
+    // IPv6Network is the IPv6 network of the mesh.
+    // This is only populated when the connection is connected.
+    string ipv6Network = 6;
+    // Domain is the domain of the mesh.
+    // This is only populated when the connection is connected.
+    string domain = 7;
 };
 
 // ListConnectionsRequest is sent by an application to a daemon to retrieve the parameters
@@ -328,7 +336,7 @@ message MeshConnTLS {
 message ConnectRequest {
     // ID is the unique identifier of the connection.
     string id = 1 [
-        (buf.validate.field).required = false,
+        (buf.validate.field).required = true,
         (buf.validate.field).string.min_len = 1,
         (buf.validate.field).string.max_len = 64
     ];
