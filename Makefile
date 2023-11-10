@@ -19,4 +19,4 @@ publish:
 
 npm-publish:
 	sed -i 's/"version": ".*"/"version": "$(subst v,,$(VERSION))"/' ts/package.json
-	# cd ts && npm publish --access public
+	cd ts && npm publish --access public
