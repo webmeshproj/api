@@ -63,11 +63,15 @@ export class Options implements DaemonOptions {
     pollInterval: number;
 
     /**
-     * default returns the default options.
+     * defaults returns the default options.
      * @returns the default options.
      */
-    static default(): Options {
-        return new Options();
+    static defaults(): DaemonOptions {
+        return {
+            daemonAddress: DefaultDaemonAddress,
+            namespace: DefaultNamespace,
+            pollInterval: 5000,
+        } as DaemonOptions;
     }
 
     /**
