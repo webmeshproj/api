@@ -70,6 +70,20 @@ export class Options implements DaemonOptions {
         return new Options();
     }
 
+    /**
+     * interceptor returns an interceptor that sets the namespace header on RPC requests.
+     * @returns the interceptor for the daemon.
+     */
+    static interceptor(namespace: string): Interceptor {
+        return (next) =>
+            async (
+                req: UnaryRequest | StreamRequest,
+            ): Promise<UnaryResponse | StreamResponse> => {
+                req.header.set(NamespaceHeader, namespace);
+                return next(req);
+            };
+    }
+
     constructor(opts?: Partial<DaemonOptions>) {
         if (opts?.pollInterval && opts.pollInterval > 0) {
             this.pollInterval = opts.pollInterval;
@@ -83,20 +97,6 @@ export class Options implements DaemonOptions {
         this.daemonAddress = opts?.daemonAddress ?? DefaultDaemonAddress;
         this.namespace =
             opts?.namespace ?? process.env.npm_package_name ?? DefaultNamespace;
-    }
-
-    /**
-     * interceptor returns an interceptor that sets the namespace header on RPC requests.
-     * @returns the interceptor for the daemon.
-     */
-    public interceptor(): Interceptor {
-        return (next) =>
-            async (
-                req: UnaryRequest | StreamRequest,
-            ): Promise<UnaryResponse | StreamResponse> => {
-                req.header.set(NamespaceHeader, this.namespace);
-                return next(req);
-            };
     }
 
     /**
