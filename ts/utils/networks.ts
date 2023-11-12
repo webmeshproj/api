@@ -19,26 +19,39 @@ export type RecursiveRequired<T> = Required<{
       : T[P];
   }>;
 
-// Metrics is a type alias to InterfaceMetrics for easier use with this package.
+/**
+ * Metrics is a type alias to InterfaceMetrics for easier use with this package.
+ */
 export type Metrics = InterfaceMetrics;
 
-// NetworkParameters are the parameters for creating or updating a mesh connection.
-// They are recursively required for ease of use in templates.
+/** 
+ * NetworkParameters are the parameters for creating or updating a mesh connection.
+ * They are recursively required for ease of use in templates.
+ */
 export type NetworkParameters = RecursiveRequired<
     Partial<Parameters>
 >;
 
-// Parameters are the parameters for creating or updating a mesh connection.
+/** 
+ * Parameters are the parameters for creating or updating a mesh connection.
+ */
 export interface Parameters {
-    // A unique ID for the connection. If not provided the daemon will generate one.
+    /** 
+    * A unique ID for the connection. If not provided the daemon will generate one.
+    */
     id?: string;
-    // The parameters for connecting to the network.
+    /** 
+    * The parameters for connecting to the network.
+    */
     params?: ConnectionParameters;
-    // Arbitrary metadata for the connection.
+    /** 
+    * Arbitrary metadata for the connection.
+    */
     meta?: PartialMessage<Struct>;
 }
-
-// Defaults are the default values for network parameters.
+/**
+ * Defaults are the default values for network parameters.
+ */
 export class Defaults {
     static daemonAddress: string = 'http://127.0.0.1:58080'
     static authMethod: NetworkAuthMethod = NetworkAuthMethod.NO_AUTH;
@@ -49,6 +62,9 @@ export class Defaults {
     static dnsListenUDP: string = '[::]:53';
     static dnsListenTCP: string = '[::]:53';
 
+    /**
+     * parameters returns the default network parameters.
+     */
     static parameters(): NetworkParameters {
         return {
             id: '',
@@ -88,9 +104,17 @@ export class Defaults {
     }
 }
 
-// Network is a connection to a webmesh network.
+/**
+ * Network represents a Webmesh network.
+ */
 export class Network {
+    /**
+     * connected is true if the node is connected to the mesh.
+     */
     public connected: boolean;
+    /**
+     * details are the details of the connection.
+     */
     public details: ConnectResponse | null;
 
     constructor(
@@ -111,7 +135,9 @@ export class Network {
             : null;
     }
 
-    // params returns the parameters for the connection.
+    /**
+     * parameters returns the network parameters.
+     */
     public get params(): NetworkParameters {
         return {
             id: this.id,
@@ -120,52 +146,72 @@ export class Network {
         } as NetworkParameters;
     }
 
-    // status returns the current status of the connection.
+    /**
+     * status returns the status of the connection.
+     */
     public get status(): DaemonConnStatus {
         return this.connnection.status;
     }
 
-    // nodeID returns the node ID of the connection.
+    /**
+     * nodeID returns the node ID of the connection.
+     */
     public get nodeID(): string {
         return this.details?.nodeID || '';
     }
 
-    // ipv4Address returns the IPv4 address of the connection.
+    /**
+     * ipv4Address returns the IPv4 address of the connection.
+     */
     public get ipv4Address(): string {
         return this.details?.ipv4Address || '';
     }
 
-    // ipv6Address returns the IPv6 address of the connection.
+    /**
+     * ipv6Address returns the IPv6 address of the connection.
+     */
     public get ipv6Address(): string {
         return this.details?.ipv6Address || '';
     }
 
-    // ipv4Network returns the IPv4 network of the connection.
+    /**
+     * ipv4Network returns the IPv4 network of the connection.
+     */
     public get ipv4Network(): string {
         return this.details?.ipv4Network || '';
     }
 
-    // ipv6Network returns the IPv6 network of the connection.
+    /**
+     * ipv6Network returns the IPv6 network of the connection.
+     */
     public get ipv6Network(): string {
         return this.details?.ipv6Network || '';
     }
 
-    // domain returns the domain of the connection.
+    /**
+     * domain returns the mesh domain of the connection.
+     */
     public get domain(): string {
         return this.details?.meshDomain || '';
     }
 
-    // fqdn returns the fully qualified domain name of the connection.
+    /**
+     * fqdn returns the fully qualified domain name of the connection.
+     */
     public get fqdn(): string {
         return this.connected ? this.nodeID + '.' + this.domain : '';
     }
 
-    // peers returns an interface for querying the peers of this connection.
+    /**
+     * peers returns an interface for working with the peers of the connection.
+     */
     public get peers(): MeshNodes {
         return new MeshNodes(this.client, this.id);
     }
 
-    // metrics retrieves the current metrics for the connection.
+    /**
+     * metrics returns the metrics for the connection.
+     */
     public metrics(): Promise<Metrics> {
         if (!this.connected) {
             Promise.resolve(new InterfaceMetrics());
@@ -182,7 +228,9 @@ export class Network {
         });
     }
 
-    // connect connects to the connection.
+    /**
+     * connect connects the node to the mesh.
+     */
     public connect(): Promise<void> {
         if (this.connected) {
             return Promise.reject(new Error('already connected'));
@@ -201,7 +249,9 @@ export class Network {
         });
     }
 
-    // disconnect disconnects from the connection.
+    /**
+     * disconnect disconnects the node from the mesh.
+     */
     public disconnect(): Promise<void> {
         if (!this.connected) {
             return Promise.reject(new Error('not connected'));
@@ -220,7 +270,9 @@ export class Network {
         });
     }
 
-    // drop drops the connection.
+    /**
+     * drop disconnects the node from the mesh and drops the connection from storage.
+     */
     public drop(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.connected) {
