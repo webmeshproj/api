@@ -32,9 +32,21 @@ export type DaemonClient = PromiseClient<typeof AppDaemon>;
  * DaemonOptions are the options for communicating with the daemon.
  */
 export interface DaemonOptions {
+    /**
+     * daemonAddress is the address of the daemon.
+     */
     daemonAddress: string;
+    /**
+     * namespace is the namespace to use for the daemon.
+     */
     namespace: string;
+    /**
+     * transport is the transport to use for communicating with the daemon.
+     */
     transport: Transport;
+    /**
+     * pollInterval is the interval in milliseconds to poll the daemon for updates.
+     */
     pollInterval?: number;
 }
 
@@ -50,6 +62,10 @@ export class Options implements DaemonOptions {
     transport: Transport;
     pollInterval: number;
 
+    /**
+     * default returns the default options.
+     * @returns the default options.
+     */
     static default(): Options {
         return new Options();
     }
@@ -70,7 +86,7 @@ export class Options implements DaemonOptions {
     }
 
     /**
-     * Interceptor returns an interceptor that sets the namespace header on RPC requests.
+     * interceptor returns an interceptor that sets the namespace header on RPC requests.
      * @returns the interceptor for the daemon.
      */
     public interceptor(): Interceptor {
