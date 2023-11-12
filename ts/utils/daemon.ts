@@ -13,15 +13,15 @@ import { AppDaemon } from '../v1/app_connect';
 /**
  * NamespaceHeader designates the header used to specify the namespace.
  */
-const NamespaceHeader = 'x-webmesh-namespace';
+export const NamespaceHeader = 'x-webmesh-namespace';
 /**
  * DefaultNamespace is the default namespace.
  */
-const DefaultNamespace = 'webmesh';
+export const DefaultNamespace = 'global';
 /** 
  * DefaultDaemonAddress is the default daemon address.
  */
-const DefaultDaemonAddress = 'http://127.0.0.1:58080';
+export const DefaultDaemonAddress = 'http://127.0.0.1:58080';
 
 /**
  * DaemonClient is a type alias for the PromiseClient of the AppDaemon service.
