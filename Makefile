@@ -9,7 +9,7 @@ gen: update  ## Generate proto files.
 	rm -rf docs/
 	$(BUF) generate proto
 	go run cmd/tsutil-gen/main.go --out ts/utils/rpcdb.ts
-	cd ts && npx typedoc --name "Webmesh API" --cleanOutputDir false
+	cd ts && npm i && npm run docs
 
 update: ## Update proto dependencies.
 	cd proto/ ; $(BUF) mod update

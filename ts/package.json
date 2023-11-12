@@ -1,6 +1,6 @@
 {
     "name": "@webmeshproject/api",
-    "version": "0.12.2",
+    "version": "0.12.3",
     "description": "Generated service and type definitions for the Webmesh API",
     "author": "Avi Zimmerman",
     "license": "Apache-2.0",
@@ -8,6 +8,10 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/webmeshproj/api.git"
+    },
+    "scripts": {
+        "format": "prettier --write \"**/*.{js,ts,md,json}\" --ignore-path .gitignore",
+        "docs": "typedoc --name 'Webmesh API' --cleanOutputDir false"
     },
     "bugs": {
         "url": "https://github.com/webmeshproj/api/issues"
@@ -17,7 +21,10 @@
         "@connectrpc/connect": "^1.1.3"
     },
     "devDependencies": {
+        "@types/node": "^20.9.0",
         "tsx": "^3.14.0",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "typedoc": "^0.25.3"
+
     }
 }
